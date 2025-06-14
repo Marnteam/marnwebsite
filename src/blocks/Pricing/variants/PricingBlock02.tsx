@@ -14,14 +14,12 @@ import { PricingToggle } from '@/components/PricingToggle'
 
 interface PricingBlock02Props {
   pricingCards: NonNullable<PricingBlock['pricingCards']>
-
   locale: string
   translations?: any
 }
 
 export const PricingBlock02: React.FC<PricingBlock02Props> = ({
   pricingCards,
-
   locale,
   translations,
 }) => {
