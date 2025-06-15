@@ -34,7 +34,7 @@ alwaysApply: true
         "Use Shadcn/UI components from `@/components/ui` for UI elements. Refer to `components.json` for configuration.",
         "Place general reusable components in `src/components`.",
         "Use Tailwind CSS for styling, leveraging the theme variables defined in `src/app/(frontend)/[locale]/globals.css` and potentially `tailwind.config.mjs`.",
-        "Leverage Lucide icons (`lucide-react`).",
+        "Leverage Material Symbols icons using the Iconify icon component(`@iconify-icon/react`).",
         "For internationalized text, use the appropriate `next-intl` functions/hooks."
       ]
     },
