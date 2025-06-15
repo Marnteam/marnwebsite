@@ -15,28 +15,33 @@ import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
-export async function generateStaticParams({
-  params: { locale },
-}: {
-  params: { locale?: 'ar' | 'en' | undefined }
-}) {
+export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
-  const posts = await payload.find({
-    collection: 'posts',
-    locale: locale,
-    draft: false,
-    limit: 1000,
-    overrideAccess: false,
-    pagination: false,
-    select: {
-      slug: true,
-    },
-  })
-
-  const params = posts.docs.map(({ slug }) => {
-    return { slug }
-  })
-
+  const locales = ['en', 'ar']
+  const params: { slug: string; locale: 'ar' | 'en' }[] = []
+  for (const locale of locales) {
+    const pages = await payload.find({
+      collection: 'posts',
+      locale: locale as 'ar' | 'en',
+      draft: false,
+      limit: 1000,
+      overrideAccess: false,
+      pagination: false,
+      select: {
+        slug: true,
+      },
+    })
+    pages.docs
+      ?.filter((doc) => {
+        return doc.slug && doc.slug !== 'home'
+      })
+      .map((doc) => {
+        params.push({
+          slug: doc.slug || '',
+          locale: locale as 'ar' | 'en',
+        })
+      })
+  }
   return params
 }
 
@@ -50,13 +55,13 @@ type Args = {
 export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = '', locale = 'ar' } = await paramsPromise
-  const url = `/${locale}/posts/` + slug
+  const url = `/${locale}/blog/` + slug
   const post = await queryPostBySlug({ slug, locale })
 
   if (!post) return <PayloadRedirects url={url} />
 
   return (
-    <article className="pt-16 pb-16">
+    <article className="pt-header-plus-admin-bar pb-16">
       <PageClient />
 
       {/* Allows redirects for valid pages too */}
@@ -68,7 +73,12 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       <div className="flex flex-col items-center gap-4 pt-8">
         <div className="container">
-          <RichText className="mx-auto max-w-[48rem]" data={post.content} enableGutter={false} />
+          <RichText
+            className="mx-auto max-w-[48rem]"
+            data={post.content}
+            enableProse
+            enableGutter={false}
+          />
           {post.relatedPosts && post.relatedPosts.length > 0 && (
             <RelatedPosts
               className="col-span-3 col-start-1 mt-12 max-w-[52rem] grid-rows-[2fr] lg:grid lg:grid-cols-subgrid"
