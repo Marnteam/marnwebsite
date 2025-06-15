@@ -149,7 +149,18 @@ export default buildConfig({
     StyledList,
     TestimonialsBlock,
   ],
-  collections: [Pages, Posts, Solutions, Integrations, Media, Customers, Categories, FAQ, Changelog, Users],
+  collections: [
+    Pages,
+    Posts,
+    Solutions,
+    Integrations,
+    Media,
+    Customers,
+    Categories,
+    FAQ,
+    Changelog,
+    Users,
+  ],
   cors: [getServerSideURL()].filter(Boolean),
   db: vercelPostgresAdapter({
     pool: {

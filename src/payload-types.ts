@@ -279,6 +279,7 @@ export interface Post {
  */
 export interface Media {
   id: string;
+  prefix?: string | null;
   alt: string;
   caption?: {
     root: {
@@ -298,7 +299,6 @@ export interface Media {
   locale?: ('en' | 'ar') | null;
   category?: (string | Category)[] | null;
   blurhash?: string | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -2161,17 +2161,68 @@ export interface MetricsBlock {
       }[]
     | null;
   /**
-   * Use Google Sheets to generate the table data, convert that into JSON, and paste here.
+   * Create a structured table with defined columns and rows
    */
-  table?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
+  table?: {
+    title?: string | null;
+    /**
+     * Define the column headers for your table
+     */
+    headers?:
+      | {
+          header: string;
+          width: 'auto' | 'w-1/5' | 'w-1/3' | 'w-1/2' | 'w-2/3';
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Add rows to your table with structured cell data
+     */
+    rows?:
+      | {
+          /**
+           * Add content for each cell in this row.
+           */
+          cells?:
+            | {
+                /**
+                 * Add "check" or "close" to show a checkmark or x in the cell. Add a solution slug to show a solution badge in the cell.
+                 */
+                content?: string | null;
+                isHeader?: boolean | null;
+                id?: string | null;
+              }[]
+            | null;
+          /**
+           * Add nested/child rows that will be collapsible under this row.
+           */
+          children?:
+            | {
+                cells?:
+                  | {
+                      /**
+                       * Add "check" or "close" to show a checkmark or x in the cell. Add a solution slug to show a solution badge in the cell.
+                       */
+                      content?: string | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
+          /**
+           * Check if this row should show expand/collapse functionality
+           */
+          isExpandable?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    styling?: {
+      striped?: boolean | null;
+      bordered?: boolean | null;
+      compact?: boolean | null;
+    };
+  };
   enableLogos?: boolean | null;
   logos?: {
     headline?: string | null;
@@ -2944,12 +2995,12 @@ export interface IntegrationsSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  prefix?: T;
   alt?: T;
   caption?: T;
   locale?: T;
   category?: T;
   blurhash?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

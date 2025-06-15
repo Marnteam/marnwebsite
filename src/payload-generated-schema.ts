@@ -166,6 +166,10 @@ export const enum_metricsBlock_stats_indicator = pgEnum('enum_metricsBlock_stats
   'decrease',
   'noChange',
 ])
+export const enum_metricsBlock_table_headers_width = pgEnum(
+  'enum_metricsBlock_table_headers_width',
+  ['auto', 'w-1/5', 'w-1/3', 'w-1/2', 'w-2/3'],
+)
 export const enum_metricsBlock_block_header_type = pgEnum('enum_metricsBlock_block_header_type', [
   'center',
   'split',
@@ -183,6 +187,10 @@ export const enum_pricingBlock_pricing_cards_type = pgEnum('enum_pricingBlock_pr
 export const enum_pricingBlock_pricing_cards_badge_type = pgEnum(
   'enum_pricingBlock_pricing_cards_badge_type',
   ['label', 'reference'],
+)
+export const enum_pricingBlock_table_headers_width = pgEnum(
+  'enum_pricingBlock_table_headers_width',
+  ['auto', 'w-1/5', 'w-1/3', 'w-1/2', 'w-2/3'],
 )
 export const enum_pricingBlock_block_header_type = pgEnum('enum_pricingBlock_block_header_type', [
   'center',
@@ -363,6 +371,10 @@ export const enum__metricsBlock_v_stats_indicator = pgEnum('enum__metricsBlock_v
   'decrease',
   'noChange',
 ])
+export const enum__metricsBlock_v_table_headers_width = pgEnum(
+  'enum__metricsBlock_v_table_headers_width',
+  ['auto', 'w-1/5', 'w-1/3', 'w-1/2', 'w-2/3'],
+)
 export const enum__metricsBlock_v_block_header_type = pgEnum(
   'enum__metricsBlock_v_block_header_type',
   ['center', 'split', 'start'],
@@ -379,6 +391,10 @@ export const enum__pricingBlock_v_pricing_cards_type = pgEnum(
 export const enum__pricingBlock_v_pricing_cards_badge_type = pgEnum(
   'enum__pricingBlock_v_pricing_cards_badge_type',
   ['label', 'reference'],
+)
+export const enum__pricingBlock_v_table_headers_width = pgEnum(
+  'enum__pricingBlock_v_table_headers_width',
+  ['auto', 'w-1/5', 'w-1/3', 'w-1/2', 'w-2/3'],
 )
 export const enum__pricingBlock_v_block_header_type = pgEnum(
   'enum__pricingBlock_v_block_header_type',
@@ -1656,6 +1672,114 @@ export const metricsBlock_stats_locales = pgTable(
   }),
 )
 
+export const metricsBlock_table_headers = pgTable(
+  'metricsBlock_table_headers',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: varchar('id').primaryKey(),
+    header: varchar('header'),
+    width: enum_metricsBlock_table_headers_width('width').default('auto'),
+  },
+  (columns) => ({
+    _orderIdx: index('metricsBlock_table_headers_order_idx').on(columns._order),
+    _parentIDIdx: index('metricsBlock_table_headers_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('metricsBlock_table_headers_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [metricsBlock.id],
+      name: 'metricsBlock_table_headers_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const metricsBlock_table_rows_cells = pgTable(
+  'metricsBlock_table_rows_cells',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: varchar('id').primaryKey(),
+    content: varchar('content'),
+    isHeader: boolean('is_header').default(false),
+  },
+  (columns) => ({
+    _orderIdx: index('metricsBlock_table_rows_cells_order_idx').on(columns._order),
+    _parentIDIdx: index('metricsBlock_table_rows_cells_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('metricsBlock_table_rows_cells_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [metricsBlock_table_rows.id],
+      name: 'metricsBlock_table_rows_cells_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const metricsBlock_table_rows_children_cells = pgTable(
+  'metricsBlock_table_rows_children_cells',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: varchar('id').primaryKey(),
+    content: varchar('content'),
+  },
+  (columns) => ({
+    _orderIdx: index('metricsBlock_table_rows_children_cells_order_idx').on(columns._order),
+    _parentIDIdx: index('metricsBlock_table_rows_children_cells_parent_id_idx').on(
+      columns._parentID,
+    ),
+    _localeIdx: index('metricsBlock_table_rows_children_cells_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [metricsBlock_table_rows_children.id],
+      name: 'metricsBlock_table_rows_children_cells_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const metricsBlock_table_rows_children = pgTable(
+  'metricsBlock_table_rows_children',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: varchar('id').primaryKey(),
+  },
+  (columns) => ({
+    _orderIdx: index('metricsBlock_table_rows_children_order_idx').on(columns._order),
+    _parentIDIdx: index('metricsBlock_table_rows_children_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('metricsBlock_table_rows_children_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [metricsBlock_table_rows.id],
+      name: 'metricsBlock_table_rows_children_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const metricsBlock_table_rows = pgTable(
+  'metricsBlock_table_rows',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: varchar('id').primaryKey(),
+    isExpandable: boolean('is_expandable').default(false),
+  },
+  (columns) => ({
+    _orderIdx: index('metricsBlock_table_rows_order_idx').on(columns._order),
+    _parentIDIdx: index('metricsBlock_table_rows_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('metricsBlock_table_rows_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [metricsBlock.id],
+      name: 'metricsBlock_table_rows_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const metricsBlock = pgTable(
   'metricsBlock',
   {
@@ -1671,6 +1795,9 @@ export const metricsBlock = pgTable(
       'block_header_badge_icon_position',
     ).default('flex-row'),
     type: enum_metricsBlock_type('type').default('01'),
+    table_styling_striped: boolean('table_styling_striped').default(true),
+    table_styling_bordered: boolean('table_styling_bordered').default(true),
+    table_styling_compact: boolean('table_styling_compact').default(false),
     enableLogos: boolean('enable_logos'),
     blockName: varchar('block_name'),
   },
@@ -1694,7 +1821,7 @@ export const metricsBlock_locales = pgTable(
     blockImage_media: uuid('block_image_media_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    table: jsonb('table'),
+    table_title: varchar('table_title'),
     logos_headline: varchar('logos_headline'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
@@ -1859,6 +1986,114 @@ export const pricingBlock_pricing_cards_locales = pgTable(
   }),
 )
 
+export const pricingBlock_table_headers = pgTable(
+  'pricingBlock_table_headers',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: varchar('id').primaryKey(),
+    header: varchar('header'),
+    width: enum_pricingBlock_table_headers_width('width').default('auto'),
+  },
+  (columns) => ({
+    _orderIdx: index('pricingBlock_table_headers_order_idx').on(columns._order),
+    _parentIDIdx: index('pricingBlock_table_headers_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('pricingBlock_table_headers_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [pricingBlock.id],
+      name: 'pricingBlock_table_headers_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const pricingBlock_table_rows_cells = pgTable(
+  'pricingBlock_table_rows_cells',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: varchar('id').primaryKey(),
+    content: varchar('content'),
+    isHeader: boolean('is_header').default(false),
+  },
+  (columns) => ({
+    _orderIdx: index('pricingBlock_table_rows_cells_order_idx').on(columns._order),
+    _parentIDIdx: index('pricingBlock_table_rows_cells_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('pricingBlock_table_rows_cells_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [pricingBlock_table_rows.id],
+      name: 'pricingBlock_table_rows_cells_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const pricingBlock_table_rows_children_cells = pgTable(
+  'pricingBlock_table_rows_children_cells',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: varchar('id').primaryKey(),
+    content: varchar('content'),
+  },
+  (columns) => ({
+    _orderIdx: index('pricingBlock_table_rows_children_cells_order_idx').on(columns._order),
+    _parentIDIdx: index('pricingBlock_table_rows_children_cells_parent_id_idx').on(
+      columns._parentID,
+    ),
+    _localeIdx: index('pricingBlock_table_rows_children_cells_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [pricingBlock_table_rows_children.id],
+      name: 'pricingBlock_table_rows_children_cells_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const pricingBlock_table_rows_children = pgTable(
+  'pricingBlock_table_rows_children',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: varchar('id').primaryKey(),
+  },
+  (columns) => ({
+    _orderIdx: index('pricingBlock_table_rows_children_order_idx').on(columns._order),
+    _parentIDIdx: index('pricingBlock_table_rows_children_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('pricingBlock_table_rows_children_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [pricingBlock_table_rows.id],
+      name: 'pricingBlock_table_rows_children_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const pricingBlock_table_rows = pgTable(
+  'pricingBlock_table_rows',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: varchar('id').primaryKey(),
+    isExpandable: boolean('is_expandable').default(false),
+  },
+  (columns) => ({
+    _orderIdx: index('pricingBlock_table_rows_order_idx').on(columns._order),
+    _parentIDIdx: index('pricingBlock_table_rows_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('pricingBlock_table_rows_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [pricingBlock.id],
+      name: 'pricingBlock_table_rows_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const pricingBlock = pgTable(
   'pricingBlock',
   {
@@ -1874,6 +2109,9 @@ export const pricingBlock = pgTable(
       'block_header_badge_icon_position',
     ).default('flex-row'),
     type: enum_pricingBlock_type('type').default('01'),
+    table_styling_striped: boolean('table_styling_striped').default(true),
+    table_styling_bordered: boolean('table_styling_bordered').default(true),
+    table_styling_compact: boolean('table_styling_compact').default(false),
     blockName: varchar('block_name'),
   },
   (columns) => ({
@@ -1893,7 +2131,7 @@ export const pricingBlock_locales = pgTable(
   {
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_headerText: jsonb('block_header_header_text'),
-    table: jsonb('table'),
+    table_title: varchar('table_title'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
     _parentID: varchar('_parent_id').notNull(),
@@ -3442,6 +3680,119 @@ export const _metricsBlock_v_stats_locales = pgTable(
   }),
 )
 
+export const _metricsBlock_v_table_headers = pgTable(
+  '_metricsBlock_v_table_headers',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
+    header: varchar('header'),
+    width: enum__metricsBlock_v_table_headers_width('width').default('auto'),
+    _uuid: varchar('_uuid'),
+  },
+  (columns) => ({
+    _orderIdx: index('_metricsBlock_v_table_headers_order_idx').on(columns._order),
+    _parentIDIdx: index('_metricsBlock_v_table_headers_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('_metricsBlock_v_table_headers_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_metricsBlock_v.id],
+      name: '_metricsBlock_v_table_headers_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _metricsBlock_v_table_rows_cells = pgTable(
+  '_metricsBlock_v_table_rows_cells',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
+    content: varchar('content'),
+    isHeader: boolean('is_header').default(false),
+    _uuid: varchar('_uuid'),
+  },
+  (columns) => ({
+    _orderIdx: index('_metricsBlock_v_table_rows_cells_order_idx').on(columns._order),
+    _parentIDIdx: index('_metricsBlock_v_table_rows_cells_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('_metricsBlock_v_table_rows_cells_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_metricsBlock_v_table_rows.id],
+      name: '_metricsBlock_v_table_rows_cells_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _metricsBlock_v_table_rows_children_cells = pgTable(
+  '_metricsBlock_v_table_rows_children_cells',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
+    content: varchar('content'),
+    _uuid: varchar('_uuid'),
+  },
+  (columns) => ({
+    _orderIdx: index('_metricsBlock_v_table_rows_children_cells_order_idx').on(columns._order),
+    _parentIDIdx: index('_metricsBlock_v_table_rows_children_cells_parent_id_idx').on(
+      columns._parentID,
+    ),
+    _localeIdx: index('_metricsBlock_v_table_rows_children_cells_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_metricsBlock_v_table_rows_children.id],
+      name: '_metricsBlock_v_table_rows_children_cells_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _metricsBlock_v_table_rows_children = pgTable(
+  '_metricsBlock_v_table_rows_children',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
+    _uuid: varchar('_uuid'),
+  },
+  (columns) => ({
+    _orderIdx: index('_metricsBlock_v_table_rows_children_order_idx').on(columns._order),
+    _parentIDIdx: index('_metricsBlock_v_table_rows_children_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('_metricsBlock_v_table_rows_children_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_metricsBlock_v_table_rows.id],
+      name: '_metricsBlock_v_table_rows_children_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _metricsBlock_v_table_rows = pgTable(
+  '_metricsBlock_v_table_rows',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
+    isExpandable: boolean('is_expandable').default(false),
+    _uuid: varchar('_uuid'),
+  },
+  (columns) => ({
+    _orderIdx: index('_metricsBlock_v_table_rows_order_idx').on(columns._order),
+    _parentIDIdx: index('_metricsBlock_v_table_rows_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('_metricsBlock_v_table_rows_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_metricsBlock_v.id],
+      name: '_metricsBlock_v_table_rows_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const _metricsBlock_v = pgTable(
   '_metricsBlock_v',
   {
@@ -3457,6 +3808,9 @@ export const _metricsBlock_v = pgTable(
       'block_header_badge_icon_position',
     ).default('flex-row'),
     type: enum__metricsBlock_v_type('type').default('01'),
+    table_styling_striped: boolean('table_styling_striped').default(true),
+    table_styling_bordered: boolean('table_styling_bordered').default(true),
+    table_styling_compact: boolean('table_styling_compact').default(false),
     enableLogos: boolean('enable_logos'),
     _uuid: varchar('_uuid'),
     blockName: varchar('block_name'),
@@ -3481,7 +3835,7 @@ export const _metricsBlock_v_locales = pgTable(
     blockImage_media: uuid('block_image_media_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    table: jsonb('table'),
+    table_title: varchar('table_title'),
     logos_headline: varchar('logos_headline'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
@@ -3651,6 +4005,119 @@ export const _pricingBlock_v_pricing_cards_locales = pgTable(
   }),
 )
 
+export const _pricingBlock_v_table_headers = pgTable(
+  '_pricingBlock_v_table_headers',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
+    header: varchar('header'),
+    width: enum__pricingBlock_v_table_headers_width('width').default('auto'),
+    _uuid: varchar('_uuid'),
+  },
+  (columns) => ({
+    _orderIdx: index('_pricingBlock_v_table_headers_order_idx').on(columns._order),
+    _parentIDIdx: index('_pricingBlock_v_table_headers_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('_pricingBlock_v_table_headers_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_pricingBlock_v.id],
+      name: '_pricingBlock_v_table_headers_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _pricingBlock_v_table_rows_cells = pgTable(
+  '_pricingBlock_v_table_rows_cells',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
+    content: varchar('content'),
+    isHeader: boolean('is_header').default(false),
+    _uuid: varchar('_uuid'),
+  },
+  (columns) => ({
+    _orderIdx: index('_pricingBlock_v_table_rows_cells_order_idx').on(columns._order),
+    _parentIDIdx: index('_pricingBlock_v_table_rows_cells_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('_pricingBlock_v_table_rows_cells_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_pricingBlock_v_table_rows.id],
+      name: '_pricingBlock_v_table_rows_cells_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _pricingBlock_v_table_rows_children_cells = pgTable(
+  '_pricingBlock_v_table_rows_children_cells',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
+    content: varchar('content'),
+    _uuid: varchar('_uuid'),
+  },
+  (columns) => ({
+    _orderIdx: index('_pricingBlock_v_table_rows_children_cells_order_idx').on(columns._order),
+    _parentIDIdx: index('_pricingBlock_v_table_rows_children_cells_parent_id_idx').on(
+      columns._parentID,
+    ),
+    _localeIdx: index('_pricingBlock_v_table_rows_children_cells_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_pricingBlock_v_table_rows_children.id],
+      name: '_pricingBlock_v_table_rows_children_cells_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _pricingBlock_v_table_rows_children = pgTable(
+  '_pricingBlock_v_table_rows_children',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
+    _uuid: varchar('_uuid'),
+  },
+  (columns) => ({
+    _orderIdx: index('_pricingBlock_v_table_rows_children_order_idx').on(columns._order),
+    _parentIDIdx: index('_pricingBlock_v_table_rows_children_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('_pricingBlock_v_table_rows_children_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_pricingBlock_v_table_rows.id],
+      name: '_pricingBlock_v_table_rows_children_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _pricingBlock_v_table_rows = pgTable(
+  '_pricingBlock_v_table_rows',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
+    isExpandable: boolean('is_expandable').default(false),
+    _uuid: varchar('_uuid'),
+  },
+  (columns) => ({
+    _orderIdx: index('_pricingBlock_v_table_rows_order_idx').on(columns._order),
+    _parentIDIdx: index('_pricingBlock_v_table_rows_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('_pricingBlock_v_table_rows_locale_idx').on(columns._locale),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_pricingBlock_v.id],
+      name: '_pricingBlock_v_table_rows_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const _pricingBlock_v = pgTable(
   '_pricingBlock_v',
   {
@@ -3666,6 +4133,9 @@ export const _pricingBlock_v = pgTable(
       'block_header_badge_icon_position',
     ).default('flex-row'),
     type: enum__pricingBlock_v_type('type').default('01'),
+    table_styling_striped: boolean('table_styling_striped').default(true),
+    table_styling_bordered: boolean('table_styling_bordered').default(true),
+    table_styling_compact: boolean('table_styling_compact').default(false),
     _uuid: varchar('_uuid'),
     blockName: varchar('block_name'),
   },
@@ -3686,7 +4156,7 @@ export const _pricingBlock_v_locales = pgTable(
   {
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_headerText: jsonb('block_header_header_text'),
-    table: jsonb('table'),
+    table_title: varchar('table_title'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
     _parentID: uuid('_parent_id').notNull(),
@@ -8029,6 +8499,65 @@ export const relations_metricsBlock_stats = relations(metricsBlock_stats, ({ one
     relationName: '_locales',
   }),
 }))
+export const relations_metricsBlock_table_headers = relations(
+  metricsBlock_table_headers,
+  ({ one }) => ({
+    _parentID: one(metricsBlock, {
+      fields: [metricsBlock_table_headers._parentID],
+      references: [metricsBlock.id],
+      relationName: 'table_headers',
+    }),
+  }),
+)
+export const relations_metricsBlock_table_rows_cells = relations(
+  metricsBlock_table_rows_cells,
+  ({ one }) => ({
+    _parentID: one(metricsBlock_table_rows, {
+      fields: [metricsBlock_table_rows_cells._parentID],
+      references: [metricsBlock_table_rows.id],
+      relationName: 'cells',
+    }),
+  }),
+)
+export const relations_metricsBlock_table_rows_children_cells = relations(
+  metricsBlock_table_rows_children_cells,
+  ({ one }) => ({
+    _parentID: one(metricsBlock_table_rows_children, {
+      fields: [metricsBlock_table_rows_children_cells._parentID],
+      references: [metricsBlock_table_rows_children.id],
+      relationName: 'cells',
+    }),
+  }),
+)
+export const relations_metricsBlock_table_rows_children = relations(
+  metricsBlock_table_rows_children,
+  ({ one, many }) => ({
+    _parentID: one(metricsBlock_table_rows, {
+      fields: [metricsBlock_table_rows_children._parentID],
+      references: [metricsBlock_table_rows.id],
+      relationName: 'children',
+    }),
+    cells: many(metricsBlock_table_rows_children_cells, {
+      relationName: 'cells',
+    }),
+  }),
+)
+export const relations_metricsBlock_table_rows = relations(
+  metricsBlock_table_rows,
+  ({ one, many }) => ({
+    _parentID: one(metricsBlock, {
+      fields: [metricsBlock_table_rows._parentID],
+      references: [metricsBlock.id],
+      relationName: 'table_rows',
+    }),
+    cells: many(metricsBlock_table_rows_cells, {
+      relationName: 'cells',
+    }),
+    children: many(metricsBlock_table_rows_children, {
+      relationName: 'children',
+    }),
+  }),
+)
 export const relations_metricsBlock_locales = relations(metricsBlock_locales, ({ one }) => ({
   _parentID: one(metricsBlock, {
     fields: [metricsBlock_locales._parentID],
@@ -8061,6 +8590,12 @@ export const relations_metricsBlock = relations(metricsBlock, ({ one, many }) =>
   }),
   stats: many(metricsBlock_stats, {
     relationName: 'stats',
+  }),
+  table_headers: many(metricsBlock_table_headers, {
+    relationName: 'table_headers',
+  }),
+  table_rows: many(metricsBlock_table_rows, {
+    relationName: 'table_rows',
   }),
 }))
 export const relations_pricingBlock_block_header_links_locales = relations(
@@ -8140,6 +8675,65 @@ export const relations_pricingBlock_pricing_cards = relations(
     }),
   }),
 )
+export const relations_pricingBlock_table_headers = relations(
+  pricingBlock_table_headers,
+  ({ one }) => ({
+    _parentID: one(pricingBlock, {
+      fields: [pricingBlock_table_headers._parentID],
+      references: [pricingBlock.id],
+      relationName: 'table_headers',
+    }),
+  }),
+)
+export const relations_pricingBlock_table_rows_cells = relations(
+  pricingBlock_table_rows_cells,
+  ({ one }) => ({
+    _parentID: one(pricingBlock_table_rows, {
+      fields: [pricingBlock_table_rows_cells._parentID],
+      references: [pricingBlock_table_rows.id],
+      relationName: 'cells',
+    }),
+  }),
+)
+export const relations_pricingBlock_table_rows_children_cells = relations(
+  pricingBlock_table_rows_children_cells,
+  ({ one }) => ({
+    _parentID: one(pricingBlock_table_rows_children, {
+      fields: [pricingBlock_table_rows_children_cells._parentID],
+      references: [pricingBlock_table_rows_children.id],
+      relationName: 'cells',
+    }),
+  }),
+)
+export const relations_pricingBlock_table_rows_children = relations(
+  pricingBlock_table_rows_children,
+  ({ one, many }) => ({
+    _parentID: one(pricingBlock_table_rows, {
+      fields: [pricingBlock_table_rows_children._parentID],
+      references: [pricingBlock_table_rows.id],
+      relationName: 'children',
+    }),
+    cells: many(pricingBlock_table_rows_children_cells, {
+      relationName: 'cells',
+    }),
+  }),
+)
+export const relations_pricingBlock_table_rows = relations(
+  pricingBlock_table_rows,
+  ({ one, many }) => ({
+    _parentID: one(pricingBlock, {
+      fields: [pricingBlock_table_rows._parentID],
+      references: [pricingBlock.id],
+      relationName: 'table_rows',
+    }),
+    cells: many(pricingBlock_table_rows_cells, {
+      relationName: 'cells',
+    }),
+    children: many(pricingBlock_table_rows_children, {
+      relationName: 'children',
+    }),
+  }),
+)
 export const relations_pricingBlock_locales = relations(pricingBlock_locales, ({ one }) => ({
   _parentID: one(pricingBlock, {
     fields: [pricingBlock_locales._parentID],
@@ -8161,6 +8755,12 @@ export const relations_pricingBlock = relations(pricingBlock, ({ one, many }) =>
   }),
   pricingCards: many(pricingBlock_pricing_cards, {
     relationName: 'pricingCards',
+  }),
+  table_headers: many(pricingBlock_table_headers, {
+    relationName: 'table_headers',
+  }),
+  table_rows: many(pricingBlock_table_rows, {
+    relationName: 'table_rows',
   }),
 }))
 export const relations_richTextBlock_block_header_links_locales = relations(
@@ -8994,6 +9594,65 @@ export const relations__metricsBlock_v_stats = relations(
     }),
   }),
 )
+export const relations__metricsBlock_v_table_headers = relations(
+  _metricsBlock_v_table_headers,
+  ({ one }) => ({
+    _parentID: one(_metricsBlock_v, {
+      fields: [_metricsBlock_v_table_headers._parentID],
+      references: [_metricsBlock_v.id],
+      relationName: 'table_headers',
+    }),
+  }),
+)
+export const relations__metricsBlock_v_table_rows_cells = relations(
+  _metricsBlock_v_table_rows_cells,
+  ({ one }) => ({
+    _parentID: one(_metricsBlock_v_table_rows, {
+      fields: [_metricsBlock_v_table_rows_cells._parentID],
+      references: [_metricsBlock_v_table_rows.id],
+      relationName: 'cells',
+    }),
+  }),
+)
+export const relations__metricsBlock_v_table_rows_children_cells = relations(
+  _metricsBlock_v_table_rows_children_cells,
+  ({ one }) => ({
+    _parentID: one(_metricsBlock_v_table_rows_children, {
+      fields: [_metricsBlock_v_table_rows_children_cells._parentID],
+      references: [_metricsBlock_v_table_rows_children.id],
+      relationName: 'cells',
+    }),
+  }),
+)
+export const relations__metricsBlock_v_table_rows_children = relations(
+  _metricsBlock_v_table_rows_children,
+  ({ one, many }) => ({
+    _parentID: one(_metricsBlock_v_table_rows, {
+      fields: [_metricsBlock_v_table_rows_children._parentID],
+      references: [_metricsBlock_v_table_rows.id],
+      relationName: 'children',
+    }),
+    cells: many(_metricsBlock_v_table_rows_children_cells, {
+      relationName: 'cells',
+    }),
+  }),
+)
+export const relations__metricsBlock_v_table_rows = relations(
+  _metricsBlock_v_table_rows,
+  ({ one, many }) => ({
+    _parentID: one(_metricsBlock_v, {
+      fields: [_metricsBlock_v_table_rows._parentID],
+      references: [_metricsBlock_v.id],
+      relationName: 'table_rows',
+    }),
+    cells: many(_metricsBlock_v_table_rows_cells, {
+      relationName: 'cells',
+    }),
+    children: many(_metricsBlock_v_table_rows_children, {
+      relationName: 'children',
+    }),
+  }),
+)
 export const relations__metricsBlock_v_locales = relations(_metricsBlock_v_locales, ({ one }) => ({
   _parentID: one(_metricsBlock_v, {
     fields: [_metricsBlock_v_locales._parentID],
@@ -9026,6 +9685,12 @@ export const relations__metricsBlock_v = relations(_metricsBlock_v, ({ one, many
   }),
   stats: many(_metricsBlock_v_stats, {
     relationName: 'stats',
+  }),
+  table_headers: many(_metricsBlock_v_table_headers, {
+    relationName: 'table_headers',
+  }),
+  table_rows: many(_metricsBlock_v_table_rows, {
+    relationName: 'table_rows',
   }),
 }))
 export const relations__pricingBlock_v_block_header_links_locales = relations(
@@ -9105,6 +9770,65 @@ export const relations__pricingBlock_v_pricing_cards = relations(
     }),
   }),
 )
+export const relations__pricingBlock_v_table_headers = relations(
+  _pricingBlock_v_table_headers,
+  ({ one }) => ({
+    _parentID: one(_pricingBlock_v, {
+      fields: [_pricingBlock_v_table_headers._parentID],
+      references: [_pricingBlock_v.id],
+      relationName: 'table_headers',
+    }),
+  }),
+)
+export const relations__pricingBlock_v_table_rows_cells = relations(
+  _pricingBlock_v_table_rows_cells,
+  ({ one }) => ({
+    _parentID: one(_pricingBlock_v_table_rows, {
+      fields: [_pricingBlock_v_table_rows_cells._parentID],
+      references: [_pricingBlock_v_table_rows.id],
+      relationName: 'cells',
+    }),
+  }),
+)
+export const relations__pricingBlock_v_table_rows_children_cells = relations(
+  _pricingBlock_v_table_rows_children_cells,
+  ({ one }) => ({
+    _parentID: one(_pricingBlock_v_table_rows_children, {
+      fields: [_pricingBlock_v_table_rows_children_cells._parentID],
+      references: [_pricingBlock_v_table_rows_children.id],
+      relationName: 'cells',
+    }),
+  }),
+)
+export const relations__pricingBlock_v_table_rows_children = relations(
+  _pricingBlock_v_table_rows_children,
+  ({ one, many }) => ({
+    _parentID: one(_pricingBlock_v_table_rows, {
+      fields: [_pricingBlock_v_table_rows_children._parentID],
+      references: [_pricingBlock_v_table_rows.id],
+      relationName: 'children',
+    }),
+    cells: many(_pricingBlock_v_table_rows_children_cells, {
+      relationName: 'cells',
+    }),
+  }),
+)
+export const relations__pricingBlock_v_table_rows = relations(
+  _pricingBlock_v_table_rows,
+  ({ one, many }) => ({
+    _parentID: one(_pricingBlock_v, {
+      fields: [_pricingBlock_v_table_rows._parentID],
+      references: [_pricingBlock_v.id],
+      relationName: 'table_rows',
+    }),
+    cells: many(_pricingBlock_v_table_rows_cells, {
+      relationName: 'cells',
+    }),
+    children: many(_pricingBlock_v_table_rows_children, {
+      relationName: 'children',
+    }),
+  }),
+)
 export const relations__pricingBlock_v_locales = relations(_pricingBlock_v_locales, ({ one }) => ({
   _parentID: one(_pricingBlock_v, {
     fields: [_pricingBlock_v_locales._parentID],
@@ -9126,6 +9850,12 @@ export const relations__pricingBlock_v = relations(_pricingBlock_v, ({ one, many
   }),
   pricingCards: many(_pricingBlock_v_pricing_cards, {
     relationName: 'pricingCards',
+  }),
+  table_headers: many(_pricingBlock_v_table_headers, {
+    relationName: 'table_headers',
+  }),
+  table_rows: many(_pricingBlock_v_table_rows, {
+    relationName: 'table_rows',
   }),
 }))
 export const relations__richTextBlock_v_block_header_links_locales = relations(
@@ -10966,11 +11696,13 @@ type DatabaseSchema = {
   enum_logosBlock_type: typeof enum_logosBlock_type
   enum_marketplaceBlock_initial_filters_sort: typeof enum_marketplaceBlock_initial_filters_sort
   enum_metricsBlock_stats_indicator: typeof enum_metricsBlock_stats_indicator
+  enum_metricsBlock_table_headers_width: typeof enum_metricsBlock_table_headers_width
   enum_metricsBlock_block_header_type: typeof enum_metricsBlock_block_header_type
   enum_metricsBlock_block_header_badge_type: typeof enum_metricsBlock_block_header_badge_type
   enum_metricsBlock_type: typeof enum_metricsBlock_type
   enum_pricingBlock_pricing_cards_type: typeof enum_pricingBlock_pricing_cards_type
   enum_pricingBlock_pricing_cards_badge_type: typeof enum_pricingBlock_pricing_cards_badge_type
+  enum_pricingBlock_table_headers_width: typeof enum_pricingBlock_table_headers_width
   enum_pricingBlock_block_header_type: typeof enum_pricingBlock_block_header_type
   enum_pricingBlock_block_header_badge_type: typeof enum_pricingBlock_block_header_badge_type
   enum_pricingBlock_type: typeof enum_pricingBlock_type
@@ -11010,11 +11742,13 @@ type DatabaseSchema = {
   enum__logosBlock_v_type: typeof enum__logosBlock_v_type
   enum__marketplaceBlock_v_initial_filters_sort: typeof enum__marketplaceBlock_v_initial_filters_sort
   enum__metricsBlock_v_stats_indicator: typeof enum__metricsBlock_v_stats_indicator
+  enum__metricsBlock_v_table_headers_width: typeof enum__metricsBlock_v_table_headers_width
   enum__metricsBlock_v_block_header_type: typeof enum__metricsBlock_v_block_header_type
   enum__metricsBlock_v_block_header_badge_type: typeof enum__metricsBlock_v_block_header_badge_type
   enum__metricsBlock_v_type: typeof enum__metricsBlock_v_type
   enum__pricingBlock_v_pricing_cards_type: typeof enum__pricingBlock_v_pricing_cards_type
   enum__pricingBlock_v_pricing_cards_badge_type: typeof enum__pricingBlock_v_pricing_cards_badge_type
+  enum__pricingBlock_v_table_headers_width: typeof enum__pricingBlock_v_table_headers_width
   enum__pricingBlock_v_block_header_type: typeof enum__pricingBlock_v_block_header_type
   enum__pricingBlock_v_block_header_badge_type: typeof enum__pricingBlock_v_block_header_badge_type
   enum__pricingBlock_v_type: typeof enum__pricingBlock_v_type
@@ -11102,6 +11836,11 @@ type DatabaseSchema = {
   metricsBlock_block_header_links_locales: typeof metricsBlock_block_header_links_locales
   metricsBlock_stats: typeof metricsBlock_stats
   metricsBlock_stats_locales: typeof metricsBlock_stats_locales
+  metricsBlock_table_headers: typeof metricsBlock_table_headers
+  metricsBlock_table_rows_cells: typeof metricsBlock_table_rows_cells
+  metricsBlock_table_rows_children_cells: typeof metricsBlock_table_rows_children_cells
+  metricsBlock_table_rows_children: typeof metricsBlock_table_rows_children
+  metricsBlock_table_rows: typeof metricsBlock_table_rows
   metricsBlock: typeof metricsBlock
   metricsBlock_locales: typeof metricsBlock_locales
   pricingBlock_block_header_links: typeof pricingBlock_block_header_links
@@ -11110,6 +11849,11 @@ type DatabaseSchema = {
   pricingBlock_pricing_cards_features_locales: typeof pricingBlock_pricing_cards_features_locales
   pricingBlock_pricing_cards: typeof pricingBlock_pricing_cards
   pricingBlock_pricing_cards_locales: typeof pricingBlock_pricing_cards_locales
+  pricingBlock_table_headers: typeof pricingBlock_table_headers
+  pricingBlock_table_rows_cells: typeof pricingBlock_table_rows_cells
+  pricingBlock_table_rows_children_cells: typeof pricingBlock_table_rows_children_cells
+  pricingBlock_table_rows_children: typeof pricingBlock_table_rows_children
+  pricingBlock_table_rows: typeof pricingBlock_table_rows
   pricingBlock: typeof pricingBlock
   pricingBlock_locales: typeof pricingBlock_locales
   richTextBlock_block_header_links: typeof richTextBlock_block_header_links
@@ -11169,6 +11913,11 @@ type DatabaseSchema = {
   _metricsBlock_v_block_header_links_locales: typeof _metricsBlock_v_block_header_links_locales
   _metricsBlock_v_stats: typeof _metricsBlock_v_stats
   _metricsBlock_v_stats_locales: typeof _metricsBlock_v_stats_locales
+  _metricsBlock_v_table_headers: typeof _metricsBlock_v_table_headers
+  _metricsBlock_v_table_rows_cells: typeof _metricsBlock_v_table_rows_cells
+  _metricsBlock_v_table_rows_children_cells: typeof _metricsBlock_v_table_rows_children_cells
+  _metricsBlock_v_table_rows_children: typeof _metricsBlock_v_table_rows_children
+  _metricsBlock_v_table_rows: typeof _metricsBlock_v_table_rows
   _metricsBlock_v: typeof _metricsBlock_v
   _metricsBlock_v_locales: typeof _metricsBlock_v_locales
   _pricingBlock_v_block_header_links: typeof _pricingBlock_v_block_header_links
@@ -11177,6 +11926,11 @@ type DatabaseSchema = {
   _pricingBlock_v_pricing_cards_features_locales: typeof _pricingBlock_v_pricing_cards_features_locales
   _pricingBlock_v_pricing_cards: typeof _pricingBlock_v_pricing_cards
   _pricingBlock_v_pricing_cards_locales: typeof _pricingBlock_v_pricing_cards_locales
+  _pricingBlock_v_table_headers: typeof _pricingBlock_v_table_headers
+  _pricingBlock_v_table_rows_cells: typeof _pricingBlock_v_table_rows_cells
+  _pricingBlock_v_table_rows_children_cells: typeof _pricingBlock_v_table_rows_children_cells
+  _pricingBlock_v_table_rows_children: typeof _pricingBlock_v_table_rows_children
+  _pricingBlock_v_table_rows: typeof _pricingBlock_v_table_rows
   _pricingBlock_v: typeof _pricingBlock_v
   _pricingBlock_v_locales: typeof _pricingBlock_v_locales
   _richTextBlock_v_block_header_links: typeof _richTextBlock_v_block_header_links
@@ -11344,6 +12098,11 @@ type DatabaseSchema = {
   relations_metricsBlock_block_header_links: typeof relations_metricsBlock_block_header_links
   relations_metricsBlock_stats_locales: typeof relations_metricsBlock_stats_locales
   relations_metricsBlock_stats: typeof relations_metricsBlock_stats
+  relations_metricsBlock_table_headers: typeof relations_metricsBlock_table_headers
+  relations_metricsBlock_table_rows_cells: typeof relations_metricsBlock_table_rows_cells
+  relations_metricsBlock_table_rows_children_cells: typeof relations_metricsBlock_table_rows_children_cells
+  relations_metricsBlock_table_rows_children: typeof relations_metricsBlock_table_rows_children
+  relations_metricsBlock_table_rows: typeof relations_metricsBlock_table_rows
   relations_metricsBlock_locales: typeof relations_metricsBlock_locales
   relations_metricsBlock: typeof relations_metricsBlock
   relations_pricingBlock_block_header_links_locales: typeof relations_pricingBlock_block_header_links_locales
@@ -11352,6 +12111,11 @@ type DatabaseSchema = {
   relations_pricingBlock_pricing_cards_features: typeof relations_pricingBlock_pricing_cards_features
   relations_pricingBlock_pricing_cards_locales: typeof relations_pricingBlock_pricing_cards_locales
   relations_pricingBlock_pricing_cards: typeof relations_pricingBlock_pricing_cards
+  relations_pricingBlock_table_headers: typeof relations_pricingBlock_table_headers
+  relations_pricingBlock_table_rows_cells: typeof relations_pricingBlock_table_rows_cells
+  relations_pricingBlock_table_rows_children_cells: typeof relations_pricingBlock_table_rows_children_cells
+  relations_pricingBlock_table_rows_children: typeof relations_pricingBlock_table_rows_children
+  relations_pricingBlock_table_rows: typeof relations_pricingBlock_table_rows
   relations_pricingBlock_locales: typeof relations_pricingBlock_locales
   relations_pricingBlock: typeof relations_pricingBlock
   relations_richTextBlock_block_header_links_locales: typeof relations_richTextBlock_block_header_links_locales
@@ -11411,6 +12175,11 @@ type DatabaseSchema = {
   relations__metricsBlock_v_block_header_links: typeof relations__metricsBlock_v_block_header_links
   relations__metricsBlock_v_stats_locales: typeof relations__metricsBlock_v_stats_locales
   relations__metricsBlock_v_stats: typeof relations__metricsBlock_v_stats
+  relations__metricsBlock_v_table_headers: typeof relations__metricsBlock_v_table_headers
+  relations__metricsBlock_v_table_rows_cells: typeof relations__metricsBlock_v_table_rows_cells
+  relations__metricsBlock_v_table_rows_children_cells: typeof relations__metricsBlock_v_table_rows_children_cells
+  relations__metricsBlock_v_table_rows_children: typeof relations__metricsBlock_v_table_rows_children
+  relations__metricsBlock_v_table_rows: typeof relations__metricsBlock_v_table_rows
   relations__metricsBlock_v_locales: typeof relations__metricsBlock_v_locales
   relations__metricsBlock_v: typeof relations__metricsBlock_v
   relations__pricingBlock_v_block_header_links_locales: typeof relations__pricingBlock_v_block_header_links_locales
@@ -11419,6 +12188,11 @@ type DatabaseSchema = {
   relations__pricingBlock_v_pricing_cards_features: typeof relations__pricingBlock_v_pricing_cards_features
   relations__pricingBlock_v_pricing_cards_locales: typeof relations__pricingBlock_v_pricing_cards_locales
   relations__pricingBlock_v_pricing_cards: typeof relations__pricingBlock_v_pricing_cards
+  relations__pricingBlock_v_table_headers: typeof relations__pricingBlock_v_table_headers
+  relations__pricingBlock_v_table_rows_cells: typeof relations__pricingBlock_v_table_rows_cells
+  relations__pricingBlock_v_table_rows_children_cells: typeof relations__pricingBlock_v_table_rows_children_cells
+  relations__pricingBlock_v_table_rows_children: typeof relations__pricingBlock_v_table_rows_children
+  relations__pricingBlock_v_table_rows: typeof relations__pricingBlock_v_table_rows
   relations__pricingBlock_v_locales: typeof relations__pricingBlock_v_locales
   relations__pricingBlock_v: typeof relations__pricingBlock_v
   relations__richTextBlock_v_block_header_links_locales: typeof relations__richTextBlock_v_block_header_links_locales
