@@ -1,4 +1,6 @@
+import { iconPickerField } from '@/fields/iconPickerField'
 import type { Block } from 'payload'
+import materialIcons from '@/fields/iconPickerField/material-symbols-icons.json'
 
 export const StyledList: Block = {
   slug: 'styledListBlock',
@@ -15,20 +17,16 @@ export const StyledList: Block = {
       defaultValue: 'bullet',
       options: [
         {
-          label: 'Bullet Points',
+          label: 'Bullets',
           value: 'bullet',
         },
         {
-          label: 'Checkmarks',
-          value: 'check',
-        },
-        {
-          label: 'Numbered List',
+          label: 'Numbers',
           value: 'numbered',
         },
         {
-          label: 'Feature List',
-          value: 'feature',
+          label: 'Icons',
+          value: 'icons',
         },
       ],
     },
@@ -42,7 +40,18 @@ export const StyledList: Block = {
           name: 'text',
           type: 'text',
           required: true,
+          localized: true,
         },
+        iconPickerField({
+          name: 'icon',
+          label: 'Icon',
+          icons: materialIcons,
+          admin: {
+            condition: (data, siblingData, { blockData }) => blockData.listStyle === 'icons',
+            description:
+              'Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons',
+          },
+        }),
       ],
     },
   ],

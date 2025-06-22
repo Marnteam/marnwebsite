@@ -1,6 +1,6 @@
 import React from 'react'
 
-import type { CallToActionBlock as CTABlockProps } from '@/payload-types'
+import type { CallToActionBlock } from '@/payload-types'
 import type { CMSLinkType } from '@/components/Link'
 
 import RichText from '@/components/RichText'
@@ -8,19 +8,25 @@ import { CMSLink } from '@/components/Link'
 
 import * as motion from 'motion/react-client'
 import { containerVariants } from '@/utilities/motion'
+import { cn } from '@/utilities/ui'
 
-export const CallToAction04: React.FC<CTABlockProps> = ({
+type CallToActionProps = CallToActionBlock & {
+  className?: string
+}
+
+export const CallToAction04: React.FC<CallToActionProps> = ({
   badge,
   richText,
   links,
   caption,
   list,
   media,
+  className,
 }) => {
   const { desktop, mobile } = media || {}
 
   return (
-    <div className="py-xl container">
+    <div className={cn('py-xl container', className)}>
       <motion.div
         variants={containerVariants}
         initial="hidden"

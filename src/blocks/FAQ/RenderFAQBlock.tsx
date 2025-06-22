@@ -11,12 +11,13 @@ const FAQBlocks = {
   '02': FAQBlock02,
 }
 
-type FeaturedAppsBlockWithLocale = FeaturedAppsBlock & {
+type FaqBlockProps = FaqBlock & {
   locale: TypedLocale
+  className?: string
 }
 
-export const RenderFAQBlock: React.FC<FaqBlock> = async (props) => {
-  const { type, blockHeader, faqs } = props || {}
+export const RenderFAQBlock: React.FC<FaqBlockProps> = async (props) => {
+  const { type, blockHeader, faqs, className } = props || {}
 
   if (!type) return null
 

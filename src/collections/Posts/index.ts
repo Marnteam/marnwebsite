@@ -27,6 +27,9 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { slugField } from '@/fields/slug'
+import { CallToActionBlock } from '@/blocks/CallToAction/config'
+import { FaqBlock } from '@/blocks/FAQ/config'
+import { GalleryBlock } from '@/blocks/Gallery/config'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
@@ -98,7 +101,16 @@ export const Posts: CollectionConfig<'posts'> = {
                   return [
                     ...defaultFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock, StyledList] }),
+                    BlocksFeature({
+                      blocks: [
+                        Banner,
+                        CallToActionBlock,
+                        FaqBlock,
+                        GalleryBlock,
+                        MediaBlock,
+                        StyledList,
+                      ],
+                    }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),

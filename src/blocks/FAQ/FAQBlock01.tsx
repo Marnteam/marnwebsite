@@ -10,17 +10,22 @@ import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import { Faq, FaqBlock } from '@/payload-types'
-import { getPayload } from 'payload'
+import { getPayload, TypedLocale } from 'payload'
 import configPromise from '@payload-config'
 import { Icon } from '@iconify-icon/react'
 import { PlusIcon } from 'lucide-react'
 
-export const FAQBlock01: React.FC<FaqBlock> = async (props) => {
-  const { faqs } = props
+type FaqBlockProps = FaqBlock & {
+  locale: TypedLocale
+  className?: string
+}
+
+export const FAQBlock01: React.FC<FaqBlockProps> = async (props) => {
+  const { faqs, className } = props
 
   return (
     <div className="bg-background">
-      <div className="container">
+      <div className={cn('container', className)}>
         {faqs && (
           <div className="mx-auto grid w-full grid-cols-1">
             <Accordion type="single" collapsible className="space-y-2">

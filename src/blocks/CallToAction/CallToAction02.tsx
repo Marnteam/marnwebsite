@@ -4,16 +4,25 @@ import { motion } from 'motion/react'
 import { containerVariants, itemsFling } from '@/utilities/motion'
 import { cn } from '@/utilities/ui'
 
-import type { CallToActionBlock as CTABlockProps } from '@/payload-types'
+import type { CallToActionBlock } from '@/payload-types'
 import type { CMSLinkType } from '@/components/Link'
 
 import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'
 import { Icon } from '@iconify-icon/react'
 
-export const CallToAction02: React.FC<CTABlockProps> = ({ links, richText, list }) => {
+type CallToActionProps = CallToActionBlock & {
+  className?: string
+}
+
+export const CallToAction02: React.FC<CallToActionProps> = ({
+  links,
+  richText,
+  list,
+  className,
+}) => {
   return (
-    <div className="py-xl container">
+    <div className={cn('py-xl container', className)}>
       <motion.div
         className={cn(
           'bg-background-neutral gap-xl px-xl rounded-space-sm flex flex-col items-center py-[calc(var(--spacing-xl)*2)]',

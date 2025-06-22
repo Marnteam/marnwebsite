@@ -4,7 +4,10 @@
   },
   "Blog": {
     "author": "المؤلف",
-    "publishedAt": "نشر في"
+    "publishedAt": "نشر في",
+    "inThisArticle": "في هذه المقالة",
+    "readTime": "{minutes} دقائق قراءة",
+    "readTimeMinute": "دقيقة واحدة قراءة"
   },
   "TestimonialsBlock": {
     "readMore": "إقرأ القصة"

@@ -13,12 +13,12 @@ import { Card, CardContent } from '@/components/ui/card'
 import { cn } from '@/utilities/ui'
 import { InfiniteSlider } from '@/components/motion-ui/infinite-slider'
 
-interface Gallery01Props {
+interface Gallery03Props {
   images: MediaType[]
   className?: string
 }
 
-export const Gallery03: React.FC<Gallery01Props> = ({ images, className }) => {
+export const Gallery03: React.FC<Gallery03Props> = ({ images, className }) => {
   if (!images || images.length === 0) {
     return null
   }

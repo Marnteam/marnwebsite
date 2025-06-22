@@ -1,7 +1,10 @@
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToAction01 } from '@/blocks/CallToAction/CallToAction01'
+import { RenderCallToActionBlock } from '@/blocks/CallToAction/RenderCallToActionBlock'
+import { RenderFAQBlock } from '@/blocks/FAQ/RenderFAQBlock'
+import { RenderGalleryBlock } from '@/blocks/Gallery/RenderGalleryBlock'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
-import { StyledListBlock, StyledListBlockProps } from '@/blocks/StyledList/Component'
+import { StyledListBlock } from '@/blocks/StyledList/Component'
 import { formatSlug } from '@/fields/slug/formatSlug'
 import type {
   BannerBlock as BannerBlockProps,
@@ -21,7 +24,7 @@ import React from 'react'
 
 type NodeTypes =
   | DefaultNodeTypes
-  | SerializedBlockNode<CTABlockProps | MediaBlockProps | BannerBlockProps | StyledListBlockProps>
+  | SerializedBlockNode<CTABlockProps | MediaBlockProps | BannerBlockProps>
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   const { value, relationTo } = linkNode.fields.doc!
@@ -40,7 +43,17 @@ export const blogConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConver
     const slug = formatSlug(text)
 
     // Create the heading element dynamically based on the tag
-    return React.createElement(headingNode.tag, { id: slug }, text)
+    return React.createElement(
+      headingNode.tag,
+      {
+        id: slug,
+        style: {
+          borderBottom: headingNode.tag === 'h2' ? '1px solid var(--border)' : 'none',
+          paddingBottom: headingNode.tag === 'h2' ? 'calc(var(--spacing) * 2)' : '0',
+        },
+      },
+      text,
+    )
   },
   ...LinkJSXConverter({ internalDocToHref }),
   blocks: {
@@ -55,9 +68,13 @@ export const blogConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConver
         disableInnerContainer={true}
       />
     ),
+    galleryBlock: ({ node }) => <RenderGalleryBlock {...node.fields} className="p-0 !py-0" />,
+    faqBlock: ({ node }) => <RenderFAQBlock {...node.fields} type="01" className="p-0" />,
     // code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
-    cta: ({ node }) => <CallToAction01 {...node.fields} />,
-    styledList: ({ node }) => <StyledListBlock className="col-start-2" {...node.fields} />,
+    callToActionBlock: ({ node }) => (
+      <RenderCallToActionBlock {...node.fields} className="p-0 !py-0" />
+    ),
+    styledListBlock: ({ node }) => <StyledListBlock {...node.fields} />,
   },
 })
 

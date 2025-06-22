@@ -2461,9 +2461,13 @@ export interface MediaBlock {
  * via the `definition` "StyledListBlock".
  */
 export interface StyledListBlock {
-  listStyle?: ('bullet' | 'check' | 'numbered' | 'feature') | null;
+  listStyle?: ('bullet' | 'numbered' | 'icons') | null;
   items: {
     text: string;
+    /**
+     * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
+     */
+    icon?: string | null;
     id?: string | null;
   }[];
   id?: string | null;
@@ -3987,17 +3991,6 @@ export interface BannerBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'banner';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CodeBlock".
- */
-export interface CodeBlock {
-  language?: ('typescript' | 'javascript' | 'css') | null;
-  code: string;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'code';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -13,6 +13,7 @@ import { CallToAction07 } from './CallToAction07'
 type CallToActionBlockWithLocale = CallToActionBlock & {
   locale?: string
   readMoreLabel?: string
+  className?: string
 }
 
 const variants: Record<string, React.FC<CallToActionBlockWithLocale>> = {

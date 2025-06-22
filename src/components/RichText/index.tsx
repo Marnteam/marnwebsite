@@ -25,6 +25,9 @@ import { cn } from '@/utilities/ui'
 import { CallToAction01 } from '@/blocks/CallToAction/CallToAction01'
 import { formatSlug } from '@/fields/slug/formatSlug'
 import { createElement } from 'react'
+import { GalleryBlock } from '@/blocks/Gallery/config'
+import { RenderGalleryBlock } from '@/blocks/Gallery/RenderGalleryBlock'
+import { RenderFAQBlock } from '@/blocks/FAQ/RenderFAQBlock'
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -61,27 +64,10 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     const headingNode = node as SerializedHeadingNode
     const text = extractTextFromHeading(headingNode)
     const slug = formatSlug(text)
-
     // Create the heading element dynamically based on the tag
     return createElement(headingNode.tag, { id: slug }, text)
   },
   ...LinkJSXConverter({ internalDocToHref }),
-  blocks: {
-    banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
-    mediaBlock: ({ node }) => (
-      <MediaBlock
-        className="col-span-3 col-start-1"
-        imgClassName="m-0"
-        {...node.fields}
-        captionClassName="mx-auto max-w-[48rem]"
-        enableGutter={false}
-        disableInnerContainer={true}
-      />
-    ),
-    // code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
-    cta: ({ node }) => <CallToAction01 {...node.fields} />,
-    styledList: ({ node }) => <StyledListBlock className="col-start-2" {...node.fields} />,
-  },
 })
 
 type Props = {
@@ -95,7 +81,7 @@ export default function RichText(props: Props) {
   const {
     className,
     converters = jsxConverters,
-    enableProse = true,
+    enableProse = false,
     enableGutter = true,
     ...rest
   } = props

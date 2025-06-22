@@ -10,6 +10,7 @@ import { TypedLocale } from 'payload'
 
 type GalleryBlockType = GalleryBlock & {
   locale: TypedLocale
+  className?: string
 }
 
 const blockComponents = {
@@ -20,7 +21,7 @@ const blockComponents = {
 }
 
 export const RenderGalleryBlock: React.FC<GalleryBlockType> = async (props) => {
-  const { type, blockHeader, images, interactiveGallery, locale } = props // blockHeader is available but not used for rendering yet
+  const { type, blockHeader, images, interactiveGallery, locale, className } = props
 
   // Ensure images exist and are an array before proceeding
   if (!images || !Array.isArray(images) || images.length === 0) {
@@ -45,7 +46,12 @@ export const RenderGalleryBlock: React.FC<GalleryBlockType> = async (props) => {
     <Fragment>
       {/* {blockHeader && <RenderBlockHeader blockHeader={blockHeader} />} // Commented out until BlockHeader is available */}
       {/* Pass only the images array to the specific variant component */}
-      <BlockComponent images={images} interactiveGallery={interactiveGallery} locale={locale} />
+      <BlockComponent
+        images={images}
+        interactiveGallery={interactiveGallery}
+        locale={locale}
+        className={className}
+      />
     </Fragment>
   )
 }

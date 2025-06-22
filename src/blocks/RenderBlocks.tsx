@@ -19,6 +19,7 @@ import { RenderRichTextBlock } from './RichText/RenderRichTextBlock'
 import { RenderMetricsBlock } from './Metrics/RenderMetricsBlock'
 import { RenderPricingBlock } from './Pricing/RenderPricingBlock'
 import { SearchableIntegrationsGrid } from '@/blocks/Marketplace/SearchableGrid'
+import { StyledListBlock } from './StyledList/Component'
 
 const blockComponents = {
   archiveBlock: ArchiveBlock,
@@ -67,7 +68,9 @@ export const RenderBlocks: React.FC<{
             {blockHeader &&
               !(block?.blockType === 'featuresBlock' && ['06', '07', '17'].includes(block.type)) &&
               !(block.blockType === 'featuredAppsBlock' && block.type === '01') &&
-              !(block.blockType === 'faqBlock' && block.type === '02') && <BlockHeader {...blockHeader} className="" />}
+              !(block.blockType === 'faqBlock' && block.type === '02') && (
+                <BlockHeader {...blockHeader} className="" />
+              )}
             <Block {...(block as any)} locale={locale} />
           </div>
         )

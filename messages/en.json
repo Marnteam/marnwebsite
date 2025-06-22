@@ -1,10 +1,13 @@
 {
-  "HomePage": {
-    "title": "Hello world!",
-    "about": "Go to the about page"
-  },
   "General": {
     "readMore": "Learn more"
+  },
+  "Blog": {
+    "author": "Author",
+    "publishedAt": "Published at",
+    "inThisArticle": "In this article",
+    "readTime": "{minutes} min read",
+    "readTimeMinute": "1 min read"
   },
   "TestimonialsBlock": {
     "readMore": "Read story"

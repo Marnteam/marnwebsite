@@ -12,12 +12,12 @@ import {
 import { Card, CardContent } from '@/components/ui/card'
 import { cn } from '@/utilities/ui'
 
-interface Gallery01Props {
+interface Gallery02Props {
   images: MediaType[]
   className?: string
 }
 
-export const Gallery02: React.FC<Gallery01Props> = ({ images, className }) => {
+export const Gallery02: React.FC<Gallery02Props> = ({ images, className }) => {
   if (!images || images.length === 0) {
     return null
   }

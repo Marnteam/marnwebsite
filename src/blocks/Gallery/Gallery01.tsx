@@ -31,7 +31,9 @@ export const Gallery01: React.FC<Gallery01Props> = ({ images, className }) => {
               {typeof image === 'object' && image !== null && (
                 <Media
                   resource={image}
-                  className="rounded-space-sm bg-background-neutral-subtle h-full w-full overflow-clip object-cover"
+                  //image class name w-full important to make image take full width in blog post layout
+                  imgClassName="w-full"
+                  className="rounded-space-sm bg-background-neutral-subtle h-full w-full overflow-clip"
                 />
               )}
             </CarouselItem>

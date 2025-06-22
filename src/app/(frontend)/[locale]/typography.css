@@ -4,12 +4,12 @@
   --prose-strong-color: theme(--color-base-primary);
   --prose-link-color: theme(--color-base-primary);
   --prose-code-color: theme(--color-base-secondary);
-  --prose-marker-color: var(--color-base-tertiary);
-  --prose-link-underline-color: var(--color-sky-400);
-  --prose-th-borders: var(--color-gray-300);
-  --prose-td-borders: var(--color-gray-200);
-  --prose-hr-color: color-mix(in oklab, var(--color-gray-950) 5%, transparent);
-  --prose-blockquote-border-color: var(--color-gray-300);
+  --prose-marker-color: var(--color-base-secondary);
+  --prose-link-underline-color: var(--color-base-tertiary);
+  --prose-th-borders: var(--color-neutral-300);
+  --prose-td-borders: var(--color-neutral-200);
+  --prose-hr-color: color-mix(in oklab, var(--color-neutral-950) 5%, transparent);
+  --prose-blockquote-border-color: var(--color-neutral-300);
 
   color: var(--prose-color);
   font-size: var(--text-body-md);
@@ -45,8 +45,8 @@
     color: var(--prose-heading-color);
     font-weight: var(--font-weight-medium);
     margin-top: calc(var(--spacing) * 20);
-    border-bottom: 1px solid var(--color-gray-200);
-    padding-bottom: calc(var(--spacing) * 2);
+    /* border-bottom: 1px solid var(--color-gray-200);
+    padding-bottom: calc(var(--spacing) * 2); */
   }
 
   h2:has(+ h3):where(:not(.not-prose, .not-prose *)) {
@@ -88,10 +88,11 @@
   }
 
   :is(h2, h3, h4):where(:not(.not-prose, .not-prose *)) {
-    scroll-margin-top: calc(var(--spacing) * 32);
+    /* scroll-margin-top: calc(var(--spacing) * 32);
     @variant lg {
       scroll-margin-top: calc(var(--spacing) * 18);
-    }
+    } */
+    scroll-margin-top: var(--header-plus-admin-bar-height);
   }
 
   ul:where(:not(.not-prose, .not-prose *)) {

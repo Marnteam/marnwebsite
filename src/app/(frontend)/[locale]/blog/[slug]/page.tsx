@@ -16,6 +16,7 @@ import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import HeadingLinks from '@/components/RichText/HeadingLinks'
 import { blogConverters } from '@/components/RichText/blogConverters'
+import { BlogSidebar } from '@/components/BlogSidebar'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -75,18 +76,15 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       <div className="mx-auto flex w-full max-w-[96rem] gap-4 pt-8">
         <div className="mx-space-site relative flex w-full items-center justify-center will-change-transform">
-          <div className="mx-space-site z-2 flex w-full max-w-7xl flex-col-reverse gap-4 *:py-(--text-h1) lg:flex-row lg:items-start">
+          <div className="mx-space-site gap-space-md z-2 flex w-full max-w-7xl flex-col-reverse *:py-(--text-h1) lg:flex-row lg:items-start">
             <RichText
               className="mx-0 max-w-4xl"
               data={post.content}
               enableProse
               enableGutter={false}
+              converters={blogConverters}
             />
-            <HeadingLinks
-              className="top-(--header-height) ms-0 lg:sticky"
-              data={post.content}
-              enableGutter={false}
-            />
+            <BlogSidebar post={post} />
           </div>
         </div>
         {post.relatedPosts && post.relatedPosts.length > 0 && (

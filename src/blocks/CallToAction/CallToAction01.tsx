@@ -2,7 +2,7 @@
 import React, { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'motion/react'
 
-import type { CallToActionBlock as CTABlockProps } from '@/payload-types'
+import type { CallToActionBlock } from '@/payload-types'
 import type { CMSLinkType } from '@/components/Link'
 
 import RichText from '@/components/RichText'
@@ -10,13 +10,18 @@ import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/MediaResponsive'
 import { cn } from '@/utilities/ui'
 
-export const CallToAction01: React.FC<CTABlockProps> = ({
+type CallToActionProps = CallToActionBlock & {
+  className?: string
+}
+
+export const CallToAction01: React.FC<CallToActionProps> = ({
   badge,
   richText,
   links,
   caption,
   list,
   media,
+  className,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
   // Parallax: as the container scrolls into view, move the image up slightly
@@ -29,11 +34,11 @@ export const CallToAction01: React.FC<CTABlockProps> = ({
   const { desktop, mobile } = media || {}
 
   return (
-    <div className="py-xl container" ref={containerRef}>
+    <div className={cn('py-xl container', className)} ref={containerRef}>
       <div className="rounded-space-sm relative overflow-hidden">
         <div
           data-theme="dark"
-          className="rounded-space-sm p-md gap-sm relative z-1 flex aspect-[9/16] h-auto w-full flex-col items-start justify-end bg-transparent md:aspect-video md:flex-row md:items-end md:justify-between"
+          className="rounded-space-sm p-md gap-sm relative z-1 flex aspect-[9/16] h-auto w-full flex-col items-start justify-end overflow-hidden bg-transparent md:aspect-video md:flex-row md:items-end md:justify-between"
         >
           {richText && (
             <RichText className="mx-0 lg:max-w-[32rem]" data={richText} enableGutter={false} />

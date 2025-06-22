@@ -1,7 +1,6 @@
 'use client'
 import React, { useRef } from 'react'
-
-import type { CallToActionBlock as CTABlockProps } from '@/payload-types'
+import type { CallToActionBlock } from '@/payload-types'
 import type { CMSLinkType } from '@/components/Link'
 
 import RichText from '@/components/RichText'
@@ -9,14 +8,20 @@ import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/MediaResponsive'
 import { motion, useScroll } from 'motion/react'
 import { useTransform } from 'motion/react'
+import { cn } from '@/utilities/ui'
 
-export const CallToAction05: React.FC<CTABlockProps> = ({
+type CallToActionProps = CallToActionBlock & {
+  className?: string
+}
+
+export const CallToAction05: React.FC<CallToActionProps> = ({
   badge,
   richText,
   links,
   caption,
   list,
   media,
+  className,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
   // Parallax: as the container scrolls into view, move the image up slightly
@@ -30,7 +35,12 @@ export const CallToAction05: React.FC<CTABlockProps> = ({
 
   return (
     <div data-theme="dark" className="py-xl bg-background-neutral" ref={containerRef}>
-      <div className="px-md py-xl gap-md rounded-space-sm container flex flex-col items-center md:flex-row md:items-center md:justify-between">
+      <div
+        className={cn(
+          'px-md py-xl gap-md rounded-space-sm container flex flex-col items-center md:flex-row md:items-center md:justify-between',
+          className,
+        )}
+      >
         <motion.div
           style={{ y }}
           className="gap-sm mx-auto flex flex-col items-start max-md:w-full"
