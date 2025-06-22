@@ -13,12 +13,13 @@ import {
 } from '@payloadcms/richtext-lexical/react'
 
 // import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
-import { StyledListBlock, StyledListBlockProps } from '@/blocks/StyledList/Component'
+import { StyledListBlock } from '@/blocks/StyledList/Component'
 
 import type {
   BannerBlock as BannerBlockProps,
   CallToActionBlock as CTABlockProps,
   MediaBlock as MediaBlockProps,
+  StyledListBlock as StyledListBlockProps,
 } from '@/payload-types'
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { cn } from '@/utilities/ui'
