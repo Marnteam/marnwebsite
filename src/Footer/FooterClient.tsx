@@ -176,7 +176,7 @@ export function FooterClient({ columns, currentYear }: Props) {
   }, [])
 
   return (
-    <div className="bg-background-neutral-subtle pt-md">
+    <div className="bg-background pt-md">
       <div className="container">
         <div className="relative">
           <motion.footer

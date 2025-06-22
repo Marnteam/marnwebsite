@@ -11,11 +11,9 @@ const buttonVariants = cva(
       variant: {
         default: 'bg-brand text-base-primary hover:bg-brand/90',
         primary: 'bg-brand text-base-primary hover:bg-brand/90',
-        secondary:
-          'border-input bg-background hover:bg-accent hover:text-accent-foreground border',
+        secondary: 'border-input bg-background hover:bg-accent hover:text-accent-foreground border',
         tertiary: '',
-        destructive:
-          'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+        destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         ghost: 'bg-transparent',
         link: 'text-base-secondary hover:text-base-secondary/90 p-0',
       },
@@ -41,8 +39,7 @@ const buttonVariants = cva(
       {
         color: 'brand',
         variant: 'secondary',
-        className:
-          'hover:bg-background-neutral text-base-secondary border-input bg-transparent',
+        className: 'hover:bg-background-neutral text-base-secondary border-input bg-transparent',
       },
       {
         color: 'brand',
@@ -68,7 +65,7 @@ const buttonVariants = cva(
         color: 'neutral',
         variant: 'secondary',
         className:
-          'hover:bg-background-neutral text-base-secondary border-input bg-transparent',
+          'hover:bg-background-neutral hover:border-neutral/20 text-base-secondary border-input bg-transparent',
       },
       {
         color: 'neutral',
@@ -102,10 +99,7 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    { className, variant, size, color, asChild = false, ...props },
-    ref,
-  ) => {
+  ({ className, variant, size, color, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button'
     return (
       <Comp

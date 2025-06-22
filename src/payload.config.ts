@@ -167,7 +167,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
     idType: 'uuid',
-    push: false, // disable push mode
+    // push: false, // disable push mode
   }),
   editor: defaultLexical,
   email: resendAdapter({
@@ -222,8 +222,8 @@ export default buildConfig({
         region: process.env.S3_REGION,
         endpoint: process.env.S3_ENDPOINT,
       },
-      // enabled: true,
-      enabled: process.env.NODE_ENV === 'production', // Use in production only
+      enabled: true,
+      // enabled: process.env.NODE_ENV === 'production', // Use in production only
     }),
   ],
   secret: process.env.PAYLOAD_SECRET,

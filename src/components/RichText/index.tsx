@@ -2,6 +2,7 @@ import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import {
   DefaultNodeTypes,
   SerializedBlockNode,
+  SerializedHeadingNode,
   SerializedLinkNode,
 } from '@payloadcms/richtext-lexical'
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
@@ -22,6 +23,8 @@ import type {
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { cn } from '@/utilities/ui'
 import { CallToAction01 } from '@/blocks/CallToAction/CallToAction01'
+import { formatSlug } from '@/fields/slug/formatSlug'
+import { createElement } from 'react'
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -33,11 +36,35 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
     throw new Error('Expected value to be an object')
   }
   const slug = value.slug
-  return relationTo === 'posts' ? `/posts/${slug}` : `/${slug}`
+  return relationTo === 'posts' ? `/blog/${slug}` : `/${slug}`
+}
+
+// Helper function to extract text content from heading node
+const extractTextFromHeading = (node: SerializedHeadingNode): string => {
+  if (!node.children) return ''
+
+  return node.children
+    .map((child: any) => {
+      if (child.type === 'text') {
+        return child.text || ''
+      }
+      // Handle nested elements if needed
+      return ''
+    })
+    .join('')
 }
 
 const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
+  ...LinkJSXConverter({ internalDocToHref }),
+  heading: ({ node }) => {
+    const headingNode = node as SerializedHeadingNode
+    const text = extractTextFromHeading(headingNode)
+    const slug = formatSlug(text)
+
+    // Create the heading element dynamically based on the tag
+    return createElement(headingNode.tag, { id: slug }, text)
+  },
   ...LinkJSXConverter({ internalDocToHref }),
   blocks: {
     banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
@@ -59,15 +86,22 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
 
 type Props = {
   data: SerializedEditorState
+  converters?: JSXConvertersFunction<NodeTypes>
   enableGutter?: boolean
   enableProse?: boolean
 } & React.HTMLAttributes<HTMLDivElement>
 
 export default function RichText(props: Props) {
-  const { className, enableProse = true, enableGutter = true, ...rest } = props
+  const {
+    className,
+    converters = jsxConverters,
+    enableProse = true,
+    enableGutter = true,
+    ...rest
+  } = props
   return (
     <RichTextWithoutBlocks
-      converters={jsxConverters}
+      converters={converters}
       className={cn(
         {
           'container px-0': enableGutter,

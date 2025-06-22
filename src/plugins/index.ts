@@ -14,8 +14,9 @@ import { beforeSyncWithSearch } from '@/search/beforeSync'
 import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 
-const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
-  return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
+const generateTitle: GenerateTitle<Post | Page> = ({ doc, locale }) => {
+  console.log(locale)
+  return doc?.title ? `${doc.title} | ${locale === 'ar' ? 'منظومة مرن' : 'Marn POS'}` : 'Marn POS'
 }
 
 const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
