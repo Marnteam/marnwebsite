@@ -30,6 +30,7 @@ import { image3 } from './image-3'
 import { seedChangelog } from './changelog'
 
 import { seedFAQs } from './faq'
+import { seedBlogPosts } from './blog-posts'
 
 const collections: CollectionSlug[] = [
   'pages',
@@ -43,6 +44,9 @@ const collections: CollectionSlug[] = [
   // 'logos',
   'media',
   'solutions',
+  'forms',
+  'form-submissions',
+  'search',
 ]
 const globals: GlobalSlug[] = ['header', 'footer']
 
@@ -118,12 +122,22 @@ export const seed = async ({
     },
   })
 
+  const demoAuthor = await payload.create({
+    collection: 'users',
+    data: {
+      name: 'Demo Author',
+      email: 'dev@marn.com',
+      password: '123456',
+    },
+    req,
+  })
+
   payload.logger.info('— Seeding categories...')
 
   //Parent Categories
   const parentCategoriesData = [
     { collection: 'categories', data: { title: 'Ecosystems', slug: 'ecosystems' } },
-    { collection: 'categories', data: { title: 'Integrations', slug: 'integrations' } },
+    { collection: 'categories', data: { title: 'Marketplace', slug: 'marketplace' } },
     { collection: 'categories', data: { title: 'Media', slug: 'media' } },
     { collection: 'categories', data: { title: 'Blog', slug: 'blog' } },
     { collection: 'categories', data: { title: 'Other', slug: 'other' } },
@@ -142,7 +156,7 @@ export const seed = async ({
     collection: 'categories',
     where: {
       slug: {
-        in: ['ecosystems', 'integrations', 'media', 'blog', 'other'],
+        in: ['ecosystems', 'marketplace', 'media', 'blog', 'other'],
       },
     },
   })
@@ -155,7 +169,7 @@ export const seed = async ({
   )
 
   const ecosystems = parentCategoriesMap['ecosystems']
-  const integrations = parentCategoriesMap['integrations']
+  const marketplace = parentCategoriesMap['marketplace']
   const media = parentCategoriesMap['media']
   const blog = parentCategoriesMap['blog']
   const other = parentCategoriesMap['other']
@@ -372,14 +386,14 @@ export const seed = async ({
         breadcrumbs: [
           {
             label: 'Payment Gateways',
-            url: '/integrations/payment-gateways',
+            url: '/marketplace/payment-gateways',
           },
           {
-            label: 'Integrations',
-            url: '/integrations',
+            label: 'Marketplace',
+            url: '/marketplace',
           },
         ],
-        parent: integrations.id,
+        parent: marketplace.id,
       },
     },
     {
@@ -390,14 +404,14 @@ export const seed = async ({
         breadcrumbs: [
           {
             label: 'Delivery Platforms',
-            url: '/integrations/delivery-platforms',
+            url: '/marketplace/delivery-platforms',
           },
           {
-            label: 'Integrations',
-            url: '/integrations',
+            label: 'Marketplace',
+            url: '/marketplace',
           },
         ],
-        parent: integrations.id,
+        parent: marketplace.id,
       },
     },
     {
@@ -408,14 +422,14 @@ export const seed = async ({
         breadcrumbs: [
           {
             label: 'Accounting Software',
-            url: '/integrations/accounting-software',
+            url: '/marketplace/accounting-software',
           },
           {
-            label: 'Integrations',
-            url: '/integrations',
+            label: 'Marketplace',
+            url: '/marketplace',
           },
         ],
-        parent: integrations.id,
+        parent: marketplace.id,
       },
     },
     {
@@ -426,14 +440,14 @@ export const seed = async ({
         breadcrumbs: [
           {
             label: 'Inventory Management',
-            url: '/integrations/inventory-management',
+            url: '/marketplace/inventory-management',
           },
           {
-            label: 'Integrations',
-            url: '/integrations',
+            label: 'Marketplace',
+            url: '/marketplace',
           },
         ],
-        parent: integrations.id,
+        parent: marketplace.id,
       },
     },
     {
@@ -444,14 +458,14 @@ export const seed = async ({
         breadcrumbs: [
           {
             label: 'Loyalty Programs',
-            url: '/integrations/loyalty-programs',
+            url: '/marketplace/loyalty-programs',
           },
           {
-            label: 'Integrations',
-            url: '/integrations',
+            label: 'Marketplace',
+            url: '/marketplace',
           },
         ],
-        parent: integrations.id,
+        parent: marketplace.id,
       },
     },
     {
@@ -462,14 +476,14 @@ export const seed = async ({
         breadcrumbs: [
           {
             label: 'E-commerce Platforms',
-            url: '/integrations/ecommerce-platforms',
+            url: '/marketplace/ecommerce-platforms',
           },
           {
-            label: 'Integrations',
-            url: '/integrations',
+            label: 'Marketplace',
+            url: '/marketplace',
           },
         ],
-        parent: integrations.id,
+        parent: marketplace.id,
       },
     },
     {
@@ -480,14 +494,14 @@ export const seed = async ({
         breadcrumbs: [
           {
             label: 'Marketing Tools',
-            url: '/integrations/marketing-tools',
+            url: '/marketplace/marketing-tools',
           },
           {
-            label: 'Integrations',
-            url: '/integrations',
+            label: 'Marketplace',
+            url: '/marketplace',
           },
         ],
-        parent: integrations.id,
+        parent: marketplace.id,
       },
     },
     {
@@ -498,14 +512,14 @@ export const seed = async ({
         breadcrumbs: [
           {
             label: 'Staff Management',
-            url: '/integrations/staff-management',
+            url: '/marketplace/staff-management',
           },
           {
-            label: 'Integrations',
-            url: '/integrations',
+            label: 'Marketplace',
+            url: '/marketplace',
           },
         ],
-        parent: integrations.id,
+        parent: marketplace.id,
       },
     },
     // Ecosystems Categories
@@ -807,9 +821,18 @@ export const seed = async ({
     otherCategory: other,
   })
 
+  payload.logger.info(`— Seeding blog posts...`)
+  await seedBlogPosts(payload, req, {
+    heroImages: [hero1Doc, image169Doc, image43Doc],
+    blockImage: imageSquareDoc,
+    author: demoAuthor,
+    blogCategory: blog,
+  })
+
   payload.logger.info(`— Seeding globals...`)
 
-  const headerData: Partial<Header> = {
+  const headerData: Header = {
+    id: '',
     tabs: [
       {
         enableDirectLink: false,
@@ -988,7 +1011,8 @@ export const seed = async ({
     ],
   }
   // Footer Data
-  const footerData: Partial<Footer> = {
+  const footerData: Footer = {
+    id: '',
     columns: [
       {
         label: 'الحلول',
@@ -1010,16 +1034,18 @@ export const seed = async ({
   }
 
   await Promise.all([
-    payload.logger.info('Updating global – header (ar)'),
+    payload.logger.info('Updating global – header'),
     payload.updateGlobal({
       slug: 'header',
       data: headerData,
+      locale: 'ar',
       req,
     }),
     payload.logger.info('Updating global – footer'),
     payload.updateGlobal({
       slug: 'footer',
       data: footerData,
+      locale: 'ar',
       req,
     }),
   ])
