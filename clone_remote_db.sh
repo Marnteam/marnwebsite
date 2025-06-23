@@ -51,14 +51,14 @@ docker run --rm \
     --no-privileges \
     -f /dump/$DUMP_FILE"
 
-
-
 if [ $? -ne 0 ]; then
   echo "❌ Failed to dump remote database."
   exit 1
 fi
 
 echo "✅ Remote dump saved at $LOCAL_DUMP_PATH"
+
+
 
 echo "▶ Copying dump into container '$LOCAL_CONTAINER'..."
 docker cp "$LOCAL_DUMP_PATH" "$LOCAL_CONTAINER:$CONTAINER_DUMP_PATH"
