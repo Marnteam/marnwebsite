@@ -279,6 +279,7 @@ export interface Post {
  */
 export interface Media {
   id: string;
+  prefix?: string | null;
   alt: string;
   caption?: {
     root: {
@@ -298,7 +299,6 @@ export interface Media {
   locale?: ('en' | 'ar') | null;
   category?: (string | Category)[] | null;
   blurhash?: string | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -2583,8 +2583,9 @@ export interface Search {
   categories?:
     | {
         relationTo?: string | null;
-        id?: string | null;
+        categoryId?: string | null;
         title?: string | null;
+        id?: string | null;
       }[]
     | null;
   updatedAt: string;
@@ -2999,12 +3000,12 @@ export interface IntegrationsSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  prefix?: T;
   alt?: T;
   caption?: T;
   locale?: T;
   category?: T;
   blurhash?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -3402,8 +3403,9 @@ export interface SearchSelect<T extends boolean = true> {
     | T
     | {
         relationTo?: T;
-        id?: T;
+        categoryId?: T;
         title?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;

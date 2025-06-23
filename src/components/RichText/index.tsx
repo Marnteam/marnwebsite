@@ -82,7 +82,7 @@ export default function RichText(props: Props) {
   const {
     className,
     converters = jsxConverters,
-    enableProse = false,
+    enableProse = true,
     enableGutter = true,
     ...rest
   } = props

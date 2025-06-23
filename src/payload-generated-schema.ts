@@ -6989,6 +6989,7 @@ export const search_categories = pgTable(
     _parentID: uuid('_parent_id').notNull(),
     id: varchar('id').primaryKey(),
     relationTo: varchar('relation_to'),
+    categoryId: varchar('category_id'),
     title: varchar('title'),
   },
   (columns) => ({
