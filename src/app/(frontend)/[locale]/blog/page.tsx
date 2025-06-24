@@ -1,18 +1,22 @@
 import type { Metadata } from 'next/types'
+import type { Page as PageType } from '@/payload-types'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import React from 'react'
+import React, { cache } from 'react'
 import PageClient from './page.client'
-import { Hero03 } from '@/heros/Hero03'
+import { RenderHero } from '@/heros/RenderHero'
+import { RenderBlocks } from '@/blocks/RenderBlocks'
+import { draftMode } from 'next/headers'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
 
-export default async function Page() {
+export default async function Page({ params }: { params: { locale: 'ar' | 'en' } }) {
+  const { locale } = await params
   const payload = await getPayload({ config: configPromise })
 
   const posts = await payload.find({
@@ -27,15 +31,28 @@ export default async function Page() {
       meta: true,
     },
   })
+  let page: PageType | null
+  page = await queryPageBySlug({
+    slug: 'blog',
+    locale,
+  })
+  const { hero, layout } = page
+
+  // if (!page && slugPath === 'home') {
+  //   page = null
+  // }
+
+  // if (!page) {
+  //   return <PayloadRedirects url={url} />
+  // }
 
   return (
-    <div className="pt-[calc(3*var(--header-height))] pb-24">
+    <article className="bg-background overflow-x-clip">
       <PageClient />
-      <div className="container mb-16">
-        <div className="prose dark:prose-invert max-w-none">
-          <h1>المدونة</h1>
-        </div>
-      </div>
+
+      <RenderHero {...hero} />
+
+      <RenderBlocks blocks={layout as any} locale={locale} />
 
       <div className="container mb-8">
         <PageRange
@@ -53,12 +70,28 @@ export default async function Page() {
           <Pagination page={posts.page} totalPages={posts.totalPages} />
         )}
       </div>
-    </div>
+    </article>
   )
 }
 
-export function generateMetadata(): Metadata {
-  return {
-    title: `Payload Website Template Posts`,
-  }
-}
+const queryPageBySlug = cache(async ({ slug, locale }: { slug: string; locale?: 'ar' | 'en' }) => {
+  const { isEnabled: draft } = await draftMode()
+
+  const payload = await getPayload({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'pages',
+    locale: locale,
+    draft,
+    limit: 1,
+    pagination: false,
+    overrideAccess: draft,
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+  })
+
+  return result.docs?.[0] || null
+})
