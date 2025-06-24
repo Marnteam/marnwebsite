@@ -15,8 +15,14 @@ import { draftMode } from 'next/headers'
 export const dynamic = 'force-static'
 export const revalidate = 600
 
-export default async function Page({ params }: { params: { locale: 'ar' | 'en' } }) {
-  const { locale } = await params
+type Args = {
+  params: Promise<{
+    locale?: 'ar' | 'en' | undefined
+  }>
+}
+
+export default async function Page({ params: paramsPromise }: Args) {
+  const { locale = 'ar' } = await paramsPromise
   const payload = await getPayload({ config: configPromise })
 
   const posts = await payload.find({
