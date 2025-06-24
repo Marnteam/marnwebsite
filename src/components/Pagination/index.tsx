@@ -32,10 +32,9 @@ export const Pagination: React.FC<{
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
-              disabled={!hasPrevPage}
-              onClick={() => {
-                router.push(`/posts/page/${page - 1}`)
-              }}
+              aria-disabled={!hasPrevPage}
+              className={cn({ 'pointer-events-none opacity-50': !hasPrevPage })}
+              onClick={() => hasPrevPage && router.push(`/blog/page/${page - 1}`)}
             />
           </PaginationItem>
 
@@ -49,7 +48,7 @@ export const Pagination: React.FC<{
             <PaginationItem>
               <PaginationLink
                 onClick={() => {
-                  router.push(`/posts/page/${page - 1}`)
+                  router.push(`/blog/page/${page - 1}`)
                 }}
               >
                 {page - 1}
@@ -61,7 +60,7 @@ export const Pagination: React.FC<{
             <PaginationLink
               isActive
               onClick={() => {
-                router.push(`/posts/page/${page}`)
+                router.push(`/blog/page/${page}`)
               }}
             >
               {page}
@@ -72,7 +71,7 @@ export const Pagination: React.FC<{
             <PaginationItem>
               <PaginationLink
                 onClick={() => {
-                  router.push(`/posts/page/${page + 1}`)
+                  router.push(`/blog/page/${page + 1}`)
                 }}
               >
                 {page + 1}
@@ -88,10 +87,9 @@ export const Pagination: React.FC<{
 
           <PaginationItem>
             <PaginationNext
-              disabled={!hasNextPage}
-              onClick={() => {
-                router.push(`/posts/page/${page + 1}`)
-              }}
+              aria-disabled={!hasNextPage}
+              className={cn({ 'pointer-events-none opacity-50': !hasNextPage })}
+              onClick={() => hasNextPage && router.push(`/blog/page/${page + 1}`)}
             />
           </PaginationItem>
         </PaginationContent>

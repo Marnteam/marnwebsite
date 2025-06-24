@@ -55,7 +55,7 @@ export const Card: React.FC<{
         {showCategories && hasCategories && (
           <div className="mb-4 text-sm uppercase">
             {showCategories && hasCategories && (
-              <div>
+              <div className="flex flex-wrap gap-1">
                 {categories?.map((category, index) => {
                   if (typeof category === 'object') {
                     const { title: titleFromCategory } = category

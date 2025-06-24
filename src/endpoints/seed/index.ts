@@ -823,7 +823,7 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding blog posts...`)
   await seedBlogPosts(payload, req, {
-    heroImages: [hero1Doc, image169Doc, image43Doc],
+    heroImages: [image169Doc],
     blockImage: imageSquareDoc,
     author: demoAuthor,
     blogCategory: blog,
