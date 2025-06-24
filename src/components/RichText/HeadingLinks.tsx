@@ -10,7 +10,7 @@ import {
   LinkJSXConverter,
   RichText as RichTextWithoutBlocks,
 } from '@payloadcms/richtext-lexical/react'
-import { formatSlug } from '@/fields/slug/formatSlug'
+import { formatSlug } from '@/hooks/formatSlug'
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
 

@@ -1,14 +1,27 @@
 import React from 'react'
+import { useLocale } from 'next-intl'
 
 const defaultLabels = {
-  plural: 'Docs',
-  singular: 'Doc',
+  ar: {
+    plural: 'مستندات',
+    singular: 'مستند',
+  },
+  en: {
+    plural: 'Docs',
+    singular: 'Doc',
+  },
 }
 
 const defaultCollectionLabels = {
   posts: {
-    plural: 'Posts',
-    singular: 'Post',
+    ar: {
+      plural: 'مقالات',
+      singular: 'مقالة',
+    },
+    en: {
+      plural: 'Posts',
+      singular: 'Post',
+    },
   },
 }
 
@@ -32,6 +45,8 @@ export const PageRange: React.FC<{
     totalDocs,
   } = props
 
+  const locale = useLocale()
+
   let indexStart = (currentPage ? currentPage - 1 : 1) * (limit || 1) + 1
   if (totalDocs && indexStart > totalDocs) indexStart = 0
 
@@ -39,16 +54,18 @@ export const PageRange: React.FC<{
   if (totalDocs && indexEnd > totalDocs) indexEnd = totalDocs
 
   const { plural, singular } =
-    collectionLabelsFromProps || defaultCollectionLabels[collection || ''] || defaultLabels || {}
+    collectionLabelsFromProps ||
+    defaultCollectionLabels[collection || ''][locale] ||
+    defaultLabels[locale]
 
   return (
-    <div className={[className, 'font-semibold'].filter(Boolean).join(' ')}>
+    <div className={[className, 'font-medium'].filter(Boolean).join(' ')}>
       {(typeof totalDocs === 'undefined' || totalDocs === 0) && 'Search produced no results.'}
       {typeof totalDocs !== 'undefined' &&
         totalDocs > 0 &&
-        `Showing ${indexStart}${indexStart > 0 ? ` - ${indexEnd}` : ''} of ${totalDocs} ${
-          totalDocs > 1 ? plural : singular
-        }`}
+        `${locale === 'en' ? 'Showing' : 'عرض'} ${indexStart}${indexStart > 0 ? ` - ${indexEnd}` : ''} ${
+          locale === 'en' ? 'of' : 'من'
+        } ${totalDocs} ${totalDocs > 1 ? plural : singular}`}
     </div>
   )
 }

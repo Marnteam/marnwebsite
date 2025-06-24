@@ -40,11 +40,12 @@ export async function generateStaticParams() {
       })
       .map((doc) => {
         params.push({
-          slug: doc.slug || '',
+          slug: encodeURIComponent(doc.slug || ''),
           locale: locale as 'ar' | 'en',
         })
       })
   }
+
   return params
 }
 
@@ -58,7 +59,7 @@ type Args = {
 export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = '', locale = 'ar' } = await paramsPromise
-  const url = `/${locale}/blog/` + slug
+  const url = `/${locale}/blog/` + decodeURIComponent(slug)
   const post = await queryPostBySlug({ slug, locale })
 
   if (!post) return <PayloadRedirects url={url} />
@@ -76,7 +77,7 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       <div className="mx-auto flex w-full max-w-[96rem] gap-4 pt-8">
         <div className="mx-space-site relative flex w-full items-center justify-center will-change-transform">
-          <div className="mx-space-site gap-space-md z-2 flex w-full max-w-7xl flex-col-reverse *:py-(--text-h1) lg:flex-row lg:items-start">
+          <div className="mx-space-site gap-space-md z-2 flex w-full flex-col-reverse *:py-(--text-h1) lg:flex-row lg:items-start">
             <RichText
               className="mx-0 max-w-4xl"
               data={post.content}
@@ -119,7 +120,7 @@ const queryPostBySlug = cache(
       pagination: false,
       where: {
         slug: {
-          equals: slug,
+          equals: decodeURIComponent(slug),
         },
       },
     })

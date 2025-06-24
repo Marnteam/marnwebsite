@@ -5,7 +5,7 @@ import { RenderFAQBlock } from '@/blocks/FAQ/RenderFAQBlock'
 import { RenderGalleryBlock } from '@/blocks/Gallery/RenderGalleryBlock'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { StyledListBlock } from '@/blocks/StyledList/Component'
-import { formatSlug } from '@/fields/slug/formatSlug'
+import { formatSlug } from '@/hooks/formatSlug'
 import type {
   BannerBlock as BannerBlockProps,
   CallToActionBlock as CTABlockProps,

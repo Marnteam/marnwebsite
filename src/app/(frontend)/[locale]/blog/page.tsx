@@ -7,6 +7,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import React from 'react'
 import PageClient from './page.client'
+import { Hero03 } from '@/heros/Hero03'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
@@ -28,11 +29,11 @@ export default async function Page() {
   })
 
   return (
-    <div className="pt-24 pb-24">
+    <div className="pt-[calc(3*var(--header-height))] pb-24">
       <PageClient />
       <div className="container mb-16">
         <div className="prose dark:prose-invert max-w-none">
-          <h1>Posts</h1>
+          <h1>المدونة</h1>
         </div>
       </div>
 

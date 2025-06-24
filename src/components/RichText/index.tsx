@@ -24,7 +24,7 @@ import type {
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { cn } from '@/utilities/ui'
 import { CallToAction01 } from '@/blocks/CallToAction/CallToAction01'
-import { formatSlug } from '@/fields/slug/formatSlug'
+import { formatSlug } from '@/hooks/formatSlug'
 import { createElement } from 'react'
 import { GalleryBlock } from '@/blocks/Gallery/config'
 import { RenderGalleryBlock } from '@/blocks/Gallery/RenderGalleryBlock'

@@ -1,5 +1,6 @@
 import type { Payload, PayloadRequest } from 'payload'
 import type { Media, User, Category, Post } from '@/payload-types'
+import { formatSlug } from '@/hooks/formatSlug'
 
 export type BlogPostsSeedArgs = {
   heroImages: Media[]
@@ -119,7 +120,7 @@ export const seedBlogPosts = async (
       ar: 'كيف تطور التكنولوجيا من مطعمك وتزيد أرباحك',
       en: 'How Technology Can Transform Your Restaurant and Boost Profits',
     },
-    slug: 'تطوير-المطاعم-بالتكنولوجيا',
+    slug: formatSlug('كيف تطور التكنولوجيا من مطعمك وتزيد أرباحك'),
     heroImage: heroImages[0]?.id,
     _status: 'published' as const,
     authors: [author.id],
@@ -157,7 +158,7 @@ export const seedBlogPosts = async (
       ar: 'مستقبل البيع بالتجزئة: كيف تحول التكنولوجيا متجرك إلى قوة بيعية',
       en: 'The Future of Retail: How Technology Transforms Your Store into a Sales Powerhouse',
     },
-    slug: 'مستقبل-البيع-بالتجزئة-التكنولوجيا',
+    slug: formatSlug('مستقبل البيع بالتجزئة: كيف تحول التكنولوجيا متجرك إلى قوة بيعية'),
     heroImage: heroImages[1]?.id,
     _status: 'published' as const,
     authors: [author.id],
@@ -195,7 +196,7 @@ export const seedBlogPosts = async (
       ar: 'استراتيجيات نمو الأعمال في العصر الرقمي',
       en: 'Business Growth Strategies in the Digital Age',
     },
-    slug: 'استراتيجيات-نمو-الاعمال-الرقمية',
+    slug: formatSlug('استراتيجيات نمو الأعمال في العصر الرقمي'),
     heroImage: heroImages[2]?.id || heroImages[0]?.id,
     _status: 'published' as const,
     authors: [author.id],
