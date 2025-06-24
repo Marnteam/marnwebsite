@@ -38,9 +38,9 @@ export default async function Page({ params }: { params: { locale: 'ar' | 'en' }
   })
   const { hero, layout } = page
 
-  // if (!page && slugPath === 'home') {
-  //   page = null
-  // }
+  if (!page) {
+    page = null
+  }
 
   // if (!page) {
   //   return <PayloadRedirects url={url} />
