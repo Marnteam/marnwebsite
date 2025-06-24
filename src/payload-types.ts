@@ -67,6 +67,7 @@ export interface Config {
   };
   blocks: {
     archiveBlock: ArchiveBlock;
+    blogBlock: BlogBlock;
     callToActionBlock: CallToActionBlock;
     customHtmlBlock: CustomHtmlBlock;
     dividerBlock: DividerBlock;
@@ -389,6 +390,29 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogBlock".
+ */
+export interface BlogBlock {
+  /**
+   * Select the featured post to display in the blog block.
+   */
+  featuredPost?: (string | null) | Post;
+  initialFilters?: {
+    /**
+     * Select the recent posts to display in the blog block.
+     */
+    recentPosts?: (string | Post)[] | null;
+    /**
+     * Select the editors picks to display in the blog block.
+     */
+    editorsPicks?: (string | Post)[] | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blogBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CallToActionBlock".
  */
 export interface CallToActionBlock {
@@ -634,6 +658,7 @@ export interface Page {
   };
   layout: (
     | ArchiveBlock
+    | BlogBlock
     | CallToActionBlock
     | CustomHtmlBlock
     | DividerBlock

@@ -20,9 +20,11 @@ import { RenderMetricsBlock } from './Metrics/RenderMetricsBlock'
 import { RenderPricingBlock } from './Pricing/RenderPricingBlock'
 import { SearchableIntegrationsGrid } from '@/blocks/Marketplace/SearchableGrid'
 import { StyledListBlock } from './StyledList/Component'
+import { RenderBlogBlock } from './Blog/RenderBlogBlock'
 
 const blockComponents = {
   archiveBlock: ArchiveBlock,
+  blogBlock: RenderBlogBlock,
   callToActionBlock: RenderCallToActionBlock,
   customHtmlBlock: RenderCustomHtmlBlock,
   dividerBlock: RenderDividerBlock,

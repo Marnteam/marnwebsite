@@ -15,7 +15,7 @@ const defaultLabels = {
 const defaultCollectionLabels = {
   posts: {
     ar: {
-      plural: 'مقالات',
+      plural: 'مقالة',
       singular: 'مقالة',
     },
     en: {
@@ -64,7 +64,7 @@ export const PageRange: React.FC<{
       {typeof totalDocs !== 'undefined' &&
         totalDocs > 0 &&
         `${locale === 'en' ? 'Showing' : 'عرض'} ${indexStart}${indexStart > 0 ? ` - ${indexEnd}` : ''} ${
-          locale === 'en' ? 'of' : 'من'
+          locale === 'en' ? 'of' : 'من أصل'
         } ${totalDocs} ${totalDocs > 1 ? plural : singular}`}
     </div>
   )

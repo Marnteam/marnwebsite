@@ -83,7 +83,7 @@ export const Hero03: React.FC<Page['hero'] & { children?: React.ReactNode }> = (
           </ul>
         </div>
       )}
-      {media && typeof media === 'object' && (
+      {media && typeof media === 'object' && (media.desktop?.light || media.desktop?.dark) && (
         <Media
           className="rounded-space-sm relative h-auto w-full overflow-hidden select-none"
           imgClassName="object-cover"
