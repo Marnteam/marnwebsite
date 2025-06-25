@@ -280,7 +280,6 @@ export interface Post {
  */
 export interface Media {
   id: string;
-  prefix?: string | null;
   alt: string;
   caption?: {
     root: {
@@ -300,6 +299,7 @@ export interface Media {
   locale?: ('en' | 'ar') | null;
   category?: (string | Category)[] | null;
   blurhash?: string | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -3044,12 +3044,12 @@ export interface IntegrationsSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
-  prefix?: T;
   alt?: T;
   caption?: T;
   locale?: T;
   category?: T;
   blurhash?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
