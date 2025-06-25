@@ -30,9 +30,10 @@ import { FAQ } from './collections/FAQ'
 
 //blocks
 import { ArchiveBlock } from '@/blocks/ArchiveBlock/config'
-import { FeaturedAppsBlock } from '@/blocks/FeaturedApps/config'
+import { BlogBlock } from './blocks/Blog/config'
 import { CallToActionBlock } from '@/blocks/CallToAction/config'
 import { CustomHtmlBlock } from '@/blocks/CustomHTML/config'
+import { FeaturedAppsBlock } from '@/blocks/FeaturedApps/config'
 import { FeaturesBlock } from '@/blocks/Features/config'
 import { FormBlock } from '@/blocks/Form/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
@@ -132,6 +133,7 @@ export default buildConfig({
 
   blocks: [
     ArchiveBlock,
+    BlogBlock,
     CallToActionBlock,
     CustomHtmlBlock,
     DividerBlock,
@@ -167,7 +169,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
     idType: 'uuid',
-    push: false, // disable push mode
+    // push: false, // disable push mode
   }),
   editor: defaultLexical,
   email: resendAdapter({
@@ -222,8 +224,8 @@ export default buildConfig({
         region: process.env.S3_REGION,
         endpoint: process.env.S3_ENDPOINT,
       },
-      enabled: true,
-      // enabled: process.env.NODE_ENV === 'production', // Use in production only
+      // enabled: true,
+      enabled: process.env.NODE_ENV === 'production', // Use in production only
     }),
   ],
   secret: process.env.PAYLOAD_SECRET,

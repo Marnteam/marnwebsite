@@ -40,6 +40,7 @@ export const enum_archiveBlock_populate_by = pgEnum('enum_archiveBlock_populate_
   'selection',
 ])
 export const enum_archiveBlock_relation_to = pgEnum('enum_archiveBlock_relation_to', ['posts'])
+export const enum_blogBlock_type = pgEnum('enum_blogBlock_type', ['featuredPost', '2-columns'])
 export const enum_callToActionBlock_type = pgEnum('enum_callToActionBlock_type', [
   '01',
   '02',
@@ -246,6 +247,10 @@ export const enum__archiveBlock_v_populate_by = pgEnum('enum__archiveBlock_v_pop
 ])
 export const enum__archiveBlock_v_relation_to = pgEnum('enum__archiveBlock_v_relation_to', [
   'posts',
+])
+export const enum__blogBlock_v_type = pgEnum('enum__blogBlock_v_type', [
+  'featuredPost',
+  '2-columns',
 ])
 export const enum__callToActionBlock_v_type = pgEnum('enum__callToActionBlock_v_type', [
   '01',
@@ -626,6 +631,56 @@ export const archiveBlock_locales = pgTable(
       columns: [columns['_parentID']],
       foreignColumns: [archiveBlock.id],
       name: 'archiveBlock_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const blogBlock = pgTable(
+  'blogBlock',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    _path: text('_path').notNull(),
+    id: varchar('id').primaryKey(),
+    type: enum_blogBlock_type('type').default('featuredPost'),
+    featuredPost: uuid('featured_post_id').references(() => posts.id, {
+      onDelete: 'set null',
+    }),
+    blockName: varchar('block_name'),
+  },
+  (columns) => ({
+    _orderIdx: index('blogBlock_order_idx').on(columns._order),
+    _parentIDIdx: index('blogBlock_parent_id_idx').on(columns._parentID),
+    _pathIdx: index('blogBlock_path_idx').on(columns._path),
+    blogBlock_featured_post_idx: index('blogBlock_featured_post_idx').on(columns.featuredPost),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [pages.id],
+      name: 'blogBlock_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const blogBlock_locales = pgTable(
+  'blogBlock_locales',
+  {
+    recentPostsList_title: varchar('recent_posts_list_title'),
+    recentPostsList_description: varchar('recent_posts_list_description'),
+    editorsPicksList_title: varchar('editors_picks_list_title'),
+    editorsPicksList_description: varchar('editors_picks_list_description'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('blogBlock_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [blogBlock.id],
+      name: 'blogBlock_locales_parent_id_fk',
     }).onDelete('cascade'),
   }),
 )
@@ -2602,6 +2657,59 @@ export const _archiveBlock_v_locales = pgTable(
       columns: [columns['_parentID']],
       foreignColumns: [_archiveBlock_v.id],
       name: '_archiveBlock_v_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _blogBlock_v = pgTable(
+  '_blogBlock_v',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    _path: text('_path').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
+    type: enum__blogBlock_v_type('type').default('featuredPost'),
+    featuredPost: uuid('featured_post_id').references(() => posts.id, {
+      onDelete: 'set null',
+    }),
+    _uuid: varchar('_uuid'),
+    blockName: varchar('block_name'),
+  },
+  (columns) => ({
+    _orderIdx: index('_blogBlock_v_order_idx').on(columns._order),
+    _parentIDIdx: index('_blogBlock_v_parent_id_idx').on(columns._parentID),
+    _pathIdx: index('_blogBlock_v_path_idx').on(columns._path),
+    _blogBlock_v_featured_post_idx: index('_blogBlock_v_featured_post_idx').on(
+      columns.featuredPost,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_pages_v.id],
+      name: '_blogBlock_v_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _blogBlock_v_locales = pgTable(
+  '_blogBlock_v_locales',
+  {
+    recentPostsList_title: varchar('recent_posts_list_title'),
+    recentPostsList_description: varchar('recent_posts_list_description'),
+    editorsPicksList_title: varchar('editors_picks_list_title'),
+    editorsPicksList_description: varchar('editors_picks_list_description'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('_blogBlock_v_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_blogBlock_v.id],
+      name: '_blogBlock_v_locales_parent_id_fk',
     }).onDelete('cascade'),
   }),
 )
@@ -7945,6 +8053,28 @@ export const relations_archiveBlock = relations(archiveBlock, ({ one, many }) =>
     relationName: '_locales',
   }),
 }))
+export const relations_blogBlock_locales = relations(blogBlock_locales, ({ one }) => ({
+  _parentID: one(blogBlock, {
+    fields: [blogBlock_locales._parentID],
+    references: [blogBlock.id],
+    relationName: '_locales',
+  }),
+}))
+export const relations_blogBlock = relations(blogBlock, ({ one, many }) => ({
+  _parentID: one(pages, {
+    fields: [blogBlock._parentID],
+    references: [pages.id],
+    relationName: '_blocks_blogBlock',
+  }),
+  _locales: many(blogBlock_locales, {
+    relationName: '_locales',
+  }),
+  featuredPost: one(posts, {
+    fields: [blogBlock.featuredPost],
+    references: [posts.id],
+    relationName: 'featuredPost',
+  }),
+}))
 export const relations_callToActionBlock_links_locales = relations(
   callToActionBlock_links_locales,
   ({ one }) => ({
@@ -8939,6 +9069,9 @@ export const relations_pages = relations(pages, ({ many }) => ({
   _blocks_archiveBlock: many(archiveBlock, {
     relationName: '_blocks_archiveBlock',
   }),
+  _blocks_blogBlock: many(blogBlock, {
+    relationName: '_blocks_blogBlock',
+  }),
   _blocks_callToActionBlock: many(callToActionBlock, {
     relationName: '_blocks_callToActionBlock',
   }),
@@ -9026,6 +9159,28 @@ export const relations__archiveBlock_v = relations(_archiveBlock_v, ({ one, many
   }),
   _locales: many(_archiveBlock_v_locales, {
     relationName: '_locales',
+  }),
+}))
+export const relations__blogBlock_v_locales = relations(_blogBlock_v_locales, ({ one }) => ({
+  _parentID: one(_blogBlock_v, {
+    fields: [_blogBlock_v_locales._parentID],
+    references: [_blogBlock_v.id],
+    relationName: '_locales',
+  }),
+}))
+export const relations__blogBlock_v = relations(_blogBlock_v, ({ one, many }) => ({
+  _parentID: one(_pages_v, {
+    fields: [_blogBlock_v._parentID],
+    references: [_pages_v.id],
+    relationName: '_blocks_blogBlock',
+  }),
+  _locales: many(_blogBlock_v_locales, {
+    relationName: '_locales',
+  }),
+  featuredPost: one(posts, {
+    fields: [_blogBlock_v.featuredPost],
+    references: [posts.id],
+    relationName: 'featuredPost',
   }),
 }))
 export const relations__callToActionBlock_v_links_locales = relations(
@@ -10041,6 +10196,9 @@ export const relations__pages_v = relations(_pages_v, ({ one, many }) => ({
   }),
   _blocks_archiveBlock: many(_archiveBlock_v, {
     relationName: '_blocks_archiveBlock',
+  }),
+  _blocks_blogBlock: many(_blogBlock_v, {
+    relationName: '_blocks_blogBlock',
   }),
   _blocks_callToActionBlock: many(_callToActionBlock_v, {
     relationName: '_blocks_callToActionBlock',
@@ -11671,6 +11829,7 @@ type DatabaseSchema = {
   link_variant: typeof link_variant
   enum_archiveBlock_populate_by: typeof enum_archiveBlock_populate_by
   enum_archiveBlock_relation_to: typeof enum_archiveBlock_relation_to
+  enum_blogBlock_type: typeof enum_blogBlock_type
   enum_callToActionBlock_type: typeof enum_callToActionBlock_type
   enum_callToActionBlock_badge_type: typeof enum_callToActionBlock_badge_type
   badge_color: typeof badge_color
@@ -11719,6 +11878,7 @@ type DatabaseSchema = {
   enum_pages_status: typeof enum_pages_status
   enum__archiveBlock_v_populate_by: typeof enum__archiveBlock_v_populate_by
   enum__archiveBlock_v_relation_to: typeof enum__archiveBlock_v_relation_to
+  enum__blogBlock_v_type: typeof enum__blogBlock_v_type
   enum__callToActionBlock_v_type: typeof enum__callToActionBlock_v_type
   enum__callToActionBlock_v_badge_type: typeof enum__callToActionBlock_v_badge_type
   enum__customHtmlBlock_v_block_header_type: typeof enum__customHtmlBlock_v_block_header_type
@@ -11795,6 +11955,8 @@ type DatabaseSchema = {
   pages_hero_links_locales: typeof pages_hero_links_locales
   archiveBlock: typeof archiveBlock
   archiveBlock_locales: typeof archiveBlock_locales
+  blogBlock: typeof blogBlock
+  blogBlock_locales: typeof blogBlock_locales
   callToActionBlock_links: typeof callToActionBlock_links
   callToActionBlock_links_locales: typeof callToActionBlock_links_locales
   callToActionBlock_list: typeof callToActionBlock_list
@@ -11872,6 +12034,8 @@ type DatabaseSchema = {
   _pages_v_version_hero_links_locales: typeof _pages_v_version_hero_links_locales
   _archiveBlock_v: typeof _archiveBlock_v
   _archiveBlock_v_locales: typeof _archiveBlock_v_locales
+  _blogBlock_v: typeof _blogBlock_v
+  _blogBlock_v_locales: typeof _blogBlock_v_locales
   _callToActionBlock_v_links: typeof _callToActionBlock_v_links
   _callToActionBlock_v_links_locales: typeof _callToActionBlock_v_links_locales
   _callToActionBlock_v_list: typeof _callToActionBlock_v_list
@@ -12057,6 +12221,8 @@ type DatabaseSchema = {
   relations_pages_hero_links: typeof relations_pages_hero_links
   relations_archiveBlock_locales: typeof relations_archiveBlock_locales
   relations_archiveBlock: typeof relations_archiveBlock
+  relations_blogBlock_locales: typeof relations_blogBlock_locales
+  relations_blogBlock: typeof relations_blogBlock
   relations_callToActionBlock_links_locales: typeof relations_callToActionBlock_links_locales
   relations_callToActionBlock_links: typeof relations_callToActionBlock_links
   relations_callToActionBlock_list: typeof relations_callToActionBlock_list
@@ -12134,6 +12300,8 @@ type DatabaseSchema = {
   relations__pages_v_version_hero_links: typeof relations__pages_v_version_hero_links
   relations__archiveBlock_v_locales: typeof relations__archiveBlock_v_locales
   relations__archiveBlock_v: typeof relations__archiveBlock_v
+  relations__blogBlock_v_locales: typeof relations__blogBlock_v_locales
+  relations__blogBlock_v: typeof relations__blogBlock_v
   relations__callToActionBlock_v_links_locales: typeof relations__callToActionBlock_v_links_locales
   relations__callToActionBlock_v_links: typeof relations__callToActionBlock_v_links
   relations__callToActionBlock_v_list: typeof relations__callToActionBlock_v_list

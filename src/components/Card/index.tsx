@@ -3,19 +3,20 @@ import { cn } from '@/utilities/ui'
 import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 
 import type { Post } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import { Badge } from '../ui/badge'
+import { getReadTimeFromLexical } from '@/utilities/extractTextFromLexical'
 
-export type CardPostData = Pick<Post, 'slug' | 'categories' | 'meta' | 'title'>
+// export type CardPostData = Pick<Post, 'slug' | 'categories' | 'meta' | 'title' | 'publishedAt' >
 
 export const Card: React.FC<{
   alignItems?: 'center'
   className?: string
-  doc?: CardPostData
+  doc?: Post
   relationTo?: 'posts'
   showCategories?: boolean
   title?: string
@@ -24,7 +25,7 @@ export const Card: React.FC<{
   const { card, link } = useClickableCard({})
   const { className, doc, relationTo, showCategories, title: titleFromProps } = props
 
-  const { slug, categories, meta, title } = doc || {}
+  const { slug, categories, meta, title, publishedAt, content } = doc || {}
   const { description, image: metaImage } = meta || {}
 
   const hasCategories = categories && Array.isArray(categories) && categories.length > 0
@@ -39,10 +40,13 @@ export const Card: React.FC<{
       href = `/${locale}/${relationTo}/${slug}`
       break
   }
+  const t = useTranslations('Blog')
+
+  const { text } = getReadTimeFromLexical(content || '', locale as 'en' | 'ar', t)
 
   return (
     <article
-      className={cn('overflow-hidden border-none hover:cursor-pointer', className)}
+      className={cn('group overflow-hidden border-none hover:cursor-pointer', className)}
       ref={card.ref}
     >
       <div className="relative w-full">
@@ -74,13 +78,24 @@ export const Card: React.FC<{
           </div>
         )}
         {titleToUse && (
-          <h3 className="text-h4 text-base-primary font-medium">
+          <h3 className="text-h4 text-base-primary group-hover:text-brand-primary font-medium transition-colors">
             <Link className="not-prose w-full" href={href} ref={link.ref}>
               {titleToUse}
             </Link>
           </h3>
         )}
-        {description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
+        {description && <div className="mt-4">{description && <p>{sanitizedDescription}</p>}</div>}
+        <hr className="border-border my-4" />
+        <div className="flex flex-row items-center gap-2">
+          <p className="text-base-tertiary text-sm">
+            {new Date(publishedAt || '').toLocaleDateString(locale, {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </p>
+          <p className="text-base-tertiary text-sm">{text}</p>
+        </div>
       </div>
     </article>
   )

@@ -2,12 +2,25 @@ import React, { Fragment } from 'react'
 import { getLocale } from 'next-intl/server'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import type { BlogBlock as BlogBlockType, Post } from '@/payload-types'
-import { Blog01 } from './Blog01'
+import type { BlogBlock, Post } from '@/payload-types'
+import { FeaturedPost } from './FeaturedPost'
+import { TwoColumns } from './TwoColumns'
+
+type BlogBlockType = BlogBlock & {
+  recentPosts?: Post[]
+  editorsPicks?: Post[]
+  locale: 'en' | 'ar'
+}
+
+const variants: Record<string, React.FC<BlogBlockType>> = {
+  featuredPost: FeaturedPost,
+  '2-columns': TwoColumns,
+}
 
 export const RenderBlogBlock: React.FC<BlogBlockType> = async (props) => {
-  const { featuredPost, initialFilters } = props
-  const { recentPosts, editorsPicks } = initialFilters || {}
+  const { type, featuredPost, recentPostsList, editorsPicksList } = props
+  const { recentPosts } = recentPostsList || {}
+  const { editorsPicks } = editorsPicksList || {}
   const locale = (await getLocale()) as 'en' | 'ar'
   const payload = await getPayload({ config })
 
@@ -35,11 +48,24 @@ export const RenderBlogBlock: React.FC<BlogBlockType> = async (props) => {
         })
         featuredPostData = post
       }
+    } else {
+      const post = await payload.find({
+        collection: 'posts',
+        depth: 2,
+        limit: 1,
+        locale: locale,
+        where: {
+          _status: {
+            equals: 'published',
+          },
+        },
+      })
+      featuredPostData = post.docs[0]
     }
 
     // Handle recent posts
-    if (initialFilters?.recentPosts?.length) {
-      const recentPostPromises = initialFilters.recentPosts.map((post) => {
+    if (recentPosts?.length) {
+      const recentPostPromises = recentPosts.map((post) => {
         if (typeof post === 'string') {
           return payload.findByID({
             collection: 'posts',
@@ -57,11 +83,25 @@ export const RenderBlogBlock: React.FC<BlogBlockType> = async (props) => {
         }
       })
       recentPostsData = (await Promise.all(recentPostPromises)).filter(Boolean) as Post[]
+    } else {
+      const recentPosts = await payload.find({
+        collection: 'posts',
+        depth: 2,
+        limit: 7,
+        locale: locale as 'en' | 'ar',
+        sort: '-publishedAt',
+        where: {
+          _status: {
+            equals: 'published',
+          },
+        },
+      })
+      recentPostsData = recentPosts.docs
     }
 
     // Handle editors picks
-    if (initialFilters?.editorsPicks?.length) {
-      const editorsPicksPromises = initialFilters.editorsPicks.map((post) => {
+    if (editorsPicks?.length) {
+      const editorsPicksPromises = editorsPicks.map((post) => {
         if (typeof post === 'string') {
           return payload.findByID({
             collection: 'posts',
@@ -79,28 +119,28 @@ export const RenderBlogBlock: React.FC<BlogBlockType> = async (props) => {
         }
       })
       editorsPicksData = (await Promise.all(editorsPicksPromises)).filter(Boolean) as Post[]
-    }
-
-    // Fallback: if no posts are selected, fetch recent posts
-    if (!featuredPostData && !recentPostsData.length && !editorsPicksData.length) {
-      const fallbackPosts = await payload.find({
+    } else {
+      // Fetch random published posts for editors picks
+      const posts = await payload.find({
         collection: 'posts',
         depth: 2,
-        limit: 7,
+        limit: 50,
         locale: locale as 'en' | 'ar',
-        sort: '-publishedAt',
         where: {
           _status: {
             equals: 'published',
           },
         },
       })
+      // Shuffle the posts array to randomize
+      const shuffled = posts.docs
+        .map((post) => ({ post, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ post }) => post)
 
-      if (fallbackPosts.docs.length > 0) {
-        featuredPostData = fallbackPosts.docs[0]
-        recentPostsData = fallbackPosts.docs.slice(1, 4)
-        editorsPicksData = fallbackPosts.docs.slice(4, 7)
-      }
+      // Take up to 7 random posts
+      const editorsPicks = { docs: shuffled.slice(0, 7) }
+      editorsPicksData = editorsPicks.docs
     }
   } catch (error) {
     console.error('Error fetching blog block data:', error)
@@ -111,14 +151,25 @@ export const RenderBlogBlock: React.FC<BlogBlockType> = async (props) => {
     return null
   }
 
+  if (!type) {
+    return null
+  }
+
+  const BlogBlockComponent = variants[type]
+
+  if (!BlogBlockComponent) {
+    console.warn(`Variant "${type}" not found for BlogBlock. Rendering default (featuredPost).`)
+    const DefaultVariant = variants['featuredPost']
+    return <DefaultVariant {...props} />
+  }
+
   return (
-    <Fragment>
-      <Blog01
-        featuredPost={featuredPostData}
-        recentPosts={recentPostsData}
-        editorsPicks={editorsPicksData}
-        locale={locale}
-      />
-    </Fragment>
+    <BlogBlockComponent
+      blockType="blogBlock"
+      featuredPost={featuredPostData}
+      recentPosts={recentPostsData}
+      editorsPicks={editorsPicksData}
+      locale={locale}
+    />
   )
 }

@@ -393,17 +393,36 @@ export interface User {
  * via the `definition` "BlogBlock".
  */
 export interface BlogBlock {
+  type?: ('featuredPost' | '2-columns') | null;
   /**
    * Select the featured post to display in the blog block.
    */
   featuredPost?: (string | null) | Post;
-  initialFilters?: {
+  recentPostsList?: {
     /**
-     * Select the recent posts to display in the blog block.
+     * Title of the recent posts list.
+     */
+    title?: string | null;
+    /**
+     * Description of the recent posts list.
+     */
+    description?: string | null;
+    /**
+     * Select the recent posts to display. Leave empty to dynamically fetch recent posts.
      */
     recentPosts?: (string | Post)[] | null;
+  };
+  editorsPicksList?: {
     /**
-     * Select the editors picks to display in the blog block.
+     * Title of the editors picks list.
+     */
+    title?: string | null;
+    /**
+     * Description of the editors picks list.
+     */
+    description?: string | null;
+    /**
+     * Select the editors picks to display. Leave empty to dynamically display random posts.
      */
     editorsPicks?: (string | Post)[] | null;
   };

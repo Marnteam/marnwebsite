@@ -3,10 +3,10 @@ import React from 'react'
 
 import type { Post } from '@/payload-types'
 
-import { Card, CardPostData } from '@/components/Card'
+import { Card } from '@/components/Card'
 
 export type Props = {
-  posts: CardPostData[]
+  posts: Post[]
 }
 
 export const CollectionArchive: React.FC<Props> = (props) => {

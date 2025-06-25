@@ -18,12 +18,41 @@ export const revalidate = 600
 
 type Args = {
   params: Promise<{
+    category: string
     locale?: 'ar' | 'en' | undefined
   }>
 }
 
+export async function generateStaticParams() {
+  const locales = ['en', 'ar']
+  const params: { category: string; locale: 'ar' | 'en' }[] = []
+  const payload = await getPayload({ config: configPromise })
+
+  for (const locale of locales) {
+    const categories = await payload.find({
+      collection: 'categories',
+      locale: locale as 'ar' | 'en',
+      where: {
+        'parent.slug': {
+          equals: 'blog',
+        },
+      },
+      pagination: false,
+    })
+
+    for (const category of categories.docs) {
+      params.push({
+        category: category.slug || '',
+        locale: locale as 'ar' | 'en',
+      })
+    }
+  }
+
+  return params
+}
+
 export default async function Page({ params: paramsPromise }: Args) {
-  const { locale = 'ar' } = await paramsPromise
+  const { category, locale = 'ar' } = await paramsPromise
   const slug = 'blog'
   const payload = await getPayload({ config: configPromise })
 
@@ -52,6 +81,11 @@ export default async function Page({ params: paramsPromise }: Args) {
       meta: true,
       content: true,
       publishedAt: true,
+    },
+    where: {
+      'categories.slug': {
+        equals: category,
+      },
     },
   })
 
