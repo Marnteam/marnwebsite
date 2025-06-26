@@ -90,7 +90,7 @@ export const ArchiveBlock: Block = {
       },
       hasMany: true,
       label: 'Selection',
-      relationTo: ['posts'],
+      relationTo: ['blog-posts'],
     },
   ],
 }

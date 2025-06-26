@@ -87,7 +87,7 @@ export interface Config {
   };
   collections: {
     pages: Page;
-    posts: Post;
+    'blog-posts': BlogPost;
     solutions: Solution;
     integrations: Integration;
     media: Media;
@@ -108,7 +108,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
-    posts: PostsSelect<false> | PostsSelect<true>;
+    'blog-posts': BlogPostsSelect<false> | BlogPostsSelect<true>;
     solutions: SolutionsSelect<false> | SolutionsSelect<true>;
     integrations: IntegrationsSelect<false> | IntegrationsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -198,8 +198,8 @@ export interface ArchiveBlock {
   limit?: number | null;
   selectedDocs?:
     | {
-        relationTo: 'posts';
-        value: string | Post;
+        relationTo: 'blog-posts';
+        value: string | BlogPost;
       }[]
     | null;
   id?: string | null;
@@ -229,9 +229,9 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts".
+ * via the `definition` "blog-posts".
  */
-export interface Post {
+export interface BlogPost {
   id: string;
   title: string;
   heroImage?: (string | null) | Media;
@@ -250,7 +250,7 @@ export interface Post {
     };
     [k: string]: unknown;
   };
-  relatedPosts?: (string | Post)[] | null;
+  relatedPosts?: (string | BlogPost)[] | null;
   categories?: (string | Category)[] | null;
   meta?: {
     title?: string | null;
@@ -280,6 +280,7 @@ export interface Post {
  */
 export interface Media {
   id: string;
+  prefix?: string | null;
   alt: string;
   caption?: {
     root: {
@@ -299,7 +300,6 @@ export interface Media {
   locale?: ('en' | 'ar') | null;
   category?: (string | Category)[] | null;
   blurhash?: string | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -397,7 +397,7 @@ export interface BlogBlock {
   /**
    * Select the featured post to display in the blog block.
    */
-  featuredPost?: (string | null) | Post;
+  featuredPost?: (string | null) | BlogPost;
   recentPostsList?: {
     /**
      * Title of the recent posts list.
@@ -410,7 +410,7 @@ export interface BlogBlock {
     /**
      * Select the recent posts to display. Leave empty to dynamically fetch recent posts.
      */
-    recentPosts?: (string | Post)[] | null;
+    recentPosts?: (string | BlogPost)[] | null;
   };
   editorsPicksList?: {
     /**
@@ -424,7 +424,7 @@ export interface BlogBlock {
     /**
      * Select the editors picks to display. Leave empty to dynamically display random posts.
      */
-    editorsPicks?: (string | Post)[] | null;
+    editorsPicks?: (string | BlogPost)[] | null;
   };
   id?: string | null;
   blockName?: string | null;
@@ -494,8 +494,8 @@ export interface CallToActionBlock {
                 value: string | Page;
               } | null)
             | ({
-                relationTo: 'posts';
-                value: string | Post;
+                relationTo: 'blog-posts';
+                value: string | BlogPost;
               } | null)
             | ({
                 relationTo: 'solutions';
@@ -557,8 +557,8 @@ export interface Solution {
           value: string | Page;
         } | null)
       | ({
-          relationTo: 'posts';
-          value: string | Post;
+          relationTo: 'blog-posts';
+          value: string | BlogPost;
         } | null)
       | ({
           relationTo: 'solutions';
@@ -635,8 +635,8 @@ export interface Page {
                   value: string | Page;
                 } | null)
               | ({
-                  relationTo: 'posts';
-                  value: string | Post;
+                  relationTo: 'blog-posts';
+                  value: string | BlogPost;
                 } | null)
               | ({
                   relationTo: 'solutions';
@@ -748,8 +748,8 @@ export interface Integration {
           value: string | Page;
         } | null)
       | ({
-          relationTo: 'posts';
-          value: string | Post;
+          relationTo: 'blog-posts';
+          value: string | BlogPost;
         } | null)
       | ({
           relationTo: 'solutions';
@@ -784,8 +784,8 @@ export interface Integration {
           value: string | Page;
         } | null)
       | ({
-          relationTo: 'posts';
-          value: string | Post;
+          relationTo: 'blog-posts';
+          value: string | BlogPost;
         } | null)
       | ({
           relationTo: 'solutions';
@@ -820,8 +820,8 @@ export interface Integration {
                 value: string | Page;
               } | null)
             | ({
-                relationTo: 'posts';
-                value: string | Post;
+                relationTo: 'blog-posts';
+                value: string | BlogPost;
               } | null)
             | ({
                 relationTo: 'solutions';
@@ -927,8 +927,8 @@ export interface CustomHtmlBlock {
                   value: string | Page;
                 } | null)
               | ({
-                  relationTo: 'posts';
-                  value: string | Post;
+                  relationTo: 'blog-posts';
+                  value: string | BlogPost;
                 } | null)
               | ({
                   relationTo: 'solutions';
@@ -1020,8 +1020,8 @@ export interface FaqBlock {
                   value: string | Page;
                 } | null)
               | ({
-                  relationTo: 'posts';
-                  value: string | Post;
+                  relationTo: 'blog-posts';
+                  value: string | BlogPost;
                 } | null)
               | ({
                   relationTo: 'solutions';
@@ -1127,8 +1127,8 @@ export interface FeaturedAppsBlock {
                   value: string | Page;
                 } | null)
               | ({
-                  relationTo: 'posts';
-                  value: string | Post;
+                  relationTo: 'blog-posts';
+                  value: string | BlogPost;
                 } | null)
               | ({
                   relationTo: 'solutions';
@@ -1235,8 +1235,8 @@ export interface FeaturesBlock {
                   value: string | Page;
                 } | null)
               | ({
-                  relationTo: 'posts';
-                  value: string | Post;
+                  relationTo: 'blog-posts';
+                  value: string | BlogPost;
                 } | null)
               | ({
                   relationTo: 'solutions';
@@ -1289,8 +1289,8 @@ export interface FeaturesBlock {
           value: string | Page;
         } | null)
       | ({
-          relationTo: 'posts';
-          value: string | Post;
+          relationTo: 'blog-posts';
+          value: string | BlogPost;
         } | null)
       | ({
           relationTo: 'solutions';
@@ -1367,8 +1367,8 @@ export interface FeaturesBlock {
                 value: string | Page;
               } | null)
             | ({
-                relationTo: 'posts';
-                value: string | Post;
+                relationTo: 'blog-posts';
+                value: string | BlogPost;
               } | null)
             | ({
                 relationTo: 'solutions';
@@ -1636,8 +1636,8 @@ export interface GalleryBlock {
                   value: string | Page;
                 } | null)
               | ({
-                  relationTo: 'posts';
-                  value: string | Post;
+                  relationTo: 'blog-posts';
+                  value: string | BlogPost;
                 } | null)
               | ({
                   relationTo: 'solutions';
@@ -1738,8 +1738,8 @@ export interface LogoBlock {
                   value: string | Page;
                 } | null)
               | ({
-                  relationTo: 'posts';
-                  value: string | Post;
+                  relationTo: 'blog-posts';
+                  value: string | BlogPost;
                 } | null)
               | ({
                   relationTo: 'solutions';
@@ -1818,8 +1818,8 @@ export interface RichTextBlock {
                   value: string | Page;
                 } | null)
               | ({
-                  relationTo: 'posts';
-                  value: string | Post;
+                  relationTo: 'blog-posts';
+                  value: string | BlogPost;
                 } | null)
               | ({
                   relationTo: 'solutions';
@@ -1920,8 +1920,8 @@ export interface TestimonialsBlock {
                   value: string | Page;
                 } | null)
               | ({
-                  relationTo: 'posts';
-                  value: string | Post;
+                  relationTo: 'blog-posts';
+                  value: string | BlogPost;
                 } | null)
               | ({
                   relationTo: 'solutions';
@@ -2012,8 +2012,8 @@ export interface Customer {
               value: string | Page;
             } | null)
           | ({
-              relationTo: 'posts';
-              value: string | Post;
+              relationTo: 'blog-posts';
+              value: string | BlogPost;
             } | null)
           | ({
               relationTo: 'solutions';
@@ -2161,8 +2161,8 @@ export interface MetricsBlock {
                   value: string | Page;
                 } | null)
               | ({
-                  relationTo: 'posts';
-                  value: string | Post;
+                  relationTo: 'blog-posts';
+                  value: string | BlogPost;
                 } | null)
               | ({
                   relationTo: 'solutions';
@@ -2328,8 +2328,8 @@ export interface PricingBlock {
                   value: string | Page;
                 } | null)
               | ({
-                  relationTo: 'posts';
-                  value: string | Post;
+                  relationTo: 'blog-posts';
+                  value: string | BlogPost;
                 } | null)
               | ({
                   relationTo: 'solutions';
@@ -2393,8 +2393,8 @@ export interface PricingBlock {
                 value: string | Page;
               } | null)
             | ({
-                relationTo: 'posts';
-                value: string | Post;
+                relationTo: 'blog-posts';
+                value: string | BlogPost;
               } | null)
             | ({
                 relationTo: 'solutions';
@@ -2579,8 +2579,8 @@ export interface Redirect {
           value: string | Page;
         } | null)
       | ({
-          relationTo: 'posts';
-          value: string | Post;
+          relationTo: 'blog-posts';
+          value: string | BlogPost;
         } | null);
     url?: string | null;
   };
@@ -2615,8 +2615,8 @@ export interface Search {
   title?: string | null;
   priority?: number | null;
   doc: {
-    relationTo: 'posts';
-    value: string | Post;
+    relationTo: 'blog-posts';
+    value: string | BlogPost;
   };
   slug?: string | null;
   meta?: {
@@ -2739,8 +2739,8 @@ export interface PayloadLockedDocument {
         value: string | Page;
       } | null)
     | ({
-        relationTo: 'posts';
-        value: string | Post;
+        relationTo: 'blog-posts';
+        value: string | BlogPost;
       } | null)
     | ({
         relationTo: 'solutions';
@@ -2914,9 +2914,9 @@ export interface PagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts_select".
+ * via the `definition` "blog-posts_select".
  */
-export interface PostsSelect<T extends boolean = true> {
+export interface BlogPostsSelect<T extends boolean = true> {
   title?: T;
   heroImage?: T;
   content?: T;
@@ -3044,12 +3044,12 @@ export interface IntegrationsSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  prefix?: T;
   alt?: T;
   caption?: T;
   locale?: T;
   category?: T;
   blurhash?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -3542,8 +3542,8 @@ export interface Setting {
             value: string | Page;
           } | null)
         | ({
-            relationTo: 'posts';
-            value: string | Post;
+            relationTo: 'blog-posts';
+            value: string | BlogPost;
           } | null)
         | ({
             relationTo: 'solutions';
@@ -3580,8 +3580,8 @@ export interface Header {
                 value: string | Page;
               } | null)
             | ({
-                relationTo: 'posts';
-                value: string | Post;
+                relationTo: 'blog-posts';
+                value: string | BlogPost;
               } | null)
             | ({
                 relationTo: 'solutions';
@@ -3601,8 +3601,8 @@ export interface Header {
                       value: string | Page;
                     } | null)
                   | ({
-                      relationTo: 'posts';
-                      value: string | Post;
+                      relationTo: 'blog-posts';
+                      value: string | BlogPost;
                     } | null)
                   | ({
                       relationTo: 'solutions';
@@ -3627,8 +3627,8 @@ export interface Header {
                         value: string | Page;
                       } | null)
                     | ({
-                        relationTo: 'posts';
-                        value: string | Post;
+                        relationTo: 'blog-posts';
+                        value: string | BlogPost;
                       } | null)
                     | ({
                         relationTo: 'solutions';
@@ -3671,8 +3671,8 @@ export interface Header {
                               value: string | Page;
                             } | null)
                           | ({
-                              relationTo: 'posts';
-                              value: string | Post;
+                              relationTo: 'blog-posts';
+                              value: string | BlogPost;
                             } | null)
                           | ({
                               relationTo: 'solutions';
@@ -3702,8 +3702,8 @@ export interface Header {
                               value: string | Page;
                             } | null)
                           | ({
-                              relationTo: 'posts';
-                              value: string | Post;
+                              relationTo: 'blog-posts';
+                              value: string | BlogPost;
                             } | null)
                           | ({
                               relationTo: 'solutions';
@@ -3738,8 +3738,8 @@ export interface Header {
                 value: string | Page;
               } | null)
             | ({
-                relationTo: 'posts';
-                value: string | Post;
+                relationTo: 'blog-posts';
+                value: string | BlogPost;
               } | null)
             | ({
                 relationTo: 'solutions';
@@ -3782,8 +3782,8 @@ export interface Footer {
                       value: string | Page;
                     } | null)
                   | ({
-                      relationTo: 'posts';
-                      value: string | Post;
+                      relationTo: 'blog-posts';
+                      value: string | BlogPost;
                     } | null)
                   | ({
                       relationTo: 'solutions';
@@ -3997,8 +3997,8 @@ export interface TaskSchedulePublish {
           value: string | Page;
         } | null)
       | ({
-          relationTo: 'posts';
-          value: string | Post;
+          relationTo: 'blog-posts';
+          value: string | BlogPost;
         } | null)
       | ({
           relationTo: 'integrations';

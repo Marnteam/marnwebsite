@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { cn } from '@/utilities/ui'
-import type { Media as MediaType, Integration, Solution, Post, Page } from '@/payload-types'
+import type { Media as MediaType, Integration, Solution, BlogPost, Page } from '@/payload-types'
 import { Media } from '@/components/MediaResponsive'
 import { Badge } from '@/components/ui/badge'
 import { ChevronDown, CircleCheck, X } from 'lucide-react'
@@ -51,8 +51,8 @@ interface PricingCardProps {
           value: string | Page
         } | null)
       | ({
-          relationTo: 'posts'
-          value: string | Post
+          relationTo: 'blog-posts'
+          value: string | BlogPost
         } | null)
       | ({
           relationTo: 'solutions'

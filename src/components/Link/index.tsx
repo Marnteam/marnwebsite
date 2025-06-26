@@ -4,7 +4,7 @@ import { cn } from '@/utilities/ui'
 import { Link } from '@/i18n/routing'
 import React from 'react'
 
-import type { Integration, Page, Post, Solution } from '@/payload-types'
+import type { Integration, Page, BlogPost, Solution } from '@/payload-types'
 import { Icon } from '@iconify-icon/react'
 
 export type CMSLinkType = {
@@ -15,8 +15,8 @@ export type CMSLinkType = {
   label?: string | null
   newTab?: boolean | null
   reference?: {
-    relationTo: 'pages' | 'posts' | 'solutions' | 'integrations'
-    value: Page | Post | Solution | Integration | string | number
+    relationTo: 'pages' | 'blog-posts' | 'solutions' | 'integrations'
+    value: Page | BlogPost | Solution | Integration | string | number
   } | null
   size?: ButtonProps['size'] | null
   type?: 'custom' | 'reference' | null
@@ -32,7 +32,7 @@ function getHref(link) {
   switch (relationTo) {
     case 'pages':
       return value.slug
-    case 'posts':
+    case 'blog-posts':
       return `/blog/${value.slug}`
     case 'solutions':
       return `/solutions/${value.slug}`

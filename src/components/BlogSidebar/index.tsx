@@ -1,8 +1,8 @@
 import HeadingLinks from '@/components/RichText/HeadingLinks'
-import type { Category, Post } from '@/payload-types'
+import type { Category, BlogPost } from '@/payload-types'
 import { useTranslations } from 'next-intl'
 
-export const BlogSidebar = ({ post }: { post: Post }) => {
+export const BlogSidebar = ({ post }: { post: BlogPost }) => {
   const { content, categories, relatedPosts } = post
   const t = useTranslations('Blog')
   return (

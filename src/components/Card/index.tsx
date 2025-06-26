@@ -5,7 +5,7 @@ import Link from 'next/link'
 import React, { Fragment } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 
-import type { Post } from '@/payload-types'
+import type { BlogPost } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import { Badge } from '../ui/badge'
@@ -16,8 +16,8 @@ import { getReadTimeFromLexical } from '@/utilities/extractTextFromLexical'
 export const Card: React.FC<{
   alignItems?: 'center'
   className?: string
-  doc?: Post
-  relationTo?: 'posts'
+  doc?: BlogPost
+  relationTo?: 'blog-posts'
   showCategories?: boolean
   title?: string
 }> = (props) => {
@@ -33,7 +33,7 @@ export const Card: React.FC<{
   const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
   let href = ''
   switch (relationTo) {
-    case 'posts':
+    case 'blog-posts':
       href = `/${locale}/blog/${encodeURIComponent(slug || '')}`
       break
     default:

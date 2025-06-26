@@ -2,13 +2,13 @@ import React, { Fragment } from 'react'
 import { getLocale } from 'next-intl/server'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import type { BlogBlock, Post } from '@/payload-types'
+import type { BlogBlock, BlogPost } from '@/payload-types'
 import { FeaturedPost } from './FeaturedPost'
 import { TwoColumns } from './TwoColumns'
 
 type BlogBlockType = BlogBlock & {
-  recentPosts?: Post[]
-  editorsPicks?: Post[]
+  recentPosts?: BlogPost[]
+  editorsPicks?: BlogPost[]
   locale: 'en' | 'ar'
 }
 
@@ -24,16 +24,16 @@ export const RenderBlogBlock: React.FC<BlogBlockType> = async (props) => {
   const locale = (await getLocale()) as 'en' | 'ar'
   const payload = await getPayload({ config })
 
-  let featuredPostData: Post | null = null
-  let recentPostsData: Post[] = []
-  let editorsPicksData: Post[] = []
+  let featuredPostData: BlogPost | null = null
+  let recentPostsData: BlogPost[] = []
+  let editorsPicksData: BlogPost[] = []
 
   try {
     // Handle featured post
     if (featuredPost) {
       if (typeof featuredPost === 'string') {
         const post = await payload.findByID({
-          collection: 'posts',
+          collection: 'blog-posts',
           id: featuredPost,
           depth: 2,
           locale: locale,
@@ -41,7 +41,7 @@ export const RenderBlogBlock: React.FC<BlogBlockType> = async (props) => {
         featuredPostData = post
       } else {
         const post = await payload.findByID({
-          collection: 'posts',
+          collection: 'blog-posts',
           id: featuredPost.id,
           depth: 2,
           locale: locale,
@@ -50,7 +50,7 @@ export const RenderBlogBlock: React.FC<BlogBlockType> = async (props) => {
       }
     } else {
       const post = await payload.find({
-        collection: 'posts',
+        collection: 'blog-posts',
         depth: 2,
         limit: 1,
         locale: locale,
@@ -68,24 +68,24 @@ export const RenderBlogBlock: React.FC<BlogBlockType> = async (props) => {
       const recentPostPromises = recentPosts.map((post) => {
         if (typeof post === 'string') {
           return payload.findByID({
-            collection: 'posts',
+            collection: 'blog-posts',
             id: post,
             depth: 2,
             locale: locale,
           })
         } else {
           return payload.findByID({
-            collection: 'posts',
+            collection: 'blog-posts',
             id: post.id,
             depth: 2,
             locale: locale,
           })
         }
       })
-      recentPostsData = (await Promise.all(recentPostPromises)).filter(Boolean) as Post[]
+      recentPostsData = (await Promise.all(recentPostPromises)).filter(Boolean) as BlogPost[]
     } else {
       const recentPosts = await payload.find({
-        collection: 'posts',
+        collection: 'blog-posts',
         depth: 2,
         limit: 7,
         locale: locale as 'en' | 'ar',
@@ -104,25 +104,25 @@ export const RenderBlogBlock: React.FC<BlogBlockType> = async (props) => {
       const editorsPicksPromises = editorsPicks.map((post) => {
         if (typeof post === 'string') {
           return payload.findByID({
-            collection: 'posts',
+            collection: 'blog-posts',
             id: post,
             depth: 2,
             locale: locale as 'en' | 'ar',
           })
         } else {
           return payload.findByID({
-            collection: 'posts',
+            collection: 'blog-posts',
             id: post.id,
             depth: 2,
             locale: locale,
           })
         }
       })
-      editorsPicksData = (await Promise.all(editorsPicksPromises)).filter(Boolean) as Post[]
+      editorsPicksData = (await Promise.all(editorsPicksPromises)).filter(Boolean) as BlogPost[]
     } else {
       // Fetch random published posts for editors picks
       const posts = await payload.find({
-        collection: 'posts',
+        collection: 'blog-posts',
         depth: 2,
         limit: 50,
         locale: locale as 'en' | 'ar',

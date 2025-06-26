@@ -1,5 +1,5 @@
 import type { Metadata } from 'next/types'
-import type { Page as PageType, Post } from '@/payload-types'
+import type { Page as PageType, BlogPost } from '@/payload-types'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
@@ -41,7 +41,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   }
 
   const posts = await payload.find({
-    collection: 'posts',
+    collection: 'blog-posts',
     depth: 1,
     limit: 12,
     overrideAccess: false,
@@ -76,7 +76,7 @@ export default async function Page({ params: paramsPromise }: Args) {
         />
       </div>
 
-      <CollectionArchive posts={posts.docs as Post[]} />
+      <CollectionArchive posts={posts.docs as BlogPost[]} />
 
       <div className="container">
         {posts.totalPages > 1 && posts.page && (

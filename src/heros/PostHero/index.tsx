@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState, useLayoutEffect } from 'react'
 import { useScroll, useTransform, useSpring, LayoutGroup, motion } from 'motion/react'
 import clsx from 'clsx'
 import { formatDateTime } from 'src/utilities/formatDateTime'
-import type { Post } from '@/payload-types'
+import type { BlogPost } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import { formatAuthors } from '@/utilities/formatAuthors'
@@ -17,7 +17,7 @@ import { getReadTimeFromLexical } from '@/utilities/extractTextFromLexical'
 import Link from 'next/link'
 
 export const PostHero: React.FC<{
-  post: Post
+  post: BlogPost
 }> = ({ post }) => {
   const t = useTranslations('Blog')
   const locale = useLocale() as 'en' | 'ar'
@@ -233,7 +233,7 @@ export const PostHero: React.FC<{
                 originX: locale === 'ar' ? 1 : 0,
                 transform: 'translate3d(0, 0, 0)',
               }}
-              className="bg-background-inverted absolute inset-0 h-1"
+              className="bg-brand absolute inset-0 h-1"
             />
           </motion.div>
         </div>

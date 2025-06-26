@@ -1,5 +1,5 @@
 import type { Payload, PayloadRequest } from 'payload'
-import type { Media, User, Category, Post } from '@/payload-types'
+import type { Media, User, Category, BlogPost } from '@/payload-types'
 import { formatSlug } from '@/hooks/formatSlug'
 
 export type BlogPostsSeedArgs = {
@@ -527,7 +527,7 @@ export const seedBlogPosts = async (
 
   for (let i = 0; i < posts.length; i++) {
     await payload.create({
-      collection: 'posts',
+      collection: 'blog-posts',
       data: posts[i],
       req,
     })

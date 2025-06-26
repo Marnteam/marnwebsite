@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import type { Media, Page, Post, Config, Integration } from '../payload-types'
+import type { Media, Page, BlogPost, Config, Integration } from '../payload-types'
 
 import { mergeOpenGraph } from './mergeOpenGraph'
 import { getServerSideURL } from './getURL'
@@ -20,7 +20,7 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
 }
 
 export const generateMeta = async (args: {
-  doc: Partial<Page> | Partial<Post> | Partial<Integration>
+  doc: Partial<Page> | Partial<BlogPost> | Partial<Integration>
 }): Promise<Metadata> => {
   const { doc } = args || {}
 

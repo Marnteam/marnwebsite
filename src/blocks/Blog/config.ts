@@ -28,7 +28,7 @@ export const BlogBlock: Block = {
     {
       name: 'featuredPost',
       type: 'relationship',
-      relationTo: 'posts',
+      relationTo: 'blog-posts',
       admin: {
         description: 'Select the featured post to display in the blog block.',
         condition: (data, siblingData) => {
@@ -64,7 +64,7 @@ export const BlogBlock: Block = {
         {
           name: 'recentPosts',
           type: 'relationship',
-          relationTo: 'posts',
+          relationTo: 'blog-posts',
           hasMany: true,
           admin: {
             description:
@@ -101,7 +101,7 @@ export const BlogBlock: Block = {
         {
           name: 'editorsPicks',
           type: 'relationship',
-          relationTo: 'posts',
+          relationTo: 'blog-posts',
           hasMany: true,
           admin: {
             description:

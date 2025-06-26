@@ -7,7 +7,7 @@ import type {
   // RichText, // Removed as it's not a direct export
   Solution,
   Integration,
-  Post,
+  BlogPost,
 } from '@/payload-types'
 
 // Helper to generate basic Lexical content that matches RichText field type
@@ -102,8 +102,8 @@ type CommonPayloadLink = {
   type?: ('reference' | 'custom') | null
   newTab?: boolean | null
   reference?: {
-    relationTo: 'pages' | 'posts' | 'solutions' | 'integrations' // Add all valid relationTo targets
-    value: string | string | Page | Post | Solution | Integration // Or the actual related document type
+    relationTo: 'pages' | 'blog-posts' | 'solutions' | 'integrations' // Add all valid relationTo targets
+    value: string | string | Page | BlogPost | Solution | Integration // Or the actual related document type
   } | null
   url?: string | null
   label: string // Label is often required

@@ -1,5 +1,5 @@
 import React from 'react'
-import type { Post } from '@/payload-types'
+import type { BlogPost } from '@/payload-types'
 import { Media } from '@/components/Media'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
@@ -11,12 +11,12 @@ import type { BlogBlock } from '@/payload-types'
 
 type BlogBlockType = BlogBlock & {
   locale: 'en' | 'ar'
-  featuredPost: Post
+  featuredPost: BlogPost
 }
 
 const PostCard: React.FC<{
   index: number
-  post: Post
+  post: BlogPost
   locale: 'en' | 'ar'
   className?: string
 }> = ({ index, post, locale, className = '' }) => {

@@ -460,12 +460,15 @@ export const enum__pages_v_version_status = pgEnum('enum__pages_v_version_status
   'published',
 ])
 export const enum__pages_v_published_locale = pgEnum('enum__pages_v_published_locale', ['en', 'ar'])
-export const enum_posts_status = pgEnum('enum_posts_status', ['draft', 'published'])
-export const enum__posts_v_version_status = pgEnum('enum__posts_v_version_status', [
+export const enum_blog_posts_status = pgEnum('enum_blog_posts_status', ['draft', 'published'])
+export const enum__blog_posts_v_version_status = pgEnum('enum__blog_posts_v_version_status', [
   'draft',
   'published',
 ])
-export const enum__posts_v_published_locale = pgEnum('enum__posts_v_published_locale', ['en', 'ar'])
+export const enum__blog_posts_v_published_locale = pgEnum('enum__blog_posts_v_published_locale', [
+  'en',
+  'ar',
+])
 export const enum_solutions_status = pgEnum('enum_solutions_status', ['draft', 'published'])
 export const enum__solutions_v_version_status = pgEnum('enum__solutions_v_version_status', [
   'draft',
@@ -643,7 +646,7 @@ export const blogBlock = pgTable(
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     type: enum_blogBlock_type('type').default('featuredPost'),
-    featuredPost: uuid('featured_post_id').references(() => posts.id, {
+    featuredPost: uuid('featured_post_id').references(() => blog_posts.id, {
       onDelete: 'set null',
     }),
     blockName: varchar('block_name'),
@@ -2491,7 +2494,7 @@ export const pages_rels = pgTable(
     solutionsID: uuid('solutions_id'),
     integrationsID: uuid('integrations_id'),
     pagesID: uuid('pages_id'),
-    postsID: uuid('posts_id'),
+    'blog-postsID': uuid('blog_posts_id'),
     mediaID: uuid('media_id'),
     categoriesID: uuid('categories_id'),
     faqID: uuid('faq_id'),
@@ -2511,7 +2514,10 @@ export const pages_rels = pgTable(
       columns.locale,
     ),
     pages_rels_pages_id_idx: index('pages_rels_pages_id_idx').on(columns.pagesID, columns.locale),
-    pages_rels_posts_id_idx: index('pages_rels_posts_id_idx').on(columns.postsID, columns.locale),
+    pages_rels_blog_posts_id_idx: index('pages_rels_blog_posts_id_idx').on(
+      columns['blog-postsID'],
+      columns.locale,
+    ),
     pages_rels_media_id_idx: index('pages_rels_media_id_idx').on(columns.mediaID, columns.locale),
     pages_rels_categories_id_idx: index('pages_rels_categories_id_idx').on(
       columns.categoriesID,
@@ -2542,10 +2548,10 @@ export const pages_rels = pgTable(
       foreignColumns: [pages.id],
       name: 'pages_rels_pages_fk',
     }).onDelete('cascade'),
-    postsIdFk: foreignKey({
-      columns: [columns['postsID']],
-      foreignColumns: [posts.id],
-      name: 'pages_rels_posts_fk',
+    'blog-postsIdFk': foreignKey({
+      columns: [columns['blog-postsID']],
+      foreignColumns: [blog_posts.id],
+      name: 'pages_rels_blog_posts_fk',
     }).onDelete('cascade'),
     mediaIdFk: foreignKey({
       columns: [columns['mediaID']],
@@ -2669,7 +2675,7 @@ export const _blogBlock_v = pgTable(
     _path: text('_path').notNull(),
     id: uuid('id').defaultRandom().primaryKey(),
     type: enum__blogBlock_v_type('type').default('featuredPost'),
-    featuredPost: uuid('featured_post_id').references(() => posts.id, {
+    featuredPost: uuid('featured_post_id').references(() => blog_posts.id, {
       onDelete: 'set null',
     }),
     _uuid: varchar('_uuid'),
@@ -4631,7 +4637,7 @@ export const _pages_v_rels = pgTable(
     solutionsID: uuid('solutions_id'),
     integrationsID: uuid('integrations_id'),
     pagesID: uuid('pages_id'),
-    postsID: uuid('posts_id'),
+    'blog-postsID': uuid('blog_posts_id'),
     mediaID: uuid('media_id'),
     categoriesID: uuid('categories_id'),
     faqID: uuid('faq_id'),
@@ -4654,8 +4660,8 @@ export const _pages_v_rels = pgTable(
       columns.pagesID,
       columns.locale,
     ),
-    _pages_v_rels_posts_id_idx: index('_pages_v_rels_posts_id_idx').on(
-      columns.postsID,
+    _pages_v_rels_blog_posts_id_idx: index('_pages_v_rels_blog_posts_id_idx').on(
+      columns['blog-postsID'],
       columns.locale,
     ),
     _pages_v_rels_media_id_idx: index('_pages_v_rels_media_id_idx').on(
@@ -4691,10 +4697,10 @@ export const _pages_v_rels = pgTable(
       foreignColumns: [pages.id],
       name: '_pages_v_rels_pages_fk',
     }).onDelete('cascade'),
-    postsIdFk: foreignKey({
-      columns: [columns['postsID']],
-      foreignColumns: [posts.id],
-      name: '_pages_v_rels_posts_fk',
+    'blog-postsIdFk': foreignKey({
+      columns: [columns['blog-postsID']],
+      foreignColumns: [blog_posts.id],
+      name: '_pages_v_rels_blog_posts_fk',
     }).onDelete('cascade'),
     mediaIdFk: foreignKey({
       columns: [columns['mediaID']],
@@ -4719,8 +4725,8 @@ export const _pages_v_rels = pgTable(
   }),
 )
 
-export const posts_populated_authors = pgTable(
-  'posts_populated_authors',
+export const blog_posts_populated_authors = pgTable(
+  'blog_posts_populated_authors',
   {
     _order: integer('_order').notNull(),
     _parentID: uuid('_parent_id').notNull(),
@@ -4728,18 +4734,18 @@ export const posts_populated_authors = pgTable(
     name: varchar('name'),
   },
   (columns) => ({
-    _orderIdx: index('posts_populated_authors_order_idx').on(columns._order),
-    _parentIDIdx: index('posts_populated_authors_parent_id_idx').on(columns._parentID),
+    _orderIdx: index('blog_posts_populated_authors_order_idx').on(columns._order),
+    _parentIDIdx: index('blog_posts_populated_authors_parent_id_idx').on(columns._parentID),
     _parentIDFk: foreignKey({
       columns: [columns['_parentID']],
-      foreignColumns: [posts.id],
-      name: 'posts_populated_authors_parent_id_fk',
+      foreignColumns: [blog_posts.id],
+      name: 'blog_posts_populated_authors_parent_id_fk',
     }).onDelete('cascade'),
   }),
 )
 
-export const posts = pgTable(
-  'posts',
+export const blog_posts = pgTable(
+  'blog_posts',
   {
     id: uuid('id').defaultRandom().primaryKey(),
     slug: varchar('slug'),
@@ -4750,18 +4756,18 @@ export const posts = pgTable(
     createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
-    _status: enum_posts_status('_status').default('draft'),
+    _status: enum_blog_posts_status('_status').default('draft'),
   },
   (columns) => ({
-    posts_slug_idx: index('posts_slug_idx').on(columns.slug),
-    posts_updated_at_idx: index('posts_updated_at_idx').on(columns.updatedAt),
-    posts_created_at_idx: index('posts_created_at_idx').on(columns.createdAt),
-    posts__status_idx: index('posts__status_idx').on(columns._status),
+    blog_posts_slug_idx: index('blog_posts_slug_idx').on(columns.slug),
+    blog_posts_updated_at_idx: index('blog_posts_updated_at_idx').on(columns.updatedAt),
+    blog_posts_created_at_idx: index('blog_posts_created_at_idx').on(columns.createdAt),
+    blog_posts__status_idx: index('blog_posts__status_idx').on(columns._status),
   }),
 )
 
-export const posts_locales = pgTable(
-  'posts_locales',
+export const blog_posts_locales = pgTable(
+  'blog_posts_locales',
   {
     title: varchar('title'),
     heroImage: uuid('hero_image_id').references(() => media.id, {
@@ -4779,68 +4785,77 @@ export const posts_locales = pgTable(
     _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
-    posts_hero_image_idx: index('posts_hero_image_idx').on(columns.heroImage, columns._locale),
-    posts_meta_meta_image_idx: index('posts_meta_meta_image_idx').on(columns.meta_image),
-    _localeParent: uniqueIndex('posts_locales_locale_parent_id_unique').on(
+    blog_posts_hero_image_idx: index('blog_posts_hero_image_idx').on(
+      columns.heroImage,
+      columns._locale,
+    ),
+    blog_posts_meta_meta_image_idx: index('blog_posts_meta_meta_image_idx').on(columns.meta_image),
+    _localeParent: uniqueIndex('blog_posts_locales_locale_parent_id_unique').on(
       columns._locale,
       columns._parentID,
     ),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
-      foreignColumns: [posts.id],
-      name: 'posts_locales_parent_id_fk',
+      foreignColumns: [blog_posts.id],
+      name: 'blog_posts_locales_parent_id_fk',
     }).onDelete('cascade'),
   }),
 )
 
-export const posts_rels = pgTable(
-  'posts_rels',
+export const blog_posts_rels = pgTable(
+  'blog_posts_rels',
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
     parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
     locale: enum__locales('locale'),
-    postsID: uuid('posts_id'),
+    'blog-postsID': uuid('blog_posts_id'),
     categoriesID: uuid('categories_id'),
     usersID: uuid('users_id'),
   },
   (columns) => ({
-    order: index('posts_rels_order_idx').on(columns.order),
-    parentIdx: index('posts_rels_parent_idx').on(columns.parent),
-    pathIdx: index('posts_rels_path_idx').on(columns.path),
-    localeIdx: index('posts_rels_locale_idx').on(columns.locale),
-    posts_rels_posts_id_idx: index('posts_rels_posts_id_idx').on(columns.postsID, columns.locale),
-    posts_rels_categories_id_idx: index('posts_rels_categories_id_idx').on(
+    order: index('blog_posts_rels_order_idx').on(columns.order),
+    parentIdx: index('blog_posts_rels_parent_idx').on(columns.parent),
+    pathIdx: index('blog_posts_rels_path_idx').on(columns.path),
+    localeIdx: index('blog_posts_rels_locale_idx').on(columns.locale),
+    blog_posts_rels_blog_posts_id_idx: index('blog_posts_rels_blog_posts_id_idx').on(
+      columns['blog-postsID'],
+      columns.locale,
+    ),
+    blog_posts_rels_categories_id_idx: index('blog_posts_rels_categories_id_idx').on(
       columns.categoriesID,
       columns.locale,
     ),
-    posts_rels_users_id_idx: index('posts_rels_users_id_idx').on(columns.usersID, columns.locale),
+    blog_posts_rels_users_id_idx: index('blog_posts_rels_users_id_idx').on(
+      columns.usersID,
+      columns.locale,
+    ),
     parentFk: foreignKey({
       columns: [columns['parent']],
-      foreignColumns: [posts.id],
-      name: 'posts_rels_parent_fk',
+      foreignColumns: [blog_posts.id],
+      name: 'blog_posts_rels_parent_fk',
     }).onDelete('cascade'),
-    postsIdFk: foreignKey({
-      columns: [columns['postsID']],
-      foreignColumns: [posts.id],
-      name: 'posts_rels_posts_fk',
+    'blog-postsIdFk': foreignKey({
+      columns: [columns['blog-postsID']],
+      foreignColumns: [blog_posts.id],
+      name: 'blog_posts_rels_blog_posts_fk',
     }).onDelete('cascade'),
     categoriesIdFk: foreignKey({
       columns: [columns['categoriesID']],
       foreignColumns: [categories.id],
-      name: 'posts_rels_categories_fk',
+      name: 'blog_posts_rels_categories_fk',
     }).onDelete('cascade'),
     usersIdFk: foreignKey({
       columns: [columns['usersID']],
       foreignColumns: [users.id],
-      name: 'posts_rels_users_fk',
+      name: 'blog_posts_rels_users_fk',
     }).onDelete('cascade'),
   }),
 )
 
-export const _posts_v_version_populated_authors = pgTable(
-  '_posts_v_version_populated_authors',
+export const _blog_posts_v_version_populated_authors = pgTable(
+  '_blog_posts_v_version_populated_authors',
   {
     _order: integer('_order').notNull(),
     _parentID: uuid('_parent_id').notNull(),
@@ -4849,21 +4864,23 @@ export const _posts_v_version_populated_authors = pgTable(
     name: varchar('name'),
   },
   (columns) => ({
-    _orderIdx: index('_posts_v_version_populated_authors_order_idx').on(columns._order),
-    _parentIDIdx: index('_posts_v_version_populated_authors_parent_id_idx').on(columns._parentID),
+    _orderIdx: index('_blog_posts_v_version_populated_authors_order_idx').on(columns._order),
+    _parentIDIdx: index('_blog_posts_v_version_populated_authors_parent_id_idx').on(
+      columns._parentID,
+    ),
     _parentIDFk: foreignKey({
       columns: [columns['_parentID']],
-      foreignColumns: [_posts_v.id],
-      name: '_posts_v_version_populated_authors_parent_id_fk',
+      foreignColumns: [_blog_posts_v.id],
+      name: '_blog_posts_v_version_populated_authors_parent_id_fk',
     }).onDelete('cascade'),
   }),
 )
 
-export const _posts_v = pgTable(
-  '_posts_v',
+export const _blog_posts_v = pgTable(
+  '_blog_posts_v',
   {
     id: uuid('id').defaultRandom().primaryKey(),
-    parent: uuid('parent_id').references(() => posts.id, {
+    parent: uuid('parent_id').references(() => blog_posts.id, {
       onDelete: 'set null',
     }),
     version_slug: varchar('version_slug'),
@@ -4878,7 +4895,7 @@ export const _posts_v = pgTable(
       withTimezone: true,
       precision: 3,
     }),
-    version__status: enum__posts_v_version_status('version__status').default('draft'),
+    version__status: enum__blog_posts_v_version_status('version__status').default('draft'),
     createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -4886,35 +4903,35 @@ export const _posts_v = pgTable(
       .defaultNow()
       .notNull(),
     snapshot: boolean('snapshot'),
-    publishedLocale: enum__posts_v_published_locale('published_locale'),
+    publishedLocale: enum__blog_posts_v_published_locale('published_locale'),
     latest: boolean('latest'),
   },
   (columns) => ({
-    _posts_v_parent_idx: index('_posts_v_parent_idx').on(columns.parent),
-    _posts_v_version_version_slug_idx: index('_posts_v_version_version_slug_idx').on(
+    _blog_posts_v_parent_idx: index('_blog_posts_v_parent_idx').on(columns.parent),
+    _blog_posts_v_version_version_slug_idx: index('_blog_posts_v_version_version_slug_idx').on(
       columns.version_slug,
     ),
-    _posts_v_version_version_updated_at_idx: index('_posts_v_version_version_updated_at_idx').on(
-      columns.version_updatedAt,
-    ),
-    _posts_v_version_version_created_at_idx: index('_posts_v_version_version_created_at_idx').on(
-      columns.version_createdAt,
-    ),
-    _posts_v_version_version__status_idx: index('_posts_v_version_version__status_idx').on(
-      columns.version__status,
-    ),
-    _posts_v_created_at_idx: index('_posts_v_created_at_idx').on(columns.createdAt),
-    _posts_v_updated_at_idx: index('_posts_v_updated_at_idx').on(columns.updatedAt),
-    _posts_v_snapshot_idx: index('_posts_v_snapshot_idx').on(columns.snapshot),
-    _posts_v_published_locale_idx: index('_posts_v_published_locale_idx').on(
+    _blog_posts_v_version_version_updated_at_idx: index(
+      '_blog_posts_v_version_version_updated_at_idx',
+    ).on(columns.version_updatedAt),
+    _blog_posts_v_version_version_created_at_idx: index(
+      '_blog_posts_v_version_version_created_at_idx',
+    ).on(columns.version_createdAt),
+    _blog_posts_v_version_version__status_idx: index(
+      '_blog_posts_v_version_version__status_idx',
+    ).on(columns.version__status),
+    _blog_posts_v_created_at_idx: index('_blog_posts_v_created_at_idx').on(columns.createdAt),
+    _blog_posts_v_updated_at_idx: index('_blog_posts_v_updated_at_idx').on(columns.updatedAt),
+    _blog_posts_v_snapshot_idx: index('_blog_posts_v_snapshot_idx').on(columns.snapshot),
+    _blog_posts_v_published_locale_idx: index('_blog_posts_v_published_locale_idx').on(
       columns.publishedLocale,
     ),
-    _posts_v_latest_idx: index('_posts_v_latest_idx').on(columns.latest),
+    _blog_posts_v_latest_idx: index('_blog_posts_v_latest_idx').on(columns.latest),
   }),
 )
 
-export const _posts_v_locales = pgTable(
-  '_posts_v_locales',
+export const _blog_posts_v_locales = pgTable(
+  '_blog_posts_v_locales',
   {
     version_title: varchar('version_title'),
     version_heroImage: uuid('version_hero_image_id').references(() => media.id, {
@@ -4936,73 +4953,72 @@ export const _posts_v_locales = pgTable(
     _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
-    _posts_v_version_version_hero_image_idx: index('_posts_v_version_version_hero_image_idx').on(
-      columns.version_heroImage,
-      columns._locale,
-    ),
-    _posts_v_version_meta_version_meta_image_idx: index(
-      '_posts_v_version_meta_version_meta_image_idx',
+    _blog_posts_v_version_version_hero_image_idx: index(
+      '_blog_posts_v_version_version_hero_image_idx',
+    ).on(columns.version_heroImage, columns._locale),
+    _blog_posts_v_version_meta_version_meta_image_idx: index(
+      '_blog_posts_v_version_meta_version_meta_image_idx',
     ).on(columns.version_meta_image),
-    _localeParent: uniqueIndex('_posts_v_locales_locale_parent_id_unique').on(
+    _localeParent: uniqueIndex('_blog_posts_v_locales_locale_parent_id_unique').on(
       columns._locale,
       columns._parentID,
     ),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
-      foreignColumns: [_posts_v.id],
-      name: '_posts_v_locales_parent_id_fk',
+      foreignColumns: [_blog_posts_v.id],
+      name: '_blog_posts_v_locales_parent_id_fk',
     }).onDelete('cascade'),
   }),
 )
 
-export const _posts_v_rels = pgTable(
-  '_posts_v_rels',
+export const _blog_posts_v_rels = pgTable(
+  '_blog_posts_v_rels',
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
     parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
     locale: enum__locales('locale'),
-    postsID: uuid('posts_id'),
+    'blog-postsID': uuid('blog_posts_id'),
     categoriesID: uuid('categories_id'),
     usersID: uuid('users_id'),
   },
   (columns) => ({
-    order: index('_posts_v_rels_order_idx').on(columns.order),
-    parentIdx: index('_posts_v_rels_parent_idx').on(columns.parent),
-    pathIdx: index('_posts_v_rels_path_idx').on(columns.path),
-    localeIdx: index('_posts_v_rels_locale_idx').on(columns.locale),
-    _posts_v_rels_posts_id_idx: index('_posts_v_rels_posts_id_idx').on(
-      columns.postsID,
+    order: index('_blog_posts_v_rels_order_idx').on(columns.order),
+    parentIdx: index('_blog_posts_v_rels_parent_idx').on(columns.parent),
+    pathIdx: index('_blog_posts_v_rels_path_idx').on(columns.path),
+    localeIdx: index('_blog_posts_v_rels_locale_idx').on(columns.locale),
+    _blog_posts_v_rels_blog_posts_id_idx: index('_blog_posts_v_rels_blog_posts_id_idx').on(
+      columns['blog-postsID'],
       columns.locale,
     ),
-    _posts_v_rels_categories_id_idx: index('_posts_v_rels_categories_id_idx').on(
+    _blog_posts_v_rels_categories_id_idx: index('_blog_posts_v_rels_categories_id_idx').on(
       columns.categoriesID,
       columns.locale,
     ),
-    _posts_v_rels_users_id_idx: index('_posts_v_rels_users_id_idx').on(
+    _blog_posts_v_rels_users_id_idx: index('_blog_posts_v_rels_users_id_idx').on(
       columns.usersID,
       columns.locale,
     ),
     parentFk: foreignKey({
       columns: [columns['parent']],
-      foreignColumns: [_posts_v.id],
-      name: '_posts_v_rels_parent_fk',
+      foreignColumns: [_blog_posts_v.id],
+      name: '_blog_posts_v_rels_parent_fk',
     }).onDelete('cascade'),
-    postsIdFk: foreignKey({
-      columns: [columns['postsID']],
-      foreignColumns: [posts.id],
-      name: '_posts_v_rels_posts_fk',
+    'blog-postsIdFk': foreignKey({
+      columns: [columns['blog-postsID']],
+      foreignColumns: [blog_posts.id],
+      name: '_blog_posts_v_rels_blog_posts_fk',
     }).onDelete('cascade'),
     categoriesIdFk: foreignKey({
       columns: [columns['categoriesID']],
       foreignColumns: [categories.id],
-      name: '_posts_v_rels_categories_fk',
+      name: '_blog_posts_v_rels_categories_fk',
     }).onDelete('cascade'),
     usersIdFk: foreignKey({
       columns: [columns['usersID']],
       foreignColumns: [users.id],
-      name: '_posts_v_rels_users_fk',
+      name: '_blog_posts_v_rels_users_fk',
     }).onDelete('cascade'),
   }),
 )
@@ -5073,7 +5089,7 @@ export const solutions_rels = pgTable(
     parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
     pagesID: uuid('pages_id'),
-    postsID: uuid('posts_id'),
+    'blog-postsID': uuid('blog_posts_id'),
     solutionsID: uuid('solutions_id'),
   },
   (columns) => ({
@@ -5081,7 +5097,9 @@ export const solutions_rels = pgTable(
     parentIdx: index('solutions_rels_parent_idx').on(columns.parent),
     pathIdx: index('solutions_rels_path_idx').on(columns.path),
     solutions_rels_pages_id_idx: index('solutions_rels_pages_id_idx').on(columns.pagesID),
-    solutions_rels_posts_id_idx: index('solutions_rels_posts_id_idx').on(columns.postsID),
+    solutions_rels_blog_posts_id_idx: index('solutions_rels_blog_posts_id_idx').on(
+      columns['blog-postsID'],
+    ),
     solutions_rels_solutions_id_idx: index('solutions_rels_solutions_id_idx').on(
       columns.solutionsID,
     ),
@@ -5095,10 +5113,10 @@ export const solutions_rels = pgTable(
       foreignColumns: [pages.id],
       name: 'solutions_rels_pages_fk',
     }).onDelete('cascade'),
-    postsIdFk: foreignKey({
-      columns: [columns['postsID']],
-      foreignColumns: [posts.id],
-      name: 'solutions_rels_posts_fk',
+    'blog-postsIdFk': foreignKey({
+      columns: [columns['blog-postsID']],
+      foreignColumns: [blog_posts.id],
+      name: 'solutions_rels_blog_posts_fk',
     }).onDelete('cascade'),
     solutionsIdFk: foreignKey({
       columns: [columns['solutionsID']],
@@ -5216,7 +5234,7 @@ export const _solutions_v_rels = pgTable(
     parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
     pagesID: uuid('pages_id'),
-    postsID: uuid('posts_id'),
+    'blog-postsID': uuid('blog_posts_id'),
     solutionsID: uuid('solutions_id'),
   },
   (columns) => ({
@@ -5224,7 +5242,9 @@ export const _solutions_v_rels = pgTable(
     parentIdx: index('_solutions_v_rels_parent_idx').on(columns.parent),
     pathIdx: index('_solutions_v_rels_path_idx').on(columns.path),
     _solutions_v_rels_pages_id_idx: index('_solutions_v_rels_pages_id_idx').on(columns.pagesID),
-    _solutions_v_rels_posts_id_idx: index('_solutions_v_rels_posts_id_idx').on(columns.postsID),
+    _solutions_v_rels_blog_posts_id_idx: index('_solutions_v_rels_blog_posts_id_idx').on(
+      columns['blog-postsID'],
+    ),
     _solutions_v_rels_solutions_id_idx: index('_solutions_v_rels_solutions_id_idx').on(
       columns.solutionsID,
     ),
@@ -5238,10 +5258,10 @@ export const _solutions_v_rels = pgTable(
       foreignColumns: [pages.id],
       name: '_solutions_v_rels_pages_fk',
     }).onDelete('cascade'),
-    postsIdFk: foreignKey({
-      columns: [columns['postsID']],
-      foreignColumns: [posts.id],
-      name: '_solutions_v_rels_posts_fk',
+    'blog-postsIdFk': foreignKey({
+      columns: [columns['blog-postsID']],
+      foreignColumns: [blog_posts.id],
+      name: '_solutions_v_rels_blog_posts_fk',
     }).onDelete('cascade'),
     solutionsIdFk: foreignKey({
       columns: [columns['solutionsID']],
@@ -5375,7 +5395,7 @@ export const integrations_rels = pgTable(
     parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
     pagesID: uuid('pages_id'),
-    postsID: uuid('posts_id'),
+    'blog-postsID': uuid('blog_posts_id'),
     solutionsID: uuid('solutions_id'),
     categoriesID: uuid('categories_id'),
   },
@@ -5384,7 +5404,9 @@ export const integrations_rels = pgTable(
     parentIdx: index('integrations_rels_parent_idx').on(columns.parent),
     pathIdx: index('integrations_rels_path_idx').on(columns.path),
     integrations_rels_pages_id_idx: index('integrations_rels_pages_id_idx').on(columns.pagesID),
-    integrations_rels_posts_id_idx: index('integrations_rels_posts_id_idx').on(columns.postsID),
+    integrations_rels_blog_posts_id_idx: index('integrations_rels_blog_posts_id_idx').on(
+      columns['blog-postsID'],
+    ),
     integrations_rels_solutions_id_idx: index('integrations_rels_solutions_id_idx').on(
       columns.solutionsID,
     ),
@@ -5401,10 +5423,10 @@ export const integrations_rels = pgTable(
       foreignColumns: [pages.id],
       name: 'integrations_rels_pages_fk',
     }).onDelete('cascade'),
-    postsIdFk: foreignKey({
-      columns: [columns['postsID']],
-      foreignColumns: [posts.id],
-      name: 'integrations_rels_posts_fk',
+    'blog-postsIdFk': foreignKey({
+      columns: [columns['blog-postsID']],
+      foreignColumns: [blog_posts.id],
+      name: 'integrations_rels_blog_posts_fk',
     }).onDelete('cascade'),
     solutionsIdFk: foreignKey({
       columns: [columns['solutionsID']],
@@ -5584,7 +5606,7 @@ export const _integrations_v_rels = pgTable(
     parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
     pagesID: uuid('pages_id'),
-    postsID: uuid('posts_id'),
+    'blog-postsID': uuid('blog_posts_id'),
     solutionsID: uuid('solutions_id'),
     categoriesID: uuid('categories_id'),
   },
@@ -5595,8 +5617,8 @@ export const _integrations_v_rels = pgTable(
     _integrations_v_rels_pages_id_idx: index('_integrations_v_rels_pages_id_idx').on(
       columns.pagesID,
     ),
-    _integrations_v_rels_posts_id_idx: index('_integrations_v_rels_posts_id_idx').on(
-      columns.postsID,
+    _integrations_v_rels_blog_posts_id_idx: index('_integrations_v_rels_blog_posts_id_idx').on(
+      columns['blog-postsID'],
     ),
     _integrations_v_rels_solutions_id_idx: index('_integrations_v_rels_solutions_id_idx').on(
       columns.solutionsID,
@@ -5614,10 +5636,10 @@ export const _integrations_v_rels = pgTable(
       foreignColumns: [pages.id],
       name: '_integrations_v_rels_pages_fk',
     }).onDelete('cascade'),
-    postsIdFk: foreignKey({
-      columns: [columns['postsID']],
-      foreignColumns: [posts.id],
-      name: '_integrations_v_rels_posts_fk',
+    'blog-postsIdFk': foreignKey({
+      columns: [columns['blog-postsID']],
+      foreignColumns: [blog_posts.id],
+      name: '_integrations_v_rels_blog_posts_fk',
     }).onDelete('cascade'),
     solutionsIdFk: foreignKey({
       columns: [columns['solutionsID']],
@@ -5891,7 +5913,7 @@ export const customers_rels = pgTable(
     solutionsID: uuid('solutions_id'),
     integrationsID: uuid('integrations_id'),
     pagesID: uuid('pages_id'),
-    postsID: uuid('posts_id'),
+    'blog-postsID': uuid('blog_posts_id'),
     categoriesID: uuid('categories_id'),
   },
   (columns) => ({
@@ -5905,7 +5927,9 @@ export const customers_rels = pgTable(
       columns.integrationsID,
     ),
     customers_rels_pages_id_idx: index('customers_rels_pages_id_idx').on(columns.pagesID),
-    customers_rels_posts_id_idx: index('customers_rels_posts_id_idx').on(columns.postsID),
+    customers_rels_blog_posts_id_idx: index('customers_rels_blog_posts_id_idx').on(
+      columns['blog-postsID'],
+    ),
     customers_rels_categories_id_idx: index('customers_rels_categories_id_idx').on(
       columns.categoriesID,
     ),
@@ -5929,10 +5953,10 @@ export const customers_rels = pgTable(
       foreignColumns: [pages.id],
       name: 'customers_rels_pages_fk',
     }).onDelete('cascade'),
-    postsIdFk: foreignKey({
-      columns: [columns['postsID']],
-      foreignColumns: [posts.id],
-      name: 'customers_rels_posts_fk',
+    'blog-postsIdFk': foreignKey({
+      columns: [columns['blog-postsID']],
+      foreignColumns: [blog_posts.id],
+      name: 'customers_rels_blog_posts_fk',
     }).onDelete('cascade'),
     categoriesIdFk: foreignKey({
       columns: [columns['categoriesID']],
@@ -6123,7 +6147,7 @@ export const _customers_v_rels = pgTable(
     solutionsID: uuid('solutions_id'),
     integrationsID: uuid('integrations_id'),
     pagesID: uuid('pages_id'),
-    postsID: uuid('posts_id'),
+    'blog-postsID': uuid('blog_posts_id'),
     categoriesID: uuid('categories_id'),
   },
   (columns) => ({
@@ -6137,7 +6161,9 @@ export const _customers_v_rels = pgTable(
       columns.integrationsID,
     ),
     _customers_v_rels_pages_id_idx: index('_customers_v_rels_pages_id_idx').on(columns.pagesID),
-    _customers_v_rels_posts_id_idx: index('_customers_v_rels_posts_id_idx').on(columns.postsID),
+    _customers_v_rels_blog_posts_id_idx: index('_customers_v_rels_blog_posts_id_idx').on(
+      columns['blog-postsID'],
+    ),
     _customers_v_rels_categories_id_idx: index('_customers_v_rels_categories_id_idx').on(
       columns.categoriesID,
     ),
@@ -6161,10 +6187,10 @@ export const _customers_v_rels = pgTable(
       foreignColumns: [pages.id],
       name: '_customers_v_rels_pages_fk',
     }).onDelete('cascade'),
-    postsIdFk: foreignKey({
-      columns: [columns['postsID']],
-      foreignColumns: [posts.id],
-      name: '_customers_v_rels_posts_fk',
+    'blog-postsIdFk': foreignKey({
+      columns: [columns['blog-postsID']],
+      foreignColumns: [blog_posts.id],
+      name: '_customers_v_rels_blog_posts_fk',
     }).onDelete('cascade'),
     categoriesIdFk: foreignKey({
       columns: [columns['categoriesID']],
@@ -6486,14 +6512,16 @@ export const redirects_rels = pgTable(
     parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
     pagesID: uuid('pages_id'),
-    postsID: uuid('posts_id'),
+    'blog-postsID': uuid('blog_posts_id'),
   },
   (columns) => ({
     order: index('redirects_rels_order_idx').on(columns.order),
     parentIdx: index('redirects_rels_parent_idx').on(columns.parent),
     pathIdx: index('redirects_rels_path_idx').on(columns.path),
     redirects_rels_pages_id_idx: index('redirects_rels_pages_id_idx').on(columns.pagesID),
-    redirects_rels_posts_id_idx: index('redirects_rels_posts_id_idx').on(columns.postsID),
+    redirects_rels_blog_posts_id_idx: index('redirects_rels_blog_posts_id_idx').on(
+      columns['blog-postsID'],
+    ),
     parentFk: foreignKey({
       columns: [columns['parent']],
       foreignColumns: [redirects.id],
@@ -6504,10 +6532,10 @@ export const redirects_rels = pgTable(
       foreignColumns: [pages.id],
       name: 'redirects_rels_pages_fk',
     }).onDelete('cascade'),
-    postsIdFk: foreignKey({
-      columns: [columns['postsID']],
-      foreignColumns: [posts.id],
-      name: 'redirects_rels_posts_fk',
+    'blog-postsIdFk': foreignKey({
+      columns: [columns['blog-postsID']],
+      foreignColumns: [blog_posts.id],
+      name: 'redirects_rels_blog_posts_fk',
     }).onDelete('cascade'),
   }),
 )
@@ -7165,22 +7193,24 @@ export const search_rels = pgTable(
     order: integer('order'),
     parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
-    postsID: uuid('posts_id'),
+    'blog-postsID': uuid('blog_posts_id'),
   },
   (columns) => ({
     order: index('search_rels_order_idx').on(columns.order),
     parentIdx: index('search_rels_parent_idx').on(columns.parent),
     pathIdx: index('search_rels_path_idx').on(columns.path),
-    search_rels_posts_id_idx: index('search_rels_posts_id_idx').on(columns.postsID),
+    search_rels_blog_posts_id_idx: index('search_rels_blog_posts_id_idx').on(
+      columns['blog-postsID'],
+    ),
     parentFk: foreignKey({
       columns: [columns['parent']],
       foreignColumns: [search.id],
       name: 'search_rels_parent_fk',
     }).onDelete('cascade'),
-    postsIdFk: foreignKey({
-      columns: [columns['postsID']],
-      foreignColumns: [posts.id],
-      name: 'search_rels_posts_fk',
+    'blog-postsIdFk': foreignKey({
+      columns: [columns['blog-postsID']],
+      foreignColumns: [blog_posts.id],
+      name: 'search_rels_blog_posts_fk',
     }).onDelete('cascade'),
   }),
 )
@@ -7285,7 +7315,7 @@ export const payload_locked_documents_rels = pgTable(
     parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
     pagesID: uuid('pages_id'),
-    postsID: uuid('posts_id'),
+    'blog-postsID': uuid('blog_posts_id'),
     solutionsID: uuid('solutions_id'),
     integrationsID: uuid('integrations_id'),
     mediaID: uuid('media_id'),
@@ -7307,9 +7337,9 @@ export const payload_locked_documents_rels = pgTable(
     payload_locked_documents_rels_pages_id_idx: index(
       'payload_locked_documents_rels_pages_id_idx',
     ).on(columns.pagesID),
-    payload_locked_documents_rels_posts_id_idx: index(
-      'payload_locked_documents_rels_posts_id_idx',
-    ).on(columns.postsID),
+    payload_locked_documents_rels_blog_posts_id_idx: index(
+      'payload_locked_documents_rels_blog_posts_id_idx',
+    ).on(columns['blog-postsID']),
     payload_locked_documents_rels_solutions_id_idx: index(
       'payload_locked_documents_rels_solutions_id_idx',
     ).on(columns.solutionsID),
@@ -7359,10 +7389,10 @@ export const payload_locked_documents_rels = pgTable(
       foreignColumns: [pages.id],
       name: 'payload_locked_documents_rels_pages_fk',
     }).onDelete('cascade'),
-    postsIdFk: foreignKey({
-      columns: [columns['postsID']],
-      foreignColumns: [posts.id],
-      name: 'payload_locked_documents_rels_posts_fk',
+    'blog-postsIdFk': foreignKey({
+      columns: [columns['blog-postsID']],
+      foreignColumns: [blog_posts.id],
+      name: 'payload_locked_documents_rels_blog_posts_fk',
     }).onDelete('cascade'),
     solutionsIdFk: foreignKey({
       columns: [columns['solutionsID']],
@@ -7560,7 +7590,7 @@ export const settings_rels = pgTable(
     parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
     pagesID: uuid('pages_id'),
-    postsID: uuid('posts_id'),
+    'blog-postsID': uuid('blog_posts_id'),
     solutionsID: uuid('solutions_id'),
   },
   (columns) => ({
@@ -7568,7 +7598,9 @@ export const settings_rels = pgTable(
     parentIdx: index('settings_rels_parent_idx').on(columns.parent),
     pathIdx: index('settings_rels_path_idx').on(columns.path),
     settings_rels_pages_id_idx: index('settings_rels_pages_id_idx').on(columns.pagesID),
-    settings_rels_posts_id_idx: index('settings_rels_posts_id_idx').on(columns.postsID),
+    settings_rels_blog_posts_id_idx: index('settings_rels_blog_posts_id_idx').on(
+      columns['blog-postsID'],
+    ),
     settings_rels_solutions_id_idx: index('settings_rels_solutions_id_idx').on(columns.solutionsID),
     parentFk: foreignKey({
       columns: [columns['parent']],
@@ -7580,10 +7612,10 @@ export const settings_rels = pgTable(
       foreignColumns: [pages.id],
       name: 'settings_rels_pages_fk',
     }).onDelete('cascade'),
-    postsIdFk: foreignKey({
-      columns: [columns['postsID']],
-      foreignColumns: [posts.id],
-      name: 'settings_rels_posts_fk',
+    'blog-postsIdFk': foreignKey({
+      columns: [columns['blog-postsID']],
+      foreignColumns: [blog_posts.id],
+      name: 'settings_rels_blog_posts_fk',
     }).onDelete('cascade'),
     solutionsIdFk: foreignKey({
       columns: [columns['solutionsID']],
@@ -7875,7 +7907,7 @@ export const header_rels = pgTable(
     parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
     pagesID: uuid('pages_id'),
-    postsID: uuid('posts_id'),
+    'blog-postsID': uuid('blog_posts_id'),
     solutionsID: uuid('solutions_id'),
   },
   (columns) => ({
@@ -7883,7 +7915,9 @@ export const header_rels = pgTable(
     parentIdx: index('header_rels_parent_idx').on(columns.parent),
     pathIdx: index('header_rels_path_idx').on(columns.path),
     header_rels_pages_id_idx: index('header_rels_pages_id_idx').on(columns.pagesID),
-    header_rels_posts_id_idx: index('header_rels_posts_id_idx').on(columns.postsID),
+    header_rels_blog_posts_id_idx: index('header_rels_blog_posts_id_idx').on(
+      columns['blog-postsID'],
+    ),
     header_rels_solutions_id_idx: index('header_rels_solutions_id_idx').on(columns.solutionsID),
     parentFk: foreignKey({
       columns: [columns['parent']],
@@ -7895,10 +7929,10 @@ export const header_rels = pgTable(
       foreignColumns: [pages.id],
       name: 'header_rels_pages_fk',
     }).onDelete('cascade'),
-    postsIdFk: foreignKey({
-      columns: [columns['postsID']],
-      foreignColumns: [posts.id],
-      name: 'header_rels_posts_fk',
+    'blog-postsIdFk': foreignKey({
+      columns: [columns['blog-postsID']],
+      foreignColumns: [blog_posts.id],
+      name: 'header_rels_blog_posts_fk',
     }).onDelete('cascade'),
     solutionsIdFk: foreignKey({
       columns: [columns['solutionsID']],
@@ -7983,7 +8017,7 @@ export const footer_rels = pgTable(
     parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
     pagesID: uuid('pages_id'),
-    postsID: uuid('posts_id'),
+    'blog-postsID': uuid('blog_posts_id'),
     solutionsID: uuid('solutions_id'),
   },
   (columns) => ({
@@ -7991,7 +8025,9 @@ export const footer_rels = pgTable(
     parentIdx: index('footer_rels_parent_idx').on(columns.parent),
     pathIdx: index('footer_rels_path_idx').on(columns.path),
     footer_rels_pages_id_idx: index('footer_rels_pages_id_idx').on(columns.pagesID),
-    footer_rels_posts_id_idx: index('footer_rels_posts_id_idx').on(columns.postsID),
+    footer_rels_blog_posts_id_idx: index('footer_rels_blog_posts_id_idx').on(
+      columns['blog-postsID'],
+    ),
     footer_rels_solutions_id_idx: index('footer_rels_solutions_id_idx').on(columns.solutionsID),
     parentFk: foreignKey({
       columns: [columns['parent']],
@@ -8003,10 +8039,10 @@ export const footer_rels = pgTable(
       foreignColumns: [pages.id],
       name: 'footer_rels_pages_fk',
     }).onDelete('cascade'),
-    postsIdFk: foreignKey({
-      columns: [columns['postsID']],
-      foreignColumns: [posts.id],
-      name: 'footer_rels_posts_fk',
+    'blog-postsIdFk': foreignKey({
+      columns: [columns['blog-postsID']],
+      foreignColumns: [blog_posts.id],
+      name: 'footer_rels_blog_posts_fk',
     }).onDelete('cascade'),
     solutionsIdFk: foreignKey({
       columns: [columns['solutionsID']],
@@ -8069,9 +8105,9 @@ export const relations_blogBlock = relations(blogBlock, ({ one, many }) => ({
   _locales: many(blogBlock_locales, {
     relationName: '_locales',
   }),
-  featuredPost: one(posts, {
+  featuredPost: one(blog_posts, {
     fields: [blogBlock.featuredPost],
-    references: [posts.id],
+    references: [blog_posts.id],
     relationName: 'featuredPost',
   }),
 }))
@@ -9036,10 +9072,10 @@ export const relations_pages_rels = relations(pages_rels, ({ one }) => ({
     references: [pages.id],
     relationName: 'pages',
   }),
-  postsID: one(posts, {
-    fields: [pages_rels.postsID],
-    references: [posts.id],
-    relationName: 'posts',
+  'blog-postsID': one(blog_posts, {
+    fields: [pages_rels['blog-postsID']],
+    references: [blog_posts.id],
+    relationName: 'blog-posts',
   }),
   mediaID: one(media, {
     fields: [pages_rels.mediaID],
@@ -9177,9 +9213,9 @@ export const relations__blogBlock_v = relations(_blogBlock_v, ({ one, many }) =>
   _locales: many(_blogBlock_v_locales, {
     relationName: '_locales',
   }),
-  featuredPost: one(posts, {
+  featuredPost: one(blog_posts, {
     fields: [_blogBlock_v.featuredPost],
-    references: [posts.id],
+    references: [blog_posts.id],
     relationName: 'featuredPost',
   }),
 }))
@@ -10159,10 +10195,10 @@ export const relations__pages_v_rels = relations(_pages_v_rels, ({ one }) => ({
     references: [pages.id],
     relationName: 'pages',
   }),
-  postsID: one(posts, {
-    fields: [_pages_v_rels.postsID],
-    references: [posts.id],
-    relationName: 'posts',
+  'blog-postsID': one(blog_posts, {
+    fields: [_pages_v_rels['blog-postsID']],
+    references: [blog_posts.id],
+    relationName: 'blog-posts',
   }),
   mediaID: one(media, {
     fields: [_pages_v_rels.mediaID],
@@ -10249,125 +10285,128 @@ export const relations__pages_v = relations(_pages_v, ({ one, many }) => ({
     relationName: '_rels',
   }),
 }))
-export const relations_posts_populated_authors = relations(posts_populated_authors, ({ one }) => ({
-  _parentID: one(posts, {
-    fields: [posts_populated_authors._parentID],
-    references: [posts.id],
-    relationName: 'populatedAuthors',
+export const relations_blog_posts_populated_authors = relations(
+  blog_posts_populated_authors,
+  ({ one }) => ({
+    _parentID: one(blog_posts, {
+      fields: [blog_posts_populated_authors._parentID],
+      references: [blog_posts.id],
+      relationName: 'populatedAuthors',
+    }),
   }),
-}))
-export const relations_posts_locales = relations(posts_locales, ({ one }) => ({
-  _parentID: one(posts, {
-    fields: [posts_locales._parentID],
-    references: [posts.id],
+)
+export const relations_blog_posts_locales = relations(blog_posts_locales, ({ one }) => ({
+  _parentID: one(blog_posts, {
+    fields: [blog_posts_locales._parentID],
+    references: [blog_posts.id],
     relationName: '_locales',
   }),
   heroImage: one(media, {
-    fields: [posts_locales.heroImage],
+    fields: [blog_posts_locales.heroImage],
     references: [media.id],
     relationName: 'heroImage',
   }),
   meta_image: one(media, {
-    fields: [posts_locales.meta_image],
+    fields: [blog_posts_locales.meta_image],
     references: [media.id],
     relationName: 'meta_image',
   }),
 }))
-export const relations_posts_rels = relations(posts_rels, ({ one }) => ({
-  parent: one(posts, {
-    fields: [posts_rels.parent],
-    references: [posts.id],
+export const relations_blog_posts_rels = relations(blog_posts_rels, ({ one }) => ({
+  parent: one(blog_posts, {
+    fields: [blog_posts_rels.parent],
+    references: [blog_posts.id],
     relationName: '_rels',
   }),
-  postsID: one(posts, {
-    fields: [posts_rels.postsID],
-    references: [posts.id],
-    relationName: 'posts',
+  'blog-postsID': one(blog_posts, {
+    fields: [blog_posts_rels['blog-postsID']],
+    references: [blog_posts.id],
+    relationName: 'blog-posts',
   }),
   categoriesID: one(categories, {
-    fields: [posts_rels.categoriesID],
+    fields: [blog_posts_rels.categoriesID],
     references: [categories.id],
     relationName: 'categories',
   }),
   usersID: one(users, {
-    fields: [posts_rels.usersID],
+    fields: [blog_posts_rels.usersID],
     references: [users.id],
     relationName: 'users',
   }),
 }))
-export const relations_posts = relations(posts, ({ many }) => ({
-  populatedAuthors: many(posts_populated_authors, {
+export const relations_blog_posts = relations(blog_posts, ({ many }) => ({
+  populatedAuthors: many(blog_posts_populated_authors, {
     relationName: 'populatedAuthors',
   }),
-  _locales: many(posts_locales, {
+  _locales: many(blog_posts_locales, {
     relationName: '_locales',
   }),
-  _rels: many(posts_rels, {
+  _rels: many(blog_posts_rels, {
     relationName: '_rels',
   }),
 }))
-export const relations__posts_v_version_populated_authors = relations(
-  _posts_v_version_populated_authors,
+export const relations__blog_posts_v_version_populated_authors = relations(
+  _blog_posts_v_version_populated_authors,
   ({ one }) => ({
-    _parentID: one(_posts_v, {
-      fields: [_posts_v_version_populated_authors._parentID],
-      references: [_posts_v.id],
+    _parentID: one(_blog_posts_v, {
+      fields: [_blog_posts_v_version_populated_authors._parentID],
+      references: [_blog_posts_v.id],
       relationName: 'version_populatedAuthors',
     }),
   }),
 )
-export const relations__posts_v_locales = relations(_posts_v_locales, ({ one }) => ({
-  _parentID: one(_posts_v, {
-    fields: [_posts_v_locales._parentID],
-    references: [_posts_v.id],
+export const relations__blog_posts_v_locales = relations(_blog_posts_v_locales, ({ one }) => ({
+  _parentID: one(_blog_posts_v, {
+    fields: [_blog_posts_v_locales._parentID],
+    references: [_blog_posts_v.id],
     relationName: '_locales',
   }),
   version_heroImage: one(media, {
-    fields: [_posts_v_locales.version_heroImage],
+    fields: [_blog_posts_v_locales.version_heroImage],
     references: [media.id],
     relationName: 'version_heroImage',
   }),
   version_meta_image: one(media, {
-    fields: [_posts_v_locales.version_meta_image],
+    fields: [_blog_posts_v_locales.version_meta_image],
     references: [media.id],
     relationName: 'version_meta_image',
   }),
 }))
-export const relations__posts_v_rels = relations(_posts_v_rels, ({ one }) => ({
-  parent: one(_posts_v, {
-    fields: [_posts_v_rels.parent],
-    references: [_posts_v.id],
+export const relations__blog_posts_v_rels = relations(_blog_posts_v_rels, ({ one }) => ({
+  parent: one(_blog_posts_v, {
+    fields: [_blog_posts_v_rels.parent],
+    references: [_blog_posts_v.id],
     relationName: '_rels',
   }),
-  postsID: one(posts, {
-    fields: [_posts_v_rels.postsID],
-    references: [posts.id],
-    relationName: 'posts',
+  'blog-postsID': one(blog_posts, {
+    fields: [_blog_posts_v_rels['blog-postsID']],
+    references: [blog_posts.id],
+    relationName: 'blog-posts',
   }),
   categoriesID: one(categories, {
-    fields: [_posts_v_rels.categoriesID],
+    fields: [_blog_posts_v_rels.categoriesID],
     references: [categories.id],
     relationName: 'categories',
   }),
   usersID: one(users, {
-    fields: [_posts_v_rels.usersID],
+    fields: [_blog_posts_v_rels.usersID],
     references: [users.id],
     relationName: 'users',
   }),
 }))
-export const relations__posts_v = relations(_posts_v, ({ one, many }) => ({
-  parent: one(posts, {
-    fields: [_posts_v.parent],
-    references: [posts.id],
+export const relations__blog_posts_v = relations(_blog_posts_v, ({ one, many }) => ({
+  parent: one(blog_posts, {
+    fields: [_blog_posts_v.parent],
+    references: [blog_posts.id],
     relationName: 'parent',
   }),
-  version_populatedAuthors: many(_posts_v_version_populated_authors, {
+  version_populatedAuthors: many(_blog_posts_v_version_populated_authors, {
     relationName: 'version_populatedAuthors',
   }),
-  _locales: many(_posts_v_locales, {
+  _locales: many(_blog_posts_v_locales, {
     relationName: '_locales',
   }),
-  _rels: many(_posts_v_rels, {
+  _rels: many(_blog_posts_v_rels, {
     relationName: '_rels',
   }),
 }))
@@ -10389,10 +10428,10 @@ export const relations_solutions_rels = relations(solutions_rels, ({ one }) => (
     references: [pages.id],
     relationName: 'pages',
   }),
-  postsID: one(posts, {
-    fields: [solutions_rels.postsID],
-    references: [posts.id],
-    relationName: 'posts',
+  'blog-postsID': one(blog_posts, {
+    fields: [solutions_rels['blog-postsID']],
+    references: [blog_posts.id],
+    relationName: 'blog-posts',
   }),
   solutionsID: one(solutions, {
     fields: [solutions_rels.solutionsID],
@@ -10436,10 +10475,10 @@ export const relations__solutions_v_rels = relations(_solutions_v_rels, ({ one }
     references: [pages.id],
     relationName: 'pages',
   }),
-  postsID: one(posts, {
-    fields: [_solutions_v_rels.postsID],
-    references: [posts.id],
-    relationName: 'posts',
+  'blog-postsID': one(blog_posts, {
+    fields: [_solutions_v_rels['blog-postsID']],
+    references: [blog_posts.id],
+    relationName: 'blog-posts',
   }),
   solutionsID: one(solutions, {
     fields: [_solutions_v_rels.solutionsID],
@@ -10513,10 +10552,10 @@ export const relations_integrations_rels = relations(integrations_rels, ({ one }
     references: [pages.id],
     relationName: 'pages',
   }),
-  postsID: one(posts, {
-    fields: [integrations_rels.postsID],
-    references: [posts.id],
-    relationName: 'posts',
+  'blog-postsID': one(blog_posts, {
+    fields: [integrations_rels['blog-postsID']],
+    references: [blog_posts.id],
+    relationName: 'blog-posts',
   }),
   solutionsID: one(solutions, {
     fields: [integrations_rels.solutionsID],
@@ -10627,10 +10666,10 @@ export const relations__integrations_v_rels = relations(_integrations_v_rels, ({
     references: [pages.id],
     relationName: 'pages',
   }),
-  postsID: one(posts, {
-    fields: [_integrations_v_rels.postsID],
-    references: [posts.id],
-    relationName: 'posts',
+  'blog-postsID': one(blog_posts, {
+    fields: [_integrations_v_rels['blog-postsID']],
+    references: [blog_posts.id],
+    relationName: 'blog-posts',
   }),
   solutionsID: one(solutions, {
     fields: [_integrations_v_rels.solutionsID],
@@ -10768,10 +10807,10 @@ export const relations_customers_rels = relations(customers_rels, ({ one }) => (
     references: [pages.id],
     relationName: 'pages',
   }),
-  postsID: one(posts, {
-    fields: [customers_rels.postsID],
-    references: [posts.id],
-    relationName: 'posts',
+  'blog-postsID': one(blog_posts, {
+    fields: [customers_rels['blog-postsID']],
+    references: [blog_posts.id],
+    relationName: 'blog-posts',
   }),
   categoriesID: one(categories, {
     fields: [customers_rels.categoriesID],
@@ -10892,10 +10931,10 @@ export const relations__customers_v_rels = relations(_customers_v_rels, ({ one }
     references: [pages.id],
     relationName: 'pages',
   }),
-  postsID: one(posts, {
-    fields: [_customers_v_rels.postsID],
-    references: [posts.id],
-    relationName: 'posts',
+  'blog-postsID': one(blog_posts, {
+    fields: [_customers_v_rels['blog-postsID']],
+    references: [blog_posts.id],
+    relationName: 'blog-posts',
   }),
   categoriesID: one(categories, {
     fields: [_customers_v_rels.categoriesID],
@@ -11075,10 +11114,10 @@ export const relations_redirects_rels = relations(redirects_rels, ({ one }) => (
     references: [pages.id],
     relationName: 'pages',
   }),
-  postsID: one(posts, {
-    fields: [redirects_rels.postsID],
-    references: [posts.id],
-    relationName: 'posts',
+  'blog-postsID': one(blog_posts, {
+    fields: [redirects_rels['blog-postsID']],
+    references: [blog_posts.id],
+    relationName: 'blog-posts',
   }),
 }))
 export const relations_redirects = relations(redirects, ({ many }) => ({
@@ -11397,10 +11436,10 @@ export const relations_search_rels = relations(search_rels, ({ one }) => ({
     references: [search.id],
     relationName: '_rels',
   }),
-  postsID: one(posts, {
-    fields: [search_rels.postsID],
-    references: [posts.id],
-    relationName: 'posts',
+  'blog-postsID': one(blog_posts, {
+    fields: [search_rels['blog-postsID']],
+    references: [blog_posts.id],
+    relationName: 'blog-posts',
   }),
 }))
 export const relations_search = relations(search, ({ one, many }) => ({
@@ -11444,10 +11483,10 @@ export const relations_payload_locked_documents_rels = relations(
       references: [pages.id],
       relationName: 'pages',
     }),
-    postsID: one(posts, {
-      fields: [payload_locked_documents_rels.postsID],
-      references: [posts.id],
-      relationName: 'posts',
+    'blog-postsID': one(blog_posts, {
+      fields: [payload_locked_documents_rels['blog-postsID']],
+      references: [blog_posts.id],
+      relationName: 'blog-posts',
     }),
     solutionsID: one(solutions, {
       fields: [payload_locked_documents_rels.solutionsID],
@@ -11568,10 +11607,10 @@ export const relations_settings_rels = relations(settings_rels, ({ one }) => ({
     references: [pages.id],
     relationName: 'pages',
   }),
-  postsID: one(posts, {
-    fields: [settings_rels.postsID],
-    references: [posts.id],
-    relationName: 'posts',
+  'blog-postsID': one(blog_posts, {
+    fields: [settings_rels['blog-postsID']],
+    references: [blog_posts.id],
+    relationName: 'blog-posts',
   }),
   solutionsID: one(solutions, {
     fields: [settings_rels.solutionsID],
@@ -11736,10 +11775,10 @@ export const relations_header_rels = relations(header_rels, ({ one }) => ({
     references: [pages.id],
     relationName: 'pages',
   }),
-  postsID: one(posts, {
-    fields: [header_rels.postsID],
-    references: [posts.id],
-    relationName: 'posts',
+  'blog-postsID': one(blog_posts, {
+    fields: [header_rels['blog-postsID']],
+    references: [blog_posts.id],
+    relationName: 'blog-posts',
   }),
   solutionsID: one(solutions, {
     fields: [header_rels.solutionsID],
@@ -11802,10 +11841,10 @@ export const relations_footer_rels = relations(footer_rels, ({ one }) => ({
     references: [pages.id],
     relationName: 'pages',
   }),
-  postsID: one(posts, {
-    fields: [footer_rels.postsID],
-    references: [posts.id],
-    relationName: 'posts',
+  'blog-postsID': one(blog_posts, {
+    fields: [footer_rels['blog-postsID']],
+    references: [blog_posts.id],
+    relationName: 'blog-posts',
   }),
   solutionsID: one(solutions, {
     fields: [footer_rels.solutionsID],
@@ -11924,9 +11963,9 @@ type DatabaseSchema = {
   enum__pages_v_version_hero_badge_type: typeof enum__pages_v_version_hero_badge_type
   enum__pages_v_version_status: typeof enum__pages_v_version_status
   enum__pages_v_published_locale: typeof enum__pages_v_published_locale
-  enum_posts_status: typeof enum_posts_status
-  enum__posts_v_version_status: typeof enum__posts_v_version_status
-  enum__posts_v_published_locale: typeof enum__posts_v_published_locale
+  enum_blog_posts_status: typeof enum_blog_posts_status
+  enum__blog_posts_v_version_status: typeof enum__blog_posts_v_version_status
+  enum__blog_posts_v_published_locale: typeof enum__blog_posts_v_published_locale
   enum_solutions_status: typeof enum_solutions_status
   enum__solutions_v_version_status: typeof enum__solutions_v_version_status
   enum__solutions_v_published_locale: typeof enum__solutions_v_published_locale
@@ -12109,14 +12148,14 @@ type DatabaseSchema = {
   _pages_v: typeof _pages_v
   _pages_v_locales: typeof _pages_v_locales
   _pages_v_rels: typeof _pages_v_rels
-  posts_populated_authors: typeof posts_populated_authors
-  posts: typeof posts
-  posts_locales: typeof posts_locales
-  posts_rels: typeof posts_rels
-  _posts_v_version_populated_authors: typeof _posts_v_version_populated_authors
-  _posts_v: typeof _posts_v
-  _posts_v_locales: typeof _posts_v_locales
-  _posts_v_rels: typeof _posts_v_rels
+  blog_posts_populated_authors: typeof blog_posts_populated_authors
+  blog_posts: typeof blog_posts
+  blog_posts_locales: typeof blog_posts_locales
+  blog_posts_rels: typeof blog_posts_rels
+  _blog_posts_v_version_populated_authors: typeof _blog_posts_v_version_populated_authors
+  _blog_posts_v: typeof _blog_posts_v
+  _blog_posts_v_locales: typeof _blog_posts_v_locales
+  _blog_posts_v_rels: typeof _blog_posts_v_rels
   solutions: typeof solutions
   solutions_locales: typeof solutions_locales
   solutions_rels: typeof solutions_rels
@@ -12375,14 +12414,14 @@ type DatabaseSchema = {
   relations__pages_v_locales: typeof relations__pages_v_locales
   relations__pages_v_rels: typeof relations__pages_v_rels
   relations__pages_v: typeof relations__pages_v
-  relations_posts_populated_authors: typeof relations_posts_populated_authors
-  relations_posts_locales: typeof relations_posts_locales
-  relations_posts_rels: typeof relations_posts_rels
-  relations_posts: typeof relations_posts
-  relations__posts_v_version_populated_authors: typeof relations__posts_v_version_populated_authors
-  relations__posts_v_locales: typeof relations__posts_v_locales
-  relations__posts_v_rels: typeof relations__posts_v_rels
-  relations__posts_v: typeof relations__posts_v
+  relations_blog_posts_populated_authors: typeof relations_blog_posts_populated_authors
+  relations_blog_posts_locales: typeof relations_blog_posts_locales
+  relations_blog_posts_rels: typeof relations_blog_posts_rels
+  relations_blog_posts: typeof relations_blog_posts
+  relations__blog_posts_v_version_populated_authors: typeof relations__blog_posts_v_version_populated_authors
+  relations__blog_posts_v_locales: typeof relations__blog_posts_v_locales
+  relations__blog_posts_v_rels: typeof relations__blog_posts_v_rels
+  relations__blog_posts_v: typeof relations__blog_posts_v
   relations_solutions_locales: typeof relations_solutions_locales
   relations_solutions_rels: typeof relations_solutions_rels
   relations_solutions: typeof relations_solutions

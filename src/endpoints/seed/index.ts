@@ -34,7 +34,7 @@ import { seedBlogPosts } from './blog-posts'
 
 const collections: CollectionSlug[] = [
   'pages',
-  'posts',
+  'blog-posts',
   'users',
   'customers',
   'categories',

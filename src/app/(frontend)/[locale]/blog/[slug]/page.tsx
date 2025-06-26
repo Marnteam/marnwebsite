@@ -8,7 +8,7 @@ import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import RichText from '@/components/RichText'
 
-import type { Post } from '@/payload-types'
+import type { BlogPost } from '@/payload-types'
 
 import { PostHero } from '@/heros/PostHero'
 import { generateMeta } from '@/utilities/generateMeta'
@@ -24,7 +24,7 @@ export async function generateStaticParams() {
   const params: { slug: string; locale: 'ar' | 'en' }[] = []
   for (const locale of locales) {
     const pages = await payload.find({
-      collection: 'posts',
+      collection: 'blog-posts',
       locale: locale as 'ar' | 'en',
       draft: false,
       limit: 1000,
@@ -112,7 +112,7 @@ const queryPostBySlug = cache(
     const payload = await getPayload({ config: configPromise })
 
     const result = await payload.find({
-      collection: 'posts',
+      collection: 'blog-posts',
       locale: locale,
       draft,
       limit: 1,

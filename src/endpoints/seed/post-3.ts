@@ -1,7 +1,7 @@
 import { RequiredDataFromCollectionSlug } from 'payload'
-import type { PostArgs } from './post-1'
+import type { BlogPostArgs } from './post-1'
 
-export const post3: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> = ({
+export const post3: (args: BlogPostArgs) => RequiredDataFromCollectionSlug<'blog-posts'> = ({
   heroImage,
   blockImage,
   author,

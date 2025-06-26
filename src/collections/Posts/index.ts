@@ -31,8 +31,8 @@ import { CallToActionBlock } from '@/blocks/CallToAction/config'
 import { FaqBlock } from '@/blocks/FAQ/config'
 import { GalleryBlock } from '@/blocks/Gallery/config'
 
-export const Posts: CollectionConfig<'posts'> = {
-  slug: 'posts',
+export const Posts: CollectionConfig<'blog-posts'> = {
+  slug: 'blog-posts',
   access: {
     create: authenticated,
     delete: authenticated,
@@ -41,7 +41,7 @@ export const Posts: CollectionConfig<'posts'> = {
   },
   // This config controls what's populated by default when a post is referenced
   // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
-  // Type safe if the collection slug generic is passed to `CollectionConfig` - `CollectionConfig<'posts'>
+  // Type safe if the collection slug generic is passed to `CollectionConfig` - `CollectionConfig<'blog-posts'>
   defaultPopulate: {
     title: true,
     slug: true,
@@ -57,7 +57,7 @@ export const Posts: CollectionConfig<'posts'> = {
       url: ({ data, req, locale }) => {
         const path = generatePreviewPath({
           slug: typeof data?.slug === 'string' ? data.slug : '',
-          collection: 'posts',
+          collection: 'blog-posts',
           req,
           locale,
         })
@@ -68,7 +68,7 @@ export const Posts: CollectionConfig<'posts'> = {
     preview: (data, { req, locale }) =>
       generatePreviewPath({
         slug: typeof data?.slug === 'string' ? data.slug : '',
-        collection: 'posts',
+        collection: 'blog-posts',
         req,
         locale,
       }),
@@ -100,7 +100,7 @@ export const Posts: CollectionConfig<'posts'> = {
                 features: ({ defaultFeatures }) => {
                   return [
                     ...defaultFeatures,
-                    HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+                    HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
                     BlocksFeature({
                       blocks: [
                         Banner,
@@ -140,7 +140,7 @@ export const Posts: CollectionConfig<'posts'> = {
                 }
               },
               hasMany: true,
-              relationTo: 'posts',
+              relationTo: 'blog-posts',
             },
             {
               name: 'categories',

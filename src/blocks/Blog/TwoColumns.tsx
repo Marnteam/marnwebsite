@@ -1,5 +1,5 @@
 import React from 'react'
-import type { BlogBlock, Post } from '@/payload-types'
+import type { BlogBlock, BlogPost } from '@/payload-types'
 import { Media } from '@/components/Media'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
@@ -10,13 +10,13 @@ import { extractTextFromLexical } from '@/utilities/extractTextFromLexical'
 
 type BlogBlockType = BlogBlock & {
   locale: 'en' | 'ar'
-  recentPosts: Post[]
-  editorsPicks: Post[]
+  recentPosts: BlogPost[]
+  editorsPicks: BlogPost[]
 }
 
 const PostCard: React.FC<{
   index: number
-  post: Post
+  post: BlogPost
   locale: 'en' | 'ar'
   className?: string
 }> = ({ index, post, locale, className = '' }) => {
