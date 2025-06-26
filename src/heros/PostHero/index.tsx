@@ -4,9 +4,9 @@ import React, { useEffect, useRef, useState, useLayoutEffect } from 'react'
 import { useScroll, useTransform, useSpring, LayoutGroup, motion } from 'motion/react'
 import clsx from 'clsx'
 import { formatDateTime } from 'src/utilities/formatDateTime'
-import type { BlogPost } from '@/payload-types'
+import type { BlogPost, Media as MediaType, User } from '@/payload-types'
 
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { formatAuthors } from '@/utilities/formatAuthors'
 import { useTranslations, useLocale } from 'next-intl'
 import { Icon } from '@iconify-icon/react'
@@ -15,6 +15,7 @@ import Facebook from '@/icons/facebook'
 import X from '@/icons/x'
 import { getReadTimeFromLexical } from '@/utilities/extractTextFromLexical'
 import Link from 'next/link'
+import { useResizeObserver } from '@/hooks/useResizeObserver'
 
 export const PostHero: React.FC<{
   post: BlogPost
@@ -25,9 +26,47 @@ export const PostHero: React.FC<{
   const [width, setWidth] = useState(0)
   const [h1Size, setH1Size] = useState(48)
   const cardOffsetRef = useRef(0)
-  const metaStart = useRef(0)
   const metaRef = useRef<HTMLDivElement>(null)
-  const [metaStartHeight, setMetaStartHeight] = useState(0)
+  const cardRef = useRef<HTMLDivElement>(null)
+
+  // ─── motion values that hold the *open* heights ────────────
+  const [openCardHeight, setOpenCardHeight] = useState(0)
+  const [openMetaHeight, setOpenMetaHeight] = useState(0)
+
+  const { scrollYProgress } = useScroll({ target: undefined })
+  const eased = useSpring(scrollYProgress, {
+    stiffness: 200,
+    damping: 40,
+    mass: 1,
+  })
+
+  // helper: only measure while the hero is fully open
+  const shouldMeasure = () => eased.get() < 0.001 // no scroll yet
+
+  const measure = () => {
+    if (!shouldMeasure()) return
+    const newCardHeight = cardRef.current?.getBoundingClientRect().height
+    if (newCardHeight && newCardHeight > 0) {
+      setOpenCardHeight(newCardHeight)
+    }
+    const newMetaHeight = metaRef.current?.getBoundingClientRect().height
+    if (newMetaHeight && newMetaHeight > 0) {
+      setOpenMetaHeight(newMetaHeight)
+    }
+  }
+
+  useLayoutEffect(() => {
+    requestAnimationFrame(measure) // first paint
+    const stopRO1 = useResizeObserver(cardRef.current, measure) // fonts/imgs
+    const stopRO2 = useResizeObserver(metaRef.current, measure)
+    window.addEventListener('resize', measure)
+
+    return () => {
+      stopRO1()
+      stopRO2()
+      window.removeEventListener('resize', measure)
+    }
+  }, [])
 
   const getCardOffset = () => {
     if (typeof window === 'undefined') return 0
@@ -51,10 +90,6 @@ export const PostHero: React.FC<{
   useLayoutEffect(() => {
     if (typeof window === 'undefined') return
     cardOffsetRef.current = getCardOffset()
-    const height = metaRef.current?.scrollHeight ?? 0
-    console.log('height', height)
-    metaStart.current = height
-    setMetaStartHeight(height)
   }, [])
 
   useEffect(() => {
@@ -62,7 +97,6 @@ export const PostHero: React.FC<{
 
     const updateDimensions = () => {
       setWidth(Math.min(window.innerWidth, 1536))
-
       // clamp(32px, 32px + 2vw, 48px)
       const vw = window.innerWidth / 100
       const minSize = 32
@@ -77,42 +111,36 @@ export const PostHero: React.FC<{
     return () => window.removeEventListener('resize', updateDimensions)
   }, [])
 
-  const { title, meta, content, heroImage, populatedAuthors, publishedAt, categories } = post
+  const { title, meta, content, heroImage, populatedAuthors, publishedAt } = post
 
   const hasAuthors =
     populatedAuthors && populatedAuthors.length > 0 && formatAuthors(populatedAuthors) !== ''
 
   const readTime = getReadTimeFromLexical(content, locale, t)
 
-  const { scrollYProgress } = useScroll({ target: undefined })
-
-  // temp workaround: easing scroll values if user stops scrolling near 0.12
-  const eased = useSpring(scrollYProgress, {
-    stiffness: 200, // Increased from 120
-    damping: 40, // Increased from 30
-    mass: 1, // Reduced from 1
-  })
-  // const eased = scrollYProgress
-
-  const metaOpacity = useTransform(eased, [0, 0.12], [1, 0])
-  const metaHeight = useTransform(eased, [0, 0.12], [`${metaStartHeight}px`, '0px'])
-
-  const cardRadius = useTransform(eased, [0, 0.12], ['24px', '0px'])
+  const cardHeight = useTransform(eased, [0, 0.12], [openCardHeight, 56])
   const cardWidth = useTransform(eased, [0, 0.12], [width - cardOffsetRef.current * 2, width])
+  const cardRadius = useTransform(eased, [0, 0.12], ['24px', '0px'])
+
   const h1FontSize = useTransform(eased, [0, 0.12], [h1Size, 17])
   const h1LineHeight = useTransform(eased, [0, 0.12], [h1Size * 1.5, 24])
-  const scrollPercentage = useTransform(scrollYProgress, [0, 1], [0, 100])
+
+  const metaOpacity = useTransform(eased, [0, 0.12], [1, 0])
+  const metaHeight = useTransform(eased, [0, 0.12], [openMetaHeight, 0])
 
   return (
     <LayoutGroup id="post-hero">
       <div className="sticky top-(--header-plus-admin-bar-height) z-1 mx-auto w-full max-w-[96rem] overflow-hidden">
-        <div className="relative">
-          <motion.header
-            layout="size"
-            layoutId="hero-card"
-            id="post-hero"
+        <motion.div
+          layout="size"
+          layoutId="hero-card"
+          className="relative flex flex-row items-center"
+          style={{ height: cardHeight }}
+        >
+          <div
+            ref={cardRef}
             className={clsx(
-              'mx-[calc(var(--spacing-space-site)*2)] py-(--text-h1)',
+              'mx-[calc(var(--spacing-space-site)*2)] w-full overflow-hidden py-(--text-h1)',
               'relative z-1',
             )}
           >
@@ -130,27 +158,38 @@ export const PostHero: React.FC<{
             <motion.div
               layoutId="post-meta"
               className="relative z-1"
-              ref={metaRef}
               style={{
                 opacity: metaOpacity,
                 height: metaHeight,
                 overflow: 'hidden',
+                maskImage: `linear-gradient(to top, transparent, var(--color-background-neutral) 0%)`,
               }}
             >
-              <div className="space-y-6">
+              <div ref={metaRef} className="space-y-6">
                 <p className="text-h4 text-base-tertiary max-w-4xl font-medium">
                   {meta?.description}
                 </p>
                 <hr className="border-border" />
                 <div className="flex flex-row items-center justify-between">
-                  <div className="flex flex-col gap-4 md:flex-row md:gap-8">
+                  <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-8">
                     {hasAuthors && (
-                      <div className="flex flex-col gap-4">
-                        <div className="flex flex-col gap-1">
-                          <p className="text-body-md text-base-secondary">
-                            {formatAuthors(populatedAuthors)}
-                          </p>
+                      <div className="flex flex-row items-center gap-2">
+                        <div className="flex flex-row items-center -space-x-[0.6rem]">
+                          {populatedAuthors.map((author: User) => {
+                            if (!author.avatar) return null
+                            return (
+                              <Media
+                                key={author.id}
+                                resource={author.avatar as MediaType}
+                                imgClassName="object-cover"
+                                className="ring-background-neutral size-6 shrink-0 overflow-hidden rounded-full ring-3 md:size-8 lg:size-10"
+                              />
+                            )
+                          })}
                         </div>
+                        <p className="text-body-md text-base-secondary font-medium">
+                          {formatAuthors(populatedAuthors)}
+                        </p>
                       </div>
                     )}
                     {publishedAt && (
@@ -176,7 +215,7 @@ export const PostHero: React.FC<{
                       </div>
                     )}
                   </div>
-                  <div className="flex flex-row items-center justify-center gap-2">
+                  <div className="flex basis-1/3 flex-row flex-wrap items-center justify-end gap-2">
                     <Button variant="secondary" size="icon" asChild>
                       <Link
                         href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
@@ -210,7 +249,7 @@ export const PostHero: React.FC<{
                 </div>
               </div>
             </motion.div>
-          </motion.header>
+          </div>
           {/* Progress bar anchored to bottom */}
           <motion.div
             style={{
@@ -236,7 +275,7 @@ export const PostHero: React.FC<{
               className="bg-brand absolute inset-0 h-1"
             />
           </motion.div>
-        </div>
+        </motion.div>
         {/* Debug: % scrolled */}
         {/* <motion.div
           className="absolute right-4 bottom-2 z-10 rounded bg-white/80 px-2 py-1 font-mono text-xs text-neutral-900 shadow"

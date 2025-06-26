@@ -15,11 +15,18 @@ export const Users: CollectionConfig = {
     defaultColumns: ['name', 'email'],
     useAsTitle: 'name',
   },
-  auth: true,
+  defaultPopulate: { name: true, avatar: true },
+  auth: { loginWithUsername: false },
   fields: [
     {
       name: 'name',
       type: 'text',
+      localized: true,
+    },
+    {
+      name: 'avatar',
+      type: 'upload',
+      relationTo: 'media',
     },
   ],
   timestamps: true,

@@ -6457,7 +6457,9 @@ export const users = pgTable(
   'users',
   {
     id: uuid('id').defaultRandom().primaryKey(),
-    name: varchar('name'),
+    avatar: uuid('avatar_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -6477,9 +6479,31 @@ export const users = pgTable(
     lockUntil: timestamp('lock_until', { mode: 'string', withTimezone: true, precision: 3 }),
   },
   (columns) => ({
+    users_avatar_idx: index('users_avatar_idx').on(columns.avatar),
     users_updated_at_idx: index('users_updated_at_idx').on(columns.updatedAt),
     users_created_at_idx: index('users_created_at_idx').on(columns.createdAt),
     users_email_idx: uniqueIndex('users_email_idx').on(columns.email),
+  }),
+)
+
+export const users_locales = pgTable(
+  'users_locales',
+  {
+    name: varchar('name'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('users_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [users.id],
+      name: 'users_locales_parent_id_fk',
+    }).onDelete('cascade'),
   }),
 )
 
@@ -11102,7 +11126,23 @@ export const relations_changelog = relations(changelog, ({ many }) => ({
     relationName: '_locales',
   }),
 }))
-export const relations_users = relations(users, () => ({}))
+export const relations_users_locales = relations(users_locales, ({ one }) => ({
+  _parentID: one(users, {
+    fields: [users_locales._parentID],
+    references: [users.id],
+    relationName: '_locales',
+  }),
+}))
+export const relations_users = relations(users, ({ one, many }) => ({
+  avatar: one(media, {
+    fields: [users.avatar],
+    references: [media.id],
+    relationName: 'avatar',
+  }),
+  _locales: many(users_locales, {
+    relationName: '_locales',
+  }),
+}))
 export const relations_redirects_rels = relations(redirects_rels, ({ one }) => ({
   parent: one(redirects, {
     fields: [redirects_rels.parent],
@@ -12195,6 +12235,7 @@ type DatabaseSchema = {
   changelog: typeof changelog
   changelog_locales: typeof changelog_locales
   users: typeof users
+  users_locales: typeof users_locales
   redirects: typeof redirects
   redirects_rels: typeof redirects_rels
   forms_blocks_checkbox: typeof forms_blocks_checkbox
@@ -12460,6 +12501,7 @@ type DatabaseSchema = {
   relations_changelog_categories: typeof relations_changelog_categories
   relations_changelog_locales: typeof relations_changelog_locales
   relations_changelog: typeof relations_changelog
+  relations_users_locales: typeof relations_users_locales
   relations_users: typeof relations_users
   relations_redirects_rels: typeof relations_redirects_rels
   relations_redirects: typeof relations_redirects

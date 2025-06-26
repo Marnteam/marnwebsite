@@ -14,7 +14,7 @@ import { PostHero } from '@/heros/PostHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
-import HeadingLinks from '@/components/RichText/HeadingLinks'
+
 import { blogConverters } from '@/components/RichText/blogConverters'
 import { BlogSidebar } from '@/components/BlogSidebar'
 
@@ -57,12 +57,15 @@ type Args = {
 }
 
 export default async function Post({ params: paramsPromise }: Args) {
+  const payload = await getPayload({ config: configPromise })
   const { isEnabled: draft } = await draftMode()
   const { slug = '', locale = 'ar' } = await paramsPromise
   const url = `/${locale}/blog/` + decodeURIComponent(slug)
   const post = await queryPostBySlug({ slug, locale })
 
   if (!post) return <PayloadRedirects url={url} />
+
+  console.log('post', post)
 
   return (
     <article className="pt-header-plus-admin-bar pb-16">
@@ -111,7 +114,7 @@ const queryPostBySlug = cache(
 
     const payload = await getPayload({ config: configPromise })
 
-    const result = await payload.find({
+    const post = await payload.find({
       collection: 'blog-posts',
       locale: locale,
       draft,
@@ -125,6 +128,21 @@ const queryPostBySlug = cache(
       },
     })
 
-    return result.docs?.[0] || null
+    //authors avatars are not populated in the post, so we need to get them from the users collection
+    const authors = await payload.find({
+      collection: 'users',
+      select: {
+        name: true,
+        avatar: true,
+      },
+      where: {
+        id: { in: post?.docs?.[0]?.populatedAuthors?.map((author) => author.id) },
+      },
+      pagination: false,
+    })
+
+    post.docs[0] && (post.docs[0].populatedAuthors = authors.docs || [])
+
+    return post.docs?.[0] || null
   },
 )
