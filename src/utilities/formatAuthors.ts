@@ -1,9 +1,9 @@
 import { BlogPost } from '@/payload-types'
-import { useLocale } from 'next-intl'
 
 /**
  * Formats an array of populatedAuthors from Posts into a prettified string.
- * @param authors - The populatedAuthors array from a Post.
+ * @param authors - The populatedAuthors array from a BlogPost.
+ * @param locale - The locale of the current page.
  * @returns A prettified string of authors.
  * @example
  *
@@ -13,9 +13,8 @@ import { useLocale } from 'next-intl'
  */
 export const formatAuthors = (
   authors: NonNullable<NonNullable<BlogPost['populatedAuthors']>[number]>[],
+  locale: 'en' | 'ar' = 'ar',
 ) => {
-  const locale = useLocale()
-  // Ensure we don't have any authors without a name
   const filteredAuthors = authors.filter((author) => Boolean(author.name))
 
   if (filteredAuthors.length === 0) return ''
@@ -26,5 +25,5 @@ export const formatAuthors = (
   return `${filteredAuthors
     .slice(0, -1)
     .map((author) => author?.name)
-    .join(', ')} ${locale === 'ar' ? 'و' : 'and'} ${filteredAuthors[authors.length - 1].name}`
+    .join(', ')} ${locale === 'ar' ? 'و' : 'and '}${filteredAuthors[authors.length - 1].name}`
 }
