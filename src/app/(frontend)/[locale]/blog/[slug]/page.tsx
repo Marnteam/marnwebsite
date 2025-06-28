@@ -65,8 +65,6 @@ export default async function Post({ params: paramsPromise }: Args) {
 
   if (!post) return <PayloadRedirects url={url} />
 
-  console.log('post', post)
-
   return (
     <article className="pt-header-plus-admin-bar pb-16">
       <PageClient />
@@ -141,7 +139,9 @@ const queryPostBySlug = cache(
       pagination: false,
     })
 
-    post.docs[0] && (post.docs[0].populatedAuthors = authors.docs || [])
+    if (post.docs[0]) {
+      post.docs[0].populatedAuthors = authors.docs || []
+    }
 
     return post.docs?.[0] || null
   },

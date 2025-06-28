@@ -118,7 +118,7 @@ export const PostHero: React.FC<{
 
   const readTime = getReadTimeFromLexical(content, locale, t)
 
-  const cardHeight = useTransform(eased, [0, 0.12], [openCardHeight, 56])
+  const cardHeight = useTransform(eased, [0, 0.12], [openCardHeight, 64])
   const cardWidth = useTransform(eased, [0, 0.12], [width - cardOffsetRef.current * 2, width])
   const cardRadius = useTransform(eased, [0, 0.12], ['24px', '0px'])
 
@@ -127,6 +127,11 @@ export const PostHero: React.FC<{
 
   const metaOpacity = useTransform(eased, [0, 0.12], [1, 0])
   const metaHeight = useTransform(eased, [0, 0.12], [openMetaHeight, 0])
+  const maskStartColor = useTransform(
+    eased,
+    [0, 0.08],
+    ['var(--color-background-neutral)', 'transparent'],
+  )
 
   return (
     <LayoutGroup id="post-hero">
@@ -162,7 +167,10 @@ export const PostHero: React.FC<{
                 opacity: metaOpacity,
                 height: metaHeight,
                 overflow: 'hidden',
-                maskImage: `linear-gradient(to top, transparent, var(--color-background-neutral) 0%)`,
+                maskImage: useTransform(
+                  maskStartColor,
+                  (v) => `linear-gradient(to top, ${v}, var(--color-background-neutral) 40%)`,
+                ),
               }}
             >
               <div ref={metaRef} className="space-y-6">
