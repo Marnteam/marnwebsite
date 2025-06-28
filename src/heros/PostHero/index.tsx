@@ -34,10 +34,13 @@ export const PostHero: React.FC<{
   const [openMetaHeight, setOpenMetaHeight] = useState(0)
 
   const { scrollYProgress } = useScroll({ target: undefined })
+  // // Ease in but quick out with minimal bounce spring
   const eased = useSpring(scrollYProgress, {
-    stiffness: 200,
-    damping: 40,
-    mass: 1,
+    stiffness: 400, // higher stiffness for quick out
+    damping: 60, // higher damping for minimal bounce
+    mass: 0.8, // slightly lighter for snappier response
+    restDelta: 0.001,
+    restSpeed: 0.01,
   })
 
   // helper: only measure while the hero is fully open
@@ -125,10 +128,10 @@ export const PostHero: React.FC<{
   const h1FontSize = useTransform(eased, [0, 0.12], [h1Size, 17])
   const h1LineHeight = useTransform(eased, [0, 0.12], [h1Size * 1.5, 24])
 
-  const metaOpacity = useTransform(eased, [0, 0.12], [1, 0])
-  const metaHeight = useTransform(eased, [0, 0.12], [openMetaHeight, 0])
+  const metaOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0])
+  const metaHeight = useTransform(scrollYProgress, [0, 0.12], [openMetaHeight, 0])
   const maskStartColor = useTransform(
-    eased,
+    scrollYProgress,
     [0, 0.08],
     ['var(--color-background-neutral)', 'transparent'],
   )
@@ -142,7 +145,8 @@ export const PostHero: React.FC<{
           className="relative flex flex-row items-center"
           style={{ height: cardHeight }}
         >
-          <div
+          <motion.div
+            layout
             ref={cardRef}
             className={clsx(
               'mx-[calc(var(--spacing-space-site)*2)] w-full overflow-hidden py-(--text-h1)',
@@ -162,7 +166,7 @@ export const PostHero: React.FC<{
             <motion.div style={{ height: useTransform(eased, [0, 0.12], ['24px', '0px']) }} />
             <motion.div
               layoutId="post-meta"
-              className="relative z-1"
+              className="z-1"
               style={{
                 opacity: metaOpacity,
                 height: metaHeight,
@@ -257,7 +261,7 @@ export const PostHero: React.FC<{
                 </div>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
           {/* Progress bar anchored to bottom */}
           <motion.div
             style={{
