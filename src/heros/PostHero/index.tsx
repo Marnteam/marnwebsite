@@ -15,7 +15,7 @@ import Facebook from '@/icons/facebook'
 import X from '@/icons/x'
 import { getReadTimeFromLexical } from '@/utilities/extractTextFromLexical'
 import Link from 'next/link'
-import { useResizeObserver } from '@/hooks/useResizeObserver'
+import { attachResizeObserver } from '@/utilities/resizeObserver'
 
 export const PostHero: React.FC<{
   post: BlogPost
@@ -57,8 +57,8 @@ export const PostHero: React.FC<{
 
   useLayoutEffect(() => {
     requestAnimationFrame(measure) // first paint
-    const stopRO1 = useResizeObserver(cardRef.current, measure) // fonts/imgs
-    const stopRO2 = useResizeObserver(metaRef.current, measure)
+    const stopRO1 = attachResizeObserver(cardRef.current, measure) // fonts/imgs
+    const stopRO2 = attachResizeObserver(metaRef.current, measure)
     window.addEventListener('resize', measure)
 
     return () => {
