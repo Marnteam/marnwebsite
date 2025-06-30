@@ -177,6 +177,12 @@ export default buildConfig({
     defaultFromName: 'Marn CMS',
     apiKey: process.env.RESEND_API_KEY || '',
   }),
+  folders: {
+    browseByFolder: false,
+    debug: true,
+    fieldName: 'folder',
+    slug: 'payload-folders',
+  },
   i18n: {
     fallbackLanguage: 'en',
     supportedLanguages: { en, ar },
