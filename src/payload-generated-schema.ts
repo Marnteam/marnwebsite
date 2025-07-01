@@ -5663,6 +5663,9 @@ export const media = pgTable(
     locale: enum_media_locale('locale'),
     blurhash: varchar('blurhash'),
     prefix: varchar('prefix').default('media'),
+    folder: uuid('folder_id').references(() => payload_folders.id, {
+      onDelete: 'set null',
+    }),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -5722,6 +5725,7 @@ export const media = pgTable(
     sizes_og_filename: varchar('sizes_og_filename'),
   },
   (columns) => ({
+    media_folder_idx: index('media_folder_idx').on(columns.folder),
     media_updated_at_idx: index('media_updated_at_idx').on(columns.updatedAt),
     media_created_at_idx: index('media_created_at_idx').on(columns.createdAt),
     media_filename_idx: uniqueIndex('media_filename_idx').on(columns.filename),
@@ -7239,6 +7243,29 @@ export const search_rels = pgTable(
   }),
 )
 
+export const payload_folders = pgTable(
+  'payload_folders',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    name: varchar('name').notNull(),
+    folder: uuid('folder_id').references((): AnyPgColumn => payload_folders.id, {
+      onDelete: 'set null',
+    }),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+  },
+  (columns) => ({
+    payload_folders_name_idx: index('payload_folders_name_idx').on(columns.name),
+    payload_folders_folder_idx: index('payload_folders_folder_idx').on(columns.folder),
+    payload_folders_updated_at_idx: index('payload_folders_updated_at_idx').on(columns.updatedAt),
+    payload_folders_created_at_idx: index('payload_folders_created_at_idx').on(columns.createdAt),
+  }),
+)
+
 export const payload_jobs_log = pgTable(
   'payload_jobs_log',
   {
@@ -7352,6 +7379,7 @@ export const payload_locked_documents_rels = pgTable(
     formsID: uuid('forms_id'),
     'form-submissionsID': uuid('form_submissions_id'),
     searchID: uuid('search_id'),
+    'payload-foldersID': uuid('payload_folders_id'),
     'payload-jobsID': uuid('payload_jobs_id'),
   },
   (columns) => ({
@@ -7400,6 +7428,9 @@ export const payload_locked_documents_rels = pgTable(
     payload_locked_documents_rels_search_id_idx: index(
       'payload_locked_documents_rels_search_id_idx',
     ).on(columns.searchID),
+    payload_locked_documents_rels_payload_folders_id_idx: index(
+      'payload_locked_documents_rels_payload_folders_id_idx',
+    ).on(columns['payload-foldersID']),
     payload_locked_documents_rels_payload_jobs_id_idx: index(
       'payload_locked_documents_rels_payload_jobs_id_idx',
     ).on(columns['payload-jobsID']),
@@ -7477,6 +7508,11 @@ export const payload_locked_documents_rels = pgTable(
       columns: [columns['searchID']],
       foreignColumns: [search.id],
       name: 'payload_locked_documents_rels_search_fk',
+    }).onDelete('cascade'),
+    'payload-foldersIdFk': foreignKey({
+      columns: [columns['payload-foldersID']],
+      foreignColumns: [payload_folders.id],
+      name: 'payload_locked_documents_rels_payload_folders_fk',
     }).onDelete('cascade'),
     'payload-jobsIdFk': foreignKey({
       columns: [columns['payload-jobsID']],
@@ -10775,7 +10811,12 @@ export const relations_media_rels = relations(media_rels, ({ one }) => ({
     relationName: 'categories',
   }),
 }))
-export const relations_media = relations(media, ({ many }) => ({
+export const relations_media = relations(media, ({ one, many }) => ({
+  folder: one(payload_folders, {
+    fields: [media.folder],
+    references: [payload_folders.id],
+    relationName: 'folder',
+  }),
   _rels: many(media_rels, {
     relationName: '_rels',
   }),
@@ -11498,6 +11539,13 @@ export const relations_search = relations(search, ({ one, many }) => ({
     relationName: '_rels',
   }),
 }))
+export const relations_payload_folders = relations(payload_folders, ({ one }) => ({
+  folder: one(payload_folders, {
+    fields: [payload_folders.folder],
+    references: [payload_folders.id],
+    relationName: 'folder',
+  }),
+}))
 export const relations_payload_jobs_log = relations(payload_jobs_log, ({ one }) => ({
   _parentID: one(payload_jobs, {
     fields: [payload_jobs_log._parentID],
@@ -11587,6 +11635,11 @@ export const relations_payload_locked_documents_rels = relations(
       fields: [payload_locked_documents_rels.searchID],
       references: [search.id],
       relationName: 'search',
+    }),
+    'payload-foldersID': one(payload_folders, {
+      fields: [payload_locked_documents_rels['payload-foldersID']],
+      references: [payload_folders.id],
+      relationName: 'payload-folders',
     }),
     'payload-jobsID': one(payload_jobs, {
       fields: [payload_locked_documents_rels['payload-jobsID']],
@@ -12268,6 +12321,7 @@ type DatabaseSchema = {
   search: typeof search
   search_locales: typeof search_locales
   search_rels: typeof search_rels
+  payload_folders: typeof payload_folders
   payload_jobs_log: typeof payload_jobs_log
   payload_jobs: typeof payload_jobs
   payload_locked_documents: typeof payload_locked_documents
@@ -12535,6 +12589,7 @@ type DatabaseSchema = {
   relations_search_locales: typeof relations_search_locales
   relations_search_rels: typeof relations_search_rels
   relations_search: typeof relations_search
+  relations_payload_folders: typeof relations_payload_folders
   relations_payload_jobs_log: typeof relations_payload_jobs_log
   relations_payload_jobs: typeof relations_payload_jobs
   relations_payload_locked_documents_rels: typeof relations_payload_locked_documents_rels
