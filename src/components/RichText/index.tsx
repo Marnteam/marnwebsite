@@ -11,9 +11,7 @@ import {
   LinkJSXConverter,
   RichText as RichTextWithoutBlocks,
 } from '@payloadcms/richtext-lexical/react'
-
-// import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
-import { StyledListBlock } from '@/blocks/StyledList/Component'
+import { jsx as _jsx } from 'react/jsx-runtime'
 
 import type {
   BannerBlock as BannerBlockProps,
@@ -21,14 +19,9 @@ import type {
   MediaBlock as MediaBlockProps,
   StyledListBlock as StyledListBlockProps,
 } from '@/payload-types'
-import { BannerBlock } from '@/blocks/Banner/Component'
 import { cn } from '@/utilities/ui'
-import { CallToAction01 } from '@/blocks/CallToAction/CallToAction01'
 import { formatSlug } from '@/hooks/formatSlug'
 import { createElement } from 'react'
-import { GalleryBlock } from '@/blocks/Gallery/config'
-import { RenderGalleryBlock } from '@/blocks/Gallery/RenderGalleryBlock'
-import { RenderFAQBlock } from '@/blocks/FAQ/RenderFAQBlock'
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -67,6 +60,25 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     const slug = formatSlug(text)
     // Create the heading element dynamically based on the tag
     return createElement(headingNode.tag, { id: slug }, text)
+  },
+  paragraph: ({ node, nodesToJSX }) => {
+    const children = nodesToJSX({
+      nodes: node.children,
+    })
+    if (!children?.length) {
+      return /*#__PURE__*/ _jsx('p', {
+        children: /*#__PURE__*/ _jsx('br', {}),
+        style: {
+          textAlign: node.format,
+        },
+      })
+    }
+    return /*#__PURE__*/ _jsx('p', {
+      children: children,
+      style: {
+        textAlign: node.format,
+      },
+    })
   },
   ...LinkJSXConverter({ internalDocToHref }),
 })

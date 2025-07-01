@@ -520,6 +520,11 @@ html[data-theme='dark'] .nav__link:hover {
   content: '';
 }
 
+.nav-group .nav__link[id*='folders']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:folder.svg');
+  content: '';
+}
+
 .nav-group .nav__link[id*='header']::before {
   mask-image: url('https://api.iconify.design/material-symbols:top-panel-close.svg');
   content: '';

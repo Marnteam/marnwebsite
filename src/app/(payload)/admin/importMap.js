@@ -33,6 +33,8 @@ import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93
 import { AppPreview as AppPreview_9c379d66dbd1d305732cf432da5e35b0 } from '@/components/AppPreview'
 import { default as default_1eb14a9e108e78608bb9e832591b6335 } from '@/components/RelationshipChipSelect'
 import { default as default_36eabb76cf083741c5e3e70086f8d257 } from '@/components/ImageCategoryGuide'
+import { FolderTableCell as FolderTableCell_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
+import { FolderEditField as FolderEditField_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { default as default_50fad7b62e1ba5d1034952cb18853e31 } from '@/Header/CustomRowLabelNavItems'
@@ -79,6 +81,8 @@ export const importMap = {
   "@/components/AppPreview#AppPreview": AppPreview_9c379d66dbd1d305732cf432da5e35b0,
   "@/components/RelationshipChipSelect#default": default_1eb14a9e108e78608bb9e832591b6335,
   "@/components/ImageCategoryGuide#default": default_36eabb76cf083741c5e3e70086f8d257,
+  "@payloadcms/ui/rsc#FolderTableCell": FolderTableCell_ab83ff7e88da8d3530831f296ec4756a,
+  "@payloadcms/ui/rsc#FolderEditField": FolderEditField_ab83ff7e88da8d3530831f296ec4756a,
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/plugin-search/client#ReindexButton": ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
   "@/Header/CustomRowLabelNavItems#default": default_50fad7b62e1ba5d1034952cb18853e31,
