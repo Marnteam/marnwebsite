@@ -46,7 +46,7 @@ type results = {
   }
 }[]
 
-const inputPath = path.join(process.cwd(), 'gemini-formatted-app-data.json')
+const inputPath = path.join(process.cwd(), './src/scripts/gemini-formatted-app-data.json')
 const data: results = JSON.parse(fs.readFileSync(inputPath, 'utf8'))
 
 const generateLexicalContent = (elements: TextElement[]): any => {

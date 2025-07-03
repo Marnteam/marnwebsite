@@ -72,7 +72,7 @@ export const SearchableIntegrationsGrid: React.FC<SearchableIntegrationsGridProp
     ecosystem: initialFilters.ecosystem?.slug || '',
     sort: initialFilters.sort || 'newest',
   }
-  console.log(filters)
+
   return (
     <div className="py-xl space-y-md container">
       <SearchFilters
