@@ -39,7 +39,7 @@ export const Metrics01: React.FC<MetricsBlockProps> = ({ stats, enableLogos, log
             )}
           >
             <div className="flex h-full items-center justify-between">
-              <div className="flex-1">
+              <div className="flex-1 text-center">
                 <p className="text-h3 font-medium">{stat.value}</p>
                 <p className="text-base-tertiary text-body-md">{stat.label}</p>
               </div>
@@ -58,7 +58,7 @@ export const Metrics01: React.FC<MetricsBlockProps> = ({ stats, enableLogos, log
               'col-span-full',
             )}
           >
-            <div className="gap-space-md flex w-full flex-col items-start">
+            <div className="gap-space-md flex w-full flex-col items-center">
               {headline && <p className="text-body-md text-base-tertiary">{headline}</p>}
               <ul
                 dir="ltr"
