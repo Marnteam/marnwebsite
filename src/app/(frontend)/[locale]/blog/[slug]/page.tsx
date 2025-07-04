@@ -80,7 +80,7 @@ export default async function Post({ params: paramsPromise }: Args) {
         <div className="mx-space-site relative flex w-full items-center justify-center will-change-transform">
           <div className="mx-space-site gap-space-md z-2 flex w-full flex-col-reverse *:py-(--text-h1) lg:flex-row lg:items-start">
             <RichText
-              className="mx-0 max-w-4xl"
+              className="mx-0 w-full max-w-4xl"
               data={post.content}
               enableProse
               enableGutter={false}

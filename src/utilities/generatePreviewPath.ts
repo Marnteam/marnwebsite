@@ -18,10 +18,12 @@ type Props = {
 export const generatePreviewPath = ({ collection, slug, req, locale }: Props) => {
   const localeString = typeof locale === 'string' ? locale : String(locale)
 
-  const path = `/${collectionPrefixMap[collection]}/${slug}`
+  const encodedSlug = encodeURIComponent(slug)
+
+  const path = `/${collectionPrefixMap[collection]}/${encodedSlug}`
 
   const params = {
-    slug,
+    slug: encodedSlug,
     collection,
     locale: localeString,
     path,
@@ -29,10 +31,6 @@ export const generatePreviewPath = ({ collection, slug, req, locale }: Props) =>
   }
 
   const encodedParams = new URLSearchParams(params)
-
-  // Object.entries(params).forEach(([key, value]) => {
-  //   encodedParams.append(key, String(value))
-  // })
 
   const isProduction =
     process.env.NODE_ENV === 'production' || Boolean(process.env.VERCEL_PROJECT_PRODUCTION_URL)

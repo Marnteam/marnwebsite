@@ -52,7 +52,7 @@ export const IntegrationPane: React.FC<{
 
   return (
     <div className="container">
-      <div className="gap-space-xs grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+      <div className="gap-space-xs grid grid-cols-2 lg:grid-cols-4">
         <InfoCard
           id="company"
           label={t('company')}
@@ -62,7 +62,7 @@ export const IntegrationPane: React.FC<{
             <Media
               resource={icon}
               className="shrink-0"
-              imgClassName="size-12 overflow-hidden rounded-xl"
+              imgClassName="size-10 overflow-hidden rounded-xl"
             />
           )}
           <p className="text-body-sm ms-2 font-medium">{company?.name}</p>
