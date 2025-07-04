@@ -44,11 +44,11 @@ const renderBadges = (
 }
 
 export const IntegrationPane: React.FC<{
-  integration: Pick<Integration, 'icon' | 'company' | 'ecosystem' | 'categories'>
+  integration: Pick<Integration, 'icon' | 'company' | 'ecosystem' | 'categories' | 'pricing'>
   locale?: TypedLocale
 }> = ({ integration, locale }) => {
   const t = useTranslations('IntegrationPane')
-  const { icon, company, ecosystem, categories } = integration
+  const { icon, company, ecosystem, categories, pricing } = integration
 
   return (
     <div className="container">
@@ -92,7 +92,7 @@ export const IntegrationPane: React.FC<{
           label={t('pricing')}
           icon="material-symbols:payments-outline-rounded"
         >
-          <span className="text-body-sm text-base-secondary font-medium">تواصل معنا</span>
+          <span className="text-body-sm text-base-secondary font-medium">{pricing}</span>
         </InfoCard>
       </div>
     </div>

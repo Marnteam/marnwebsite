@@ -15,7 +15,6 @@ import { Page, BlogPost } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 
 const generateTitle: GenerateTitle<BlogPost | Page> = ({ doc, locale }) => {
-  console.log(locale)
   return doc?.title ? `${doc.title} | ${locale === 'ar' ? 'منظومة مرن' : 'Marn POS'}` : 'Marn POS'
 }
 

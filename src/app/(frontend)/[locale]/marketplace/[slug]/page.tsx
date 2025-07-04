@@ -111,6 +111,7 @@ const queryIntegrationBySlug = cache(
         company: true,
         ecosystem: true,
         categories: true,
+        pricing: true,
       },
     })
 

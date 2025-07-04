@@ -20,9 +20,14 @@ interface IntegrationsGridProps {
   }
 }
 
-export const IntegrationsGrid: React.FC<IntegrationsGridProps> = ({ integrations, locale, initialFilters }) => {
+export const IntegrationsGrid: React.FC<IntegrationsGridProps> = ({
+  integrations,
+  locale,
+  initialFilters,
+}) => {
   const searchParams = useSearchParams()
-  const [filteredIntegrations, setFilteredIntegrations] = useState<IntegrationWithId[]>(integrations)
+  const [filteredIntegrations, setFilteredIntegrations] =
+    useState<IntegrationWithId[]>(integrations)
   const filters = {
     search: searchParams.get('q') || '',
     category: searchParams.get('category') || initialFilters?.category || '',
@@ -41,7 +46,6 @@ export const IntegrationsGrid: React.FC<IntegrationsGridProps> = ({ integrations
 
     if (!filtersChanged) return
 
-    console.log(filters.category, filters.ecosystem, filters.search, filters.sort)
     const fetchFilteredIntegrations = async () => {
       try {
         const response = await fetch(

@@ -805,6 +805,7 @@ export interface Integration {
      */
     phone?: string | null;
   };
+  pricing?: string | null;
   /**
    * URL to the documentation for the integration.
    */
@@ -3032,6 +3033,7 @@ export interface IntegrationsSelect<T extends boolean = true> {
         email?: T;
         phone?: T;
       };
+  pricing?: T;
   docsLink?:
     | T
     | {

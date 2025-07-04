@@ -20,7 +20,6 @@ export const IntegrationHero: React.FC<
   //   setHeaderTheme('light')
   // }, [setHeaderTheme])
 
-  console.log(icon)
   return (
     <section className="pb-xl gap-space-3xl container flex flex-col items-center pt-(--header-plus-admin-bar-height)">
       <div className="gap-md flex max-w-[36rem] flex-col items-center">

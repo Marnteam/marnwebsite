@@ -46,25 +46,25 @@ export const Integrations: CollectionConfig<'integrations'> = {
   },
   admin: {
     defaultColumns: ['icon', 'name', 'tagline', 'updatedAt'],
-    // livePreview: {
-    //   url: ({ data, req, locale }) => {
-    //     const path = generatePreviewPath({
-    //       slug: typeof data?.slug === 'string' ? data.slug : '',
-    //       collection: 'integrations',
-    //       req,
-    //       locale,
-    //     })
+    livePreview: {
+      url: ({ data, req, locale }) => {
+        const path = generatePreviewPath({
+          slug: typeof data?.slug === 'string' ? data.slug : '',
+          collection: 'integrations',
+          req,
+          locale,
+        })
 
-    //     return path
-    //   },
-    // },
-    // preview: (data, { req, locale }) =>
-    //   generatePreviewPath({
-    //     slug: typeof data?.slug === 'string' ? data.slug : '',
-    //     collection: 'integrations',
-    //     req,
-    //     locale,
-    //   }),
+        return path
+      },
+    },
+    preview: (data, { req, locale }) =>
+      generatePreviewPath({
+        slug: typeof data?.slug === 'string' ? data.slug : '',
+        collection: 'integrations',
+        req,
+        locale,
+      }),
     useAsTitle: 'name',
   },
   fields: [
@@ -78,6 +78,7 @@ export const Integrations: CollectionConfig<'integrations'> = {
         rtl: false,
       },
     },
+
     {
       type: 'tabs',
       tabs: [
@@ -168,6 +169,11 @@ export const Integrations: CollectionConfig<'integrations'> = {
                   ],
                 },
               ],
+            },
+            {
+              name: 'pricing',
+              type: 'text',
+              localized: true,
             },
 
             link({

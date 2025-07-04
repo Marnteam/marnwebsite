@@ -2,9 +2,9 @@ type BadgeColors = 'blue' | 'red' | 'green' | 'yellow' | 'gray' | 'violet' | 'in
 
 // Map ecosystem slugs to badge colors
 const ecosystemColorMap: Record<string, BadgeColors> = {
-  sell: 'green', // البيع - Sell ecosystem
-  operate: 'yellow', // التشغيل - Operate ecosystem
-  manage: 'violet', // الإدارة - Manage ecosystem
+  sell: 'blue',
+  operate: 'yellow',
+  manage: 'violet',
 }
 
 /**
