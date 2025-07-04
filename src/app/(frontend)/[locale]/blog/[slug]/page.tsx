@@ -18,6 +18,8 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { blogConverters } from '@/components/RichText/blogConverters'
 import { BlogSidebar } from '@/components/BlogSidebar'
 
+export const dynamicParams = true
+
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
   const locales = ['en', 'ar']
