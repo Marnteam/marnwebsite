@@ -19,6 +19,12 @@
     "integrations": "مع تطبيق مجمّع طلبات من اختيارك",
     "features": "الميزات"
   },
+  "IntegrationPane": {
+    "company": "الشركة",
+    "ecosystem": "المنظومة",
+    "categories": "الفئات",
+    "pricing": "الأسعار"
+  },
   "Header": {
     "home": "الرئيسية",
     "pages": "الصفحات",

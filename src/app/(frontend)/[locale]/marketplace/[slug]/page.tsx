@@ -5,11 +5,13 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
-import { Hero03 } from '@/heros/Hero03'
+import { IntegrationHero } from '@/heros/IntegrationHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
+import { Media } from '@/payload-types'
+import { IntegrationPane } from '@/components/IntegrationPane'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -58,7 +60,7 @@ export default async function Post({ params: paramsPromise }: Args) {
 
   if (!integration) return <PayloadRedirects url={url} />
 
-  const { hero, layout } = integration
+  const { icon, hero, layout } = integration
 
   return (
     <article className="pt-header-plus-admin-bar pb-16">
@@ -69,7 +71,8 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       {draft && <LivePreviewListener />}
 
-      <Hero03 type="hero03" richText={hero} />
+      <IntegrationHero type="hero03" richText={hero} icon={icon as Media} />
+      <IntegrationPane integration={integration} />
       <RenderBlocks blocks={layout as any} locale={locale} />
     </article>
   )
@@ -104,6 +107,10 @@ const queryIntegrationBySlug = cache(
         summary: true,
         tagline: true,
         layout: true,
+        icon: true,
+        company: true,
+        ecosystem: true,
+        categories: true,
       },
     })
 

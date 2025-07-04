@@ -28,7 +28,7 @@ type results = {
   app_description?: string
   value_proposition?: string
   app_features?: string
-  company_name?: string
+  company_name?: { en: string; ar: string }
   company_email?: string
   company_phone?: string
   company_website?: string
@@ -403,6 +403,65 @@ OUTPUT (JSON only, no markdown):
     ;[tagline, hero] = await Promise.all([generateTagline(app), generateHero(app)])
   }
 
+  let companyName
+  if (!app.company_name?.ar) {
+    const company = await generateObject({
+      model: google('gemini-2.5-pro', {
+        useSearchGrounding: true,
+        dynamicRetrievalConfig: {
+          mode: 'MODE_UNSPECIFIED',
+        },
+      }),
+      schema: z.object({
+        name: z.object({
+          en: z.string(),
+          ar: z.string(),
+        }),
+      }),
+      system: `
+      You are a bilingual business researcher with web-search access.
+
+GOAL  
+For every incoming app object, return the legal or commonly used **company name** in both languages:
+
+• company_name_ar – Modern Standard Arabic (official spelling if available)  
+• company_name_en – English (official spelling; camel-case or title-case as registered)  
+
+METHOD  
+1. Perform at least two focused searches, e.g.  
+     "<app name> company السعودية"  
+     "<app name> شركة نقاط بيع"  
+     "<app name> parent company"  
+
+2. Accept ONLY authoritative sources:  
+   – Official website “About”, "Terms and Conditions", "Privacy Policy", or footer  
+   – Saudi Ministry of Commerce registry snippet  
+   – Verified LinkedIn company page  
+   – App Store or Play Store page  
+   – Reputable press releases or filings  
+
+3. If an Arabic name is **not** published, transliterate the English name (e.g., “PaySync” → "باي سنك").  
+4. If you cannot confidently match the app to a company, output **"INSUFFICIENT_DATA"** for **both** fields.  
+
+OUTPUT (plain JSON, no markdown):
+
+{
+  "name": {
+    "ar": "<Arabic name or INSUFFICIENT_DATA>",
+    "en": "<English name or INSUFFICIENT_DATA>"
+  }
+}
+
+    `,
+      prompt: `App: ${selectedApp.name} (Arabic) 
+      hint: ${app.app_description}
+      `,
+    })
+    companyName = company.object.name
+
+    app.company_name = companyName
+  }
+
   // update app data in arabic
   await payload.update({
     collection: 'integrations',
@@ -431,7 +490,7 @@ OUTPUT (JSON only, no markdown):
       link: {
         type: 'custom',
         newTab: true,
-        url: `https://marn.com/marketplace/${selectedApp.slug}`,
+        url: `/marketplace/${selectedApp.slug}`,
         label: selectedApp.name || '',
       },
       docsLink: {
@@ -440,9 +499,8 @@ OUTPUT (JSON only, no markdown):
         url: app.company_website || '',
         label: 'مستندات التطوير',
       },
-
       company: {
-        name: app.company_name,
+        name: app.company_name?.ar || companyName.ar,
         email: app.company_email,
         phone: app.company_phone,
       },
@@ -491,9 +549,8 @@ OUTPUT (JSON only, no markdown):
         },
       ]),
       company: {
-        name: app.company_name,
+        name: app.company_name?.en || companyName.en,
       },
-
       meta: {
         title: `${selectedApp.title as string} | Marn Marketplace`,
         description: app.hero?.p_en || hero.p_en,
@@ -509,6 +566,7 @@ OUTPUT (JSON only, no markdown):
   app.summary = app.summary || summary
   app.hero = app.hero || hero
   app.tagline = app.tagline || tagline
+  app.company_name = app.company_name || companyName
 
   payload.logger.info(`Saved ${selectedApp.title} to CMS`)
 }

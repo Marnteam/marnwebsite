@@ -16,6 +16,12 @@
     "annually": "Annually",
     "monthly": "Monthly"
   },
+  "IntegrationPane": {
+    "company": "Company",
+    "ecosystem": "Ecosystem",
+    "categories": "Categories",
+    "pricing": "Pricing"
+  },
   "Header": {
     "home": "Home",
     "pages": "Pages",

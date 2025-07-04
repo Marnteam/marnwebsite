@@ -8,7 +8,10 @@
     "core_use_case": "منتج برمجي كخدمة (SaaS) متخصص في ذكاء الأعمال (BI) والتحليلات يتكامل مع أنظمة نقاط البيع (POS) في قطاع الأغذية والمشروبات لتقديم تحليل بيانات مفصل ورؤى قابلة للتنفيذ للمطاعم وشركات الأغذية والمشروبات.",
     "monetization_model": "اشتراك",
     "app_features": "تحليل مفصل للمبيعات مع فلاتر ومخططات بيانية، والإشراف على الإيرادات والمدفوعات، وتقارير المطاعم بالساعة واليوم والسنة، وتحليل متقدم لسلوك العملاء، وتنبؤ مدعوم بالذكاء الاصطناعي لزيادة المبيعات وتقليل الهدر، وتحليل عمليات وأداء الأعمال، والتسوية المالية مع مجمعي طلبات الطعام وتطبيقات التوصيل، والوصول إلى تقارير أعمال أسرع وأكثر دقة.",
-    "company_name": "Quant Data & Analytics",
+    "company_name": {
+      "en": "Fruits 360",
+      "ar": "فروتس 360"
+    },
     "company_email": "info@quant.sa",
     "company_phone": "+966 11 454 6885",
     "company_website": "https://www.quant.sa/",
@@ -51,7 +54,10 @@
     "core_use_case": "إدارة الطلبات من مختلف القنوات، وعمليات المطبخ، والتوصيل.",
     "monetization_model": "نموذج الاشتراك بقيمة 60 دولارًا شهريًا لكل موقع.",
     "app_features": "إدارة موحدة للطلبات، نظام عرض المطبخ الذكي (KDS)، إدارة مركزية للقائمة والأسعار، تحليلات وتقارير شاملة، إدارة متعددة العلامات التجارية والمواقع، التكامل مع أنظمة متعددة، إدارة المخزون.",
-    "company_name": "Grubtech Software Design LLC",
+    "company_name": {
+      "en": "Group Tech for Information Technology",
+      "ar": "جروب تك لتقنية المعلومات"
+    },
     "company_email": "support@grubtech.com",
     "company_phone": "+971581621994",
     "company_website": "https://www.grubtech.com/",
@@ -99,7 +105,10 @@
     "core_use_case": "Deliverect هي عبارة عن منصة برمجيات كخدمة (SaaS) تعمل على تبسيط إدارة الطلبات عبر الإنترنت للمطاعم. وهي تدمج العديد من منصات توصيل الطعام التابعة لجهات خارجية (مثل Uber Eats و DoorDash و Grubhub) مباشرة في نظام نقاط البيع (POS) الخاص بالمطعم. وهذا يلغي الحاجة إلى قيام الموظفين بإعادة إدخال الطلبات يدويًا من أجهزة لوحية متعددة، مما يوفر الوقت ويقلل من الأخطاء. تعمل المنصة على مركزية جميع الطلبات عبر الإنترنت في نظام واحد، مما يسمح للمطاعم بإدارة قوائمها ومخزونها وتحليلات المبيعات بكفاءة.",
     "monetization_model": "subscription",
     "app_features": "إدارة الطلبات: تجميع كافة الطلبات عبر الإنترنت من منصات توصيل متعددة في واجهة واحدة.\nإدارة القائمة: تحديث القوائم عبر منصات متعددة ومواقع متعددة بنقرة واحدة.\nمزامنة المخزون: تتبع المخزون في الوقت الفعلي وتنبيهات انخفاض المخزون.\nإعداد التقارير والتحليلات: لوحات معلومات ثاقبة لتتبع المبيعات والأداء عبر جميع القنوات.\nالتكامل مع نقاط البيع: يتكامل بسلاسة مع أنظمة نقاط البيع الحالية.\nإدارة التوصيل: تحسين وتقليل تكاليف التوصيل للميل الأخير.\nالطلب المباشر: تمكين المطاعم من قبول الطلبات مباشرة من خلال مواقعها الإلكترونية الخاصة.",
-    "company_name": "Deliverect",
+    "company_name": {
+      "en": "Deliverect",
+      "ar": "ديليفيركت"
+    },
     "company_email": "support@deliverect.com",
     "company_phone": "+971 800 032 1140",
     "company_website": "https://www.deliverect.com/",
@@ -147,7 +156,10 @@
     "core_use_case": "تمكين الشركات من إرسال حملات تسويقية، وإشعارات هامة، ورسائل التحقق (OTP) لعملائها.",
     "monetization_model": "نموذج تسعير مرن حيث يمكن للعملاء شراء باقات من الرسائل أو أرصدة لاستخدامها في حملاتهم.",
     "app_features": "حملات تسويقية مخصصة، التكامل مع المتاجر الإلكترونية، رسائل التحقق (OTP)، واجهة برمجة التطبيقات (API)، تحليلات وتقارير، دعم فني.",
-    "company_name": "مسجات | MSEGAT",
+    "company_name": {
+      "en": "Bawabat Al Ghad for Information Technology",
+      "ar": "شركة بوابة الغد لتقنية المعلومات"
+    },
     "company_email": "support@msegat.com",
     "company_phone": "966114959958",
     "company_website": "https://msegat.com",
@@ -190,7 +202,10 @@
     "core_use_case": "إدارة الشؤون المالية والإدارية بكفاءة وسهولة.",
     "monetization_model": "نموذج الاشتراك مع باقات متنوعة.",
     "app_features": "إدارة المبيعات والفوترة الإلكترونية، إدارة المشتريات والمصروفات، إدارة المخزون، المحاسبة والأصول، إدارة الموارد البشرية، التقارير المالية، التكامل مع الأنظمة الأخرى.",
-    "company_name": "شركة فوم (VOM)",
+    "company_name": {
+      "en": "Digital Financial Solutions for Information Technology Company",
+      "ar": "شركة الحلول الرقمية المالية لتقنية المعلومات"
+    },
     "company_email": "info@getvom.com",
     "company_phone": "+966502309337",
     "company_website": "https://getvom.com/",
@@ -233,7 +248,10 @@
     "core_use_case": "نظام إدارة سحابي متكامل للمطاعم ومتاجر التجزئة.",
     "monetization_model": "اشتراك (تتوفر خطط أسعار مختلفة)",
     "app_features": "إدارة الموظفين، نظام نقاط البيع (POS)، إدارة المخزون، تقارير آنية، التكامل مع تطبيقات الطرف الثالث، إدارة علاقات العملاء (CRM)، الطلب والدفع الإلكتروني.",
-    "company_name": "N/A",
+    "company_name": {
+      "en": "Foodics",
+      "ar": "فوديكس"
+    },
     "company_email": "no@email.com",
     "company_phone": "N/A",
     "company_website": "N/A",
@@ -281,7 +299,10 @@
     "core_use_case": "يعمل كبرنامج وسيط يندمج مع نظام 'زيرو' (Xero) لترجمة تقارير وبيانات 'زيرو' إلى اللغة العربية وتكييفها لتتوافق مع اللوائح السعودية.",
     "monetization_model": "نموذج الاشتراك السنوي.",
     "app_features": "إدارة الحسابات، فواتير المبيعات، المشتريات، إدارة المخزون، الموارد البشرية والرواتب، التقارير المالية، إدارة المهام، التكامل مع برامج أخرى.",
-    "company_name": "شركة المحافظة على الثروات القابضة (Wealth Preservation Holding Company)",
+    "company_name": {
+      "en": "Digital Solutions for Information Technology Company",
+      "ar": "شركة الحلول الرقمية لتقنية المعلومات"
+    },
     "company_email": "hesaab@wpholding.com",
     "company_phone": "+966 53 466 6824",
     "company_website": "https://hesaab.com/",
@@ -324,7 +345,10 @@
     "core_use_case": "The primary function or use case of the app.",
     "monetization_model": "How the app generates revenue (e.g., subscription, ads, one-time purchase).",
     "app_features": "Key features and functionalities of the app.",
-    "company_name": "WIYAK",
+    "company_name": {
+      "en": "Okey Menu",
+      "ar": "أوكي منيو"
+    },
     "company_email": "customercare@wiyak.com",
     "company_phone": "+965 22211221",
     "company_website": "https://www.wiyak.com/wishop",
@@ -367,7 +391,10 @@
     "core_use_case": "تمكين المطاعم من إدارة الطلبات بكفاءة وتعزيز تواجدهم الرقمي.",
     "monetization_model": "نموذج الاشتراك السنوي (SaaS)",
     "app_features": "منصة خاصة بالعلامة التجارية، تكامل مع أنظمة نقاط البيع، إدارة متكاملة لعمليات التوصيل، تطبيقات مساندة لأصحاب المتاجر، حلول دفع متنوعة، أدوات تسويقية وبرامج ولاء، نظام لإدارة طلبات مركز الاتصال، تقارير وتحليلات.",
-    "company_name": "شركة أنظمة الطلب للاتصالات وتقنية المعلومات",
+    "company_name": {
+      "en": "OrderStation",
+      "ar": "أوردرستيشن"
+    },
     "company_email": "info@tryorder.com",
     "company_phone": "+966 55 610 2002",
     "company_website": "https://tryorder.com",
@@ -410,7 +437,10 @@
     "core_use_case": "The primary function or use case of the app.",
     "monetization_model": "How the app generates revenue (e.g., subscription, ads, one-time purchase).",
     "app_features": "Key features and functionalities of the app.",
-    "company_name": "YourCompanyName",
+    "company_name": {
+      "en": "Kawkab for Information Technology",
+      "ar": "شركة كوكب لتقنية المعلومات"
+    },
     "company_email": "contact@yourcompany.com",
     "company_phone": "123-456-7890",
     "company_website": "www.yourcompanywebsite.com",
@@ -453,7 +483,10 @@
     "core_use_case": "توفير بنية تحتية قوية وآمنة للمدفوعات عبر الإنترنت.",
     "monetization_model": "نموذج تسعير قائم على نسبة من كل معاملة بالإضافة إلى رسوم ثابتة (2.2% + 1 ريال سعودي لكل معاملة).",
     "app_features": "تعدد طرق الدفع، سهولة التكامل، الأمان والموثوقية، دعم العملات المحلية، حلول متنوعة، لوحة تحكم شاملة.",
-    "company_name": "شركة ميسر المالية",
+    "company_name": {
+      "en": "Moyasar",
+      "ar": "ميسر"
+    },
     "company_email": "support@moyasar.com",
     "company_phone": "8001111848",
     "company_website": "https://moyasar.com/",
@@ -496,7 +529,10 @@
     "core_use_case": "محفظة رقمية للمدفوعات وتحويل الأموال وإدارة الشؤون المالية.",
     "monetization_model": "مجاني للمستخدمين الأفراد، مع رسوم على بعض الخدمات مثل التحويلات الدولية وعمولات من التجار.",
     "app_features": "تحويل الأموال (محلي ودولي)، دفع الفواتير، مدفوعات عبر رمز الاستجابة السريعة (QR)، بطاقات دفع مسبقة، تتبع النفقات، عروض وخصومات.",
-    "company_name": "شركة المدفوعات الرقمية السعودية (Saudi Digital Payments Company)",
+    "company_name": {
+      "en": "stc pay",
+      "ar": "إس تي سي باي"
+    },
     "company_email": "Info@stcpay.com.sa",
     "company_phone": "داخل السعودية: 8001180008; خارج السعودية: 966920011444+",
     "company_website": "https://stcpay.com.sa/",
@@ -539,7 +575,10 @@
     "core_use_case": "توصيل الطلبات من المطاعم إلى المستخدمين.",
     "monetization_model": "نموذج عمل يركز على توفير تجربة عملاء فريدة من خلال التوصيل السريع وتطوير الخدمات المستمر.",
     "app_features": "سهولة الاستخدام، تنوع الخيارات، تتبع الطلب، خيارات دفع متعددة، سرعة التوصيل، دعم الطهاة المنزليين.",
-    "company_name": "شركة جاهز الدولية لتقنية نظم المعلومات",
+    "company_name": {
+      "en": "Jahez International Company for Information Systems Technology",
+      "ar": "شركة جاهز الدولية لتقنية نظم المعلومات"
+    },
     "company_email": "info@jahez.net",
     "company_phone": "8001241220",
     "company_website": "www.jahezgroup.com",
@@ -582,7 +621,10 @@
     "core_use_case": "أتمتة عملية الطلب والدفع داخل المطاعم، مما يقلل من الحاجة إلى عدد كبير من النوادل ويتيح للعملاء تجربة أكثر سلاسة.",
     "monetization_model": "نموذج اشتراك شهري للشركات (B2B) مع فترة تجريبية مجانية وأسعار تنافسية دون فرض عمولة على الطلبات.",
     "app_features": "الطلب والدفع عبر QR Code، قائمة طعام رقمية تفاعلية، التكامل مع أنظمة نقاط البيع (POS)، إدارة الحجوزات وقوائم الانتظار، تحليلات وتقارير مفصلة، جمع بيانات العملاء، دعم فني على مدار الساعة.",
-    "company_name": "شركة إنتليجنس فيجن التجارية (INTELLIGENCE VISION TRADING COMPANY)",
+    "company_name": {
+      "en": "Bright Vision Information Technology Est.",
+      "ar": "مؤسسة رؤية براقة لتقنية المعلومات"
+    },
     "company_email": "info@iwaiter.net",
     "company_phone": "+966 500 937188",
     "company_website": "https://iwaiter.net",
@@ -625,7 +667,10 @@
     "core_use_case": "توفير منصة لبرامج الولاء تساعد الشركات على زيادة تفاعل العملاء ومعدل تكرار الشراء.",
     "monetization_model": "نموذج تسعير قائم على الباقات للشركات، التطبيقات مجانية للاستخدام للمستهلكين.",
     "app_features": "التكامل مع أنظمة نقاط البيع، برامج ولاء متعددة القنوات، مرونة في أنواع المكافآت، قابلية التوسع، أدوات تسويق واستهداف، تحليلات وتقارير، تطبيقات قابلة للتخصيص.",
-    "company_name": "Mukafaat Marketing Solutions (مكافآت لحلول التسويق)",
+    "company_name": {
+      "en": "Mokafaat",
+      "ar": "مكافآت"
+    },
     "company_email": "info@mukafaatms.com",
     "company_phone": "+966 920000849",
     "company_website": "https://mukafaat.com/",
@@ -668,7 +713,10 @@
     "core_use_case": "تمكين المطاعم من إدارة عملياتها عبر الإنترنت بكفاءة وفعالية.",
     "monetization_model": "نموذج البرنامج كخدمة (SaaS) مع تسعير مخصص بناءً على حجم واحتياجات كل مطعم.",
     "app_features": "إدارة متكاملة، تخصيص مناطق التوصيل، أنواع متعددة للطلبات، أدوات تسويقية، تكامل مع أنظمة نقاط البيع، تتبع الطلبات، كشك الطلب الذاتي، إدارة اشتراكات الوجبات.",
-    "company_name": "شركة دوك لتقنية المعلومات (DOOK DELIVERY COMPANY FOR INFO TECH)",
+    "company_name": {
+      "en": "Taker Information Technology Company",
+      "ar": "شركة تيكر لتقنية المعلومات"
+    },
     "company_email": "contact@taker.io",
     "company_phone": "+966 55 933 3770",
     "company_website": "https://www.taker.io/ar",
@@ -711,7 +759,10 @@
     "core_use_case": "توفير حلول برامج الولاء الذكية والمؤتمتة للشركات والمتاجر لتعزيز تفاعل العملاء وزيادة المبيعات.",
     "monetization_model": "subscription",
     "app_features": "نظام ولاء قابل للتخصيص، وإدارة علاقات العملاء (CRM)، وتحليل بيانات سلوك العملاء، وأدوات تسويقية مؤتمتة (حملات عبر البريد الإلكتروني والرسائل القصيرة)، ونظام لجمع آراء العملاء وتقييماتهم، وإمكانية بيع بطاقات الهدايا والعروض الترويجية، ونظام للطلبات المسبقة والاستلام من المتجر، والتكامل مع أنظمة نقاط البيع (POS) المختلفة مثل فودكس (Foodics) ورواء.",
-    "company_name": "Bonat Information Technology Company",
+    "company_name": {
+      "en": "Bonat Information Technology Company",
+      "ar": "شركة بونات لتقنية المعلومات"
+    },
     "company_email": "Customercare@bonat.io",
     "company_phone": "+966115202552",
     "company_website": "https://www.bonat.io",
@@ -759,7 +810,10 @@
     "core_use_case": "منصة متكاملة لبرامج الولاء وإشراك العملاء، تركز على قطاع المطاعم والمقاهي وتجار التجزئة في المملكة العربية السعودية. تتيح للشركات إنشاء برامج ولاء مخصصة، وتحليل بيانات العملاء، وإطلاق حملات تسويقية، وتوفير خدمة الطلب المسبق. كما تمكن المستخدمين النهائيين من كسب واستبدال المكافآت والطلب المسبق من المتاجر المفضلة لديهم.",
     "monetization_model": "subscription",
     "app_features": "برامج ولاء مرنة (نقاط، أختام، مكافآت، خصومات)، تحليلات بيانات سلوك العملاء، حملات تسويقية مستهدفة (إشعارات، رسائل نصية، بريد إلكتروني)، الطلب المسبق والاستلام من السيارة أو المتجر، بطاقات هدايا إلكترونية مسبقة الدفع، التكامل مع أنظمة نقاط البيع (مثل فودكس)، دعم محفظة آبل (Apple Wallet)، لوحة تحكم سهلة للشركات.",
-    "company_name": "شركة هرمس الذكية للتجارة (COMPANY HULRAMMUS AL-DHAKIA LELTGARA CHARKA DHAT AL-MASSAWALIYEH MAHDOUDYA SHAKHS WAHID)",
+    "company_name": {
+      "en": "Noqtah Information Technology Company",
+      "ar": "شركة نقطة لتقنية المعلومات"
+    },
     "company_email": "hello@nugttah.com",
     "company_phone": "+966 50 011 2662",
     "company_website": "https://nugttah.com/",

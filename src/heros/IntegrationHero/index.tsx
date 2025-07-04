@@ -1,6 +1,6 @@
 import React from 'react'
 
-import type { Page } from '@/payload-types'
+import type { Media as MediaType, Page } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/MediaResponsive'
@@ -8,16 +8,11 @@ import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/utilities/ui'
 import { InfiniteSlider } from '@/components/motion-ui/infinite-slider'
+import { ConnectingIcons } from './connectingIcons'
 
-export const Hero03: React.FC<Page['hero'] & { children?: React.ReactNode }> = ({
-  richText,
-  media,
-  links,
-  caption,
-  logos,
-  badge,
-  children,
-}) => {
+export const IntegrationHero: React.FC<
+  Page['hero'] & { children?: React.ReactNode; icon?: MediaType }
+> = ({ icon, richText, media, links, caption, logos, badge, children }) => {
   const { logos: logosGroup, headline } = logos || {}
   // const { setHeaderTheme } = useHeaderTheme()
 
@@ -25,10 +20,12 @@ export const Hero03: React.FC<Page['hero'] & { children?: React.ReactNode }> = (
   //   setHeaderTheme('light')
   // }, [setHeaderTheme])
 
+  console.log(icon)
   return (
-    <section className="pb-xl gap-space-3xl container flex flex-col items-center pt-[calc(3*var(--header-height))]">
+    <section className="pb-xl gap-space-3xl container flex flex-col items-center pt-(--header-plus-admin-bar-height)">
       <div className="gap-md flex max-w-[36rem] flex-col items-center">
         {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
+        {icon && <ConnectingIcons icon={icon} />}
 
         {richText && (
           <RichText
