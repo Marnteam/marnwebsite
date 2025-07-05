@@ -87,12 +87,18 @@
     font-weight: var(--font-weight-normal);
   }
 
+  /* This selects p immediately preceded by something 
+  that's not h2 or h3 */
+  :not(h2) + p:where(:not(.not-prose, .not-prose *)) {
+    margin-top: calc(var(--spacing) * 6);
+  }
+
   :is(h2, h3, h4):where(:not(.not-prose, .not-prose *)) {
     /* scroll-margin-top: calc(var(--spacing) * 32);
     @variant lg {
       scroll-margin-top: calc(var(--spacing) * 18);
     } */
-    scroll-margin-top: var(--header-plus-admin-bar-height);
+    scroll-margin-top: calc(var(--header-plus-admin-bar-height) + 6rem);
   }
 
   ul:where(:not(.not-prose, .not-prose *)) {

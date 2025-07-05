@@ -79,6 +79,7 @@ export default async function Page({ params: paramsPromise }: Args) {
       <RenderHero {...hero} />
 
       <RenderBlocks blocks={layout as any} locale={locale} />
+      {/* <h2 className="mb-space-sm text-h2 font-medium">{t('allArticles')}</h2> */}
 
       <div className="py-md container flex flex-row items-center justify-between">
         {categories.length > 0 && (

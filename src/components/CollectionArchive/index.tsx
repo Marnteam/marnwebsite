@@ -6,12 +6,14 @@ import type { BlogPost, Category } from '@/payload-types'
 import { Card } from '@/components/Card'
 import { Badge } from '../ui/badge'
 import { Link } from '@/i18n/routing'
+import { useTranslations } from 'next-intl'
 
 export type Props = {
   posts: BlogPost[]
 }
 
 export const CollectionArchive: React.FC<Props> = (props) => {
+  const t = useTranslations('Blog')
   const { posts } = props
 
   const categories: Category[] = []

@@ -7,7 +7,8 @@
     "publishedAt": "نشر في",
     "inThisArticle": "في هذه المقالة",
     "readTime": "{minutes} دقائق للقراءة",
-    "readTimeMinute": "دقيقة واحدة للقراءة"
+    "readTimeMinute": "دقيقة واحدة للقراءة",
+    "allArticles": "جميع المقالات"
   },
   "TestimonialsBlock": {
     "readMore": "إقرأ القصة"

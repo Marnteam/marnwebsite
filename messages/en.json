@@ -7,7 +7,8 @@
     "publishedAt": "Published at",
     "inThisArticle": "In this article",
     "readTime": "{minutes} min read",
-    "readTimeMinute": "1 min read"
+    "readTimeMinute": "1 min read",
+    "allArticles": "All articles"
   },
   "TestimonialsBlock": {
     "readMore": "Read story"

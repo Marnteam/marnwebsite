@@ -104,8 +104,14 @@ export function FooterClient({ columns, currentYear }: Props) {
   const overscroll = (inputDelta: number) => {
     if (springing.current) return
 
-    const atBottom =
-      window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 1
+    // Improved bottom detection for Safari compatibility
+    const scrollTop = window.scrollY
+    const windowHeight = window.innerHeight
+    const documentHeight = document.documentElement.scrollHeight
+    const threshold = 5 // Safari needs more tolerance
+
+    const atBottom = scrollTop + windowHeight >= documentHeight - threshold
+
     if (!atBottom || inputDelta <= 0) return
 
     setPeek(peekRef.current + inputDelta) // accumulate
@@ -121,14 +127,31 @@ export function FooterClient({ columns, currentYear }: Props) {
 
   /* event wiring */
   useEffect(() => {
+    // Detect Safari for different behavior
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+
     /* velocity-aware onWheel  */
     const onWheel = (e: WheelEvent) => {
-      /* 1 — normalise delta exactly as before */
+      // Only handle downward scrolling when actually at bottom
+      if (e.deltaY <= 0) return
+
+      // Check if we're truly at the bottom before doing anything
+      const scrollTop = window.scrollY
+      const windowHeight = window.innerHeight
+      const documentHeight = document.documentElement.scrollHeight
+      const threshold = isSafari ? 10 : 5 // More tolerance for Safari
+
+      const atBottom = scrollTop + windowHeight >= documentHeight - threshold
+
+      // Don't interfere with normal scrolling if not at bottom
+      if (!atBottom) return
+
+      /* 1 — normalise delta exactly as before */
       const gain = Math.sign(e.deltaY) * Math.max(1, Math.abs(e.deltaY)) * WHEEL_GAIN
 
       overscroll(gain) // <-- your existing helper
 
-      /* 2 — compute idle time from event spacing */
+      /* 2 — compute idle time from event spacing */
       const now = performance.now()
       const gap = now - lastWheelTS.current // time since previous tick
       lastWheelTS.current = now
@@ -140,8 +163,12 @@ export function FooterClient({ columns, currentYear }: Props) {
       }
       idleTimer.current = setTimeout(springBack, idle)
 
-      /* 3 — suppress browser rubber-band while we're peeking */
-      if (peekRef.current > 0) e.preventDefault()
+      /* 3 — suppress browser rubber-band while we're peeking */
+      // Only prevent default if we're actually showing the footer peek
+      // and we're definitely at the bottom
+      if (peekRef.current > 0 && atBottom) {
+        e.preventDefault()
+      }
     }
 
     /* 2 - touch */
@@ -160,7 +187,10 @@ export function FooterClient({ columns, currentYear }: Props) {
       if (peekRef.current) springBack()
     }
 
-    window.addEventListener('wheel', onWheel, { passive: false }) // ← must be non-passive
+    // Use passive wheel events for Safari to avoid interference
+    const wheelOptions = isSafari ? { passive: true } : { passive: false }
+
+    window.addEventListener('wheel', onWheel, wheelOptions)
     window.addEventListener('touchstart', tStart, { passive: true })
     window.addEventListener('touchmove', tMove, { passive: true })
     window.addEventListener('touchend', tEnd, { passive: true })
