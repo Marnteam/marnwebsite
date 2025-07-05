@@ -87,7 +87,7 @@ export default async function Page({ params: paramsPromise }: Args) {
               href="/blog"
               className="text-base-primary bg-background-neutral hover:text-base-secondary hover:bg-background-neutral-subtle rounded-full px-4 py-2 text-sm font-medium transition-colors"
             >
-              All
+              {locale === 'ar' ? 'الكل' : 'All'}
             </Link>
             {categories?.map((category, index) => {
               return (
@@ -102,6 +102,14 @@ export default async function Page({ params: paramsPromise }: Args) {
             })}
           </div>
         )}
+      </div>
+
+      <CollectionArchive posts={posts.docs as BlogPost[]} />
+
+      <div className="my-space-xl container flex flex-col items-center justify-between gap-4 md:flex-row">
+        {posts.totalPages > 1 && posts.page && (
+          <Pagination className="my-0" page={posts.page} totalPages={posts.totalPages} />
+        )}
         <PageRange
           className="w-fit shrink-0"
           collection="posts"
@@ -109,14 +117,6 @@ export default async function Page({ params: paramsPromise }: Args) {
           limit={12}
           totalDocs={posts.totalDocs}
         />
-      </div>
-
-      <CollectionArchive posts={posts.docs as BlogPost[]} />
-
-      <div className="container">
-        {posts.totalPages > 1 && posts.page && (
-          <Pagination page={posts.page} totalPages={posts.totalPages} />
-        )}
       </div>
     </article>
   )
