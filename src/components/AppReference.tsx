@@ -1,7 +1,6 @@
 import React from 'react'
 import { Media } from '@/components/MediaResponsive'
 import { CMSLink } from '@/components/Link'
-import { Button } from '@/components/ui/button'
 import { Solution, Integration, Media as MediaType } from '@/payload-types'
 import { cn } from '@/utilities/ui'
 

@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect, useRef } from 'react'
-import { getClientSideURL } from '@/utilities/getURL'
 import { cn } from '@/utilities/ui'
 import { useTheme } from '@/providers/Theme'
 import type { Props as MediaProps } from '../types'

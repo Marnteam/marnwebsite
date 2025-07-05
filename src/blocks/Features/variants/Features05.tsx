@@ -8,7 +8,7 @@ import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'
 import { Badge } from '@/components/ui/badge'
 import { motion } from 'motion/react'
-import { containerVariants, itemVariants, itemsFling } from '@/utilities/motion'
+import { containerVariants, itemsFling } from '@/utilities/motion'
 
 export const Features05: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns?.length) return null

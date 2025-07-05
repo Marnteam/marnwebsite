@@ -1,7 +1,7 @@
 import React from 'react'
 import { TypedLocale } from 'payload'
 
-import { Faq, FaqBlock, FeaturedAppsBlock } from '@/payload-types'
+import { FaqBlock } from '@/payload-types'
 
 import { FAQBlock01 } from './FAQBlock01'
 import { FAQBlock02 } from './FAQBlock02'

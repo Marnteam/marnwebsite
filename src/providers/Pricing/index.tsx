@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useCallback, useContext, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 
 export interface ContextType {
   isMonthly?: boolean

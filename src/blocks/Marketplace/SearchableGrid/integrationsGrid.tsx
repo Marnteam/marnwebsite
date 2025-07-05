@@ -4,8 +4,6 @@ import { IntegrationCard, type IntegrationsCardData } from '@/components/Integra
 import { AnimatePresence, motion } from 'motion/react'
 import { itemVariants } from '@/utilities/motion'
 import { useSearchParams } from 'next/navigation'
-import { getPayload } from 'payload'
-import configPromise from '@payload-config'
 
 export type IntegrationWithId = IntegrationsCardData & { id: string }
 

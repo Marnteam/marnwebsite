@@ -1,5 +1,4 @@
 import { BannerBlock } from '@/blocks/Banner/Component'
-import { CallToAction01 } from '@/blocks/CallToAction/CallToAction01'
 import { RenderCallToActionBlock } from '@/blocks/CallToAction/RenderCallToActionBlock'
 import { RenderFAQBlock } from '@/blocks/FAQ/RenderFAQBlock'
 import { RenderGalleryBlock } from '@/blocks/Gallery/RenderGalleryBlock'
@@ -11,7 +10,6 @@ import type {
   CallToActionBlock as CTABlockProps,
   MediaBlock as MediaBlockProps,
 } from '@/payload-types'
-import { cn } from '@/utilities/ui'
 import {
   DefaultNodeTypes,
   SerializedBlockNode,
@@ -19,7 +17,6 @@ import {
   SerializedLinkNode,
 } from '@payloadcms/richtext-lexical'
 import { JSXConvertersFunction, LinkJSXConverter } from '@payloadcms/richtext-lexical/react'
-import Link from 'next/link'
 import React from 'react'
 
 type NodeTypes =

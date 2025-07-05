@@ -4,7 +4,6 @@ import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 
 import {
   FixedToolbarFeature,
-  HeadingFeature,
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import type { LogoBlock, Media } from '@/payload-types'
+import type { LogoBlock } from '@/payload-types'
 
 import { Logo01 } from './Logo01'
 import { Logo02 } from './Logo02'

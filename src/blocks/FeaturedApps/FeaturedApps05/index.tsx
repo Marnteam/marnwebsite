@@ -2,7 +2,7 @@ import React from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
-import type { FeaturedAppsBlock as AppsBlockProps, Integration, Media } from '@/payload-types'
+import type { Media } from '@/payload-types'
 import { AppsListClientWrapper } from './AppsListClientWrapper'
 import { BlockHeaderType } from '@/types/blockHeader'
 

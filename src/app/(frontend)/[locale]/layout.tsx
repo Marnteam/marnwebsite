@@ -7,7 +7,6 @@ import { Header } from '@/Header/Component'
 import { Providers } from '@/providers'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { cookies, draftMode } from 'next/headers'
-import { DynamicAdminBarLoader } from '@/components/AdminBar/DynamicLoader.client'
 
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'

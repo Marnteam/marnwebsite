@@ -1,5 +1,5 @@
 import React from 'react'
-import { IntegrationsGrid, type IntegrationWithId } from './integrationsGrid'
+import { IntegrationsGrid } from './integrationsGrid'
 import { SearchFilters } from './SearchFilters'
 import type { Category } from '@/payload-types'
 import { getPayload } from 'payload'

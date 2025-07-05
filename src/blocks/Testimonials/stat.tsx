@@ -1,7 +1,5 @@
-import { ArrowDown, ChevronDown, ChevronUp } from 'lucide-react'
+import { ChevronDown, ChevronUp } from 'lucide-react'
 
-import { Customer } from '@/payload-types'
-import { ArrowUp } from 'lucide-react'
 import { cn } from '@/utilities/ui'
 
 type Stat = {

@@ -4,7 +4,6 @@ import { revalidatePath } from 'next/cache'
 
 import { authenticated } from '../access/authenticated'
 import { link } from '../fields/link'
-import { linkGroup } from '@/fields/linkGroup'
 
 export const Header: GlobalConfig = {
   slug: 'header',

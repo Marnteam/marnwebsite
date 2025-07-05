@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Search, Filter } from 'lucide-react'
+import { Search } from 'lucide-react'
 import type { Category } from '@/payload-types'
 
 interface SearchFiltersProps {

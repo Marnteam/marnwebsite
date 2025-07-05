@@ -1,11 +1,10 @@
 import React, { Fragment } from 'react'
-import type { GalleryBlock, Media } from '@/payload-types'
+import type { GalleryBlock } from '@/payload-types'
 // import { RenderBlockHeader } from '@/blocks/BlockHeader/RenderBlockHeader' // BlockHeader path not found
 import { Gallery01 } from './Gallery01'
 import { Gallery02 } from './Gallery02'
 import { Gallery03 } from './Gallery03'
 import { Gallery04 } from './Gallery04'
-import { BlockHeaderType } from '@/types/blockHeader'
 import { TypedLocale } from 'payload'
 
 type GalleryBlockType = GalleryBlock & {

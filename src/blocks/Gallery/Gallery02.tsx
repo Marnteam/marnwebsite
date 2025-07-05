@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import type { GalleryBlock, Media as MediaType } from '@/payload-types'
+import type { Media as MediaType } from '@/payload-types'
 import { Media } from '@/components/Media'
 import {
   Carousel,
@@ -9,7 +9,6 @@ import {
   CarouselItem,
   CarouselNavigation,
 } from '@/components/ui/carousel'
-import { Card, CardContent } from '@/components/ui/card'
 import { cn } from '@/utilities/ui'
 
 interface Gallery02Props {

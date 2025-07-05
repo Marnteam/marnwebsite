@@ -1,5 +1,5 @@
 import type { Payload, PayloadRequest, RequiredDataFromCollectionSlug } from 'payload'
-import type { Media, Solution } from '@/payload-types'
+import type { Solution } from '@/payload-types'
 
 export const seedSolutions = async (
   payload: Payload,

@@ -1,5 +1,4 @@
 import { BlocksFeature } from '@payloadcms/richtext-lexical'
-import { StyledList } from '@/blocks/StyledList/config'
 import { HeadingFeature } from '@payloadcms/richtext-lexical'
 import { FixedToolbarFeature, InlineToolbarFeature } from '@payloadcms/richtext-lexical'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'

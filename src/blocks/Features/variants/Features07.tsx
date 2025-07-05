@@ -2,10 +2,8 @@
 
 import React from 'react'
 import { Media } from '@/components/Media'
-import { cn } from '@/utilities/ui'
 import { FeaturesBlock } from '@/payload-types'
 import { Icon } from '@iconify-icon/react'
-import { Card, CardContent } from '@/components/ui/card'
 import { BlockHeader } from '@/components/BlockHeader'
 import { motion } from 'motion/react'
 import { containerVariants, itemsFling } from '@/utilities/motion'

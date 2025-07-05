@@ -1,16 +1,9 @@
 import type { Block, Field } from 'payload'
 
-import {
-  FixedToolbarFeature,
-  HeadingFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
 
-import { link } from '@/fields/link'
+
+
 import { blockHeader } from '@/components/BlockHeader/config'
-import { linkGroup } from '@/fields/linkGroup'
-import { badge } from '@/fields/badge'
 
 const fields: Field[] = [
   {

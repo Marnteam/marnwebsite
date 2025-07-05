@@ -2,14 +2,8 @@ import { getCachedGlobal } from '@/utilities/getGlobals'
 
 import type { Footer } from '@/payload-types'
 
-import { Button } from '@/components/ui/button'
-import { Link } from '@/i18n/routing'
 import { getTranslations } from 'next-intl/server'
 
-import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
-import { LanguageSwitcher } from '@/providers/LanguageSelector/index'
-import { CMSLink } from '@/components/Link'
-import Logo from '@/components/ui/logo'
 
 import Facebook from '@/icons/facebook'
 import Instagram from '@/icons/instagram'

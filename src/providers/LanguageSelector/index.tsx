@@ -10,7 +10,6 @@ import {
 import React, { useState, useEffect } from 'react'
 import { useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import { useCallback } from 'react'
 import { GlobeIcon } from 'lucide-react'
 
 export const LanguageSwitcher: React.FC = () => {

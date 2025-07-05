@@ -1,7 +1,6 @@
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { unstable_cache } from 'next/cache'
-import { Solution } from '@/payload-types'
 
 async function getSolutions(depth = 0) {
   const payload = await getPayload({ config: configPromise })

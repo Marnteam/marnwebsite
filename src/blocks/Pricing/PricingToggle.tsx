@@ -4,7 +4,6 @@ import React from 'react'
 import { usePricing } from '@/providers/Pricing'
 import { cn } from '@/utilities/ui'
 import { Tabs, TabsList, TabsTrigger } from '@/components/motion-ui/tabs'
-import { itemsFling } from '@/utilities/motion'
 
 export const PricingToggle = ({
   className,

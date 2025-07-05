@@ -3,7 +3,6 @@ import React from 'react'
 import { FeaturesBlock } from '@/payload-types'
 import { Media } from '@/components/Media'
 import { Card, CardContent } from '@/components/ui/card'
-import { CMSLink } from '@/components/Link'
 import { LinkBlock } from '@/components/LinkBlock'
 import { cn } from '@/utilities/ui'
 

@@ -12,7 +12,6 @@ import {
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Banner } from '../../blocks/Banner/config'
-import { Code } from '../../blocks/Code/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { StyledList } from '../../blocks/StyledList/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'

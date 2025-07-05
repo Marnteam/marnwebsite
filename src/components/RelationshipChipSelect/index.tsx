@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { useConfig, useField, usePayloadAPI, useLocale } from '@payloadcms/ui'
-import type { RelationshipFieldClientComponent, StaticDescription, StaticLabel } from 'payload'
+import { useField, usePayloadAPI, useLocale } from '@payloadcms/ui'
+import type { RelationshipFieldClientComponent } from 'payload'
 
 import './index.scss'
 

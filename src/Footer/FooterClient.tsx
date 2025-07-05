@@ -20,7 +20,7 @@ import zatca from '@/components/Graphics/zatca.svg'
 import sama from '@/components/Graphics/sama.svg'
 import { useTranslations } from 'next-intl'
 import { Input } from '@/components/ui/input'
-import { AtSignIcon, Mail, MailIcon } from 'lucide-react'
+import { MailIcon } from 'lucide-react'
 import Image from 'next/image'
 
 const socialLinks = [

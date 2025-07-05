@@ -8,7 +8,6 @@ import type {
 import { Controller } from 'react-hook-form'
 
 import PhoneInput from '@/components/ui/phone-input'
-import { Label } from '@/components/ui/label'
 import React from 'react'
 
 import { Error } from '../Error'

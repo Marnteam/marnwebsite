@@ -1,17 +1,13 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import type { GalleryBlock, Media as MediaType } from '@/payload-types'
+import type { GalleryBlock } from '@/payload-types'
 import { Media } from '@/components/Media'
 import {
   Carousel,
   CarouselContent,
-  CarouselIndicator,
   CarouselItem,
-  CarouselNavigation,
 } from '@/components/ui/carousel'
-import { Card, CardContent } from '@/components/ui/card'
 import { cn } from '@/utilities/ui'
-import { InfiniteSlider } from '@/components/motion-ui/infinite-slider'
 import { TransitionPanel } from '@/components/motion-ui/transition-panel'
 import useMeasure from 'react-use-measure'
 import { Button } from '@/components/ui/button'

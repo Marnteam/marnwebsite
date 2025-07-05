@@ -1,6 +1,5 @@
 'use client'
-import { useHeaderTheme } from '@/providers/HeaderTheme'
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 
 import type { Page } from '@/payload-types'
 

@@ -18,14 +18,13 @@ import {
   MorphingDialogContainer,
   MorphingDialogContent,
   MorphingDialogDescription,
-  MorphingDialogImage,
   MorphingDialogSubtitle,
   MorphingDialogTitle,
   MorphingDialogTrigger,
 } from '@/components/motion-ui/morphing-dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Icon } from '@iconify-icon/react'
-import { Plus, PlusCircle } from 'lucide-react'
+import { Plus } from 'lucide-react'
 
 type Features11Props = FeaturesBlock & {
   locale: string

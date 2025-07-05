@@ -3,7 +3,6 @@
 import type {
   Integration,
   Media as MediaType,
-  FeaturedAppsBlock as AppsBlockType,
 } from '@/payload-types' // Import necessary types
 import { Media } from '@/components/Media'
 import {
@@ -15,7 +14,6 @@ import {
   useTransform,
 } from 'motion/react'
 import { useRef, useMemo } from 'react'
-import { Badge } from '@/components/ui/badge'
 import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'
 import { cn } from '@/utilities/ui'

@@ -14,7 +14,6 @@ import { motion, useMotionValueEvent, useScroll } from 'motion/react'
 import { AnimatePresence } from 'motion/react'
 import { AdminBar } from '@/components/AdminBar'
 import { PayloadAdminBarProps } from 'payload-admin-bar'
-import { itemsFling, itemsFling2 } from '@/utilities/motion'
 
 interface AdminBarProps {
   adminBarProps: PayloadAdminBarProps

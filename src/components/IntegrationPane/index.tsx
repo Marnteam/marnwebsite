@@ -1,4 +1,3 @@
-import { CMSLink } from '@/components/Link'
 import { Category, Integration } from '@/payload-types'
 import { Media } from '@/components/MediaResponsive'
 import { Badge } from '@/components/ui/badge'

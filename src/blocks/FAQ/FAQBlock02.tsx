@@ -1,4 +1,3 @@
-import { cn } from '@/utilities/ui'
 import {
   Accordion,
   AccordionContent,
@@ -7,12 +6,7 @@ import {
 } from '@/components/ui/accordion'
 
 import RichText from '@/components/RichText'
-import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/Media'
 import { Faq, FaqBlock } from '@/payload-types'
-import { getPayload } from 'payload'
-import configPromise from '@payload-config'
-import { Icon } from '@iconify-icon/react'
 import { PlusIcon } from 'lucide-react'
 import { BlockHeader } from '@/components/BlockHeader'
 

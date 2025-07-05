@@ -1,16 +1,8 @@
 'use client'
 
 import React from 'react'
-import { cn } from '@/utilities/ui'
 import type { PricingBlock, Media as MediaType } from '@/payload-types'
-import { Media } from '@/components/Media'
-import { Badge } from '@/components/ui/badge'
-import { Check, CircleCheck, X } from 'lucide-react'
-import { CMSLink } from '@/components/Link'
-import { BlockHeader } from '@/components/BlockHeader'
-import { SaudiRiyal } from '@/icons/saudi-riyal'
 import { PricingCard } from '../PricingCard'
-import { PricingToggle } from '@/components/PricingToggle'
 
 interface PricingBlock02Props {
   pricingCards: NonNullable<PricingBlock['pricingCards']>

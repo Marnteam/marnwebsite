@@ -2,14 +2,9 @@ import type { CollectionConfig } from 'payload'
 
 import { authenticated } from '../access/authenticated'
 import { authenticatedOrPublished } from '../access/authenticatedOrPublished'
-import { slugField } from '@/fields/slug'
 import {
-  FixedToolbarFeature,
-  HeadingFeature,
-  InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
-import { link } from '@/fields/link'
 
 export const Testimonials: CollectionConfig = {
   slug: 'testimonials',

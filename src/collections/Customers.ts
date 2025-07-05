@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload'
-import { revalidatePath } from 'next/cache'
 
 import { slugField } from '@/fields/slug'
 import { authenticated } from '@/access/authenticated'
@@ -9,7 +8,6 @@ import {
   FixedToolbarFeature,
   InlineToolbarFeature,
   HeadingFeature,
-  BlocksFeature,
 } from '@payloadcms/richtext-lexical'
 
 import { link } from '@/fields/link'

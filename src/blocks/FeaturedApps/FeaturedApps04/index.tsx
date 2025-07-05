@@ -12,7 +12,6 @@ import {
 import { Media } from '@/components/Media'
 import { CMSLink } from '@/components/Link'
 import RichText from '@/components/RichText'
-import { ArrowLeftIcon } from 'lucide-react'
 import { TypedLocale } from 'payload'
 import { BlockHeaderType } from '@/types/blockHeader'
 

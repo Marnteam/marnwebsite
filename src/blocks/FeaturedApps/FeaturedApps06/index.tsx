@@ -12,7 +12,7 @@ import { Carousel } from '@/components/ui/carousel'
 
 import { Icon } from '@iconify-icon/react'
 
-import { FeaturedAppsBlock, Integration, Media as MediaType, Solution } from '@/payload-types'
+import { FeaturedAppsBlock, Media as MediaType } from '@/payload-types'
 
 interface FeaturedApps06Props {
   cards: FeaturedAppsBlock['cards']

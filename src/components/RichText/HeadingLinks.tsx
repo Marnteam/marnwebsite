@@ -7,7 +7,6 @@ import {
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import {
   JSXConvertersFunction,
-  LinkJSXConverter,
   RichText as RichTextWithoutBlocks,
 } from '@payloadcms/richtext-lexical/react'
 import { formatSlug } from '@/hooks/formatSlug'

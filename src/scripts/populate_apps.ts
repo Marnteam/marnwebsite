@@ -5,7 +5,6 @@ import configPromise from '../payload.config'
 
 import { openai } from '@ai-sdk/openai'
 import { google } from '@ai-sdk/google'
-import { GoogleGenerativeAIProviderMetadata } from '@ai-sdk/google'
 import { generateObject, generateText } from 'ai'
 import { z } from 'zod'
 

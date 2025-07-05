@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import type { Integration, PricingBlock, Solution } from '@/payload-types'
+import type { Integration, Solution } from '@/payload-types'
 import {
   Table,
   TableHeader,

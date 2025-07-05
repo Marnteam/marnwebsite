@@ -1,7 +1,5 @@
 import React, { Fragment } from 'react'
 import { getLocale, getTranslations } from 'next-intl/server'
-import { getPayload } from 'payload'
-import config from '@payload-config'
 
 import type { TestimonialsBlock as TestimonialsBlockType, Customer } from '@/payload-types'
 import { TestimonialsBlock02 } from './variants/TestimonialsBlock02'

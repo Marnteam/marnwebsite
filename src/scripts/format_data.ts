@@ -1,6 +1,5 @@
 import 'dotenv/config'
 
-import { google } from '@ai-sdk/google'
 import { openai } from '@ai-sdk/openai'
 import { generateObject } from 'ai'
 import fs from 'fs'

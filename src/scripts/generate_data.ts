@@ -3,13 +3,11 @@ import 'dotenv/config'
 import { getPayload } from 'payload'
 import configPromise from '../payload.config'
 
-import { openai } from '@ai-sdk/openai'
 import { google } from '@ai-sdk/google'
-import { GoogleGenerativeAIProviderMetadata } from '@ai-sdk/google'
-import { generateObject, generateText } from 'ai'
+import { generateObject } from 'ai'
 import { z } from 'zod'
 
-import { Category, Integration } from '@/payload-types'
+import { Category } from '@/payload-types'
 import { promises as fs } from 'fs'
 import path from 'path'
 

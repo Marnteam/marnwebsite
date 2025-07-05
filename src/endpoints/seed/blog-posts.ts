@@ -1,5 +1,5 @@
 import type { Payload, PayloadRequest } from 'payload'
-import type { Media, User, Category, BlogPost } from '@/payload-types'
+import type { Media, User, Category } from '@/payload-types'
 import { formatSlug } from '@/hooks/formatSlug'
 
 export type BlogPostsSeedArgs = {
