@@ -1,5 +1,5 @@
 import type { Metadata } from 'next/types'
-import type { Page as PageType, BlogPost } from '@/payload-types'
+import type { Page as PageType, BlogPost, Category } from '@/payload-types'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
@@ -12,6 +12,7 @@ import { RenderHero } from '@/heros/RenderHero'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { draftMode } from 'next/headers'
 import { generateMeta } from '@/utilities/generateMeta'
+import { Link } from '@/i18n/routing'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
@@ -55,6 +56,18 @@ export default async function Page({ params: paramsPromise }: Args) {
     },
   })
 
+  const categories: Category[] = []
+
+  posts.docs.forEach((post) => {
+    post.categories?.forEach((category) => {
+      if (typeof category === 'object' && category !== null) {
+        if (!categories.some((c) => c.id === category.id)) {
+          categories.push(category)
+        }
+      }
+    })
+  })
+
   // if (!page) {
   //   return <PayloadRedirects url={url} />
   // }
@@ -67,8 +80,30 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       <RenderBlocks blocks={layout as any} locale={locale} />
 
-      <div className="py-xl container">
+      <div className="py-md container flex flex-row items-center justify-between">
+        {categories.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href="/blog"
+              className="text-base-primary bg-background-neutral hover:text-base-secondary hover:bg-background-neutral-subtle rounded-full px-4 py-2 text-sm font-medium transition-colors"
+            >
+              All
+            </Link>
+            {categories?.map((category, index) => {
+              return (
+                <Link
+                  href={`/blog/category/${category.slug}`}
+                  key={index}
+                  className="text-base-primary bg-background-neutral hover:text-base-secondary hover:bg-background-neutral-subtle rounded-full px-4 py-2 text-sm font-medium transition-colors"
+                >
+                  {category.title}
+                </Link>
+              )
+            })}
+          </div>
+        )}
         <PageRange
+          className="w-fit shrink-0"
           collection="posts"
           currentPage={posts.page}
           limit={12}

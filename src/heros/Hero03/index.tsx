@@ -26,7 +26,7 @@ export const Hero03: React.FC<Page['hero'] & { children?: React.ReactNode }> = (
   // }, [setHeaderTheme])
 
   return (
-    <section className="pb-xl gap-space-3xl container flex flex-col items-center pt-[calc(3*var(--header-height))]">
+    <section className="pb-xl gap-space-3xl container flex flex-col items-center pt-[calc(var(--header-plus-admin-bar-height)*2)]">
       <div className="gap-md flex max-w-[36rem] flex-col items-center">
         {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
 
