@@ -90,8 +90,11 @@ export const HeaderClient: React.FC<HeaderType & AdminBarProps> = ({
         )}
       >
         <div className="z-50 w-full max-w-54">
-          <Link href="/" className="flex-shrink-0">
-            <Logo className="text-base-primary h-6 w-auto" />
+          <Link
+            href="/"
+            className="hover:text-base-secondary text-base-primary flex-shrink-0 transition-colors"
+          >
+            <Logo className="h-6 w-auto" />
           </Link>
         </div>
 
@@ -130,11 +133,7 @@ export const HeaderClient: React.FC<HeaderType & AdminBarProps> = ({
               // 'animate-in slide-in-from-top-4 duration-300 ease-out',
             )}
           >
-            <MobileNav
-              cta={cta}
-              tabs={tabs}
-              onLinkClick={() => setIsMobileNavOpen(false)}
-            />
+            <MobileNav cta={cta} tabs={tabs} onLinkClick={() => setIsMobileNavOpen(false)} />
           </motion.div>
         )}
       </AnimatePresence>
