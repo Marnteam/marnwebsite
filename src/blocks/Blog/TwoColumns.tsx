@@ -30,18 +30,18 @@ const PostCard: React.FC<{
   const author = Array.isArray(post.authors) && post.authors.length > 0 ? post.authors[0] : null
 
   return (
-    <article data-index={index} className={`group ${className}`}>
-      <div className="hover:bg-background-neutral-subtle flex w-full flex-row items-start rounded-3xl transition-colors">
+    <article data-index={index} className={`group/inner z-1 ${className}`}>
+      <div className="flex w-full flex-row items-start rounded-2xl transition-colors">
         {/* Image */}
         <div className="relative aspect-square h-auto w-[33.33%] shrink-0 p-4">
           {post.meta?.image && typeof post.meta?.image === 'object' ? (
             <Media
               resource={post.meta?.image}
               className="h-full w-full overflow-hidden rounded-lg"
-              imgClassName="h-full w-full object-cover  transition-transform duration-300 group-hover:scale-105"
+              imgClassName="h-full w-full object-cover transition-transform duration-300 group-hover/inner:scale-105"
             />
           ) : (
-            <div className="bg-background-neutral-subtle h-full w-full" />
+            <div className="bg-background-neutral-subtle h-full w-full rounded-lg" />
           )}
         </div>
 
@@ -50,17 +50,23 @@ const PostCard: React.FC<{
           <div>
             {/* Category Badge */}
             {category && typeof category === 'object' && (
-              <Badge type="label" label={category.title} color="blue" size="md" className="mb-2" />
+              <Badge
+                type="label"
+                label={category.title}
+                color="gray"
+                size="md"
+                className="group-hover/inner:bg-background-neutral mb-2"
+              />
             )}
 
             {/* Title */}
-            <h3 className="mb-space-2xs text-h4 text-base-primary group-hover:text-brand-primary line-clamp-2 font-medium transition-colors">
+            <h3 className="mb-space-2xs text-h4 text-base-primary group-hover/inner:text-brand-primary line-clamp-2 font-medium transition-colors">
               <Link href={href}>{post.title}</Link>
             </h3>
 
             {/* Excerpt */}
             {excerpt && (
-              <p className="mb-space-xs text-base-secondary line-clamp-3 text-sm">
+              <p className="mb-space-xs text-base-secondary group-hover/inner:text-base-tertiary line-clamp-3 text-sm transition-colors">
                 {excerpt.slice(0, 60)}...
               </p>
             )}
@@ -74,7 +80,7 @@ const PostCard: React.FC<{
         </div>
       </div>
       {
-        <hr className="mx-space-md border-background-neutral-subtle group-last:hidden group-hover:hidden" />
+        <hr className="mx-space-md border-background-neutral-subtle transition-opacity group-last/inner:hidden" />
       }
     </article>
   )
@@ -110,20 +116,17 @@ export const TwoColumns: React.FC<BlogBlockType> = ({
                     )}
                   </div>
                 )}
-                <div className="p-2 lg:p-4">
+                <div className="group/outer grid grid-cols-1 grid-rows-3 p-2 lg:p-4">
+                  <div className="bg bg-background-neutral-subtle ease-in-out-cubic col-start-1 row-start-1 h-full w-full translate-y-(--x) rounded-2xl opacity-0 group-[:has(article:hover)]/outer:opacity-100 group-[:has(article:hover)]/outer:transition-all"></div>
                   {recentPosts.slice(0, 3).map((post, index) => {
                     return (
-                      <>
-                        <PostCard
-                          index={index}
-                          key={post.id}
-                          post={post}
-                          locale={locale}
-                          // className={
-                          //   index < recentPosts.slice(0, 3).length - 1 ? 'border-border border-b' : ''
-                          // }
-                        />
-                      </>
+                      <PostCard
+                        className={`col-start-1 row-start-${index + 1}`}
+                        index={index}
+                        key={post.id}
+                        post={post}
+                        locale={locale}
+                      />
                     )
                   })}
                 </div>
@@ -145,18 +148,17 @@ export const TwoColumns: React.FC<BlogBlockType> = ({
                     )}
                   </div>
                 )}
-                <div className="p-2 lg:p-4">
+                <div className="group/outer grid grid-cols-1 grid-rows-3 p-2 lg:p-4">
+                  <div className="bg bg-background-neutral-subtle ease-in-out-cubic col-start-1 row-start-1 h-full w-full translate-y-(--x) rounded-2xl opacity-0 group-[:has(article:hover)]/outer:opacity-100 group-[:has(article:hover)]/outer:transition-all"></div>
                   {editorsPicks.slice(0, 3).map((post, index) => {
                     return (
                       <>
                         <PostCard
+                          className={`col-start-1 row-start-${index + 1}`}
                           index={index}
                           key={post.id}
                           post={post}
                           locale={locale}
-                          // className={
-                          //   index < recentPosts.slice(0, 3).length - 1 ? 'border-border border-b' : ''
-                          // }
                         />
                       </>
                     )

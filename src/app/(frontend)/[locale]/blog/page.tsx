@@ -67,7 +67,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       <RenderBlocks blocks={layout as any} locale={locale} />
 
-      <div className="container mb-8">
+      <div className="py-xl container">
         <PageRange
           collection="posts"
           currentPage={posts.page}

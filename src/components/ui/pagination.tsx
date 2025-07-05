@@ -49,6 +49,8 @@ function PaginationLink({ className, isActive, size = 'icon', ...props }: Pagina
           variant: isActive ? 'secondary' : 'ghost',
           size,
         }),
+        'h-10 text-sm',
+        isActive && 'bg-background-neutral',
         className,
       )}
       {...props}
@@ -61,8 +63,8 @@ function PaginationPrevious({ className, ...props }: React.ComponentProps<typeof
   return (
     <PaginationLink
       aria-label="Go to previous page"
-      size="default"
-      className={cn('gap-1 px-2.5 sm:pl-2.5', className)}
+      size="md"
+      className={cn('gap-1 px-4 sm:ps-4', className)}
       {...props}
     >
       <Icon icon="mdi:chevron-left" className="h-4 w-4 rtl:rotate-180" />
@@ -76,8 +78,8 @@ function PaginationNext({ className, ...props }: React.ComponentProps<typeof Pag
   return (
     <PaginationLink
       aria-label="Go to next page"
-      size="default"
-      className={cn('gap-1 px-2.5 sm:pr-2.5', className)}
+      size="md"
+      className={cn('gap-1 px-4 sm:pe-4', className)}
       {...props}
     >
       <span className="hidden sm:block">{t('next')}</span>

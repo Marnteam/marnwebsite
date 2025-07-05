@@ -14,72 +14,6 @@ type BlogBlockType = BlogBlock & {
   featuredPost: BlogPost
 }
 
-const PostCard: React.FC<{
-  index: number
-  post: BlogPost
-  locale: 'en' | 'ar'
-  className?: string
-}> = ({ index, post, locale, className = '' }) => {
-  const t = useTranslations('Blog')
-
-  const href = `/${locale}/blog/${post.slug}`
-  const { text } = getReadTimeFromLexical(post.content, locale as 'en' | 'ar', t)
-  const excerpt = extractTextFromLexical(post.content)
-  const category =
-    Array.isArray(post.categories) && post.categories.length > 0 ? post.categories[0] : null
-  const author = Array.isArray(post.authors) && post.authors.length > 0 ? post.authors[0] : null
-
-  return (
-    <article data-index={index} className={`group ${className}`}>
-      <div className="hover:bg-background-neutral-subtle flex w-full flex-row items-start rounded-3xl transition-colors">
-        {/* Image */}
-        <div className="relative aspect-square h-auto w-[33.33%] shrink-0 p-4">
-          {post.meta?.image && typeof post.meta?.image === 'object' ? (
-            <Media
-              resource={post.meta?.image}
-              className="h-full w-full overflow-hidden rounded-lg"
-              imgClassName="h-full w-full object-cover  transition-transform duration-300 group-hover:scale-105"
-            />
-          ) : (
-            <div className="bg-background-neutral-subtle h-full w-full" />
-          )}
-        </div>
-
-        {/* Content */}
-        <div className="pe-space-md py-space-sm flex w-full flex-col justify-between self-stretch ps-0">
-          <div>
-            {/* Category Badge */}
-            {category && typeof category === 'object' && (
-              <Badge type="label" label={category.title} color="blue" size="md" className="mb-2" />
-            )}
-
-            {/* Title */}
-            <h3 className="mb-space-2xs text-h4 text-base-primary group-hover:text-brand-primary line-clamp-2 font-medium transition-colors">
-              <Link href={href}>{post.title}</Link>
-            </h3>
-
-            {/* Excerpt */}
-            {excerpt && (
-              <p className="mb-space-xs text-base-secondary line-clamp-3 text-sm">
-                {excerpt.slice(0, 60)}...
-              </p>
-            )}
-          </div>
-
-          {/* Meta */}
-          <div className="text-base-tertiary border-border pt-space-xs flex items-center justify-between border-t text-sm">
-            <span>{text}</span>
-            <span>{post.publishedAt && formatDateTime(post.publishedAt)}</span>
-          </div>
-        </div>
-      </div>
-      {
-        <hr className="mx-space-md border-background-neutral-subtle group-last:hidden group-hover:hidden" />
-      }
-    </article>
-  )
-}
-
 export const FeaturedPost: React.FC<BlogBlockType> = ({ featuredPost, locale }) => {
   const t = useTranslations('Blog')
 
@@ -88,20 +22,18 @@ export const FeaturedPost: React.FC<BlogBlockType> = ({ featuredPost, locale }) 
     <div className="pb-xl container pt-0">
       <div className="mx-auto">
         <div className="gap-space-sm flex flex-col">
-          {/* Featured Post */}
           {featuredPost && (
-            <div className="bg-background-neutral flex flex-col rounded-3xl md:flex-row">
-              {/* Featured Post Image */}
+            <div className="bg-background-neutral hover:shadow-border group flex flex-col rounded-3xl md:flex-row">
               {featuredPost.meta?.image && typeof featuredPost.meta?.image === 'object' ? (
                 <div className="w-full flex-1 p-4">
                   <Media
                     resource={featuredPost.meta?.image}
-                    className="h-full w-full"
-                    imgClassName="h-full w-full rounded-lg object-cover"
+                    className="h-full w-full overflow-hidden rounded-lg"
+                    imgClassName="h-full w-full object-cover group-hover:scale-105 transition-transform"
                   />
                 </div>
               ) : (
-                <div className="bg-background-neutral-subtle h-full w-full" />
+                <div className="bg-background-neutral-subtle h-full w-full rounded-lg" />
               )}
 
               <div className="pe-space-md md:py-space-md gap-space-sm ms-0 flex w-full flex-1 flex-col p-4 pt-0 lg:m-4">
@@ -114,7 +46,7 @@ export const FeaturedPost: React.FC<BlogBlockType> = ({ featuredPost, locale }) 
                         ? featuredPost.categories[0].title
                         : 'Category'
                     }
-                    color="blue"
+                    color="gray"
                     size="lg"
                   />
                 )}
@@ -131,7 +63,7 @@ export const FeaturedPost: React.FC<BlogBlockType> = ({ featuredPost, locale }) 
 
                 {/* Featured Post Excerpt */}
                 {featuredPost.content && (
-                  <p className="text-body-lg text-base-secondary line-clamp-3">
+                  <p className="text-body-lg text-base-secondary group-hover:text-base-tertiary line-clamp-3 transition-colors">
                     {extractTextFromLexical(featuredPost.content).slice(0, 180)}...
                   </p>
                 )}
@@ -144,7 +76,7 @@ export const FeaturedPost: React.FC<BlogBlockType> = ({ featuredPost, locale }) 
                   {Array.isArray(featuredPost.authors) && featuredPost.authors.length > 0 && (
                     <div className="gap-space-2xs flex items-center">
                       <div className="bg-background-neutral-subtle h-10 w-10 rounded-full"></div>
-                      <span className="text-base-primary font-medium">
+                      <span className="text-base-primary group-hover:text-base-tertiary font-medium transition-colors">
                         {typeof featuredPost.authors[0] === 'object' && featuredPost.authors[0].name
                           ? featuredPost.authors[0].name
                           : 'Author'}

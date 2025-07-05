@@ -52,7 +52,12 @@ export const Card: React.FC<{
       <div className="relative w-full">
         {!metaImage && <div className="">No image</div>}
         {metaImage && typeof metaImage !== 'string' && (
-          <Media imgClassName="rounded-2xl" resource={metaImage} size="33vw" />
+          <Media
+            imgClassName="group-hover:scale-105 transition-transform"
+            resource={metaImage}
+            className="overflow-hidden rounded-2xl"
+            size="33vw"
+          />
         )}
       </div>
       <div className="p-4">
@@ -68,7 +73,15 @@ export const Card: React.FC<{
 
                     const isLast = index === categories.length - 1
 
-                    return <Badge key={index} size="md" label={categoryTitle} type="label" />
+                    return (
+                      <Badge
+                        key={index}
+                        size="md"
+                        label={categoryTitle}
+                        type="label"
+                        color="gray"
+                      />
+                    )
                   }
 
                   return null
@@ -84,17 +97,21 @@ export const Card: React.FC<{
             </Link>
           </h3>
         )}
-        {description && <div className="mt-4">{description && <p>{sanitizedDescription}</p>}</div>}
+        {description && (
+          <p className="group-hover:text-base-tertiary mt-4 transition-colors">
+            {sanitizedDescription}
+          </p>
+        )}
         <hr className="border-border my-4" />
-        <div className="flex flex-row items-center gap-2">
-          <p className="text-base-tertiary text-sm">
+        <div className="text-base-tertiary flex flex-row items-center gap-2">
+          <p className="text-sm">
             {new Date(publishedAt || '').toLocaleDateString(locale, {
               year: 'numeric',
               month: 'long',
               day: 'numeric',
             })}
           </p>
-          <p className="text-base-tertiary text-sm">{text}</p>
+          <p className="text-sm">{text}</p>
         </div>
       </div>
     </article>
