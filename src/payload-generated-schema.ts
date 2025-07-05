@@ -6459,6 +6459,30 @@ export const changelog_locales = pgTable(
   }),
 )
 
+export const users_sessions = pgTable(
+  'users_sessions',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: varchar('id').primaryKey(),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 }),
+    expiresAt: timestamp('expires_at', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }).notNull(),
+  },
+  (columns) => ({
+    _orderIdx: index('users_sessions_order_idx').on(columns._order),
+    _parentIDIdx: index('users_sessions_parent_id_idx').on(columns._parentID),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [users.id],
+      name: 'users_sessions_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const users = pgTable(
   'users',
   {
@@ -11169,6 +11193,13 @@ export const relations_changelog = relations(changelog, ({ many }) => ({
     relationName: '_locales',
   }),
 }))
+export const relations_users_sessions = relations(users_sessions, ({ one }) => ({
+  _parentID: one(users, {
+    fields: [users_sessions._parentID],
+    references: [users.id],
+    relationName: 'sessions',
+  }),
+}))
 export const relations_users_locales = relations(users_locales, ({ one }) => ({
   _parentID: one(users, {
     fields: [users_locales._parentID],
@@ -11181,6 +11212,9 @@ export const relations_users = relations(users, ({ one, many }) => ({
     fields: [users.avatar],
     references: [media.id],
     relationName: 'avatar',
+  }),
+  sessions: many(users_sessions, {
+    relationName: 'sessions',
   }),
   _locales: many(users_locales, {
     relationName: '_locales',
@@ -12289,6 +12323,7 @@ type DatabaseSchema = {
   changelog_categories: typeof changelog_categories
   changelog: typeof changelog
   changelog_locales: typeof changelog_locales
+  users_sessions: typeof users_sessions
   users: typeof users
   users_locales: typeof users_locales
   redirects: typeof redirects
@@ -12557,6 +12592,7 @@ type DatabaseSchema = {
   relations_changelog_categories: typeof relations_changelog_categories
   relations_changelog_locales: typeof relations_changelog_locales
   relations_changelog: typeof relations_changelog
+  relations_users_sessions: typeof relations_users_sessions
   relations_users_locales: typeof relations_users_locales
   relations_users: typeof relations_users
   relations_redirects_rels: typeof relations_redirects_rels
