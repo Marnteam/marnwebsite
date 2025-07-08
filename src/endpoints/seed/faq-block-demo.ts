@@ -1,5 +1,5 @@
-import type { Page, FaqBlock, Media, Faq } from '@/payload-types'
-import { generateLexicalContent, type TextElement } from '@/utilities/generateLexicalContent'
+import type { Page, Media, Faq } from '@/payload-types'
+import { generateLexicalContent } from '@/utilities/generateLexicalContent'
 
 export const seedFAQBlockDemo = (
   media: {

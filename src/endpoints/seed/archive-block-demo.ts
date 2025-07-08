@@ -1,4 +1,4 @@
-import type { Page, ArchiveBlock, Media } from '@/payload-types'
+import type { Page, Media } from '@/payload-types'
 
 // Helper to generate basic Lexical content
 interface TextElement {

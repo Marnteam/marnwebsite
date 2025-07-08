@@ -8,7 +8,7 @@ import type {
   Integration,
   BlogPost,
 } from '@/payload-types'
-import { generateLexicalContent, type TextElement } from '@/utilities/generateLexicalContent'
+import { generateLexicalContent } from '@/utilities/generateLexicalContent'
 
 // Helper to pick an icon
 let iconIndex = 0

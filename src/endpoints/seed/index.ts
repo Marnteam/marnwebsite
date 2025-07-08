@@ -18,7 +18,6 @@ import { seedCTABlockDemo } from './cta-block-demo'
 import { seedBlogBlockDemo } from './blog-block-demo'
 import { seedDividerBlockDemo } from './divider-block-demo'
 import { seedCustomHtmlDemo } from './custom-html-demo'
-import { seedMediaBlockDemo } from './media-block-demo'
 import { seedRichTextDemo } from './rich-text-demo'
 import { seedFAQBlockDemo } from './faq-block-demo'
 import { seedGalleryBlockDemo } from './gallery-block-demo'
@@ -915,11 +914,11 @@ export const seed = async ({
     imageSquare: imageSquareDoc,
   })
 
-  const mediaBlockDemoData = seedMediaBlockDemo({
-    image169: image169Doc,
-    image43: image43Doc,
-    imageSquare: imageSquareDoc,
-  })
+  // const mediaBlockDemoData = seedMediaBlockDemo({
+  //   image169: image169Doc,
+  //   image43: image43Doc,
+  //   imageSquare: imageSquareDoc,
+  // })
 
   const richTextDemoData = seedRichTextDemo({
     image169: image169Doc,

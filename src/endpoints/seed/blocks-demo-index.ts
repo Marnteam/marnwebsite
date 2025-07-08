@@ -1,5 +1,5 @@
-import type { Page, RichTextBlock, Media } from '@/payload-types'
-import { generateLexicalContent, type TextElement } from '@/utilities/generateLexicalContent'
+import type { Page, Media } from '@/payload-types'
+import { generateLexicalContent } from '@/utilities/generateLexicalContent'
 
 export const seedBlocksDemoIndex = (media: {
   image169: Media | null

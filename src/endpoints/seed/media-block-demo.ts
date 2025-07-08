@@ -1,4 +1,4 @@
-import type { Page, MediaBlock, RichTextBlock, DividerBlock, Media } from '@/payload-types'
+import type { Page, Media } from '@/payload-types'
 import { generateLexicalContent } from '@/utilities/generateLexicalContent'
 
 export const seedMediaBlockDemo = (media: {
@@ -32,30 +32,30 @@ export const seedMediaBlockDemo = (media: {
   })
 
   // Wide Image (16:9 ratio)
-  if (media.image169) {
-    layout.push({
-      blockType: 'mediaBlock',
-      media: media.image169.id,
-      size: 'default',
-      caption: null,
-    })
-    layout.push({
-      blockType: 'richTextBlock',
-      blockHeader: {
-        type: 'split',
-      },
-      type: '01',
-      maxWidth: 'default',
-      columns: 1,
-      content: generateLexicalContent([
-        {
-          type: 'p',
-          text: 'الصورة أعلاه بنسبة عرض إلى ارتفاع 16:9، مثالية للمحتوى الأفقي والعروض التقديمية.',
-          direction: 'rtl',
-        },
-      ]),
-    })
-  }
+  // if (media.image169) {
+  //   layout.push({
+  //     blockType: 'mediaBlock',
+  //     media: media.image169.id,
+  //     size: 'default',
+  //     caption: null,
+  //   })
+  //   layout.push({
+  //     blockType: 'richTextBlock',
+  //     blockHeader: {
+  //       type: 'split',
+  //     },
+  //     type: '01',
+  //     maxWidth: 'default',
+  //     columns: 1,
+  //     content: generateLexicalContent([
+  //       {
+  //         type: 'p',
+  //         text: 'الصورة أعلاه بنسبة عرض إلى ارتفاع 16:9، مثالية للمحتوى الأفقي والعروض التقديمية.',
+  //         direction: 'rtl',
+  //       },
+  //     ]),
+  //   })
+  // }
 
   layout.push({
     blockType: 'dividerBlock',
@@ -64,51 +64,51 @@ export const seedMediaBlockDemo = (media: {
   })
 
   // Square Image section
-  if (media.imageSquare) {
-    layout.push({
-      blockType: 'richTextBlock',
-      blockHeader: {
-        type: 'split',
-      },
-      type: '01',
-      maxWidth: 'default',
-      columns: 1,
-      content: generateLexicalContent([
-        {
-          type: 'h2',
-          text: 'الصور المربعة',
-          direction: 'rtl',
-        },
-        {
-          type: 'p',
-          text: 'الصور المربعة مناسبة للمحتوى المتوازن وصور المنتجات.',
-          direction: 'rtl',
-        },
-      ]),
-    })
-    layout.push({
-      blockType: 'mediaBlock',
-      media: media.imageSquare.id,
-      size: 'default',
-      caption: null,
-    })
-    layout.push({
-      blockType: 'richTextBlock',
-      blockHeader: {
-        type: 'split',
-      },
-      type: '01',
-      maxWidth: 'default',
-      columns: 1,
-      content: generateLexicalContent([
-        {
-          type: 'p',
-          text: 'الصور المربعة تعطي توازناً بصرياً جميلاً وتناسب مختلف أنواع المحتوى.',
-          direction: 'rtl',
-        },
-      ]),
-    })
-  }
+  // if (media.imageSquare) {
+  //   layout.push({
+  //     blockType: 'richTextBlock',
+  //     blockHeader: {
+  //       type: 'split',
+  //     },
+  //     type: '01',
+  //     maxWidth: 'default',
+  //     columns: 1,
+  //     content: generateLexicalContent([
+  //       {
+  //         type: 'h2',
+  //         text: 'الصور المربعة',
+  //         direction: 'rtl',
+  //       },
+  //       {
+  //         type: 'p',
+  //         text: 'الصور المربعة مناسبة للمحتوى المتوازن وصور المنتجات.',
+  //         direction: 'rtl',
+  //       },
+  //     ]),
+  //   })
+  //   layout.push({
+  //     blockType: 'mediaBlock',
+  //     media: media.imageSquare.id,
+  //     size: 'default',
+  //     caption: null,
+  //   })
+  //   layout.push({
+  //     blockType: 'richTextBlock',
+  //     blockHeader: {
+  //       type: 'split',
+  //     },
+  //     type: '01',
+  //     maxWidth: 'default',
+  //     columns: 1,
+  //     content: generateLexicalContent([
+  //       {
+  //         type: 'p',
+  //         text: 'الصور المربعة تعطي توازناً بصرياً جميلاً وتناسب مختلف أنواع المحتوى.',
+  //         direction: 'rtl',
+  //       },
+  //     ]),
+  //   })
+  // }
 
   layout.push({
     blockType: 'dividerBlock',
@@ -117,51 +117,51 @@ export const seedMediaBlockDemo = (media: {
   })
 
   // Portrait Image section
-  if (media.image43) {
-    layout.push({
-      blockType: 'richTextBlock',
-      blockHeader: {
-        type: 'split',
-      },
-      type: '01',
-      maxWidth: 'default',
-      columns: 1,
-      content: generateLexicalContent([
-        {
-          type: 'h2',
-          text: 'الصور الطولية',
-          direction: 'rtl',
-        },
-        {
-          type: 'p',
-          text: 'الصور بنسبة 4:3 مناسبة للمحتوى العمودي والصور الشخصية.',
-          direction: 'rtl',
-        },
-      ]),
-    })
-    layout.push({
-      blockType: 'mediaBlock',
-      media: media.image43.id,
-      size: 'default',
-      caption: null,
-    })
-    layout.push({
-      blockType: 'richTextBlock',
-      blockHeader: {
-        type: 'split',
-      },
-      type: '01',
-      maxWidth: 'default',
-      columns: 1,
-      content: generateLexicalContent([
-        {
-          type: 'p',
-          text: 'الصور بنسبة 4:3 تقليدية وتعطي شعوراً بالاستقرار والثبات.',
-          direction: 'rtl',
-        },
-      ]),
-    })
-  }
+  // if (media.image43) {
+  //   layout.push({
+  //     blockType: 'richTextBlock',
+  //     blockHeader: {
+  //       type: 'split',
+  //     },
+  //     type: '01',
+  //     maxWidth: 'default',
+  //     columns: 1,
+  //     content: generateLexicalContent([
+  //       {
+  //         type: 'h2',
+  //         text: 'الصور الطولية',
+  //         direction: 'rtl',
+  //       },
+  //       {
+  //         type: 'p',
+  //         text: 'الصور بنسبة 4:3 مناسبة للمحتوى العمودي والصور الشخصية.',
+  //         direction: 'rtl',
+  //       },
+  //     ]),
+  //   })
+  //   layout.push({
+  //     blockType: 'mediaBlock' as any,
+  //     media: media.image43.id,
+  //     size: 'default',
+  //     caption: null,
+  //   })
+  //   layout.push({
+  //     blockType: 'richTextBlock',
+  //     blockHeader: {
+  //       type: 'split',
+  //     },
+  //     type: '01',
+  //     maxWidth: 'default',
+  //     columns: 1,
+  //     content: generateLexicalContent([
+  //       {
+  //         type: 'p',
+  //         text: 'الصور بنسبة 4:3 تقليدية وتعطي شعوراً بالاستقرار والثبات.',
+  //         direction: 'rtl',
+  //       },
+  //     ]),
+  //   })
+  // }
 
   const heroData: Page['hero'] = {
     type: 'hero03',

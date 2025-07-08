@@ -1,5 +1,5 @@
 import type { Page, PricingBlock, Media, Solution, Integration } from '@/payload-types'
-import { generateLexicalContent, type TextElement } from '@/utilities/generateLexicalContent'
+import { generateLexicalContent } from '@/utilities/generateLexicalContent'
 
 export const seedPricingBlockDemo = (
   media: {

@@ -1,4 +1,4 @@
-import type { Page, MarketplaceBlock, Media, Category } from '@/payload-types'
+import type { Page, MarketplaceBlock, Media } from '@/payload-types'
 import { generateLexicalContent } from '@/utilities/generateLexicalContent'
 
 export const seedMarketplaceBlockDemo = ({
