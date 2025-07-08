@@ -8,74 +8,7 @@ import type {
   Integration,
   BlogPost,
 } from '@/payload-types'
-
-// Helper to generate basic Lexical content that matches RichText field type
-// Now accepts an array of text elements with types (h2, p)
-interface TextElement {
-  type: 'h2' | 'h3' | 'h4' | 'p' // Add other heading levels or types if needed
-  text: string
-  direction?: 'ltr' | 'rtl' | null | undefined
-}
-
-const generateLexicalContent = (elements: TextElement[]): any => {
-  const children = elements.map((element) => {
-    const textNode = {
-      detail: 0,
-      format: 0,
-      mode: 'normal',
-      style: '',
-      text: element.text,
-      type: 'text',
-      version: 1,
-    }
-
-    let nodeType = 'paragraph'
-    let headingTag: string | undefined
-
-    switch (element.type) {
-      case 'h2':
-        nodeType = 'heading'
-        headingTag = 'h2'
-        break
-      case 'h3':
-        nodeType = 'heading'
-        headingTag = 'h3'
-        break
-      case 'h4':
-        nodeType = 'heading'
-        headingTag = 'h4'
-        break
-      case 'p':
-      default:
-        nodeType = 'paragraph'
-        break
-    }
-
-    const paragraphNode: any = {
-      children: [textNode],
-      direction: element.direction || 'rtl', // Default to RTL, can be overridden
-      format: '',
-      indent: 0,
-      type: nodeType,
-      version: 1,
-    }
-    if (headingTag) {
-      paragraphNode.tag = headingTag
-    }
-    return paragraphNode
-  })
-
-  return {
-    root: {
-      type: 'root',
-      children,
-      direction: elements[0]?.direction || 'rtl', // Default root direction to RTL or first element's direction
-      format: '',
-      indent: 0,
-      version: 1,
-    },
-  }
-}
+import { generateLexicalContent, type TextElement } from '@/utilities/generateLexicalContent'
 
 // Helper to pick an icon
 let iconIndex = 0
@@ -195,7 +128,7 @@ export const seedFeaturesShowcasePage = (media: {
 
     const blockHeaderData: FeaturesBlock['blockHeader'] = {
       type: 'center',
-      badge: { type: 'label', label: `Features ${type}` } as any,
+      badge: { type: 'label', label: `Features ${type}` },
       headerText: generateLexicalContent([
         { type: 'h2', text: headerTitleText, direction: 'rtl' },
         { type: 'p', text: headerDescriptionText, direction: 'rtl' },
@@ -218,7 +151,7 @@ export const seedFeaturesShowcasePage = (media: {
         url: `/learn-more/${type}`,
         label: `تفاصيل الميزة ${type}`,
         newTab: false,
-      } as any
+      }
     }
 
     let numCols = 1
@@ -328,7 +261,7 @@ export const seedFeaturesShowcasePage = (media: {
         columnData.badge = {
           label: type === '02' ? `ميزات${type}` : `ميزة ${i + 1}`,
           type: 'label', // Assuming 'type' is part of your badge field structure
-        } as any // Cast as 'any' or use the specific BadgeField type if available
+        }
       }
 
       // Conditionally add 'enableCta' and 'link'
@@ -341,7 +274,7 @@ export const seedFeaturesShowcasePage = (media: {
           url: `/column-cta/${type}-${i}`,
           label: `إجراء ${i + 1}`,
           newTab: false,
-        } as any // Cast as 'any' or use the specific LinkField type if available
+        }
       }
 
       // Conditionally add 'reverseOrder'
@@ -386,8 +319,7 @@ export const seedFeaturesShowcasePage = (media: {
           url: '/', // Link to Arabic homepage
           label: 'العودة إلى الرئيسية',
           newTab: false,
-        } as any,
-        id: 'hero-link-1-ar',
+        },
       },
     ],
   }

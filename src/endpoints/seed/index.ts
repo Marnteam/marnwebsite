@@ -1,10 +1,4 @@
-import type {
-  CollectionSlug,
-  GlobalSlug,
-  Payload,
-  PayloadRequest,
-  File,
-} from 'payload'
+import type { CollectionSlug, GlobalSlug, Payload, PayloadRequest, File } from 'payload'
 import type { Header, Form, Footer, Category } from '@/payload-types'
 
 import { contactForm as contactFormData } from './contact-form'
@@ -19,6 +13,23 @@ import { imageSquare } from './image-square'
 import { seedIntegrations } from './integrations'
 import { seedSolutions } from './solutions'
 import { seedFeaturesShowcasePage } from './features-showcase-page'
+import { seedArchiveBlockDemo } from './archive-block-demo'
+import { seedCTABlockDemo } from './cta-block-demo'
+import { seedBlogBlockDemo } from './blog-block-demo'
+import { seedDividerBlockDemo } from './divider-block-demo'
+import { seedCustomHtmlDemo } from './custom-html-demo'
+import { seedMediaBlockDemo } from './media-block-demo'
+import { seedRichTextDemo } from './rich-text-demo'
+import { seedFAQBlockDemo } from './faq-block-demo'
+import { seedGalleryBlockDemo } from './gallery-block-demo'
+import { seedFormBlockDemo } from './form-block-demo'
+import { seedPricingBlockDemo } from './pricing-block-demo'
+import { seedFeaturedAppsBlockDemo } from './featured-apps-block-demo'
+import { seedTestimonialsBlockDemo } from './testimonials-block-demo'
+import { seedLogosBlockDemo } from './logos-block-demo'
+import { seedMetricsBlockDemo } from './metrics-block-demo'
+import { seedMarketplaceBlockDemo } from './marketplace-block-demo'
+import { seedBlocksDemoIndex } from './blocks-demo-index'
 import { seedChangelog } from './changelog'
 
 import { seedFAQs } from './faq'
@@ -618,6 +629,7 @@ export const seed = async ({
       },
     },
   })
+
   const integrationCategoriesMap = integrationCategories.docs.reduce(
     (acc, category) => {
       acc[category?.slug ?? ''] = category
@@ -625,6 +637,17 @@ export const seed = async ({
     },
     {} as Record<string, Category>,
   )
+
+  const customerLogosCategory = (
+    await payload.find({
+      collection: 'categories',
+      where: {
+        slug: {
+          equals: 'customer-logos',
+        },
+      },
+    })
+  ).docs[0]
 
   payload.logger.info('— Seeding media...')
 
@@ -755,41 +778,79 @@ export const seed = async ({
     image43: image43Doc,
     imageSquare: imageSquareDoc,
   })
-  const pagesData = [
-    {
-      // locale: 'ar' as TypedLocale,
-      data: home({
-        heroImage: hero1Doc,
-        metaImage: image169Doc,
-        image169: image169Doc,
-        image43: image43Doc,
-        imageSquare: imageSquareDoc,
-      }),
-      key: 'home',
-    },
-    {
-      // locale: 'ar' as TypedLocale,
-      data: contactPageData({ contactForm }),
-      key: 'contact',
-    },
-    {
-      // locale: 'ar' as TypedLocale,
-      data: featuresShowcasePageData,
-      key: 'features',
-    },
-  ]
 
-  await Promise.all(
-    pagesData.map(async (page) => {
-      return await payload.create({
-        collection: 'pages',
-        depth: 0,
-        data: page.data,
-        // locale: page.locale,
-      })
-    }),
+  // Block demo pages
+  const blocksDemoIndexData = seedBlocksDemoIndex({
+    image169: image169Doc,
+    image43: image43Doc,
+    imageSquare: imageSquareDoc,
+  })
+
+  const archiveBlockDemoData = seedArchiveBlockDemo(
+    {
+      image169: image169Doc,
+      image43: image43Doc,
+      imageSquare: imageSquareDoc,
+    },
+    {
+      sellCategory,
+      operateCategory,
+      manageCategory,
+    },
   )
 
+  const ctaBlockDemoData = seedCTABlockDemo(
+    {
+      image169: image169Doc,
+      image43: image43Doc,
+      imageSquare: imageSquareDoc,
+    },
+    contactForm,
+  )
+
+  payload.logger.info(`— Seeding FAQs...`)
+  await seedFAQs(payload, req, {
+    sellCategory,
+    operateCategory,
+    manageCategory,
+    otherCategory: other,
+  })
+
+  // Fetch data for demo pages
+  payload.logger.info(`— Fetching blog posts for demo pages...`)
+  const blogPostsResponse = await payload.find({
+    collection: 'blog-posts',
+    depth: 1,
+    limit: 10,
+    sort: '-publishedAt',
+  })
+  const allBlogPosts = blogPostsResponse.docs
+
+  payload.logger.info(`— Fetching FAQs for demo pages...`)
+  const faqsResponse = await payload.find({
+    collection: 'faq',
+    depth: 1,
+    limit: 10,
+    sort: '-updatedAt',
+  })
+  const allFAQs = faqsResponse.docs
+
+  payload.logger.info(`— Fetching solutions and integrations for demo pages...`)
+  const solutionsResponse = await payload.find({
+    collection: 'solutions',
+    depth: 1,
+    limit: 10,
+  })
+  const allSolutions = solutionsResponse.docs
+
+  const integrationsResponse = await payload.find({
+    collection: 'integrations',
+    depth: 1,
+    limit: 10,
+  })
+  const allIntegrations = integrationsResponse.docs
+
+  payload.logger.info(`— Fetching customers for demo pages...`)
   // Seed Customers (replaces both testimonials and case studies)
   const { customers, slugToIdMap: customersSlugToIdMap } = await seedCustomers({
     payload,
@@ -802,16 +863,10 @@ export const seed = async ({
     integrationsSlugToIdMap,
   })
 
+  const allCustomers = customers
+
   payload.logger.info(`— Seeding changelog...`)
   await seedChangelog(payload, req)
-
-  payload.logger.info(`— Seeding FAQs...`)
-  await seedFAQs(payload, req, {
-    sellCategory,
-    operateCategory,
-    manageCategory,
-    otherCategory: other,
-  })
 
   payload.logger.info(`— Seeding blog posts...`)
   await seedBlogPosts(payload, req, {
@@ -820,6 +875,233 @@ export const seed = async ({
     author: demoAuthor,
     blogCategory: blog,
   })
+
+  payload.logger.info(`— Fetching logos for demo pages...`)
+  const logosResponse = await payload.find({
+    collection: 'media',
+    where: {
+      category: {
+        equals: customerLogosCategory.id,
+      },
+    },
+    depth: 0,
+    limit: 50,
+  })
+  let allLogos = logosResponse.docs
+  // Fallback if no logos category or not enough logos
+  if (allLogos.length < 24) {
+    const moreMedia = await payload.find({ collection: 'media', limit: 50 })
+    allLogos = [...allLogos, ...moreMedia.docs]
+  }
+
+  const blogBlockDemoData = seedBlogBlockDemo(
+    {
+      image169: image169Doc,
+      image43: image43Doc,
+      imageSquare: imageSquareDoc,
+    },
+    allBlogPosts,
+  )
+
+  const dividerBlockDemoData = seedDividerBlockDemo({
+    image169: image169Doc,
+    image43: image43Doc,
+    imageSquare: imageSquareDoc,
+  })
+
+  const customHtmlDemoData = seedCustomHtmlDemo({
+    image169: image169Doc,
+    image43: image43Doc,
+    imageSquare: imageSquareDoc,
+  })
+
+  const mediaBlockDemoData = seedMediaBlockDemo({
+    image169: image169Doc,
+    image43: image43Doc,
+    imageSquare: imageSquareDoc,
+  })
+
+  const richTextDemoData = seedRichTextDemo({
+    image169: image169Doc,
+    image43: image43Doc,
+    imageSquare: imageSquareDoc,
+  })
+
+  const faqBlockDemoData = seedFAQBlockDemo(
+    {
+      image169: image169Doc,
+      image43: image43Doc,
+      imageSquare: imageSquareDoc,
+    },
+    allFAQs,
+  )
+
+  const galleryBlockDemoData = seedGalleryBlockDemo({
+    image169: image169Doc,
+    image43: image43Doc,
+    imageSquare: imageSquareDoc,
+  })
+
+  const formBlockDemoData = seedFormBlockDemo(
+    {
+      image169: image169Doc,
+      image43: image43Doc,
+      imageSquare: imageSquareDoc,
+    },
+    contactForm,
+  )
+
+  const pricingBlockDemoData = seedPricingBlockDemo(
+    {
+      image169: image169Doc,
+      image43: image43Doc,
+      imageSquare: imageSquareDoc,
+    },
+    allSolutions,
+    allIntegrations,
+  )
+
+  const featuredAppsBlockDemoData = seedFeaturedAppsBlockDemo(
+    {
+      image169: image169Doc,
+      image43: image43Doc,
+      imageSquare: imageSquareDoc,
+    },
+    allSolutions,
+    allIntegrations,
+  )
+
+  const testimonialsBlockDemoData = seedTestimonialsBlockDemo(
+    {
+      image169: image169Doc,
+    },
+    allCustomers,
+  )
+
+  const logosBlockDemoData = seedLogosBlockDemo({
+    image169: image169Doc,
+    logos: allLogos,
+  })
+
+  const metricsBlockDemoData = seedMetricsBlockDemo({
+    image169: image169Doc,
+    image43: image43Doc,
+    imageSquare: imageSquareDoc,
+    logos: allLogos,
+  })
+
+  const marketplaceBlockDemoData = seedMarketplaceBlockDemo({
+    image169: image169Doc,
+    filterCategory: integrationCategoriesMap['payment-gateways']?.id,
+  })
+
+  const pagesData = [
+    {
+      data: home({
+        heroImage: hero1Doc,
+        metaImage: image169Doc,
+        image169: image169Doc,
+        image43: image43Doc,
+        imageSquare: imageSquareDoc,
+      }),
+      key: 'home',
+    },
+    {
+      data: contactPageData({ contactForm }),
+      key: 'contact',
+    },
+    {
+      data: featuresShowcasePageData,
+      key: 'features',
+    },
+    {
+      data: blocksDemoIndexData,
+      key: 'blocks-demo-index',
+    },
+    {
+      data: archiveBlockDemoData,
+      key: 'archive-block-demo',
+    },
+    {
+      data: ctaBlockDemoData,
+      key: 'cta-block-demo',
+    },
+    {
+      data: blogBlockDemoData,
+      key: 'blog-block-demo',
+    },
+    {
+      data: dividerBlockDemoData,
+      key: 'divider-block-demo',
+    },
+    {
+      data: customHtmlDemoData,
+      key: 'custom-html-demo',
+    },
+    // {
+    //   data: mediaBlockDemoData,
+    //   key: 'media-block-demo',
+    // },
+    {
+      data: richTextDemoData,
+      key: 'rich-text-demo',
+    },
+    {
+      data: faqBlockDemoData,
+      key: 'faq-block-demo',
+    },
+    {
+      data: galleryBlockDemoData,
+      key: 'gallery-block-demo',
+    },
+    {
+      data: formBlockDemoData,
+      key: 'form-block-demo',
+    },
+    {
+      data: pricingBlockDemoData,
+      key: 'pricing-block-demo',
+    },
+    {
+      data: featuredAppsBlockDemoData,
+      key: 'featured-apps-block-demo',
+    },
+    {
+      data: testimonialsBlockDemoData,
+      key: 'testimonials-block-demo',
+    },
+    {
+      data: logosBlockDemoData,
+      key: 'logos-block-demo',
+    },
+    {
+      data: metricsBlockDemoData,
+      key: 'metrics-block-demo',
+    },
+    {
+      data: marketplaceBlockDemoData,
+      key: 'marketplace-block-demo',
+    },
+  ]
+
+  // Create pages sequentially to identify any validation errors
+  for (const page of pagesData) {
+    payload.logger.info(`Creating page: ${page.key}`)
+    try {
+      await payload.create({
+        collection: 'pages',
+        depth: 0,
+        data: page.data,
+        // locale: page.locale,
+      })
+      payload.logger.info(`✓ Successfully created page: ${page.key}`)
+    } catch (error) {
+      payload.logger.error(
+        `❌ Failed to create page "${page.key}": ${error instanceof Error ? error.message : String(error)}`,
+      )
+      throw error // Re-throw to stop seeding process
+    }
+  }
 
   payload.logger.info(`— Seeding globals...`)
 

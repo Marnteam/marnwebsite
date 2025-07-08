@@ -1,21 +1,29 @@
----
-description: 
-globs: 
-alwaysApply: false
----
 # Payload CMS Seeding Guidelines
 
 This document outlines best practices for creating and maintaining seed functions for Payload CMS, particularly within this project.
 
-Refer to the main seed implementation: [src/endpoints/seed/index.ts](mdc:src/endpoints/seed/index.ts)
+**Main Reference**: [src/endpoints/seed/index.ts](mdc:src/endpoints/seed/index.ts)
+
+## Table of Contents
+
+1. [Core Principles](#core-principles)
+2. [Schema Validation & Debugging](#schema-validation--debugging)
+3. [Content & Data Patterns](#content--data-patterns)
+4. [Technical Implementation](#technical-implementation)
+5. [Integration Workflow](#integration-workflow)
+6. [Common Pitfalls & Solutions](#common-pitfalls--solutions)
+
+---
 
 ## Core Principles
 
 ### 1. Execution Strategy
+
 - **Sequential Creation for Dependencies:** Create documents with dependencies sequentially using `for...of` loops or individual `await` calls
 - **Parallelization for Independence:** Use `Promise.all` for independent operations (clearing, fetching external resources, creating unrelated documents)
 
 ### 2. Function Design Patterns
+
 - **Modular Seed Functions:** Create separate files for each collection/feature (e.g., `./faq.ts`, `./testimonials.ts`)
 - **Structured Parameters:** Accept dependencies as organized objects rather than individual parameters:
   ```typescript
@@ -27,36 +35,109 @@ Refer to the main seed implementation: [src/endpoints/seed/index.ts](mdc:src/end
       operateCategory?: Category
       manageCategory?: Category
       otherCategory?: Category
-    }
+    },
   ): Promise<FAQsResult>
   ```
 
 ### 3. Error Handling & Resilience
+
 - **Graceful Parallel Failures:** Use the Promise.all + filter pattern for parallel creation with individual error handling:
+
   ```typescript
   const promises = data.map(async (item) => {
     try {
       return await payload.create({ collection: 'items', data: item, req })
     } catch (error) {
       payload.logger.error(`Failed to create item: ${error.message}`)
-      return null  // Return null on error
+      return null // Return null on error
     }
   })
-  
+
   const results = await Promise.all(promises)
-  const successful = results.filter(Boolean)  // Remove nulls
+  const successful = results.filter(Boolean) // Remove nulls
   ```
 
-### 4. Relationship Management
+---
+
+## Schema Validation & Debugging
+
+### 4. Debugging Strategy
+
+- **Sequential Debugging:** Convert `Promise.all` to `for...of` loops with detailed logging to isolate failing documents:
+
+  ```typescript
+  // Instead of: await Promise.all(pagesData.map(page => payload.create(...)))
+
+  // Use for debugging:
+  for (const page of pagesData) {
+    payload.logger.info(`Creating page: ${page.key}`)
+    try {
+      await payload.create({
+        collection: 'pages',
+        data: page.data,
+      })
+      payload.logger.info(`✓ Successfully created page: ${page.key}`)
+    } catch (error) {
+      payload.logger.error(`❌ Failed to create page "${page.key}": ${error.message}`)
+      throw error // Re-throw to stop seeding process
+    }
+  }
+  ```
+
+### 5. Schema Compliance
+
+- **Field Structure Validation:** Ensure data matches exact field schema requirements
+- **Required vs Optional:** Never set required group fields to `null`
+- **Collection References:** Verify `relationTo` values match actual collection slugs
+
+#### Common Schema Issues:
+
+```typescript
+// ❌ WRONG: Invalid ID fields in hero links
+links: [
+  {
+    link: { type: 'custom', url: '/path', label: 'Text' },
+    id: 'hero-link-1', // This field doesn't exist in linkGroup schema!
+  },
+]
+
+// ✅ CORRECT: Hero links structure
+links: [
+  {
+    link: { type: 'custom', url: '/path', label: 'Text' },
+  },
+]
+
+// ❌ WRONG: Setting required group to null
+blockHeader: null, // Causes "Cannot read properties of null (reading 'type')"
+
+// ✅ CORRECT: Provide required group structure
+blockHeader: {
+  type: 'center', // Required field within the group
+}
+
+// ❌ WRONG: Wrong collection slug
+relationTo: 'posts', // Collection is actually 'blog-posts'
+
+// ✅ CORRECT: Match actual collection slug
+relationTo: 'blog-posts',
+```
+
+### 6. Relationship Management
+
 - **Defensive Referencing:** Use optional chaining for relationship IDs to prevent runtime errors:
   ```typescript
   category: categories.sellCategory?.id,
   ```
 - **Dependency Storage:** Store created document results in variables/maps for linking related documents
+- **Collection Slug Verification:** Always verify collection slugs match the actual Payload configuration
+
+---
 
 ## Content & Data Patterns
 
-### 5. Rich Text (Lexical) Content
+### 7. Rich Text (Lexical) Content
+
 - **Multi-level RTL Direction:** For Arabic/RTL content, set direction at both root and element levels:
   ```typescript
   answer: {
@@ -72,34 +153,59 @@ Refer to the main seed implementation: [src/endpoints/seed/index.ts](mdc:src/end
   }
   ```
 
-### 6. Complex Field Types
+### 8. Complex Field Types
+
 - **Polymorphic Fields:** Match data structure to specific variant using `blockType` or `type` discriminators
 - **Link Objects:** Use correct structure for link type (`type: 'reference'` vs `type: 'custom'`)
 - **Icon Fields:** Provide valid icon identifiers from the configured icon set
+- **Group Fields:** Never set group fields with required children to `null`
 
-### 7. Content Organization
+### 9. Content Organization
+
 - **Domain-Specific Structuring:** Organize content by functional areas (e.g., sell/operate/manage for POS systems) rather than randomly
 - **Contextual Relevance:** Create content that matches the business domain and user needs
 
+---
+
 ## Technical Implementation
 
-### 8. Type Safety
-- **Generated Types:** Use Payload's generated types from `src/payload-types.ts`
-- **Type Casting:** Cast `payload.create` results when TypeScript can't infer: `as Post`
-- **Complex Globals:** Use `data: yourData as any` for complex globals when precise typing is difficult, but ensure structural correctness
+### 10. Type Safety & Casting
 
-### 9. Localization
+- **Generated Types:** Use Payload's generated types from `src/payload-types.ts`
+- **Strategic Type Casting:** Use `as any` when TypeScript can't infer complex nested structures, but ensure runtime correctness:
+
+  ```typescript
+  // When TypeScript types are too restrictive for valid runtime data
+  layout: blocks as any, // Ensure blocks match runtime schema requirements
+
+  // For complex link objects with multiple possible structures
+  link: {
+    type: 'custom',
+    url: '/path',
+    label: 'Text',
+  } as any,
+  ```
+
+- **Type Casting Results:** Cast `payload.create` results when TypeScript can't infer: `as Post`
+- **Complex Globals:** Use `data: yourData as any` for complex globals when precise typing is difficult
+
+### 11. Localization
+
 - **Locale Setting:** Set `locale` property on localized documents
 - **Content Adaptation:** Update slugs, URLs, and locale-specific text accordingly
 
-### 10. Performance & Operations
+### 12. Performance & Operations
+
 - **Logging Strategy:** Add comprehensive logs (`payload.logger.info`, `payload.logger.error`) for major steps and progress tracking
 - **Revalidation Awareness:** Use `context: { disableRevalidate: true }` when seeding outside Next.js application context
 - **Iterative Development:** Leverage linter feedback and test thoroughly
 
+---
+
 ## Integration Workflow
 
-### 11. Main Seed Integration
+### 13. Main Seed Integration
+
 Follow this consistent pattern for adding new seeding functions:
 
 ```typescript
@@ -112,11 +218,11 @@ await seedFAQs(payload, req, {
   sellCategory,
   operateCategory,
   manageCategory,
-  otherCategory: other,  // Alias if needed
+  otherCategory: other, // Alias if needed
 })
 ```
 
-## Example Pattern
+### 14. Complete Seed Pattern
 
 ```typescript
 export const seed = async ({ payload, req }: { payload: Payload; req: PayloadRequest }) => {
@@ -131,7 +237,7 @@ export const seed = async ({ payload, req }: { payload: Payload; req: PayloadReq
   // 2. Seed prerequisites (sequential for dependencies)
   payload.logger.info('— Seeding categories...')
   const categories = await seedCategories(payload, req)
-  
+
   // 3. Fetch external resources (parallel)
   payload.logger.info('— Fetching media files...')
   const files = await Promise.all([fetchFileByURL(url1), fetchFileByURL(url2)])
@@ -147,3 +253,49 @@ export const seed = async ({ payload, req }: { payload: Payload; req: PayloadReq
   payload.logger.info('Seeded database successfully!')
 }
 ```
+
+---
+
+## Common Pitfalls & Solutions
+
+### 15. Validation Errors
+
+| Error Message                                     | Cause                                     | Solution                                            |
+| ------------------------------------------------- | ----------------------------------------- | --------------------------------------------------- |
+| `Cannot read properties of null (reading 'type')` | Setting required group field to `null`    | Provide proper group structure with required fields |
+| `The following field is invalid: id`              | Adding non-existent `id` field to schema  | Remove invalid fields, check field schema           |
+| `Collections To Show` invalid                     | Wrong `relationTo` collection slug        | Verify collection slug matches Payload config       |
+| `ValidationError` on specific fields              | Data structure doesn't match field schema | Review field configuration and match exactly        |
+
+### 16. Debugging Checklist
+
+When facing seed errors:
+
+1. **Convert to Sequential:** Replace `Promise.all` with `for...of` loop
+2. **Add Detailed Logging:** Log each document creation attempt
+3. **Check Field Schema:** Verify all fields exist in the collection/block configuration
+4. **Validate Relationships:** Ensure `relationTo` values match actual collection slugs
+5. **Review Required Fields:** Don't set required groups/fields to `null`
+6. **Type Cast Strategically:** Use `as any` when types are overly restrictive but data is correct
+
+### 17. Schema Investigation
+
+```typescript
+// To debug field schemas, check:
+// 1. Collection configs: src/collections/*/index.ts
+// 2. Block configs: src/blocks/*/config.ts
+// 3. Field definitions: src/fields/*.ts
+// 4. Generated types: src/payload-types.ts
+```
+
+---
+
+## Best Practices Summary
+
+1. **Start Simple:** Begin with minimal data structures, then add complexity
+2. **Debug Sequentially:** Use sequential execution to isolate errors
+3. **Validate Schema:** Always match exact field structure requirements
+4. **Log Comprehensively:** Add detailed logs for debugging and monitoring
+5. **Handle Errors Gracefully:** Use try-catch and optional chaining
+6. **Test Iteratively:** Run seeds frequently during development
+7. **Document Dependencies:** Clear comment complex relationships and dependencies

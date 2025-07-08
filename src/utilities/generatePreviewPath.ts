@@ -18,7 +18,11 @@ type Props = {
 export const generatePreviewPath = ({ collection, slug, req, locale }: Props) => {
   const localeString = typeof locale === 'string' ? locale : String(locale)
 
-  const encodedSlug = encodeURIComponent(slug)
+  // encode slug without encoding the slashes
+  const encodedSlug = slug
+    .split('/')
+    .map((segment) => encodeURIComponent(segment))
+    .join('/')
 
   const path = `/${collectionPrefixMap[collection]}/${encodedSlug}`
 

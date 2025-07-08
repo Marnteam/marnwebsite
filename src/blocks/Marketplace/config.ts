@@ -36,7 +36,7 @@ export const Marketplace: Block = {
           filterOptions: (data) => {
             return {
               'parent.slug': {
-                equals: 'integrations',
+                equals: 'marketplace',
               },
             }
           },
@@ -64,7 +64,8 @@ export const Marketplace: Block = {
           ],
           defaultValue: 'newest',
           admin: {
-            description: 'Select the order to initially sort the integrations by. Leave empty to sort by newest.',
+            description:
+              'Select the order to initially sort the integrations by. Leave empty to sort by newest.',
           },
         },
       ],
