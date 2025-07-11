@@ -35,11 +35,29 @@ export const link_variant = pgEnum('link_variant', [
   'ghost',
   'link',
 ])
+export const enum_archiveBlock_block_header_type = pgEnum('enum_archiveBlock_block_header_type', [
+  'center',
+  'split',
+  'start',
+])
+export const enum_archiveBlock_block_header_badge_type = pgEnum(
+  'enum_archiveBlock_block_header_badge_type',
+  ['label', 'reference'],
+)
+export const badge_color = pgEnum('badge_color', [
+  'blue',
+  'red',
+  'green',
+  'yellow',
+  'gray',
+  'inverted',
+])
+export const badge_icon_position = pgEnum('badge_icon_position', ['flex-row', 'flex-row-reverse'])
 export const enum_archiveBlock_populate_by = pgEnum('enum_archiveBlock_populate_by', [
   'collection',
   'selection',
 ])
-export const enum_archiveBlock_relation_to = pgEnum('enum_archiveBlock_relation_to', ['posts'])
+export const enum_archiveBlock_relation_to = pgEnum('enum_archiveBlock_relation_to', ['blog-posts'])
 export const enum_blogBlock_type = pgEnum('enum_blogBlock_type', ['featuredPost', '2-columns'])
 export const enum_callToActionBlock_type = pgEnum('enum_callToActionBlock_type', [
   '01',
@@ -54,15 +72,6 @@ export const enum_callToActionBlock_badge_type = pgEnum('enum_callToActionBlock_
   'label',
   'reference',
 ])
-export const badge_color = pgEnum('badge_color', [
-  'blue',
-  'red',
-  'green',
-  'yellow',
-  'gray',
-  'inverted',
-])
-export const badge_icon_position = pgEnum('badge_icon_position', ['flex-row', 'flex-row-reverse'])
 export const enum_customHtmlBlock_block_header_type = pgEnum(
   'enum_customHtmlBlock_block_header_type',
   ['center', 'split', 'start'],
@@ -241,12 +250,20 @@ export const enum_pages_hero_badge_type = pgEnum('enum_pages_hero_badge_type', [
   'reference',
 ])
 export const enum_pages_status = pgEnum('enum_pages_status', ['draft', 'published'])
+export const enum__archiveBlock_v_block_header_type = pgEnum(
+  'enum__archiveBlock_v_block_header_type',
+  ['center', 'split', 'start'],
+)
+export const enum__archiveBlock_v_block_header_badge_type = pgEnum(
+  'enum__archiveBlock_v_block_header_badge_type',
+  ['label', 'reference'],
+)
 export const enum__archiveBlock_v_populate_by = pgEnum('enum__archiveBlock_v_populate_by', [
   'collection',
   'selection',
 ])
 export const enum__archiveBlock_v_relation_to = pgEnum('enum__archiveBlock_v_relation_to', [
-  'posts',
+  'blog-posts',
 ])
 export const enum__blogBlock_v_type = pgEnum('enum__blogBlock_v_type', [
   'featuredPost',
@@ -593,6 +610,49 @@ export const pages_hero_links_locales = pgTable(
   }),
 )
 
+export const archiveBlock_block_header_links = pgTable(
+  'archiveBlock_block_header_links',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+    id: varchar('id').primaryKey(),
+    link_type: link_type('link_type').default('reference'),
+    link_newTab: boolean('link_new_tab'),
+    link_url: varchar('link_url'),
+    link_color: link_color('link_color').default('neutral'),
+    link_variant: link_variant('link_variant').default('primary'),
+  },
+  (columns) => ({
+    _orderIdx: index('archiveBlock_block_header_links_order_idx').on(columns._order),
+    _parentIDIdx: index('archiveBlock_block_header_links_parent_id_idx').on(columns._parentID),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [archiveBlock.id],
+      name: 'archiveBlock_block_header_links_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const archiveBlock_block_header_links_locales = pgTable(
+  'archiveBlock_block_header_links_locales',
+  {
+    link_label: varchar('link_label'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex(
+      'archiveBlock_block_header_links_locales_locale_parent_id_unique',
+    ).on(columns._locale, columns._parentID),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [archiveBlock_block_header_links.id],
+      name: 'archiveBlock_block_header_links_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const archiveBlock = pgTable(
   'archiveBlock',
   {
@@ -600,8 +660,15 @@ export const archiveBlock = pgTable(
     _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
+    blockHeader_type: enum_archiveBlock_block_header_type('block_header_type').default('center'),
+    blockHeader_badge_type: enum_archiveBlock_block_header_badge_type('block_header_badge_type'),
+    blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
+    blockHeader_badge_icon: varchar('block_header_badge_icon'),
+    blockHeader_badge_icon_position: badge_icon_position(
+      'block_header_badge_icon_position',
+    ).default('flex-row'),
     populateBy: enum_archiveBlock_populate_by('populate_by').default('collection'),
-    relationTo: enum_archiveBlock_relation_to('relation_to').default('posts'),
+    relationTo: enum_archiveBlock_relation_to('relation_to').default('blog-posts'),
     limit: numeric('limit').default('10'),
     blockName: varchar('block_name'),
   },
@@ -620,7 +687,8 @@ export const archiveBlock = pgTable(
 export const archiveBlock_locales = pgTable(
   'archiveBlock_locales',
   {
-    introContent: jsonb('intro_content'),
+    blockHeader_badge_label: varchar('block_header_badge_label'),
+    blockHeader_headerText: jsonb('block_header_header_text'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
     _parentID: varchar('_parent_id').notNull(),
@@ -2621,6 +2689,50 @@ export const _pages_v_version_hero_links_locales = pgTable(
   }),
 )
 
+export const _archiveBlock_v_block_header_links = pgTable(
+  '_archiveBlock_v_block_header_links',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
+    link_type: link_type('link_type').default('reference'),
+    link_newTab: boolean('link_new_tab'),
+    link_url: varchar('link_url'),
+    link_color: link_color('link_color').default('neutral'),
+    link_variant: link_variant('link_variant').default('primary'),
+    _uuid: varchar('_uuid'),
+  },
+  (columns) => ({
+    _orderIdx: index('_archiveBlock_v_block_header_links_order_idx').on(columns._order),
+    _parentIDIdx: index('_archiveBlock_v_block_header_links_parent_id_idx').on(columns._parentID),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_archiveBlock_v.id],
+      name: '_archiveBlock_v_block_header_links_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _archiveBlock_v_block_header_links_locales = pgTable(
+  '_archiveBlock_v_block_header_links_locales',
+  {
+    link_label: varchar('link_label'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex(
+      '_archiveBlock_v_block_header_links_locales_locale_parent_id_unique',
+    ).on(columns._locale, columns._parentID),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_archiveBlock_v_block_header_links.id],
+      name: '_archiveBlock_v_block_header_links_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const _archiveBlock_v = pgTable(
   '_archiveBlock_v',
   {
@@ -2628,8 +2740,15 @@ export const _archiveBlock_v = pgTable(
     _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: uuid('id').defaultRandom().primaryKey(),
+    blockHeader_type: enum__archiveBlock_v_block_header_type('block_header_type').default('center'),
+    blockHeader_badge_type: enum__archiveBlock_v_block_header_badge_type('block_header_badge_type'),
+    blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
+    blockHeader_badge_icon: varchar('block_header_badge_icon'),
+    blockHeader_badge_icon_position: badge_icon_position(
+      'block_header_badge_icon_position',
+    ).default('flex-row'),
     populateBy: enum__archiveBlock_v_populate_by('populate_by').default('collection'),
-    relationTo: enum__archiveBlock_v_relation_to('relation_to').default('posts'),
+    relationTo: enum__archiveBlock_v_relation_to('relation_to').default('blog-posts'),
     limit: numeric('limit').default('10'),
     _uuid: varchar('_uuid'),
     blockName: varchar('block_name'),
@@ -2649,7 +2768,8 @@ export const _archiveBlock_v = pgTable(
 export const _archiveBlock_v_locales = pgTable(
   '_archiveBlock_v_locales',
   {
-    introContent: jsonb('intro_content'),
+    blockHeader_badge_label: varchar('block_header_badge_label'),
+    blockHeader_headerText: jsonb('block_header_header_text'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
     _parentID: uuid('_parent_id').notNull(),
@@ -8158,6 +8278,29 @@ export const relations_pages_hero_links = relations(pages_hero_links, ({ one, ma
     relationName: '_locales',
   }),
 }))
+export const relations_archiveBlock_block_header_links_locales = relations(
+  archiveBlock_block_header_links_locales,
+  ({ one }) => ({
+    _parentID: one(archiveBlock_block_header_links, {
+      fields: [archiveBlock_block_header_links_locales._parentID],
+      references: [archiveBlock_block_header_links.id],
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations_archiveBlock_block_header_links = relations(
+  archiveBlock_block_header_links,
+  ({ one, many }) => ({
+    _parentID: one(archiveBlock, {
+      fields: [archiveBlock_block_header_links._parentID],
+      references: [archiveBlock.id],
+      relationName: 'blockHeader_links',
+    }),
+    _locales: many(archiveBlock_block_header_links_locales, {
+      relationName: '_locales',
+    }),
+  }),
+)
 export const relations_archiveBlock_locales = relations(archiveBlock_locales, ({ one }) => ({
   _parentID: one(archiveBlock, {
     fields: [archiveBlock_locales._parentID],
@@ -8173,6 +8316,9 @@ export const relations_archiveBlock = relations(archiveBlock, ({ one, many }) =>
   }),
   _locales: many(archiveBlock_locales, {
     relationName: '_locales',
+  }),
+  blockHeader_links: many(archiveBlock_block_header_links, {
+    relationName: 'blockHeader_links',
   }),
 }))
 export const relations_blogBlock_locales = relations(blogBlock_locales, ({ one }) => ({
@@ -9266,6 +9412,29 @@ export const relations__pages_v_version_hero_links = relations(
     }),
   }),
 )
+export const relations__archiveBlock_v_block_header_links_locales = relations(
+  _archiveBlock_v_block_header_links_locales,
+  ({ one }) => ({
+    _parentID: one(_archiveBlock_v_block_header_links, {
+      fields: [_archiveBlock_v_block_header_links_locales._parentID],
+      references: [_archiveBlock_v_block_header_links.id],
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations__archiveBlock_v_block_header_links = relations(
+  _archiveBlock_v_block_header_links,
+  ({ one, many }) => ({
+    _parentID: one(_archiveBlock_v, {
+      fields: [_archiveBlock_v_block_header_links._parentID],
+      references: [_archiveBlock_v.id],
+      relationName: 'blockHeader_links',
+    }),
+    _locales: many(_archiveBlock_v_block_header_links_locales, {
+      relationName: '_locales',
+    }),
+  }),
+)
 export const relations__archiveBlock_v_locales = relations(_archiveBlock_v_locales, ({ one }) => ({
   _parentID: one(_archiveBlock_v, {
     fields: [_archiveBlock_v_locales._parentID],
@@ -9281,6 +9450,9 @@ export const relations__archiveBlock_v = relations(_archiveBlock_v, ({ one, many
   }),
   _locales: many(_archiveBlock_v_locales, {
     relationName: '_locales',
+  }),
+  blockHeader_links: many(_archiveBlock_v_block_header_links, {
+    relationName: 'blockHeader_links',
   }),
 }))
 export const relations__blogBlock_v_locales = relations(_blogBlock_v_locales, ({ one }) => ({
@@ -11995,13 +12167,15 @@ type DatabaseSchema = {
   link_type: typeof link_type
   link_color: typeof link_color
   link_variant: typeof link_variant
+  enum_archiveBlock_block_header_type: typeof enum_archiveBlock_block_header_type
+  enum_archiveBlock_block_header_badge_type: typeof enum_archiveBlock_block_header_badge_type
+  badge_color: typeof badge_color
+  badge_icon_position: typeof badge_icon_position
   enum_archiveBlock_populate_by: typeof enum_archiveBlock_populate_by
   enum_archiveBlock_relation_to: typeof enum_archiveBlock_relation_to
   enum_blogBlock_type: typeof enum_blogBlock_type
   enum_callToActionBlock_type: typeof enum_callToActionBlock_type
   enum_callToActionBlock_badge_type: typeof enum_callToActionBlock_badge_type
-  badge_color: typeof badge_color
-  badge_icon_position: typeof badge_icon_position
   enum_customHtmlBlock_block_header_type: typeof enum_customHtmlBlock_block_header_type
   enum_customHtmlBlock_block_header_badge_type: typeof enum_customHtmlBlock_block_header_badge_type
   enum_dividerBlock_size: typeof enum_dividerBlock_size
@@ -12044,6 +12218,8 @@ type DatabaseSchema = {
   enum_pages_hero_type: typeof enum_pages_hero_type
   enum_pages_hero_badge_type: typeof enum_pages_hero_badge_type
   enum_pages_status: typeof enum_pages_status
+  enum__archiveBlock_v_block_header_type: typeof enum__archiveBlock_v_block_header_type
+  enum__archiveBlock_v_block_header_badge_type: typeof enum__archiveBlock_v_block_header_badge_type
   enum__archiveBlock_v_populate_by: typeof enum__archiveBlock_v_populate_by
   enum__archiveBlock_v_relation_to: typeof enum__archiveBlock_v_relation_to
   enum__blogBlock_v_type: typeof enum__blogBlock_v_type
@@ -12121,6 +12297,8 @@ type DatabaseSchema = {
   enum_header_tabs_nav_items_style: typeof enum_header_tabs_nav_items_style
   pages_hero_links: typeof pages_hero_links
   pages_hero_links_locales: typeof pages_hero_links_locales
+  archiveBlock_block_header_links: typeof archiveBlock_block_header_links
+  archiveBlock_block_header_links_locales: typeof archiveBlock_block_header_links_locales
   archiveBlock: typeof archiveBlock
   archiveBlock_locales: typeof archiveBlock_locales
   blogBlock: typeof blogBlock
@@ -12200,6 +12378,8 @@ type DatabaseSchema = {
   pages_rels: typeof pages_rels
   _pages_v_version_hero_links: typeof _pages_v_version_hero_links
   _pages_v_version_hero_links_locales: typeof _pages_v_version_hero_links_locales
+  _archiveBlock_v_block_header_links: typeof _archiveBlock_v_block_header_links
+  _archiveBlock_v_block_header_links_locales: typeof _archiveBlock_v_block_header_links_locales
   _archiveBlock_v: typeof _archiveBlock_v
   _archiveBlock_v_locales: typeof _archiveBlock_v_locales
   _blogBlock_v: typeof _blogBlock_v
@@ -12390,6 +12570,8 @@ type DatabaseSchema = {
   footer_rels: typeof footer_rels
   relations_pages_hero_links_locales: typeof relations_pages_hero_links_locales
   relations_pages_hero_links: typeof relations_pages_hero_links
+  relations_archiveBlock_block_header_links_locales: typeof relations_archiveBlock_block_header_links_locales
+  relations_archiveBlock_block_header_links: typeof relations_archiveBlock_block_header_links
   relations_archiveBlock_locales: typeof relations_archiveBlock_locales
   relations_archiveBlock: typeof relations_archiveBlock
   relations_blogBlock_locales: typeof relations_blogBlock_locales
@@ -12469,6 +12651,8 @@ type DatabaseSchema = {
   relations_pages: typeof relations_pages
   relations__pages_v_version_hero_links_locales: typeof relations__pages_v_version_hero_links_locales
   relations__pages_v_version_hero_links: typeof relations__pages_v_version_hero_links
+  relations__archiveBlock_v_block_header_links_locales: typeof relations__archiveBlock_v_block_header_links_locales
+  relations__archiveBlock_v_block_header_links: typeof relations__archiveBlock_v_block_header_links
   relations__archiveBlock_v_locales: typeof relations__archiveBlock_v_locales
   relations__archiveBlock_v: typeof relations__archiveBlock_v
   relations__blogBlock_v_locales: typeof relations__blogBlock_v_locales
