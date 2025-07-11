@@ -52,7 +52,7 @@ export const IntegrationsGrid: React.FC<IntegrationsGridProps> = ({
             locale,
           })}`,
         )
-        const data = await response.json()
+        const data: { docs: IntegrationWithId[] } = await response.json()
         // setIntegrations(data.docs)
         setFilteredIntegrations(data.docs)
       } catch (error) {
