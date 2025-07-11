@@ -116,6 +116,37 @@ export const PostHero: React.FC<{
     exit: { opacity: 0, y: 50, x: 0 },
   }
 
+  const containerVariants: Variants = {
+    initial: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        type: 'spring',
+        stiffness: 900,
+        damping: 80,
+        mass: 10,
+      },
+    },
+    animate: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        type: 'spring',
+        stiffness: 900,
+        damping: 80,
+        mass: 10,
+      },
+    },
+    exit: {
+      opacity: 1,
+      transition: {
+        // staggerChildren: 0.1,
+        // staggerDirection: -1,
+        duration: 0.1,
+      },
+    },
+  }
+
   return (
     <LayoutGroup id="post-hero">
       <div className="sticky top-(--header-plus-admin-bar-height) z-1 mx-auto w-full max-w-[96rem] overflow-hidden">
@@ -128,9 +159,14 @@ export const PostHero: React.FC<{
                   'mx-[calc(var(--spacing-space-site)*2)] overflow-hidden py-4',
                   'relative z-1',
                 )}
+                variants={containerVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
               >
-                <motion.span
+                <motion.h1
                   layout="size"
+                  variants={metaVariants}
                   style={{
                     // display: 'block',
                     fontSize: `17px`,
@@ -142,7 +178,7 @@ export const PostHero: React.FC<{
                   className="text-base-primary relative z-2 w-full max-w-4xl font-medium"
                 >
                   {title}
-                </motion.span>
+                </motion.h1>
               </motion.div>
             )}
             {!isCollapsed && (
@@ -153,36 +189,7 @@ export const PostHero: React.FC<{
                   'relative mx-[calc(var(--spacing-space-site)*2)] overflow-hidden py-(--text-h1)',
                   'relative z-1',
                 )}
-                variants={{
-                  initial: {
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.1,
-                      type: 'spring',
-                      stiffness: 900,
-                      damping: 80,
-                      mass: 10,
-                    },
-                  },
-                  animate: {
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.1,
-                      type: 'spring',
-                      stiffness: 900,
-                      damping: 80,
-                      mass: 10,
-                    },
-                  },
-                  exit: {
-                    opacity: 1,
-                    transition: {
-                      // staggerChildren: 0.1,
-                      // staggerDirection: -1,
-                      duration: 0.1,
-                    },
-                  },
-                }}
+                variants={containerVariants}
                 initial="initial"
                 animate="animate"
                 exit="exit"
