@@ -168,12 +168,8 @@ export const PostHero: React.FC<{
                   layout="size"
                   variants={metaVariants}
                   style={{
-                    // display: 'block',
                     fontSize: `17px`,
                     lineHeight: `24px`,
-                    // overflow: 'hidden',
-                    // whiteSpace: 'nowrap',
-                    // textOverflow: 'ellipsis',
                   }}
                   className="text-base-primary relative z-2 w-full max-w-4xl font-medium"
                 >
