@@ -4,9 +4,16 @@ import React, { useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 import { Input } from '@/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Search } from 'lucide-react'
 import type { Category } from '@/payload-types'
+import { Icon } from '@iconify-icon/react/dist/iconify.mjs'
 
 interface SearchFiltersProps {
   categories: Pick<Category, 'id' | 'title' | 'slug'>[]
@@ -20,7 +27,12 @@ interface SearchFiltersProps {
   }
 }
 
-export const SearchFilters: React.FC<SearchFiltersProps> = ({ categories, ecosystems, locale, initialFilters }) => {
+export const SearchFilters: React.FC<SearchFiltersProps> = ({
+  categories,
+  ecosystems,
+  locale,
+  initialFilters,
+}) => {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -111,10 +123,15 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({ categories, ecosys
           placeholder={t.search}
           defaultValue={initialFilters.search}
           onChange={(e) => debouncedSearch(e.target.value)}
-          className="peer rounded-full ps-8"
+          className="peer rounded-full ps-9"
         />
         <div className="text-base-quaternary peer-focus:text-base-secondary pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
-          <Search size={16} aria-hidden="true" />
+          <Icon
+            icon="material-symbols:search-rounded"
+            height="none"
+            className="size-5"
+            aria-hidden="true"
+          />
         </div>
       </div>
 

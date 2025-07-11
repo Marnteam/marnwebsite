@@ -33,6 +33,21 @@
     }
   }
 
+  input:autofill,
+  input:autofill:hover,
+  input:autofill:focus,
+  input:autofill:active,
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    /* New overrides for better reliability */
+    -webkit-text-fill-color: var(--color-base-primary) !important;
+    -webkit-box-shadow: 0 0 0px 1000px var(--background-medium) inset !important;
+    box-shadow: 0 0 0px 1000px var(--background-medium) inset !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+  }
+
   h1,
   h2,
   h3,
