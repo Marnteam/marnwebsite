@@ -6,6 +6,7 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { blockHeader } from '@/components/BlockHeader/config'
 
 export const ArchiveBlock: Block = {
   slug: 'archiveBlock',
@@ -16,22 +17,23 @@ export const ArchiveBlock: Block = {
   interfaceName: 'ArchiveBlock',
   dbName: 'archiveBlock',
   fields: [
-    {
-      name: 'introContent',
-      type: 'richText',
-      localized: true,
-      editor: lexicalEditor({
-        features: ({ rootFeatures }) => {
-          return [
-            ...rootFeatures,
-            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-            FixedToolbarFeature(),
-            InlineToolbarFeature(),
-          ]
-        },
-      }),
-      label: 'Intro Content',
-    },
+    // {
+    //   name: 'introContent',
+    //   type: 'richText',
+    //   localized: true,
+    //   editor: lexicalEditor({
+    //     features: ({ rootFeatures }) => {
+    //       return [
+    //         ...rootFeatures,
+    //         HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+    //         FixedToolbarFeature(),
+    //         InlineToolbarFeature(),
+    //       ]
+    //     },
+    //   }),
+    //   label: 'Intro Content',
+    // },
+    blockHeader,
     {
       name: 'populateBy',
       type: 'select',

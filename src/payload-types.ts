@@ -183,21 +183,75 @@ export interface UserAuthOperations {
  * via the `definition` "ArchiveBlock".
  */
 export interface ArchiveBlock {
-  introContent?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
+  blockHeader: {
+    type: 'center' | 'split' | 'start';
+    badge?: {
+      type?: ('label' | 'reference') | null;
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: string | Solution;
+          } | null)
+        | ({
+            relationTo: 'integrations';
+            value: string | Integration;
+          } | null);
+      /**
+       * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
+       */
+      icon?: string | null;
+      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
     };
-    [k: string]: unknown;
-  } | null;
+    headerText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: string | Page;
+                } | null)
+              | ({
+                  relationTo: 'blog-posts';
+                  value: string | BlogPost;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: string | Solution;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            color?: ('brand' | 'neutral') | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
   populateBy?: ('collection' | 'selection') | null;
   relationTo?: 'blog-posts' | null;
   categories?: (string | Category)[] | null;
@@ -214,66 +268,44 @@ export interface ArchiveBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
+ * via the `definition` "solutions".
  */
-export interface Category {
+export interface Solution {
   id: string;
+  /**
+   * Internal page title used to identify this entry in the CMS and generate the URL slug. English only.
+   */
   title: string;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  parent?: (string | null) | Category;
-  breadcrumbs?:
-    | {
-        doc?: (string | null) | Category;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blog-posts".
- */
-export interface BlogPost {
-  id: string;
-  title: string;
-  heroImage?: (string | null) | Media;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  relatedPosts?: (string | BlogPost)[] | null;
-  categories?: (string | Category)[] | null;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (string | null) | Media;
-    description?: string | null;
+  /**
+   * Upload an icon for the solution. 500x500px recommended. Only media with category "app-icons" will be shown.
+   */
+  icon?: (string | null) | Media;
+  name?: string | null;
+  tagline?: string | null;
+  link: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'blog-posts';
+          value: string | BlogPost;
+        } | null)
+      | ({
+          relationTo: 'solutions';
+          value: string | Solution;
+        } | null);
+    url?: string | null;
+    label: string;
   };
   publishedAt?: string | null;
-  authors?: (string | User)[] | null;
-  populatedAuthors?:
-    | {
-        id?: string | null;
-        name?: string | null;
-      }[]
-    | null;
+  /**
+   * Link this item to an ecosystem category. The list is filtered to show only categories from the "ecosystems" family.
+   */
+  ecosystem?: (string | null) | Category;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -379,6 +411,27 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: string;
+  title: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  parent?: (string | null) | Category;
+  breadcrumbs?:
+    | {
+        doc?: (string | null) | Category;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-folders".
  */
 export interface FolderInterface {
@@ -401,222 +454,6 @@ export interface FolderInterface {
   };
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: string;
-  name?: string | null;
-  avatar?: (string | null) | Media;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "BlogBlock".
- */
-export interface BlogBlock {
-  type?: ('featuredPost' | '2-columns') | null;
-  /**
-   * Select the featured post to display in the blog block.
-   */
-  featuredPost?: (string | null) | BlogPost;
-  recentPostsList?: {
-    /**
-     * Title of the recent posts list.
-     */
-    title?: string | null;
-    /**
-     * Description of the recent posts list.
-     */
-    description?: string | null;
-    /**
-     * Select the recent posts to display. Leave empty to dynamically fetch recent posts.
-     */
-    recentPosts?: (string | BlogPost)[] | null;
-  };
-  editorsPicksList?: {
-    /**
-     * Title of the editors picks list.
-     */
-    title?: string | null;
-    /**
-     * Description of the editors picks list.
-     */
-    description?: string | null;
-    /**
-     * Select the editors picks to display. Leave empty to dynamically display random posts.
-     */
-    editorsPicks?: (string | BlogPost)[] | null;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'blogBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CallToActionBlock".
- */
-export interface CallToActionBlock {
-  type: '01' | '02' | '03' | '04' | '05' | '06' | '07';
-  badge?: {
-    type?: ('label' | 'reference') | null;
-    label?: string | null;
-    color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
-    reference?:
-      | ({
-          relationTo: 'solutions';
-          value: string | Solution;
-        } | null)
-      | ({
-          relationTo: 'integrations';
-          value: string | Integration;
-        } | null);
-    /**
-     * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
-     */
-    icon?: string | null;
-    icon_position?: ('flex-row' | 'flex-row-reverse') | null;
-  };
-  richText?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  media?: {
-    desktop?: {
-      light?: (string | null) | Media;
-      dark?: (string | null) | Media;
-    };
-    /**
-     * Optional
-     */
-    mobile?: {
-      light?: (string | null) | Media;
-      dark?: (string | null) | Media;
-    };
-  };
-  links?:
-    | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: string | Page;
-              } | null)
-            | ({
-                relationTo: 'blog-posts';
-                value: string | BlogPost;
-              } | null)
-            | ({
-                relationTo: 'solutions';
-                value: string | Solution;
-              } | null);
-          url?: string | null;
-          label: string;
-          /**
-           * Choose the button style.
-           */
-          color?: ('brand' | 'neutral') | null;
-          /**
-           * Choose how the link should be rendered.
-           */
-          variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  caption?: string | null;
-  list?:
-    | {
-        /**
-         * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
-         */
-        icon?: string | null;
-        title?: string | null;
-        subtitle?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  form?: (string | null) | Form;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'callToActionBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "solutions".
- */
-export interface Solution {
-  id: string;
-  /**
-   * Internal page title used to identify this entry in the CMS and generate the URL slug. English only.
-   */
-  title: string;
-  /**
-   * Upload an icon for the solution. 500x500px recommended. Only media with category "app-icons" will be shown.
-   */
-  icon?: (string | null) | Media;
-  name?: string | null;
-  tagline?: string | null;
-  link: {
-    type?: ('reference' | 'custom') | null;
-    newTab?: boolean | null;
-    reference?:
-      | ({
-          relationTo: 'pages';
-          value: string | Page;
-        } | null)
-      | ({
-          relationTo: 'blog-posts';
-          value: string | BlogPost;
-        } | null)
-      | ({
-          relationTo: 'solutions';
-          value: string | Solution;
-        } | null);
-    url?: string | null;
-    label: string;
-  };
-  publishedAt?: string | null;
-  /**
-   * Link this item to an ecosystem category. The list is filtered to show only categories from the "ecosystems" family.
-   */
-  ecosystem?: (string | null) | Category;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -915,6 +752,355 @@ export interface Integration {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-posts".
+ */
+export interface BlogPost {
+  id: string;
+  title: string;
+  heroImage?: (string | null) | Media;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  relatedPosts?: (string | BlogPost)[] | null;
+  categories?: (string | Category)[] | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  authors?: (string | User)[] | null;
+  populatedAuthors?:
+    | {
+        id?: string | null;
+        name?: string | null;
+      }[]
+    | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string;
+  name?: string | null;
+  avatar?: (string | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CallToActionBlock".
+ */
+export interface CallToActionBlock {
+  type: '01' | '02' | '03' | '04' | '05' | '06' | '07';
+  badge?: {
+    type?: ('label' | 'reference') | null;
+    label?: string | null;
+    color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+    reference?:
+      | ({
+          relationTo: 'solutions';
+          value: string | Solution;
+        } | null)
+      | ({
+          relationTo: 'integrations';
+          value: string | Integration;
+        } | null);
+    /**
+     * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
+     */
+    icon?: string | null;
+    icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+  };
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  media?: {
+    desktop?: {
+      light?: (string | null) | Media;
+      dark?: (string | null) | Media;
+    };
+    /**
+     * Optional
+     */
+    mobile?: {
+      light?: (string | null) | Media;
+      dark?: (string | null) | Media;
+    };
+  };
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: string | Page;
+              } | null)
+            | ({
+                relationTo: 'blog-posts';
+                value: string | BlogPost;
+              } | null)
+            | ({
+                relationTo: 'solutions';
+                value: string | Solution;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose the button style.
+           */
+          color?: ('brand' | 'neutral') | null;
+          /**
+           * Choose how the link should be rendered.
+           */
+          variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  caption?: string | null;
+  list?:
+    | {
+        /**
+         * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
+         */
+        icon?: string | null;
+        title?: string | null;
+        subtitle?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  form?: (string | null) | Form;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'callToActionBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "forms".
+ */
+export interface Form {
+  id: string;
+  title: string;
+  fields?:
+    | (
+        | {
+            name: string;
+            label?: string | null;
+            width?: number | null;
+            required?: boolean | null;
+            defaultValue?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'checkbox';
+          }
+        | {
+            name: string;
+            label?: string | null;
+            width?: number | null;
+            required?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'country';
+          }
+        | {
+            name: string;
+            label?: string | null;
+            width?: number | null;
+            required?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'email';
+          }
+        | {
+            message?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'message';
+          }
+        | {
+            name: string;
+            label?: string | null;
+            width?: number | null;
+            defaultValue?: number | null;
+            required?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'number';
+          }
+        | {
+            name: string;
+            label?: string | null;
+            width?: number | null;
+            defaultValue?: string | null;
+            placeholder?: string | null;
+            options?:
+              | {
+                  label: string;
+                  value: string;
+                  id?: string | null;
+                }[]
+              | null;
+            required?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'select';
+          }
+        | {
+            name: string;
+            label?: string | null;
+            width?: number | null;
+            required?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'state';
+          }
+        | {
+            name: string;
+            label?: string | null;
+            width?: number | null;
+            defaultValue?: string | null;
+            required?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'text';
+          }
+        | {
+            name: string;
+            label?: string | null;
+            width?: number | null;
+            defaultValue?: string | null;
+            required?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textarea';
+          }
+      )[]
+    | null;
+  submitButtonLabel?: string | null;
+  /**
+   * Choose whether to display an on-page message or redirect to a different page after they submit the form.
+   */
+  confirmationType?: ('message' | 'redirect') | null;
+  confirmationMessage?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  redirect?: {
+    url: string;
+  };
+  /**
+   * Send custom emails when the form submits. Use comma separated lists to send the same email to multiple recipients. To reference a value from this form, wrap that field's name with double curly brackets, i.e. {{firstName}}. You can use a wildcard {{*}} to output all data and {{*:table}} to format it as an HTML table in the email.
+   */
+  emails?:
+    | {
+        emailTo?: string | null;
+        cc?: string | null;
+        bcc?: string | null;
+        replyTo?: string | null;
+        emailFrom?: string | null;
+        subject: string;
+        /**
+         * Enter the message that should be sent in this email.
+         */
+        message?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1453,180 +1639,6 @@ export interface FormBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "forms".
- */
-export interface Form {
-  id: string;
-  title: string;
-  fields?:
-    | (
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            required?: boolean | null;
-            defaultValue?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'checkbox';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'country';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'email';
-          }
-        | {
-            message?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'message';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            defaultValue?: number | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'number';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            defaultValue?: string | null;
-            placeholder?: string | null;
-            options?:
-              | {
-                  label: string;
-                  value: string;
-                  id?: string | null;
-                }[]
-              | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'select';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'state';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            defaultValue?: string | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'text';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            defaultValue?: string | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textarea';
-          }
-      )[]
-    | null;
-  submitButtonLabel?: string | null;
-  /**
-   * Choose whether to display an on-page message or redirect to a different page after they submit the form.
-   */
-  confirmationType?: ('message' | 'redirect') | null;
-  confirmationMessage?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  redirect?: {
-    url: string;
-  };
-  /**
-   * Send custom emails when the form submits. Use comma separated lists to send the same email to multiple recipients. To reference a value from this form, wrap that field's name with double curly brackets, i.e. {{firstName}}. You can use a wildcard {{*}} to output all data and {{*:table}} to format it as an HTML table in the email.
-   */
-  emails?:
-    | {
-        emailTo?: string | null;
-        cc?: string | null;
-        bcc?: string | null;
-        replyTo?: string | null;
-        emailFrom?: string | null;
-        subject: string;
-        /**
-         * Enter the message that should be sent in this email.
-         */
-        message?: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "GalleryBlock".
  */
 export interface GalleryBlock {
@@ -2126,6 +2138,48 @@ export interface Customer {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogBlock".
+ */
+export interface BlogBlock {
+  type?: ('featuredPost' | '2-columns') | null;
+  /**
+   * Select the featured post to display in the blog block.
+   */
+  featuredPost?: (string | null) | BlogPost;
+  recentPostsList?: {
+    /**
+     * Title of the recent posts list.
+     */
+    title?: string | null;
+    /**
+     * Description of the recent posts list.
+     */
+    description?: string | null;
+    /**
+     * Select the recent posts to display. Leave empty to dynamically fetch recent posts.
+     */
+    recentPosts?: (string | BlogPost)[] | null;
+  };
+  editorsPicksList?: {
+    /**
+     * Title of the editors picks list.
+     */
+    title?: string | null;
+    /**
+     * Description of the editors picks list.
+     */
+    description?: string | null;
+    /**
+     * Select the editors picks to display. Leave empty to dynamically display random posts.
+     */
+    editorsPicks?: (string | BlogPost)[] | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blogBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -76,6 +76,12 @@
   border-radius: var(--style-radius-full);
 }
 
+.preview-btn,
+.live-preview-toggler {
+  border-radius: var(--style-radius-full);
+  flex-shrink: 0;
+}
+
 .pill {
   border-radius: var(--style-radius-full);
 }

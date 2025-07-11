@@ -30,7 +30,7 @@ export const CallToAction05: React.FC<CallToActionProps> = ({
     offset: ['start end', 'end start'],
   })
   // Parallax: image moves up to -40px as you scroll through the block
-  const y = useTransform(scrollYProgress, [0, 1], [-40, 40])
+  const y = useTransform(scrollYProgress, [0, 1], ['-50%', '50%'])
   const { desktop, mobile } = media || {}
 
   return (

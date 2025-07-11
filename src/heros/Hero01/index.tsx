@@ -28,7 +28,7 @@ export const Hero01: React.FC<Page['hero']> = ({
     offset: ['start end', 'end start'],
   })
   // Parallax: image moves up to -200px as you scroll through the block
-  const y = useTransform(scrollYProgress, [0, 1], [-200, 200])
+  const y = useTransform(scrollYProgress, [0, 1], ['-50%', '50%'])
 
   // const { setHeaderTheme } = useHeaderObserver()
 

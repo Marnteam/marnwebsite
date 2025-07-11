@@ -1,6 +1,6 @@
 'use client'
-import React from 'react'
-import { motion } from 'motion/react'
+import React, { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'motion/react'
 import { containerVariants, itemsFling } from '@/utilities/motion'
 import { cn } from '@/utilities/ui'
 
@@ -21,18 +21,24 @@ export const CallToAction02: React.FC<CallToActionProps> = ({
   list,
   className,
 }) => {
+  const ref = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['0 1', '0 0.5'],
+  })
+
   return (
-    <div className={cn('py-xl container', className)}>
+    <div ref={ref} className={cn('py-xl relative container overflow-hidden', className)}>
       <motion.div
         className={cn(
-          'bg-background-neutral gap-xl px-xl rounded-space-sm flex flex-col items-center py-[calc(var(--spacing-xl)*2)]',
+          'gap-xl px-xl rounded-space-sm relative flex flex-col items-center overflow-hidden py-[calc(var(--spacing-xl)*2)]',
         )}
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
       >
-        <div className="gap-lg flex flex-col items-center">
+        <div className="gap-lg z-1 flex flex-col items-center">
           {richText && (
             <RichText className="mb-0 text-center" data={richText} enableGutter={false} />
           )}
@@ -42,10 +48,10 @@ export const CallToAction02: React.FC<CallToActionProps> = ({
             })}
           </div>
         </div>
-        <hr className="border-border w-full" />
+        <hr className="border-border z-1 w-full" />
         {list && (
           <div
-            className="gap-sm grid w-full grid-cols-2 md:grid-cols-(--columns)"
+            className="gap-sm z-1 grid w-full grid-cols-2 md:grid-cols-(--columns)"
             style={
               { '--columns': `repeat(${list?.length}, minmax(0, 1fr))` } as React.CSSProperties
             }
@@ -59,7 +65,7 @@ export const CallToAction02: React.FC<CallToActionProps> = ({
                   className="gap-sm flex flex-col items-start"
                 >
                   {icon && (
-                    <div className="bg-background-neutral-subtle p-xs inline rounded-full">
+                    <div className="bg-background-neutral-subtle p-xs inline aspect-square rounded-full">
                       <Icon
                         className="text-base-secondary size-sm"
                         height="none"
@@ -79,6 +85,29 @@ export const CallToAction02: React.FC<CallToActionProps> = ({
             })}
           </div>
         )}
+        <motion.div
+          // style={{
+          //   scaleX: useTransform(scrollYProgress, [0, 1], [0.8, 1]),
+          // }}
+          initial="hidden"
+          whileInView="visible"
+          variants={{
+            hidden: {
+              scaleX: 0.9,
+            },
+            visible: {
+              scaleX: 1,
+              transition: {
+                type: 'spring',
+                stiffness: 800,
+                damping: 80,
+                mass: 4,
+              },
+            },
+          }}
+          viewport={{ once: true, amount: 0.3 }}
+          className="bg-background-neutral absolute inset-0 mx-auto rounded-3xl"
+        />
       </motion.div>
     </div>
   )

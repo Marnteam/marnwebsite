@@ -24,14 +24,13 @@ export const CallToAction01: React.FC<CallToActionProps> = ({
   className,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
-  // Parallax: as the container scrolls into view, move the image up slightly
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start end', 'end start'],
   })
-  // Parallax: image moves up to -40px as you scroll through the block
-  const y = useTransform(scrollYProgress, [0, 1], [-200, 200])
-  const { desktop, mobile } = media || {}
+
+  const y = useTransform(scrollYProgress, [0, 1], ['-50%', '50%'])
 
   return (
     <div className={cn('py-xl container', className)} ref={containerRef}>
@@ -43,7 +42,7 @@ export const CallToAction01: React.FC<CallToActionProps> = ({
           {richText && (
             <RichText className="mx-0 lg:max-w-[32rem]" data={richText} enableGutter={false} />
           )}
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-row gap-4">
             {(links || []).map(({ link }, i) => {
               return <CMSLink key={i} size="lg" {...(link as CMSLinkType)} />
             })}
