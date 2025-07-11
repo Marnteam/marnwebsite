@@ -1,7 +1,7 @@
 import { Variants } from 'motion/react'
 
 export const containerVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 1, y: 20 }, // opacity could be 0
   visible: {
     opacity: 1,
     y: 0,
@@ -33,10 +33,6 @@ export const itemsFling: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      // type: 'spring',
-      // stiffness: 150,
-      // damping: 19,
-      // mass: 1.2,
       type: 'spring',
       stiffness: 800,
       damping: 100,
