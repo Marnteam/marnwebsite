@@ -3,7 +3,6 @@
 import { cn } from '@/utilities/ui'
 import { motion } from 'motion/react'
 import React, { useState, useEffect } from 'react'
-import { useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 
 export const LanguageSwitcher: React.FC<{ locale: string }> = ({ locale }) => {

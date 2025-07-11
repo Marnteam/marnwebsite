@@ -2,7 +2,7 @@ import { getCachedGlobal } from '@/utilities/getGlobals'
 
 import type { Footer } from '@/payload-types'
 
-import { getLocale, getTranslations } from 'next-intl/server'
+import { getLocale } from 'next-intl/server'
 
 import { FooterClient } from './FooterClient'
 

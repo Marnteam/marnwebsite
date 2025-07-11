@@ -1,11 +1,7 @@
 import type { Block } from 'payload'
 
-import {
-  FixedToolbarFeature,
-  HeadingFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
+
+
 import { blockHeader } from '@/components/BlockHeader/config'
 
 export const ArchiveBlock: Block = {

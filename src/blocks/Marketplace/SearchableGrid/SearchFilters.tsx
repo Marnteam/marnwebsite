@@ -11,7 +11,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Search } from 'lucide-react'
 import type { Category } from '@/payload-types'
 import { Icon } from '@iconify-icon/react/dist/iconify.mjs'
 
