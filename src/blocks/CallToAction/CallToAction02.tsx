@@ -1,6 +1,6 @@
 'use client'
-import React, { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'motion/react'
+import React from 'react'
+import { motion } from 'motion/react'
 import { containerVariants, itemsFling } from '@/utilities/motion'
 import { cn } from '@/utilities/ui'
 
@@ -21,14 +21,8 @@ export const CallToAction02: React.FC<CallToActionProps> = ({
   list,
   className,
 }) => {
-  const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['0 1', '0 0.5'],
-  })
-
   return (
-    <div ref={ref} className={cn('py-xl relative container overflow-hidden', className)}>
+    <div className={cn('py-xl relative container overflow-hidden', className)}>
       <motion.div
         className={cn(
           'gap-xl px-xl rounded-space-sm relative flex flex-col items-center overflow-hidden py-[calc(var(--spacing-xl)*2)]',
@@ -36,19 +30,21 @@ export const CallToAction02: React.FC<CallToActionProps> = ({
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: false, amount: 0.1 }}
       >
-        <div className="gap-lg z-1 flex flex-col items-center">
+        <motion.div className="gap-lg z-1 flex flex-col items-center">
           {richText && (
-            <RichText className="mb-0 text-center" data={richText} enableGutter={false} />
+            <motion.div variants={itemsFling}>
+              <RichText className="mb-0 text-center" data={richText} enableGutter={false} />
+            </motion.div>
           )}
-          <div className="flex flex-col gap-8">
+          <motion.div variants={itemsFling} className="flex flex-col gap-8">
             {(links || []).map(({ link }, i) => {
               return <CMSLink key={i} size="lg" {...(link as CMSLinkType)} />
             })}
-          </div>
-        </div>
-        <hr className="border-border z-1 w-full" />
+          </motion.div>
+        </motion.div>
+        <motion.hr variants={itemsFling} className="border-border z-1 w-full" />
         {list && (
           <div
             className="gap-sm z-1 grid w-full grid-cols-2 md:grid-cols-(--columns)"
@@ -93,10 +89,12 @@ export const CallToAction02: React.FC<CallToActionProps> = ({
           whileInView="visible"
           variants={{
             hidden: {
-              scaleX: 0.9,
+              opacity: 1,
+              scale: 0.9,
             },
             visible: {
-              scaleX: 1,
+              opacity: 1,
+              scale: 1,
               transition: {
                 type: 'spring',
                 stiffness: 800,
@@ -105,8 +103,8 @@ export const CallToAction02: React.FC<CallToActionProps> = ({
               },
             },
           }}
-          viewport={{ once: true, amount: 0.3 }}
-          className="bg-background-neutral absolute inset-0 mx-auto rounded-3xl"
+          viewport={{ once: false, amount: 0.05 }}
+          className="absolute inset-0 mx-auto rounded-3xl bg-red-200"
         />
       </motion.div>
     </div>
