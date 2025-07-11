@@ -59,6 +59,7 @@ const socialLinks = [
 type Props = {
   columns: Footer['columns']
   currentYear: number
+  locale: string
 }
 
 /* ─── knobs ──────────────────────────────────────────────────────────────── */
@@ -68,7 +69,7 @@ const WHEEL_GAIN = 45 // multiplier per wheel tick ≈ 1
 const WHEEL_IDLE = 65 // ms gap that ends a wheel gesture
 /* ────────────────────────────────────────────────────────────────────────── */
 
-export function FooterClient({ columns, currentYear }: Props) {
+export function FooterClient({ columns, currentYear, locale }: Props) {
   /* live transform */
   const y = useMotionValue(0)
   const t = useTranslations('Footer')
@@ -236,16 +237,16 @@ export function FooterClient({ columns, currentYear }: Props) {
                     </Button>
                   </div>
                 </div>
-                <div id="social" className="flex w-full flex-col gap-1">
+                <div id="social" className="flex w-full flex-col gap-2">
                   <p className="text-base-tertiary text-sm font-medium">{t('followUs')}</p>
-                  <div className="flex w-full flex-row items-start justify-between lg:-ms-2.5 lg:justify-start">
+                  <div className="flex w-full flex-row items-start justify-between gap-2 lg:justify-start">
                     {socialLinks.map(({ label, url, icon: Icon }, i) => (
                       <Button
                         key={i}
-                        variant="ghost"
+                        variant="tertiary"
                         color="neutral"
                         size="icon"
-                        className="bg-transparent hover:bg-transparent"
+                        // className="bg-transparent hover:bg-transparent"
                         asChild
                       >
                         <Link href={url} className="group">
@@ -272,9 +273,9 @@ export function FooterClient({ columns, currentYear }: Props) {
                     />
                   </div>
                 </div>
-                <div id="theme" className="flex flex-row items-start gap-2">
-                  <ThemeSelector />
-                  <LanguageSwitcher />
+                <div id="theme" className="flex flex-row items-center gap-4">
+                  <LanguageSwitcher locale={locale} />
+                  <ThemeSelector locale={locale} />
                 </div>
               </div>
               <nav className="pb-site grid grid-cols-2 gap-4 md:col-span-2 md:grid-cols-3 lg:col-span-6 lg:col-start-7">

@@ -8,12 +8,10 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import React, { useState, useEffect } from 'react'
-import { useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { GlobeIcon } from 'lucide-react'
 
-export const LanguageSwitcher: React.FC = () => {
-  const locale = useLocale()
+export const LanguageSwitcher: React.FC<{ locale: string }> = ({ locale }) => {
   const router = useRouter()
   const [value, setValue] = useState(locale) // Set initial value to the current locale
   const [isOpen, setIsOpen] = useState(false)
