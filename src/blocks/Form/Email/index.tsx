@@ -18,7 +18,8 @@ export const Email: React.FC<
   }
 > = ({ name, defaultValue, errors, label, register, required: requiredFromProps, width }) => {
   return (
-    <Width width={width}>
+    <>
+      {/* <Width width={width}> */}
       {/* <Label htmlFor={name}>{label}</Label> */}
       <Input
         placeholder={label}
@@ -29,6 +30,7 @@ export const Email: React.FC<
       />
 
       {requiredFromProps && errors[name] && <Error />}
-    </Width>
+      {/* </Width> */}
+    </>
   )
 }

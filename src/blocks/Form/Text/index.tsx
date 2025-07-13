@@ -18,7 +18,8 @@ export const Text: React.FC<
   }
 > = ({ name, defaultValue, errors, label, register, required: requiredFromProps, width }) => {
   return (
-    <Width width={width}>
+    <>
+      {/* <Width width={width}> */}
       {/* <Label htmlFor={name}>{label}</Label> */}
       <Input
         placeholder={label}
@@ -28,6 +29,7 @@ export const Text: React.FC<
         {...register(name, { required: requiredFromProps })}
       />
       {requiredFromProps && errors[name] && <Error />}
-    </Width>
+      {/* </Width> */}
+    </>
   )
 }

@@ -16,6 +16,7 @@ import type { CMSLinkType } from '@/components/Link'
 
 import { CMSLink } from '@/components/Link'
 import { Data } from '../Form/Component'
+import { RenderFields } from '../Form/RenderFields'
 
 type CTABlockType = CallToActionBlock & {
   form: FormType
@@ -140,27 +141,7 @@ export const CallToAction06: React.FC<CTABlockType> = (props) => {
               {!hasSubmitted && (
                 <form id={formID} onSubmit={handleSubmit(onSubmit)}>
                   <div className="mb-4">
-                    {formFromProps &&
-                      formFromProps.fields &&
-                      formFromProps.fields?.map((field, index) => {
-                        const Field: React.FC<any> = fields?.[field.blockType]
-                        if (Field) {
-                          return (
-                            <div className="mb-sm" key={index}>
-                              <Field
-                                form={formFromProps}
-                                {...field}
-                                {...formMethods}
-                                control={control}
-                                errors={errors}
-                                register={register}
-                                locale={locale}
-                              />
-                            </div>
-                          )
-                        }
-                        return null
-                      })}
+                    <RenderFields form={formFromProps} locale={locale} />
                   </div>
                   <Button
                     form={formID}

@@ -16,6 +16,7 @@ import type { CMSLinkType } from '@/components/Link'
 
 import { CMSLink } from '@/components/Link'
 import { Data } from '../Form/Component'
+import { RenderFields } from '../Form/RenderFields'
 
 type CTABlockType = CallToActionBlock & {
   form: FormType
@@ -31,13 +32,7 @@ export const CallToAction07: React.FC<CTABlockType> = (props) => {
     list,
     media,
     form: formFromProps,
-    form: {
-      id: formID,
-      confirmationMessage,
-      confirmationType,
-      redirect,
-      submitButtonLabel,
-    } = {},
+    form: { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } = {},
     locale,
   } = props
 
@@ -53,9 +48,7 @@ export const CallToAction07: React.FC<CTABlockType> = (props) => {
 
   const [isLoading, setIsLoading] = useState(false)
   const [hasSubmitted, setHasSubmitted] = useState<boolean>()
-  const [error, setError] = useState<
-    { message: string; status?: string } | undefined
-  >()
+  const [error, setError] = useState<{ message: string; status?: string } | undefined>()
   const router = useRouter()
 
   const onSubmit = useCallback(
@@ -75,19 +68,16 @@ export const CallToAction07: React.FC<CTABlockType> = (props) => {
         }, 1000)
 
         try {
-          const req = await fetch(
-            `${getClientSideURL()}/api/form-submissions`,
-            {
-              body: JSON.stringify({
-                form: formID,
-                submissionData: dataToSend,
-              }),
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              method: 'POST',
+          const req = await fetch(`${getClientSideURL()}/api/form-submissions`, {
+            body: JSON.stringify({
+              form: formID,
+              submissionData: dataToSend,
+            }),
+            headers: {
+              'Content-Type': 'application/json',
             },
-          )
+            method: 'POST',
+          })
 
           const res = await req.json()
 
@@ -133,17 +123,11 @@ export const CallToAction07: React.FC<CTABlockType> = (props) => {
       <div className="px-md bg-background-neutral rounded-space-sm py-lg flex flex-col items-start gap-4 lg:flex-row lg:items-start lg:justify-between *:lg:basis-1/2">
         <div className="gap-sm flex flex-col items-start">
           {richText && (
-            <RichText
-              className="mx-0 mb-0 text-start"
-              data={richText}
-              enableGutter={false}
-            />
+            <RichText className="mx-0 mb-0 text-start" data={richText} enableGutter={false} />
           )}
           <div className="flex flex-col gap-8">
             {(links || []).map(({ link }, i) => {
-              return (
-                <CMSLink key={i} size="lg" {...(link as CMSLinkType)} />
-              )
+              return <CMSLink key={i} size="lg" {...(link as CMSLinkType)} />
             })}
           </div>
         </div>
@@ -153,37 +137,12 @@ export const CallToAction07: React.FC<CTABlockType> = (props) => {
               {/* {!isLoading && hasSubmitted && confirmationType === 'message' && (
                 <RichText data={confirmationMessage as SerializedEditorState} />
               )} */}
-              {isLoading && !hasSubmitted && (
-                <p>Loading, please wait...</p>
-              )}
-              {error && (
-                <div>{`${error.status || '500'}: ${error.message || ''}`}</div>
-              )}
+              {isLoading && !hasSubmitted && <p>Loading, please wait...</p>}
+              {error && <div>{`${error.status || '500'}: ${error.message || ''}`}</div>}
               {!hasSubmitted && (
                 <form id={formID} onSubmit={handleSubmit(onSubmit)}>
                   <div className="mb-4">
-                    {formFromProps &&
-                      formFromProps.fields &&
-                      formFromProps.fields?.map((field, index) => {
-                        const Field: React.FC<any> =
-                          fields?.[field.blockType]
-                        if (Field) {
-                          return (
-                            <div className="mb-sm" key={index}>
-                              <Field
-                                form={formFromProps}
-                                {...field}
-                                {...formMethods}
-                                control={control}
-                                errors={errors}
-                                register={register}
-                                locale={locale}
-                              />
-                            </div>
-                          )
-                        }
-                        return null
-                      })}
+                    <RenderFields form={formFromProps} locale={locale} />
                   </div>
                   <Button
                     form={formID}
