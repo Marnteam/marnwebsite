@@ -318,6 +318,7 @@ export interface Solution {
  */
 export interface Media {
   id: string;
+  prefix?: string | null;
   alt: string;
   caption?: {
     root: {
@@ -337,7 +338,6 @@ export interface Media {
   locale?: ('en' | 'ar') | null;
   category?: (string | Category)[] | null;
   blurhash?: string | null;
-  prefix?: string | null;
   folder?: (string | null) | FolderInterface;
   updatedAt: string;
   createdAt: string;
@@ -3144,12 +3144,12 @@ export interface IntegrationsSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  prefix?: T;
   alt?: T;
   caption?: T;
   locale?: T;
   category?: T;
   blurhash?: T;
-  prefix?: T;
   folder?: T;
   updatedAt?: T;
   createdAt?: T;
