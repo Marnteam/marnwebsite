@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input'
 import React from 'react'
 
 import { Error } from '../Error'
-import { Width } from '../Width'
 
 export const Email: React.FC<
   EmailField & {

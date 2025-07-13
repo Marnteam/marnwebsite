@@ -8,7 +8,6 @@ import RichText from '@/components/RichText'
 import { Button } from '@/components/ui/button'
 
 import { buildInitialFormState } from '../Form/buildInitialFormState'
-import { fields } from '../Form/fields'
 import { getClientSideURL } from '@/utilities/getURL'
 
 import type { CallToActionBlock } from '@/payload-types'
