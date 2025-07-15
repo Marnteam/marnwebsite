@@ -44,24 +44,6 @@ export const Metrics02: React.FC<MetricsBlockProps> = ({
     value,
     className,
   }) => {
-    // If value is null or empty, just render as is
-    if (!value) {
-      return <p className={cn(className)}>{value ?? ''}</p>
-    }
-
-    const match = value.match(/^([^\d\.\,]*)?(\d+(?:[.,]\d+)?)([^\d\.\,]*)?$/)
-
-    if (!match) {
-      // Not a number or not matching the pattern, render as plain text
-      return <p className={cn(className)}>{value}</p>
-    }
-
-    const [, prefix = '', numberStr, suffix = ''] = match
-    // Replace comma with dot for decimal numbers if needed
-    const normalizedNumberStr = numberStr.replace(',', '.')
-    const valueAsNumber = Number(normalizedNumberStr)
-    const isNumber = !Number.isNaN(valueAsNumber)
-
     const ref = useRef<HTMLDivElement>(null)
     const [count, setCount] = useState(0)
     const isInView = useInView(ref, {
@@ -69,15 +51,29 @@ export const Metrics02: React.FC<MetricsBlockProps> = ({
       once: true,
     })
 
+    const match = value?.match(/^([^\d\.\,]*)?(\d+(?:[.,]\d+)?)([^\d\.\,]*)?$/)
+
+    let prefix = ''
+    let numberStr = ''
+    let suffix = ''
+    let valueAsNumber = 0
+    let isNumber = false
+
+    if (match) {
+      ;[, prefix = '', numberStr, suffix = ''] = match
+      const normalizedNumberStr = numberStr.replace(',', '.')
+      valueAsNumber = Number(normalizedNumberStr)
+      isNumber = !Number.isNaN(valueAsNumber)
+    }
+
     useEffect(() => {
       if (isInView && isNumber) {
         setCount(valueAsNumber)
       }
-    }, [valueAsNumber, isInView, isNumber])
+    }, [isInView, isNumber, valueAsNumber])
 
-    if (!isNumber) {
-      // fallback, should not happen if regex matches
-      return <p className={cn(className)}>{value}</p>
+    if (!match || !value) {
+      return <p className={cn(className)}>{value ?? ''}</p>
     }
 
     return (
@@ -112,7 +108,7 @@ export const Metrics02: React.FC<MetricsBlockProps> = ({
           {stats?.map((stat, index) => (
             <div key={stat.id || index} className="bg-card rounded-space-sm p-6">
               <div className="flex h-full flex-col items-center justify-between">
-                <StatDisplay value={stat.value} className="text-h3 font-medium" />
+                <StatDisplay value={stat.value} className="text-h3 text-base-primary font-medium" />
                 <div className="flex flex-1 flex-row items-center justify-center text-center">
                   {renderIndicator(stat.indicator)}
                   <p className="text-base-tertiary text-body-md">{stat.label}</p>
