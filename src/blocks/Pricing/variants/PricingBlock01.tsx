@@ -4,6 +4,7 @@ import React from 'react'
 import type { PricingBlock } from '@/payload-types'
 import { PricingCard } from '../PricingCard'
 import { TooltipProvider } from '@/components/motion-ui/tooltip'
+import { cn } from '@/utilities/ui'
 
 interface PricingBlock01Props {
   pricingCards: NonNullable<PricingBlock['pricingCards']>
@@ -15,15 +16,17 @@ interface PricingBlock01Props {
     integrations: string
     features: string
   }
+  className?: string
 }
 
 export const PricingBlock01: React.FC<PricingBlock01Props> = ({
   pricingCards,
   locale,
   translations,
+  className,
 }) => {
   return (
-    <section className="-mt-[calc(var(--spacing-space-xl)*2)]">
+    <section className={cn('mt-[calc(var(--spacing-space-xl)*2)]', className)}>
       <div className="container max-w-screen-xl">
         {/* Pricing Cards Grid */}
         <TooltipProvider delayDuration={0}>

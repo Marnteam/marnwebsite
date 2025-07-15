@@ -131,8 +131,8 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
       <motion.div layout className="flex flex-col gap-4">
         <div className="relative flex flex-row items-center gap-4">
           {badge?.label && (
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-              <Badge {...badge} className="px-space-sm py-space-xs" />
+            <div className="absolute end-0 top-0">
+              <Badge {...badge} />
             </div>
           )}
 

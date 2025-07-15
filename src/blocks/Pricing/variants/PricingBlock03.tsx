@@ -55,7 +55,7 @@ export const PricingBlock03: React.FC<PricingBlock03Props> = ({
                         imgClassName="w-full h-auto rounded-3xl"
                       />
                     )}
-                    <div className="px-space-sm pe-space-md gap-space-xs flex flex-col">
+                    <div className="px-space-sm pe-space-md gap-space-xs flex w-full flex-col">
                       {(badge?.label || badge?.reference) && <Badge size="md" {...badge} />}
                       <div>
                         <h3 className="text-body-lg/loose text-base-primary font-medium">
