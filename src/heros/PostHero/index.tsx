@@ -157,7 +157,7 @@ export const PostHero: React.FC<{
               <motion.div
                 key="collapsed-hero" // Add unique key
                 className={clsx(
-                  'mx-[calc(var(--spacing-space-site)*2)] overflow-hidden py-4',
+                  'mx-[calc(var(--spacing-space-site))] overflow-hidden py-4 md:mx-[calc(var(--spacing-space-site)*2)]',
                   'relative z-1',
                 )}
                 variants={containerVariants}
@@ -172,7 +172,7 @@ export const PostHero: React.FC<{
                     fontSize: `17px`,
                     lineHeight: `24px`,
                   }}
-                  className="text-base-primary relative z-2 w-full max-w-4xl font-medium"
+                  className="text-base-primary relative z-2 w-full font-medium"
                 >
                   {title}
                 </motion.h1>
@@ -192,9 +192,6 @@ export const PostHero: React.FC<{
                 exit="exit"
               >
                 <motion.h1
-                  style={{
-                    fontSize: 'var(--text-h1)',
-                  }}
                   layout="size"
                   variants={{
                     initial: { opacity: 0, y: 50, x: 0 },
