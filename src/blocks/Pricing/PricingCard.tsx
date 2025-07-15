@@ -132,7 +132,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
         <div className="relative flex flex-row items-center gap-4">
           {badge?.label && (
             <div className="absolute end-0 top-0">
-              <Badge {...badge} />
+              <Badge {...badge} color="gray" />
             </div>
           )}
 
