@@ -319,7 +319,7 @@ export const PostHero: React.FC<{
               borderRadius: cardRadius,
               willChange: 'transform',
               overflow: 'hidden',
-              borderBottom: useTransform(eased, [0.2, 0.21], ['none', '1px solid var(--border)']),
+              borderBottom: useTransform(eased, [0.1, 0.11], ['none', '1px solid var(--border)']),
             }}
             layout
             className="bg-background-neutral z-0 h-full"
