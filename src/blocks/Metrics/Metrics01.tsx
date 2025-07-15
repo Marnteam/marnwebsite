@@ -6,15 +6,28 @@ import type { MetricsBlock as MetricsBlockProps } from '@/payload-types'
 import { cn } from '@/utilities/ui'
 import { InfiniteSlider } from '@/components/motion-ui/infinite-slider'
 import { Media } from '@/components/MediaResponsive'
+import { Icon } from '@iconify-icon/react/dist/iconify.mjs'
 
 export const Metrics01: React.FC<MetricsBlockProps> = ({ stats, enableLogos, logos }) => {
   const { logos: logosGroup, headline } = logos || {}
   const renderIndicator = (indicator?: 'increase' | 'decrease' | 'noChange' | null) => {
     switch (indicator) {
       case 'increase':
-        return <TrendingUp className="h-4 w-4 text-green-500" />
+        return (
+          <Icon
+            icon="material-symbols:arrow-upward-alt-rounded"
+            className="text-base-tertiary size-6"
+            height="none"
+          />
+        )
       case 'decrease':
-        return <TrendingDown className="h-4 w-4 text-red-500" />
+        return (
+          <Icon
+            icon="material-symbols:arrow-downward-alt-rounded"
+            className="text-base-tertiary size-6"
+            height="none"
+          />
+        )
       default:
         return null
     }
@@ -38,12 +51,12 @@ export const Metrics01: React.FC<MetricsBlockProps> = ({ stats, enableLogos, log
               stats?.length === 3 && index === 2 && 'max-lg:col-span-2',
             )}
           >
-            <div className="flex h-full items-center justify-between">
-              <div className="flex-1 text-center">
-                <p className="text-h3 font-medium">{stat.value}</p>
+            <div className="flex h-full flex-col items-center justify-between">
+              <p className="text-h3 font-medium">{stat.value}</p>
+              <div className="flex flex-1 flex-row items-center justify-center text-center">
+                {renderIndicator(stat.indicator)}
                 <p className="text-base-tertiary text-body-md">{stat.label}</p>
               </div>
-              {renderIndicator(stat.indicator)}
             </div>
           </div>
         ))}

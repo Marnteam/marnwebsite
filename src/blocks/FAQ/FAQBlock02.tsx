@@ -7,8 +7,8 @@ import {
 
 import RichText from '@/components/RichText'
 import { Faq, FaqBlock } from '@/payload-types'
-import { PlusIcon } from 'lucide-react'
 import { BlockHeader } from '@/components/BlockHeader'
+import { Icon } from '@iconify-icon/react/dist/iconify.mjs'
 
 export const FAQBlock02: React.FC<FaqBlock> = async (props) => {
   const { faqs, blockHeader } = props
@@ -26,12 +26,13 @@ export const FAQBlock02: React.FC<FaqBlock> = async (props) => {
                   key={idx}
                   className="bg-background-neutral group rounded-space-sm ps-sm relative py-4 pe-[calc((var(--spacing-space-sm)+8px)+var(--spacing-space-md))]"
                 >
-                  <AccordionTrigger className="text-base-secondary data-[state=open]:text-base-primary flex flex-row justify-between text-start text-(length:--text-body-lg) [&[data-state=open]_svg]:rotate-45">
+                  <AccordionTrigger className="text-base-secondary data-[state=open]:text-base-primary flex flex-row justify-between text-start text-(length:--text-body-lg) [&[data-state=open]_iconify-icon]:rotate-45">
                     {faq.question}
-                    <div className="bg-neutral/10 -group-hover:bg-neutral/20 text-base-tertiary end-xs absolute rounded-full p-1">
-                      <PlusIcon
-                        className="text-base transition-transform duration-200"
-                        color="currentColor"
+                    <div className="bg-neutral/10 text-base-tertiary end-xs absolute h-8 rounded-full p-1">
+                      <Icon
+                        icon="material-symbols:add-rounded"
+                        className="size-6 transition-transform duration-200"
+                        height="none"
                       />
                     </div>
                   </AccordionTrigger>
