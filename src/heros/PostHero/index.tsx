@@ -208,14 +208,14 @@ export const PostHero: React.FC<{
                     },
                     exit: { opacity: 0, y: 50, x: 0, zIndex: -10, position: 'absolute', inset: 0 },
                   }}
-                  className="text-base-primary relative z-2 w-full max-w-4xl font-medium"
+                  className="text-base-primary text-h2 md:text-h1 relative z-2 w-full max-w-4xl font-medium"
                 >
                   {title}
                 </motion.h1>
                 <motion.div layout="size" className="z-1 mt-6 space-y-6">
                   <motion.p
                     variants={metaVariants}
-                    className="text-h4 text-base-tertiary max-w-4xl font-medium"
+                    className="text-body-md md:text-h4 text-base-tertiary max-w-4xl font-medium"
                   >
                     {meta?.description}
                   </motion.p>
@@ -317,7 +317,9 @@ export const PostHero: React.FC<{
               borderRadius: cardRadius,
               willChange: 'transform',
               overflow: 'hidden',
+              borderBottom: useTransform(eased, [0.2, 0.21], ['none', '1px solid var(--border)']),
             }}
+            layout
             className="bg-background-neutral z-0 h-full"
           >
             <motion.div
