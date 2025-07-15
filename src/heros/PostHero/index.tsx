@@ -94,7 +94,7 @@ export const PostHero: React.FC<{
   // const cardWidth = useTransform(eased, [0, 0.2], [width - cardOffsetRef.current * 2, width])
   // const cardRadius = useTransform(eased, [0, 0.2], ['24px', '0px'])
   const cardWidth = isCollapsed ? width : width - cardOffsetRef.current * 2
-  const cardRadius = isCollapsed ? '24px' : '0px'
+  const cardRadius = isCollapsed ? '0px' : '24px'
 
   const { title, meta, content, heroImage, populatedAuthors, publishedAt } = post
 
