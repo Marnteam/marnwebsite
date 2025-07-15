@@ -38,13 +38,14 @@ export const PostHero: React.FC<{
 
   const { scrollYProgress } = useScroll({ target: undefined })
   // Ease in but quick out with minimal bounce spring
-  const eased = useSpring(scrollYProgress, {
-    stiffness: 400, // higher stiffness for quick out
-    damping: 60, // higher damping for minimal bounce
-    mass: 0.8, // slightly lighter for snappier response
-    restDelta: 0.001,
-    restSpeed: 0.01,
-  })
+  // const eased = useSpring(scrollYProgress, {
+  //   stiffness: 400, // higher stiffness for quick out
+  //   damping: 60, // higher damping for minimal bounce
+  //   mass: 0.8, // slightly lighter for snappier response
+  //   restDelta: 0.001,
+  //   restSpeed: 0.01,
+  // })
+  const eased = scrollYProgress
 
   useEffect(() => {
     if (typeof window === 'undefined') return
