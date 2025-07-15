@@ -1,12 +1,13 @@
 'use client'
-import React from 'react'
-import { TrendingUp, TrendingDown } from 'lucide-react'
+import React, { useEffect, useRef, useState } from 'react'
 import type { MetricsBlock as MetricsBlockProps } from '@/payload-types'
 
 import { cn } from '@/utilities/ui'
 import { InfiniteSlider } from '@/components/motion-ui/infinite-slider'
 import { Media } from '@/components/MediaResponsive'
 import { Icon } from '@iconify-icon/react/dist/iconify.mjs'
+import { SlidingNumber } from '@/components/motion-ui/sliding-number'
+import { useInView } from 'motion/react'
 
 export const Metrics01: React.FC<MetricsBlockProps> = ({ stats, enableLogos, logos }) => {
   const { logos: logosGroup, headline } = logos || {}
@@ -33,6 +34,55 @@ export const Metrics01: React.FC<MetricsBlockProps> = ({ stats, enableLogos, log
     }
   }
 
+  const StatDisplay: React.FC<{ value?: string | null; className?: string }> = ({
+    value,
+    className,
+  }) => {
+    // If value is null or empty, just render as is
+    if (!value) {
+      return <p className={cn(className)}>{value ?? ''}</p>
+    }
+
+    const match = value.match(/^([^\d\.\,]*)?(\d+(?:[.,]\d+)?)([^\d\.\,]*)?$/)
+
+    if (!match) {
+      // Not a number or not matching the pattern, render as plain text
+      return <p className={cn(className)}>{value}</p>
+    }
+
+    const [, prefix = '', numberStr, suffix = ''] = match
+    // Replace comma with dot for decimal numbers if needed
+    const normalizedNumberStr = numberStr.replace(',', '.')
+    const valueAsNumber = Number(normalizedNumberStr)
+    const isNumber = !Number.isNaN(valueAsNumber)
+
+    const ref = useRef<HTMLDivElement>(null)
+    const [count, setCount] = useState(0)
+    const isInView = useInView(ref, {
+      amount: 0.5,
+      once: true,
+    })
+
+    useEffect(() => {
+      if (isInView && isNumber) {
+        setCount(valueAsNumber)
+      }
+    }, [valueAsNumber, isInView, isNumber])
+
+    if (!isNumber) {
+      // fallback, should not happen if regex matches
+      return <p className={cn(className)}>{value}</p>
+    }
+
+    return (
+      <div className={'inline-flex items-center whitespace-pre ' + className} ref={ref}>
+        {prefix && <span>{prefix}</span>}
+        <SlidingNumber value={count} />
+        {suffix && <span>{suffix}</span>}
+      </div>
+    )
+  }
+
   return (
     <div className="py-xl container">
       <div
@@ -52,7 +102,7 @@ export const Metrics01: React.FC<MetricsBlockProps> = ({ stats, enableLogos, log
             )}
           >
             <div className="flex h-full flex-col items-center justify-between">
-              <p className="text-h3 font-medium">{stat.value}</p>
+              <StatDisplay value={stat.value} className="text-h3 font-medium" />
               <div className="flex flex-1 flex-row items-center justify-center text-center">
                 {renderIndicator(stat.indicator)}
                 <p className="text-base-tertiary text-body-md">{stat.label}</p>
