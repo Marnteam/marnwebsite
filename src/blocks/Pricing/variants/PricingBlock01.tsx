@@ -26,7 +26,7 @@ export const PricingBlock01: React.FC<PricingBlock01Props> = ({
   className,
 }) => {
   return (
-    <section className={cn('mt-[calc(var(--spacing-space-xl)*2)]', className)}>
+    <section className={cn('', className)}>
       <div className="container max-w-screen-xl">
         {/* Pricing Cards Grid */}
         <TooltipProvider delayDuration={0}>

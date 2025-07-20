@@ -20,6 +20,7 @@ import { RenderMetricsBlock } from './Metrics/RenderMetricsBlock'
 import { RenderPricingBlock } from './Pricing/RenderPricingBlock'
 import { SearchableIntegrationsGrid } from '@/blocks/Marketplace/SearchableGrid'
 import { RenderBlogBlock } from './Blog/RenderBlogBlock'
+import { cn } from '@/utilities/ui'
 
 const blockComponents = {
   archiveBlock: ArchiveBlock,
@@ -67,7 +68,10 @@ export const RenderBlocks: React.FC<{
         return (
           <div
             id={block.blockName || undefined}
-            className="pt-[clamp(4rem,2.4rem+4vw,6rem)]"
+            className={cn(
+              'pt-[clamp(4rem,2.4rem+4vw,6rem)]',
+              block.blockType === 'pricingBlock' && block.type === '01' && 'pt-0',
+            )}
             key={index}
           >
             {blockHeader &&
