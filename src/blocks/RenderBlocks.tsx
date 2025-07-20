@@ -65,12 +65,16 @@ export const RenderBlocks: React.FC<{
         }
 
         return (
-          <div id={block.blockName || undefined} className="*:first:pt-xl *:last:pb-xl" key={index}>
+          <div
+            id={block.blockName || undefined}
+            className="pt-[clamp(4rem,2.4rem+4vw,6rem)]"
+            key={index}
+          >
             {blockHeader &&
               !(block?.blockType === 'featuresBlock' && ['06', '07', '17'].includes(block.type)) &&
               !(block.blockType === 'featuredAppsBlock' && block.type === '01') &&
               !(block.blockType === 'faqBlock' && block.type === '02') && (
-                <BlockHeader {...blockHeader} className="" />
+                <BlockHeader {...blockHeader} />
               )}
             <Block {...(block as any)} locale={locale} />
           </div>
