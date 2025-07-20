@@ -36,7 +36,7 @@ export const Hero04: React.FC<Page['hero']> = ({
       <div
         className={cn(
           'flex w-full flex-col items-center gap-4 lg:flex-row',
-          media?.desktop?.light && 'mt-header',
+          // media?.desktop?.light && 'mt-header',
         )}
       >
         <div className="lg:pe-xl w-full">
