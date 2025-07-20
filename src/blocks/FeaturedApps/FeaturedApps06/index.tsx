@@ -29,14 +29,14 @@ export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({ cards }) => {
           lg: 3, //  ≥1024px: 3 slides
         }}
       >
-        <CarouselContent className="md:-ms-xs max-md:gap-xs max-md:flex-col">
+        <CarouselContent className="max-md:gap-space-xs max-md:flex-col">
           {cards?.map(({ title, subtitle, appReference, id }) => (
-            <CarouselItem key={id} className="md:ps-xs">
+            <CarouselItem key={id} className="md:not-first:ps-space-xs">
               <Card key={id} className="h-full w-full">
                 <CardContent className="rounded-space-sm gap-sm bg-background-neutral">
                   <div className="gap-xs flex flex-col">
                     <h3 className="text-h3">{title}</h3>
-                    <p className="text-body-md text-base-secondary">{subtitle}</p>
+                    <p className="text-body-md text-base-secondary font-normal">{subtitle}</p>
                   </div>
                   <hr className="border-border w-full" />
                   <div className="gap-xs flex flex-col">
