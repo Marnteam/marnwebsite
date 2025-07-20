@@ -47,7 +47,7 @@ export const Metrics02: React.FC<MetricsBlockProps> = ({
     const ref = useRef<HTMLDivElement>(null)
     const [count, setCount] = useState(0)
     const isInView = useInView(ref, {
-      amount: 0.5,
+      amount: 1,
       once: true,
     })
 
@@ -73,7 +73,7 @@ export const Metrics02: React.FC<MetricsBlockProps> = ({
     }, [isInView, isNumber, valueAsNumber])
 
     if (!match || !value) {
-      return <p className={cn(className)}>{value ?? ''}</p>
+      return <p className={className}>{value ?? ''}</p>
     }
 
     return (
@@ -108,8 +108,11 @@ export const Metrics02: React.FC<MetricsBlockProps> = ({
           {stats?.map((stat, index) => (
             <div key={stat.id || index} className="bg-card rounded-space-sm p-6">
               <div className="flex h-full flex-col items-center justify-between">
-                <StatDisplay value={stat.value} className="text-h3 text-base-primary font-medium" />
-                <div className="flex flex-1 flex-row items-center justify-center text-center">
+                <StatDisplay
+                  value={stat.value}
+                  className="text-base-primary flex-1 text-(length:--text-h3) font-medium"
+                />
+                <div className="flex flex-row items-center justify-center text-center">
                   {renderIndicator(stat.indicator)}
                   <p className="text-base-tertiary text-body-md">{stat.label}</p>
                 </div>
@@ -135,7 +138,7 @@ export const Metrics02: React.FC<MetricsBlockProps> = ({
                   dir="ltr"
                   className="-mask-x-to-10% flex w-full flex-wrap items-center justify-center mask-x-from-90% mask-x-to-100% md:justify-between"
                 >
-                  <InfiniteSlider gap={48} className="dark:invert">
+                  <InfiniteSlider gap={48} className="">
                     {logosGroup.map((logo, i) => {
                       return (
                         <li key={i} className="flex items-center justify-center">
