@@ -4,6 +4,7 @@ import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/utilities/ui'
 import { BlockHeaderType } from '@/types/blockHeader'
+import { countWords, extractTextFromLexical } from '@/utilities/extractTextFromLexical'
 
 export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
   const {
@@ -17,7 +18,9 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
     type,
   } = props
 
-  if (!headerText) return null
+  const headerTextLength = countWords(extractTextFromLexical(headerText))
+
+  if (!headerTextLength) return null
 
   return (
     <div
