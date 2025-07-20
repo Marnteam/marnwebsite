@@ -21,7 +21,7 @@ export const Logo01: React.FC<Logo01Props> = ({ logos, className }) => {
         dir="ltr"
         className="flex w-full flex-wrap items-center justify-center mask-x-from-90% mask-x-to-100% md:justify-between"
       >
-        <InfiniteSlider gap={48} className="dark:invert">
+        <InfiniteSlider gap={48} className="">
           {logos.map((logo, i) => {
             return (
               <li key={i} className="flex items-center justify-center">
