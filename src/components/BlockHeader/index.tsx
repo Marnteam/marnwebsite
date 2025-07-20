@@ -22,11 +22,11 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
   return (
     <div
       className={cn(
-        'gap-sm container grid grid-cols-2',
-        type === 'center' ? 'justify-items-center' : '',
+        'gap-y-space-md container grid grid-cols-1 justify-items-start',
+        type === 'split' && 'md:gap-space-sm md:grid-cols-2',
+        type === 'center' && 'justify-items-center',
         className,
       )}
-      data-theme="light"
     >
       {(badge?.label || badge?.reference) && (
         <Badge size="lg" {...badge} className={cn('col-span-2', badgeClassName)} />
@@ -35,10 +35,10 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
       {headerText && (
         <RichText
           className={cn(
-            'col-span-2 mx-0',
+            'mx-0 w-full max-w-4xl',
+            type === 'center' && 'text-center text-pretty',
             type === 'split' &&
-              'md:grid md:grid-cols-subgrid [&>*:is(h1,h2,h3,h4,h5,h6)]:pe-(length:--spacing-xl)',
-            type === 'center' && 'mx-auto text-center',
+              'md:col-span-2 md:grid md:grid-cols-subgrid [&>*:is(h1,h2,h3,h4,h5,h6)]:pe-(length:--spacing-xl)',
             '[&_p]:text-body-lg',
             richTextClassName,
           )}
@@ -49,10 +49,9 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
       {Array.isArray(links) && links.length > 0 && (
         <ul
           className={cn(
-            'col-span-2 row-start-3 justify-self-stretch md:col-span-1 md:justify-self-auto',
-            'flex flex-row gap-1',
-            type === 'split' ? 'md:col-start-2' : '',
-            type === 'center' ? 'justify-center md:col-span-2' : '',
+            'col-span-2 flex w-full flex-row gap-1',
+            type === 'center' && 'justify-center',
+            type === 'split' && 'md:col-start-2',
             linksClassName,
           )}
         >
