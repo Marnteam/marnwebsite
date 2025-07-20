@@ -121,8 +121,9 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
             ? 'dark'
             : 'light'
       }
+      style={{ borderRadius: 24 }}
       className={cn(
-        'bg-background-neutral rounded-space-sm relative space-y-4',
+        'bg-background-neutral relative space-y-4',
         type === 'featured' && 'bg-background-neutral p-card-xl',
         type === 'basic' && 'bg-background-neutral-subtle p-card-xl',
         type === null && 'p-space-md',
@@ -201,7 +202,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
           className="hover:bg-neutral/5 data-[state=expanded]:hover:bg-neutral/10 data-[state=expanded]:bg-neutral/5 w-full space-y-4 rounded-xl px-4 py-3 pt-2 transition-colors duration-200 max-md:px-0 data-[state=expanded]:max-md:px-4"
         >
           <motion.div layout className="-me-2 flex w-full flex-row items-center justify-between">
-            <p className="text-body-sm text-base-tertiary font-normal">
+            <p className="text-base-tertiary text-sm font-normal">
               {translations.includedSolutions}
             </p>
             <ChevronDown
