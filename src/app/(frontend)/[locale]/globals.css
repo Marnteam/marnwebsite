@@ -289,6 +289,8 @@
 
   --color-inverted-primary: var(--inverted-primary);
   --color-inverted-secondary: var(--inverted-secondary);
+  --color-inverted-tertiary: var(--inverted-tertiary);
+  --color-inverted-quaternary: var(--inverted-quaternary);
 
   /* indigo */
   --color-marn-50: #eef1fc;
