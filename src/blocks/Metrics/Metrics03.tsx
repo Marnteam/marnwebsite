@@ -12,7 +12,7 @@ export const Metrics03: React.FC<MetricsBlockProps> = ({ table, enableLogos, log
       {table && <StructuredTable table={table} />}
       {enableLogos && logos && logosGroup && logosGroup.length > 0 && (
         <div className="gap-space-md mt-md md:gap-space-lg flex w-full flex-col items-start">
-          {headline && <p className="text-body-sm text-base-quaternary font-medium">{headline}</p>}
+          {headline && <p className="text-body-sm text-base-tertiary font-medium">{headline}</p>}
           <ul
             dir="ltr"
             className="-mask-x-to-10% flex w-full flex-wrap items-center justify-center mask-x-from-90% mask-x-to-100% md:justify-between"
