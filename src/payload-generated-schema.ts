@@ -6672,7 +6672,7 @@ export const redirects = pgTable(
       .notNull(),
   },
   (columns) => ({
-    redirects_from_idx: index('redirects_from_idx').on(columns.from),
+    redirects_from_idx: uniqueIndex('redirects_from_idx').on(columns.from),
     redirects_updated_at_idx: index('redirects_updated_at_idx').on(columns.updatedAt),
     redirects_created_at_idx: index('redirects_created_at_idx').on(columns.createdAt),
   }),
