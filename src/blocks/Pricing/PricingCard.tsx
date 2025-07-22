@@ -250,8 +250,8 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                             }}
                           >
                             <div className="text-center">
-                              <p className="text-base-secondary text-sm font-medium">{name}</p>
-                              <p className="text-base-tertiary text-sm">{tagline}</p>
+                              <p className="text-inverted-secondary text-sm font-medium">{name}</p>
+                              <p className="text-inverted-tertiary text-sm">{tagline}</p>
                             </div>
                           </TooltipContent>
                         </>

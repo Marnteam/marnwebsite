@@ -30,7 +30,7 @@ export const PricingBlock01: React.FC<PricingBlock01Props> = ({
       <div className="container max-w-screen-xl">
         {/* Pricing Cards Grid */}
         <TooltipProvider delayDuration={0}>
-          <div className="grid items-start gap-4 md:grid-cols-2">
+          <div className="grid items-stretch gap-4 md:grid-cols-2">
             {pricingCards.map((card, index) => (
               <PricingCard key={index} {...card} translations={translations} />
             ))}
