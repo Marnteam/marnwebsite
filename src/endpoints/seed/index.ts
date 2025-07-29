@@ -128,8 +128,8 @@ export const seed = async ({
     collection: 'users',
     data: {
       name: 'Demo Author',
-      email: 'dev@marn.com',
-      password: '123456',
+      email: 'demo-author@example.com',
+      password: 'password',
     },
     req,
   })
