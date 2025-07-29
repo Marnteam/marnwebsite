@@ -26,6 +26,7 @@ export const Text: React.FC<
         id={name}
         type="text"
         {...register(name, { required: requiredFromProps })}
+        autoComplete={`name given-name`}
       />
       {requiredFromProps && errors[name] && <Error />}
       {/* </Width> */}

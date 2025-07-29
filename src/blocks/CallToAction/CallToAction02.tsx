@@ -104,7 +104,7 @@ export const CallToAction02: React.FC<CallToActionProps> = ({
             },
           }}
           viewport={{ once: false, amount: 0.05 }}
-          className="absolute inset-0 mx-auto rounded-3xl bg-red-200"
+          className="bg-background-neutral absolute inset-0 mx-auto rounded-3xl"
         />
       </motion.div>
     </div>

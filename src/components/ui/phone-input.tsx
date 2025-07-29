@@ -78,8 +78,10 @@ const PhoneInputField = React.forwardRef<HTMLInputElement, React.ComponentProps<
     return (
       <Input
         ref={ref}
+        id="tel tel-national"
         data-slot="phone-input"
         className={cn('z-1 -ms-px rounded-e-none shadow-none focus-visible:z-1', className)}
+        autoComplete={`tel tel-national`}
         {...props}
       />
     )
@@ -124,11 +126,13 @@ const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
         </div>
         <select
           ref={ref}
+          id="tel-country-code"
           disabled={disabled}
           value={value}
           onChange={handleSelect}
           className="absolute inset-0 text-sm opacity-0"
           aria-label="Select country"
+          autoComplete={`tel tel-country-code`}
         >
           <option key="default" value="">
             Select a country

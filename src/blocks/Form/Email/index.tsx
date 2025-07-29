@@ -25,6 +25,7 @@ export const Email: React.FC<
         defaultValue={defaultValue}
         id={name}
         type="text"
+        autoComplete={`email`}
         {...register(name, { pattern: /^\S[^\s@]*@\S+$/, required: requiredFromProps })}
       />
 

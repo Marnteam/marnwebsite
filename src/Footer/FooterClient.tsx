@@ -224,9 +224,11 @@ export function FooterClient({ columns, currentYear, locale }: Props) {
                   <div className="flex w-full max-w-96 items-center space-x-2">
                     <div className="relative w-full">
                       <Input
+                        id="email"
                         className="peer h-11 rounded-full ps-9 text-sm"
                         placeholder={t('newsletterPlaceholder')}
                         type="email"
+                        autoComplete={`email`}
                       />
                       <div className="text-base-quaternary peer-focus:text-base-secondary pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
                         <MailIcon size={16} aria-hidden="true" />
