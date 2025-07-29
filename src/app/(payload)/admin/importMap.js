@@ -34,9 +34,10 @@ import { AppPreview as AppPreview_9c379d66dbd1d305732cf432da5e35b0 } from '@/com
 import { default as default_1eb14a9e108e78608bb9e832591b6335 } from '@/components/RelationshipChipSelect'
 import { default as default_36eabb76cf083741c5e3e70086f8d257 } from '@/components/ImageCategoryGuide'
 import { FolderTableCell as FolderTableCell_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
-import { FolderEditField as FolderEditField_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
+import { FolderField as FolderField_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
+import { FolderTypeField as FolderTypeField_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
 import { default as default_50fad7b62e1ba5d1034952cb18853e31 } from '@/Header/CustomRowLabelNavItems'
 import { default as default_25391bb246c1d60cf178de278309b30a } from '@/Header/CustomRowLabelTabs'
 import { default as default_5b83c0d03ff747b791bd44d436d1f222 } from '@/components/Graphics/Icon'
@@ -82,9 +83,10 @@ export const importMap = {
   "@/components/RelationshipChipSelect#default": default_1eb14a9e108e78608bb9e832591b6335,
   "@/components/ImageCategoryGuide#default": default_36eabb76cf083741c5e3e70086f8d257,
   "@payloadcms/ui/rsc#FolderTableCell": FolderTableCell_ab83ff7e88da8d3530831f296ec4756a,
-  "@payloadcms/ui/rsc#FolderEditField": FolderEditField_ab83ff7e88da8d3530831f296ec4756a,
+  "@payloadcms/ui/rsc#FolderField": FolderField_ab83ff7e88da8d3530831f296ec4756a,
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/plugin-search/client#ReindexButton": ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
+  "@payloadcms/ui#FolderTypeField": FolderTypeField_3817bf644402e67bfe6577f60ef982de,
   "@/Header/CustomRowLabelNavItems#default": default_50fad7b62e1ba5d1034952cb18853e31,
   "@/Header/CustomRowLabelTabs#default": default_25391bb246c1d60cf178de278309b30a,
   "@/components/Graphics/Icon#default": default_5b83c0d03ff747b791bd44d436d1f222,
