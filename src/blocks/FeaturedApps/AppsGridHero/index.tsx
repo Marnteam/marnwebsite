@@ -1,9 +1,6 @@
 'use client'
 
-import type {
-  Integration,
-  Media as MediaType,
-} from '@/payload-types' // Import necessary types
+import type { Integration, Media as MediaType } from '@/payload-types' // Import necessary types
 import { Media } from '@/components/Media'
 import {
   motion,
@@ -89,9 +86,9 @@ const ContentSection: React.FC<{ blockHeader: BlockHeaderType }> = ({ blockHeade
       )}
 
       {links && links.length > 0 && (
-        <div className="flex w-full flex-col justify-center gap-2 sm:w-auto sm:flex-row">
+        <div className="flex w-auto flex-col justify-center gap-2 sm:flex-row">
           {links.map(({ link }, i) => (
-            <CMSLink key={i} className="w-full sm:w-auto" size={'lg'} {...link} />
+            <CMSLink key={i} size={'lg'} {...link} />
           ))}
         </div>
       )}
@@ -134,7 +131,7 @@ const AnimatedAppIcon: React.FC<{
     >
       <Media
         resource={app.icon as MediaType}
-        className="h-full w-full drop-shadow-lg"
+        className="h-full w-full"
         imgClassName="object-cover rounded-2xl lg:rounded-3xl w-full h-full"
       />
     </motion.div>
