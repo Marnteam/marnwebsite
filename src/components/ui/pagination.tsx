@@ -67,7 +67,11 @@ function PaginationPrevious({ className, ...props }: React.ComponentProps<typeof
       className={cn('gap-1 px-4 sm:ps-4', className)}
       {...props}
     >
-      <Icon icon="mdi:chevron-left" height="none" className="size-4 max-md:size-6 rtl:rotate-180" />
+      <Icon
+        icon="material-symbols:chevron-leftt-rounded"
+        height="none"
+        className="size-4 max-md:size-6 rtl:rotate-180"
+      />
       <span className="hidden sm:block">{t('previous')}</span>
     </PaginationLink>
   )
@@ -84,7 +88,7 @@ function PaginationNext({ className, ...props }: React.ComponentProps<typeof Pag
     >
       <span className="hidden sm:block">{t('next')}</span>
       <Icon
-        icon="mdi:chevron-right"
+        icon="material-symbols:chevron-right-rounded"
         height="none"
         className="size-4 max-md:size-6 rtl:rotate-180"
       />

@@ -16,6 +16,18 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { blogConverters } from '@/components/RichText/blogConverters'
 import { BlogSidebar } from '@/components/BlogSidebar'
 
+import {
+  Breadcrumb,
+  BreadcrumbEllipsis,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb'
+import { Link } from '@/i18n/routing'
+import { Category } from '@/payload-types'
+
 export const dynamicParams = true
 
 export async function generateStaticParams() {
@@ -73,6 +85,29 @@ export default async function Post({ params: paramsPromise }: Args) {
       <PayloadRedirects disableNotFound url={url} />
 
       {draft && <LivePreviewListener />}
+      <div className="md:px-space-site mx-auto max-w-[96rem]">
+        <Breadcrumb className="mx-space-site mb-4">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/blog">المدونة</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href={`/blog/${(post.categories?.[0] as Category).slug}`}>
+                  {(post.categories?.[0] as Category).title}
+                </Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{post.title}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
 
       <PostHero post={post} />
 

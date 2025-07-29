@@ -125,9 +125,9 @@ export const PostHero: React.FC<{
       transition: {
         staggerChildren: 0.1,
         type: 'spring',
-        stiffness: 900,
-        damping: 80,
-        mass: 10,
+        stiffness: 100,
+        damping: 22,
+        mass: 1,
       },
     },
     animate: {
@@ -135,9 +135,10 @@ export const PostHero: React.FC<{
       transition: {
         staggerChildren: 0.1,
         type: 'spring',
-        stiffness: 900,
-        damping: 80,
-        mass: 10,
+
+        stiffness: 100,
+        damping: 22,
+        mass: 1,
       },
     },
     exit: {
