@@ -18,7 +18,6 @@ import { BlogSidebar } from '@/components/BlogSidebar'
 
 import {
   Breadcrumb,
-  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
