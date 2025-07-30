@@ -83,7 +83,7 @@ export default async function Post({ params: paramsPromise }: Args) {
       <PayloadRedirects disableNotFound url={url} />
 
       {draft && <LivePreviewListener />}
-      <div className="md:px-space-site sticky top-(--header-plus-admin-bar-height) mx-auto mb-6 max-w-[96rem]">
+      <div className="px-space-site sticky top-(--header-plus-admin-bar-height) mx-auto mb-6 max-w-[96rem]">
         <Breadcrumb className="xmx-space-site">
           <BreadcrumbList>
             <BreadcrumbItem>
