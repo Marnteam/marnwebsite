@@ -74,11 +74,11 @@ export const HeaderClient: React.FC<HeaderType & AdminBarProps> = ({
     <header
       data-theme={headerTheme || 'light'}
       className={cn(
-        'border-border fixed top-0 left-0 z-10 w-full max-w-screen border-0 bg-transparent transition-colors duration-300',
+        'fixed top-0 left-0 z-10 w-full max-w-screen border-0 bg-transparent transition-colors duration-300',
         '-md:top-[var(--admin-bar-height,0px)]',
         hideBackground && 'before:opacity-0 after:opacity-0',
         isMobileNavOpen && 'bg-background border-none',
-        y > 20 && 'bg-background border-b',
+        y > 20 && 'bg-background shadow-border',
       )}
     >
       <AdminBar adminBarProps={adminBarProps} />
