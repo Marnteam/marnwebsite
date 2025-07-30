@@ -325,7 +325,7 @@ export const PostHero: React.FC<{
                 transform: 'translate3d(0, 0, 0)',
               }}
               layout="position"
-              className="bg-brand absolute inset-0 h-1"
+              className="bg-brand absolute inset-0 z-10 h-0.5"
             />
           </motion.div>
         </motion.div>
