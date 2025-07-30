@@ -9,7 +9,7 @@ import React, { cache } from 'react'
 import RichText from '@/components/RichText'
 
 import { PostHero } from '@/heros/PostHero'
-import { generateMeta } from '@/utilities/generateMeta'
+// import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
@@ -25,7 +25,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 import { Link } from '@/i18n/routing'
-import { Category } from '@/payload-types'
+import { BlogPost, Category, Page } from '@/payload-types'
 
 export const dynamicParams = true
 
@@ -180,3 +180,30 @@ const queryPostBySlug = cache(
     return post.docs?.[0] || null
   },
 )
+
+const generateMeta = async (args: {
+  doc: Partial<Page> | Partial<BlogPost>
+}): Promise<Metadata> => {
+  const { doc } = args || {}
+
+  // const ogImage = getImageURL(doc?.meta?.image)
+
+  const title = doc?.meta?.title ? doc?.meta?.title + ' | منظومة مرن' : 'منظومة مرن'
+
+  return {
+    description: doc?.meta?.description,
+    openGraph: {
+      description: doc?.meta?.description || '',
+      // images: ogImage
+      //   ? [
+      //       {
+      //         url: ogImage,
+      //       },
+      //     ]
+      //   : undefined,
+      title,
+      url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
+    },
+    title,
+  }
+}
