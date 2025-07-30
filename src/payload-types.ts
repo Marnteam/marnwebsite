@@ -539,6 +539,13 @@ export interface Page {
       desktop?: {
         light?: (string | null) | Media;
         dark?: (string | null) | Media;
+        videoControls?: {
+          autoplay?: boolean | null;
+          loop?: boolean | null;
+          muted?: boolean | null;
+          controls?: boolean | null;
+          objectFit?: ('cover' | 'contain' | 'fill' | 'none' | 'scale-down') | null;
+        };
       };
       /**
        * Optional
@@ -546,6 +553,13 @@ export interface Page {
       mobile?: {
         light?: (string | null) | Media;
         dark?: (string | null) | Media;
+        videoControls?: {
+          autoplay?: boolean | null;
+          loop?: boolean | null;
+          muted?: boolean | null;
+          controls?: boolean | null;
+          objectFit?: ('cover' | 'contain' | 'fill' | 'none' | 'scale-down') | null;
+        };
       };
     };
     logos?: {
@@ -871,6 +885,13 @@ export interface CallToActionBlock {
     desktop?: {
       light?: (string | null) | Media;
       dark?: (string | null) | Media;
+      videoControls?: {
+        autoplay?: boolean | null;
+        loop?: boolean | null;
+        muted?: boolean | null;
+        controls?: boolean | null;
+        objectFit?: ('cover' | 'contain' | 'fill' | 'none' | 'scale-down') | null;
+      };
     };
     /**
      * Optional
@@ -878,6 +899,13 @@ export interface CallToActionBlock {
     mobile?: {
       light?: (string | null) | Media;
       dark?: (string | null) | Media;
+      videoControls?: {
+        autoplay?: boolean | null;
+        loop?: boolean | null;
+        muted?: boolean | null;
+        controls?: boolean | null;
+        objectFit?: ('cover' | 'contain' | 'fill' | 'none' | 'scale-down') | null;
+      };
     };
   };
   links?:
@@ -2982,12 +3010,30 @@ export interface PagesSelect<T extends boolean = true> {
                 | {
                     light?: T;
                     dark?: T;
+                    videoControls?:
+                      | T
+                      | {
+                          autoplay?: T;
+                          loop?: T;
+                          muted?: T;
+                          controls?: T;
+                          objectFit?: T;
+                        };
                   };
               mobile?:
                 | T
                 | {
                     light?: T;
                     dark?: T;
+                    videoControls?:
+                      | T
+                      | {
+                          autoplay?: T;
+                          loop?: T;
+                          muted?: T;
+                          controls?: T;
+                          objectFit?: T;
+                        };
                   };
             };
         logos?:

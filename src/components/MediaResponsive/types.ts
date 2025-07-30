@@ -23,6 +23,13 @@ export interface Props {
     desktop?: {
       light?: (string | null) | MediaType
       dark?: (string | null) | MediaType
+      videoControls?: {
+        autoplay?: boolean
+        loop?: boolean
+        muted?: boolean
+        controls?: boolean
+        objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'
+      }
     }
     /**
      * Optional
@@ -30,6 +37,13 @@ export interface Props {
     mobile?: {
       light?: (string | null) | MediaType
       dark?: (string | null) | MediaType
+      videoControls?: {
+        autoplay?: boolean
+        loop?: boolean
+        muted?: boolean
+        controls?: boolean
+        objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'
+      }
     }
   }
 }
