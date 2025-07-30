@@ -9,6 +9,7 @@ import {
   motion,
   AnimatePresence,
   Variants,
+  useMotionValueEvent,
 } from 'motion/react'
 import clsx from 'clsx'
 import { formatDateTime } from 'src/utilities/formatDateTime'
@@ -36,26 +37,16 @@ export const PostHero: React.FC<{
   const cardRef = useRef<HTMLDivElement>(null)
   const [isCollapsed, setIsCollapsed] = useState(false)
 
-  const { scrollYProgress } = useScroll({ target: undefined })
-  // Ease in but quick out with minimal bounce spring
-  // const eased = useSpring(scrollYProgress, {
-  //   stiffness: 400, // higher stiffness for quick out
-  //   damping: 60, // higher damping for minimal bounce
-  //   mass: 0.8, // slightly lighter for snappier response
-  //   restDelta: 0.001,
-  //   restSpeed: 0.01,
-  // })
+  const { scrollY, scrollYProgress } = useScroll({ target: undefined })
   const eased = scrollYProgress
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    const handleScroll = () => {
-      setIsCollapsed(window.scrollY > 0.1)
+  useMotionValueEvent(scrollY, 'change', (current) => {
+    if (current > 0.1) {
+      setIsCollapsed(true)
+    } else {
+      setIsCollapsed(false)
     }
-    window.addEventListener('scroll', handleScroll)
-
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  })
 
   const getCardOffset = () => {
     if (typeof window === 'undefined') return 0
@@ -116,7 +107,7 @@ export const PostHero: React.FC<{
         mass: 4,
       },
     },
-    exit: { opacity: 0, y: 50, x: 0 },
+    exit: { opacity: 0, y: 0, x: 0 },
   }
 
   const containerVariants: Variants = {
@@ -133,19 +124,20 @@ export const PostHero: React.FC<{
     animate: {
       opacity: 1,
       transition: {
+        ease: 'easeOut',
         staggerChildren: 0.1,
-        type: 'spring',
-
-        stiffness: 100,
-        damping: 22,
-        mass: 1,
+        // type: 'spring',
+        // stiffness: 100,
+        // damping: 22,
+        // mass: 1,
       },
     },
     exit: {
-      opacity: 1,
+      opacity: 0,
       transition: {
         // staggerChildren: 0.1,
         // staggerDirection: -1,
+
         duration: 0.1,
       },
     },
@@ -186,7 +178,7 @@ export const PostHero: React.FC<{
                 ref={cardRef}
                 key="expanded-hero" // Add unique key
                 className={clsx(
-                  'relative mx-[calc(var(--spacing-space-site)*2)] overflow-hidden py-(--text-h1)',
+                  'relative mx-[calc(var(--spacing-space-site)*2)] overflow-hidden pt-(--text-h1) pb-(--spacing-space-site)',
                   'relative z-1',
                 )}
                 variants={containerVariants}
@@ -196,21 +188,22 @@ export const PostHero: React.FC<{
               >
                 <motion.h1
                   layout="size"
-                  variants={{
-                    initial: { opacity: 0, y: 50, x: 0 },
-                    animate: {
-                      opacity: 1,
-                      y: 0,
-                      x: 0,
-                      transition: {
-                        type: 'spring',
-                        stiffness: 800,
-                        damping: 100,
-                        mass: 4,
-                      },
-                    },
-                    exit: { opacity: 0, y: 50, x: 0, zIndex: -10, position: 'absolute', inset: 0 },
-                  }}
+                  // variants={{
+                  //   initial: { opacity: 0, y: 50, x: 0 },
+                  //   animate: {
+                  //     opacity: 1,
+                  //     y: 0,
+                  //     x: 0,
+                  //     transition: {
+                  //       type: 'spring',
+                  //       stiffness: 800,
+                  //       damping: 100,
+                  //       mass: 4,
+                  //     },
+                  //   },
+                  //   exit: { opacity: 0, y: 0, x: 0, zIndex: -10, position: 'absolute', inset: 0 },
+                  // }}
+                  variants={metaVariants}
                   className="text-base-primary text-h2 md:text-h1 relative z-2 w-full max-w-4xl font-medium"
                 >
                   {title}
