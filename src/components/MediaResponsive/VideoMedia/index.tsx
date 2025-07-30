@@ -8,8 +8,16 @@ import { getMediaUrl } from '@/utilities/getMediaURL'
 
 export const VideoMedia: React.FC<MediaProps> = (props) => {
   const { onClick, resource, media, videoClassName } = props
-  const { light: lightFromDesktop, dark: darkFromDesktop } = media?.desktop || {}
-  const { light: lightFromMobile, dark: darkFromMobile } = media?.mobile || {}
+  const {
+    light: lightFromDesktop,
+    dark: darkFromDesktop,
+    videoControls: desktopControls,
+  } = media?.desktop || {}
+  const {
+    light: lightFromMobile,
+    dark: darkFromMobile,
+    videoControls: mobileControls,
+  } = media?.mobile || {}
 
   const videoRef = useRef<HTMLVideoElement>(null)
   // const [showFallback] = useState<boolean>()
@@ -83,16 +91,19 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
 
   if (!srcToUse && !mobileSrcToUse) return null
 
+  const videoControls = desktopControls || mobileControls
+
   return (
     <video
-      autoPlay
-      className={cn('h-full w-full object-cover', videoClassName)}
-      controls={false}
-      loop
-      muted
+      autoPlay={videoControls?.autoplay}
+      className={cn('h-full w-full', videoClassName)}
+      controls={videoControls?.controls}
+      loop={videoControls?.loop}
+      muted={videoControls?.autoplay ? true : videoControls?.muted}
       onClick={onClick}
       playsInline
       ref={videoRef}
+      style={{ objectFit: videoControls?.objectFit || 'cover' }}
     >
       <source src={srcToUse} />
       <source src={mobileSrcToUse} media="(max-width: 768px)" />
