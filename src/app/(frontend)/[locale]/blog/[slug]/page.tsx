@@ -84,8 +84,8 @@ export default async function Post({ params: paramsPromise }: Args) {
       <PayloadRedirects disableNotFound url={url} />
 
       {draft && <LivePreviewListener />}
-      <div className="md:px-space-site mx-auto max-w-[96rem]">
-        <Breadcrumb className="mx-space-site mb-4">
+      <div className="md:px-space-site sticky top-(--header-plus-admin-bar-height) mx-auto mb-6 max-w-[96rem]">
+        <Breadcrumb className="xmx-space-site">
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
@@ -99,10 +99,6 @@ export default async function Post({ params: paramsPromise }: Args) {
                   {(post.categories?.[0] as Category).title}
                 </Link>
               </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>{post.title}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
