@@ -24,11 +24,11 @@ export interface Props {
       light?: (string | null) | MediaType
       dark?: (string | null) | MediaType
       videoControls?: {
-        autoplay?: boolean
-        loop?: boolean
-        muted?: boolean
-        controls?: boolean
-        objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'
+        autoplay?: boolean | null
+        loop?: boolean | null
+        muted?: boolean | null
+        controls?: boolean | null
+        objectFit?: ('cover' | 'contain' | 'fill' | 'none' | 'scale-down') | null
       }
     }
     /**
@@ -38,11 +38,11 @@ export interface Props {
       light?: (string | null) | MediaType
       dark?: (string | null) | MediaType
       videoControls?: {
-        autoplay?: boolean
-        loop?: boolean
-        muted?: boolean
-        controls?: boolean
-        objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'
+        autoplay?: boolean | null
+        loop?: boolean | null
+        muted?: boolean | null
+        controls?: boolean | null
+        objectFit?: ('cover' | 'contain' | 'fill' | 'none' | 'scale-down') | null
       }
     }
   }

@@ -95,11 +95,11 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
 
   return (
     <video
-      autoPlay={videoControls?.autoplay}
+      autoPlay={videoControls?.autoplay ?? true}
       className={cn('h-full w-full', videoClassName)}
-      controls={videoControls?.controls}
-      loop={videoControls?.loop}
-      muted={videoControls?.autoplay ? true : videoControls?.muted}
+      controls={videoControls?.controls ?? false}
+      loop={videoControls?.loop ?? true}
+      muted={videoControls?.autoplay ? true : (videoControls?.muted ?? true)}
       onClick={onClick}
       playsInline
       ref={videoRef}
