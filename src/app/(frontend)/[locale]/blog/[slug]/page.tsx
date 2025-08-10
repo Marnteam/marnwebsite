@@ -94,7 +94,7 @@ export default async function Post({ params: paramsPromise }: Args) {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href={`/blog/${(post.categories?.[0] as Category).slug}`}>
+                <Link href={`/blog/category/${(post.categories?.[0] as Category).slug}`}>
                   {(post.categories?.[0] as Category).title}
                 </Link>
               </BreadcrumbLink>
