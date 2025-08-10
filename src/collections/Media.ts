@@ -122,6 +122,16 @@ export const Media: CollectionConfig = {
     ],
   },
   hooks: {
-    beforeValidate: [generateBlurHash],
+    beforeValidate: [
+      ({ data }) => {
+        if (typeof data === 'object' && data) {
+          if (!data.alt && typeof data.filename === 'string') {
+            data.alt = data.filename
+          }
+        }
+        return data
+      },
+      generateBlurHash,
+    ],
   },
 }
