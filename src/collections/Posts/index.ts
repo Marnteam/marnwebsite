@@ -2,12 +2,15 @@ import type { CollectionConfig } from 'payload'
 
 import {
   BlocksFeature,
+  EXPERIMENTAL_TableFeature,
   FixedToolbarFeature,
   HeadingFeature,
   HorizontalRuleFeature,
   InlineToolbarFeature,
   lexicalEditor,
+  UploadFeature,
 } from '@payloadcms/richtext-lexical'
+import { ImagePasteFeature } from '@/components/RichText/ImagePasteFeature/feature.server'
 
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
@@ -110,9 +113,12 @@ export const Posts: CollectionConfig<'blog-posts'> = {
                         StyledList,
                       ],
                     }),
+                    UploadFeature({}),
+                    ImagePasteFeature(),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),
+                    EXPERIMENTAL_TableFeature(),
                   ]
                 },
               }),
