@@ -107,11 +107,10 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-4">
         <div className="xlg:mx-space-site relative">
-          <div className="px-space-site gap-space-md *:pt-space-xl z-2 flex w-full flex-col-reverse lg:flex-row lg:items-start">
+          <div className="px-space-site gap-space-xl *:pt-space-xl z-2 flex w-full flex-col-reverse lg:flex-row lg:items-start lg:justify-between">
             <RichText
-              className="mx-0 w-full max-w-4xl overflow-x-hidden"
+              className="rtl:lg:pr-space-site ltr:lg:pl-space-site mx-0 w-full max-w-4xl overflow-x-hidden"
               data={post.content}
-              enableProse
               enableGutter={false}
               converters={blogConverters}
             />
