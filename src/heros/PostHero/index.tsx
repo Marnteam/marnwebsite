@@ -159,11 +159,7 @@ export const PostHero: React.FC<{
                 <motion.h1
                   layout="size"
                   variants={metaVariants}
-                  style={{
-                    fontSize: `17px`,
-                    lineHeight: `24px`,
-                  }}
-                  className="text-base-primary relative z-2 w-full font-medium"
+                  className="text-base-primary text-body-md relative z-2 w-full font-medium"
                 >
                   {title}
                 </motion.h1>
