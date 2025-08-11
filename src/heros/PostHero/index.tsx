@@ -124,20 +124,16 @@ export const PostHero: React.FC<{
     animate: {
       opacity: 1,
       transition: {
-        ease: 'easeOut',
         staggerChildren: 0.1,
-        // type: 'spring',
-        // stiffness: 100,
-        // damping: 22,
-        // mass: 1,
+        type: 'spring',
+        stiffness: 100,
+        damping: 22,
+        mass: 1,
       },
     },
     exit: {
       opacity: 0,
       transition: {
-        // staggerChildren: 0.1,
-        // staggerDirection: -1,
-
         duration: 0.1,
       },
     },
@@ -188,21 +184,6 @@ export const PostHero: React.FC<{
               >
                 <motion.h1
                   layout="size"
-                  // variants={{
-                  //   initial: { opacity: 0, y: 50, x: 0 },
-                  //   animate: {
-                  //     opacity: 1,
-                  //     y: 0,
-                  //     x: 0,
-                  //     transition: {
-                  //       type: 'spring',
-                  //       stiffness: 800,
-                  //       damping: 100,
-                  //       mass: 4,
-                  //     },
-                  //   },
-                  //   exit: { opacity: 0, y: 0, x: 0, zIndex: -10, position: 'absolute', inset: 0 },
-                  // }}
                   variants={metaVariants}
                   className="text-base-primary text-h2 md:text-h1 relative z-2 w-full max-w-4xl font-medium"
                 >
@@ -313,7 +294,7 @@ export const PostHero: React.FC<{
               borderRadius: cardRadius,
               willChange: 'transform',
               overflow: 'hidden',
-              borderBottom: useTransform(eased, [0.1, 0.11], ['none', '1px solid var(--border)']),
+              borderBottom: !isCollapsed ? 'none' : '1px solid var(--border)',
             }}
             layout
             className="bg-background-neutral z-0 h-full"

@@ -50,13 +50,13 @@
   }
 
   h2:has(+ h3):where(:not(.not-prose, .not-prose *)) {
-    font-size: var(--text-h3);
+    font-size: var(--text-h2);
     line-height: 2;
     font-weight: var(--font-weight-medium);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-variant-ligatures: none;
     letter-spacing: 0.1em;
-    color: var(--prose-color);
+    color: var(--prose-heading-color);
     text-transform: uppercase;
   }
 
@@ -89,9 +89,9 @@
 
   /* This selects p immediately preceded by something 
   that's not h2 or h3 */
-  :not(h2) + p:where(:not(.not-prose, .not-prose *)) {
+  /* :not(h2) + p:where(:not(.not-prose, .not-prose *)) {
     margin-top: calc(var(--spacing) * 6);
-  }
+  } */
 
   :is(h2, h3, h4):where(:not(.not-prose, .not-prose *)) {
     /* scroll-margin-top: calc(var(--spacing) * 32);
@@ -99,6 +99,22 @@
       scroll-margin-top: calc(var(--spacing) * 18);
     } */
     scroll-margin-top: calc(var(--header-plus-admin-bar-height) + 6rem);
+  }
+
+  li.list-item-checkbox[role='checkbox'][aria-checked='false']:where(
+      :not(.not-prose, .not-prose *)
+    ) {
+    list-style-type: none;
+    padding-inline-start: 0;
+  }
+
+  li.list-item-checkbox[role='checkbox'][aria-checked='false']
+    label:where(:not(.not-prose, .not-prose *)) {
+    cursor: pointer;
+    font-size: var(--text-body-md);
+    color: var(--prose-color);
+    font-weight: var(--font-weight-normal);
+    margin-inline-start: calc(var(--spacing) * 3);
   }
 
   ul:where(:not(.not-prose, .not-prose *)) {
