@@ -1,5 +1,5 @@
 import HeadingLinks from '@/components/RichText/HeadingLinks'
-import type { Category, BlogPost } from '@/payload-types'
+import type { BlogPost } from '@/payload-types'
 import { useTranslations } from 'next-intl'
 import { ScrollArea } from '../ui/scroll-area'
 
