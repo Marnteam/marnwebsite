@@ -1,13 +1,14 @@
 import HeadingLinks from '@/components/RichText/HeadingLinks'
 import type { Category, BlogPost } from '@/payload-types'
 import { useTranslations } from 'next-intl'
+import { ScrollArea } from '../ui/scroll-area'
 
 export const BlogSidebar = ({ post }: { post: BlogPost }) => {
   const { content, categories, relatedPosts } = post
   const t = useTranslations('Blog')
   return (
-    <div className="top-[calc(var(--header-plus-admin-bar-height)+56px)] ms-0 w-full basis-1/3 lg:sticky">
-      {categories && categories.length > 0 && (
+    <div className="ms-0 lg:sticky lg:top-[calc(var(--header-plus-admin-bar-height)+56px)]">
+      {/* {categories && categories.length > 0 && (
         <div className="mb-2">
           <ul className="flex flex-row flex-wrap gap-2">
             {categories.map((category: Category) => (
@@ -20,18 +21,20 @@ export const BlogSidebar = ({ post }: { post: BlogPost }) => {
             ))}
           </ul>
         </div>
-      )}
-      <div className="bg-background-neutral space-y-6 rounded-3xl p-(length:--text-h4)">
-        <h2 className="text-body-md mb-2 font-medium text-(color:--color-base-primary)">
-          {t('inThisArticle')}:{' '}
-        </h2>
-
-        <HeadingLinks
-          className="top-(--header-height) ms-0 lg:sticky"
-          data={post.content}
-          enableGutter={false}
-        />
-      </div>
+      )} */}
+      <ScrollArea className="bg-background-neutral-subtle relative rounded-3xl lg:h-[calc(100vh-var(--header-plus-admin-bar-height)-160px)] lg:max-h-fit">
+        <div className="space-y-4 p-6">
+          <h2 className="text-body-md font-medium text-(color:--color-base-primary)">
+            {t('inThisArticle')}:{' '}
+          </h2>
+          <hr className="border-border w-full" />
+          <HeadingLinks
+            className="top-(--header-height) ms-0"
+            data={post.content}
+            enableGutter={false}
+          />
+        </div>
+      </ScrollArea>
     </div>
   )
 }

@@ -4,13 +4,15 @@ import { ThemeProvider } from './Theme'
 import type { Theme } from './Theme/types'
 import { HeaderIntersectionObserver } from './HeaderIntersectionObserver'
 import { WindowInfoProvider } from '@faceless-ui/window-info'
-import { NextIntlClientProvider, useMessages } from 'next-intl'
+import { NextIntlClientProvider, useLocale, useMessages } from 'next-intl'
+import { ClientProviders } from './client'
 
 export const Providers: React.FC<{
   children: React.ReactNode
   initialTheme?: Theme
 }> = ({ children, initialTheme }) => {
   const messages = useMessages()
+  const locale = useLocale()
 
   return (
     <WindowInfoProvider
@@ -23,7 +25,9 @@ export const Providers: React.FC<{
     >
       <NextIntlClientProvider messages={messages}>
         <ThemeProvider initialTheme={initialTheme}>
-          <HeaderIntersectionObserver>{children}</HeaderIntersectionObserver>
+          <ClientProviders locale={locale}>
+            <HeaderIntersectionObserver>{children}</HeaderIntersectionObserver>
+          </ClientProviders>
         </ThemeProvider>
       </NextIntlClientProvider>
     </WindowInfoProvider>

@@ -63,11 +63,11 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
         case 'h1':
           return ''
         case 'h2':
-          return 'ps-2'
+          return 'ms-2 text-base-primary text-base hover:text-brand'
         case 'h3':
-          return 'ps-4'
+          return 'ms-6 font-normal'
         case 'h4':
-          return 'ps-6'
+          return 'ms-10 font-normal'
         default:
           return ''
       }
@@ -79,11 +79,12 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
       <Link
         href={`#${slug}`}
         className={cn(
-          'hover:text-base-primary group text-body-md flex flex-row items-center gap-2 font-medium text-(color:--color-base-tertiary) transition-colors',
+          'hover:text-brand group relative flex translate-x-0 flex-row items-center gap-2 text-sm font-medium text-(color:--color-base-tertiary) transition-[color,transform] duration-200 ease-in-out after:absolute after:inset-0 after:ps-10 hover:after:-start-4 hover:ltr:translate-x-2 rtl:hover:-translate-x-4',
+          paddingClass,
         )}
       >
         {/* <div className="group-hover:bg-base-primary bg-base-quaternary w-0.25 flex-none self-stretch transition-colors" /> */}
-        <span className={cn('py-1.5', paddingClass)}>{text}</span>
+        <span className={cn('py-1.5')}>{text}</span>
       </Link>
     )
   },
