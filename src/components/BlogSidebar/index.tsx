@@ -7,7 +7,7 @@ export const BlogSidebar = ({ post }: { post: BlogPost }) => {
   const { content, categories, relatedPosts } = post
   const t = useTranslations('Blog')
   return (
-    <div className="ms-0 lg:sticky lg:top-[calc(var(--header-plus-admin-bar-height)+56px)]">
+    <div className="ms-0 max-w-160 lg:sticky lg:top-[calc(var(--header-plus-admin-bar-height)+56px)] lg:max-w-84 lg:grow-1">
       {/* {categories && categories.length > 0 && (
         <div className="mb-2">
           <ul className="flex flex-row flex-wrap gap-2">
