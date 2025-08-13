@@ -10,30 +10,27 @@ export const seedFAQBlockDemo = (
   faqs?: Faq[],
 ) => {
   const faqBlocks = [
-    // Introduction
-    {
-      blockType: 'richTextBlock',
-      type: '01',
-      maxWidth: 'default',
-      columns: 1,
-      content: generateLexicalContent([
-        {
-          type: 'h2',
-          text: 'النمط الكامل العرض (Full Width)',
-          direction: 'rtl',
-        },
-        {
-          type: 'p',
-          text: 'يعرض هذا النمط الأسئلة الشائعة في تخطيط يشغل كامل العرض المتاح، مما يوفر مساحة أكبر للمحتوى.',
-          direction: 'rtl',
-        },
-      ]),
-    },
-
     // FAQ Block 01 - Full Width
     {
       blockType: 'faqBlock',
       type: '01',
+      blockHeader: {
+        type: 'center',
+        headerText: generateLexicalContent([
+          {
+            type: 'h2',
+            text: 'النمط الكامل العرض (Full Width)',
+            direction: 'rtl',
+          },
+        ]),
+        descriptionText: generateLexicalContent([
+          {
+            type: 'p',
+            text: 'يعرض هذا النمط الأسئلة الشائعة في تخطيط يشغل كامل العرض المتاح، مما يوفر مساحة أكبر للمحتوى.',
+            direction: 'rtl',
+          },
+        ]),
+      },
       faqs: faqs,
     },
 
@@ -44,38 +41,27 @@ export const seedFAQBlockDemo = (
       enableDivider: true,
     },
 
-    // Split layout introduction
-    {
-      blockType: 'richTextBlock',
-      type: '01',
-      maxWidth: 'default',
-      columns: 1,
-      content: generateLexicalContent([
-        {
-          type: 'h2',
-          text: 'النمط المنقسم (Split Layout)',
-          direction: 'rtl',
-        },
-        {
-          type: 'p',
-          text: 'يقسم هذا النمط المساحة بين عنوان القسم على اليسار والأسئلة الشائعة على اليمين، مما يعطي تنظيماً أفضل للمحتوى.',
-          direction: 'rtl',
-        },
-      ]),
-    },
-
     // FAQ Block 02 - Split with Block Header
     {
       blockType: 'faqBlock',
       type: '02',
       blockHeader: {
         type: 'start',
-        subhead: 'مركز المساعدة',
-        heading: 'أسئلة شائعة إضافية',
-        description: generateLexicalContent([
+        badge: {
+          type: 'label',
+          label: 'النمط المنقسم (Split Layout)',
+        },
+        headerText: generateLexicalContent([
+          {
+            type: 'h2',
+            text: 'النمط المنقسم (Split Layout)',
+            direction: 'rtl',
+          },
+        ]),
+        descriptionText: generateLexicalContent([
           {
             type: 'p',
-            text: 'إليك المزيد من الأسئلة الشائعة التي قد تساعدك في فهم كيفية استخدام النظام بشكل أفضل.',
+            text: 'يقسم هذا النمط المساحة بين عنوان القسم على اليسار والأسئلة الشائعة على اليمين، مما يعطي تنظيماً أفضل للمحتوى. إليك المزيد من الأسئلة الشائعة التي قد تساعدك في فهم كيفية استخدام النظام بشكل أفضل.',
             direction: 'rtl',
           },
         ]),

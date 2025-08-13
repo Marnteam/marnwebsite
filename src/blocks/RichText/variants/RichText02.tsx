@@ -25,9 +25,9 @@ export const RichText02: React.FC<RichText01Props> = ({
   }
 
   return (
-    <div className="bg-background">
+    <div className="bg-background py-space-xl">
       <div className="container">
-        <div className="bg-background-neutral rounded-space-sm p-space-xl">
+        <div className="bg-background-neutral rounded-space-sm p-space-md lg:py-space-xl">
           <RichText
             data={content}
             enableGutter={true}
