@@ -1,13 +1,13 @@
 .prose {
-  --prose-color: theme(--color-base-secondary);
+  --prose-color: theme(--color-base-tertiary);
   --prose-heading-color: theme(--color-base-primary);
   --prose-strong-color: theme(--color-base-primary);
-  --prose-link-color: theme(--color-base-primary);
+  --prose-link-color: theme(--color-brand-primary);
   --prose-code-color: theme(--color-base-secondary);
   --prose-marker-color: var(--color-base-secondary);
   --prose-link-underline-color: var(--color-base-tertiary);
-  --prose-th-borders: var(--color-neutral-300);
-  --prose-td-borders: var(--color-neutral-200);
+  --prose-th-borders: var(--border);
+  --prose-td-borders: var(--border);
   --prose-hr-color: color-mix(in oklab, var(--color-neutral-950) 5%, transparent);
   --prose-blockquote-border-color: var(--color-neutral-300);
 
@@ -45,8 +45,6 @@
     color: var(--prose-heading-color);
     font-weight: var(--font-weight-medium);
     margin-top: calc(var(--spacing) * 20);
-    /* border-bottom: 1px solid var(--color-gray-200);
-    padding-bottom: calc(var(--spacing) * 2); */
   }
 
   h2:has(+ h3):where(:not(.not-prose, .not-prose *)) {
@@ -137,18 +135,18 @@
 
   a:not(:where(:is(h2, h3, h4) *)):where(:not(.not-prose, .not-prose *)) {
     color: var(--prose-link-color);
-    font-weight: var(--font-weight-medium);
     text-decoration: underline;
-    text-underline-offset: 3px;
+    text-underline-offset: 4px;
     text-decoration-color: var(--prose-link-underline-color);
     text-decoration-thickness: 1px;
     & code {
       font-weight: var(--font-weight-medium);
     }
+    transition: text-underline-offset 0.2s ease-in-out;
   }
 
   a:hover:where(:not(.not-prose, .not-prose *)) {
-    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
   }
 
   strong:where(:not(.not-prose, .not-prose *)) {
@@ -194,6 +192,12 @@
     line-height: 2;
   }
 
+  /* .lexical-table-container:where(:not(.not-prose, .not-prose *)) {
+    overflow: hidden;
+    border-radius: var(--radius-3xl);
+    border: 1px solid var(--border);
+  } */
+
   table:where(:not(.not-prose, .not-prose *)) {
     width: 100%;
     table-layout: auto;
@@ -202,6 +206,10 @@
     font-size: var(--text-sm);
     line-height: 1.4;
   }
+
+  /* table p:where(:not(.not-prose, .not-prose *)) {
+    font-size: var(--text-sm);
+  } */
 
   thead:where(:not(.not-prose, .not-prose *)) {
     border-bottom-width: 1px;

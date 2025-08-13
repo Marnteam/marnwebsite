@@ -12,11 +12,11 @@ import { Icon } from '@iconify-icon/react/dist/iconify.mjs'
 
 export const FAQBlock02: React.FC<FaqBlock> = async (props) => {
   const { faqs, blockHeader } = props
-
+  console.log(blockHeader)
   return (
-    <div className="bg-background">
+    <div className="bg-background pt-[clamp(4rem,2.4rem+4vw,6rem)]">
       <div className="container flex flex-col gap-4 lg:flex-row lg:items-start">
-        <BlockHeader {...blockHeader} type="start" className="lg:pe-md w-full px-0" />
+        <BlockHeader {...blockHeader} type="start" className="lg:pe-md w-full px-0 pt-0!" />
         {faqs && (
           <div className="mx-auto grid w-full grid-cols-1">
             <Accordion type="single" collapsible className="space-y-2">

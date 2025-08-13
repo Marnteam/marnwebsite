@@ -26,21 +26,6 @@ export const seedGalleryBlockDemo = (media: {
 
     // Gallery 01 - Card/Carousel Style
     {
-      blockType: 'richTextBlock',
-      content: generateLexicalContent([
-        {
-          type: 'h3',
-          text: 'المعرض النوع الأول - بطاقات تفاعلية',
-          direction: 'rtl',
-        },
-        {
-          type: 'p',
-          text: 'معرض بتصميم البطاقات مع أزرار التنقل والمؤشرات. مثالي لعرض مجموعة محدودة من الصور بشكل أنيق ومنظم.',
-          direction: 'rtl',
-        },
-      ]),
-    },
-    {
       blockType: 'galleryBlock',
       type: '01',
       images: [media.image169?.id, media.image43?.id, media.imageSquare?.id].filter(Boolean),
@@ -50,14 +35,14 @@ export const seedGalleryBlockDemo = (media: {
         headerText: generateLexicalContent([
           {
             type: 'h3',
-            text: 'معرض الصور - نمط البطاقات',
+            text: 'المعرض النوع الأول - بطاقات تفاعلية',
             direction: 'rtl',
           },
         ]),
         descriptionText: generateLexicalContent([
           {
             type: 'p',
-            text: 'تصفح الصور باستخدام الأزرار أو المؤشرات السفلية',
+            text: 'معرض بتصميم البطاقات مع أزرار التنقل والمؤشرات. مثالي لعرض مجموعة محدودة من الصور بشكل أنيق ومنظم. تصفح الصور باستخدام الأزرار أو المؤشرات السفلية.',
             direction: 'rtl',
           },
         ]),
@@ -65,21 +50,6 @@ export const seedGalleryBlockDemo = (media: {
     },
 
     // Gallery 02 - Full-width Style
-    {
-      blockType: 'richTextBlock',
-      content: generateLexicalContent([
-        {
-          type: 'h3',
-          text: 'المعرض النوع الثاني - العرض الكامل',
-          direction: 'rtl',
-        },
-        {
-          type: 'p',
-          text: 'معرض بعرض كامل للشاشة لإبراز الصور بشكل مؤثر. مناسب للصور عالية الجودة والمحتوى المرئي المهم.',
-          direction: 'rtl',
-        },
-      ]),
-    },
     {
       blockType: 'galleryBlock',
       type: '02',
@@ -90,14 +60,14 @@ export const seedGalleryBlockDemo = (media: {
         headerText: generateLexicalContent([
           {
             type: 'h3',
-            text: 'معرض الصور - العرض الكامل',
+            text: 'المعرض النوع الثاني - العرض الكامل',
             direction: 'rtl',
           },
         ]),
         descriptionText: generateLexicalContent([
           {
             type: 'p',
-            text: 'عرض الصور بحجم كامل للحصول على تأثير بصري قوي',
+            text: 'معرض بعرض كامل للشاشة لإبراز الصور بشكل مؤثر. مناسب للصور عالية الجودة والمحتوى المرئي المهم. عرض الصور بحجم كامل للحصول على تأثير بصري قوي.',
             direction: 'rtl',
           },
         ]),
@@ -105,21 +75,6 @@ export const seedGalleryBlockDemo = (media: {
     },
 
     // Gallery 03 - Infinite Slider
-    {
-      blockType: 'richTextBlock',
-      content: generateLexicalContent([
-        {
-          type: 'h3',
-          text: 'المعرض النوع الثالث - التمرير اللانهائي',
-          direction: 'rtl',
-        },
-        {
-          type: 'p',
-          text: 'معرض بتمرير تلقائي مستمر يعرض الصور بشكل انسيابي. مثالي لجذب الانتباه وعرض مجموعة كبيرة من الصور.',
-          direction: 'rtl',
-        },
-      ]),
-    },
     {
       blockType: 'galleryBlock',
       type: '03',
@@ -136,14 +91,14 @@ export const seedGalleryBlockDemo = (media: {
         headerText: generateLexicalContent([
           {
             type: 'h3',
-            text: 'معرض الصور - التمرير اللانهائي',
+            text: 'المعرض النوع الثالث - التمرير اللانهائي',
             direction: 'rtl',
           },
         ]),
         descriptionText: generateLexicalContent([
           {
             type: 'p',
-            text: 'تمرير تلقائي مستمر لعرض الصور بشكل جذاب',
+            text: 'معرض بتمرير تلقائي مستمر يعرض الصور بشكل انسيابي. مثالي لجذب الانتباه وعرض مجموعة كبيرة من الصور. تمرير تلقائي مستمر لعرض الصور بشكل جذاب.',
             direction: 'rtl',
           },
         ]),
@@ -151,21 +106,6 @@ export const seedGalleryBlockDemo = (media: {
     },
 
     // Gallery 04 - Interactive with Panels
-    {
-      blockType: 'richTextBlock',
-      content: generateLexicalContent([
-        {
-          type: 'h3',
-          text: 'المعرض النوع الرابع - التفاعلي مع اللوحات',
-          direction: 'rtl',
-        },
-        {
-          type: 'p',
-          text: 'معرض تفاعلي متقدم يعرض الصور مع لوحات معلومات منفصلة. كل صورة لها عنوان ووصف خاص بها.',
-          direction: 'rtl',
-        },
-      ]),
-    },
     {
       blockType: 'galleryBlock',
       type: '04',
@@ -201,14 +141,14 @@ export const seedGalleryBlockDemo = (media: {
         headerText: generateLexicalContent([
           {
             type: 'h3',
-            text: 'معرض الصور - التفاعلي مع اللوحات',
+            text: 'المعرض النوع الرابع - التفاعلي مع اللوحات',
             direction: 'rtl',
           },
         ]),
         descriptionText: generateLexicalContent([
           {
             type: 'p',
-            text: 'عرض الصور مع لوحات معلومات تفاعلية لكل صورة',
+            text: 'معرض تفاعلي متقدم يعرض الصور مع لوحات معلومات منفصلة. كل صورة لها عنوان ووصف خاص بها. عرض الصور مع لوحات معلومات تفاعلية لكل صورة.',
             direction: 'rtl',
           },
         ]),

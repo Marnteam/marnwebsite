@@ -23,12 +23,12 @@ export const RenderGalleryBlock: React.FC<GalleryBlockType> = async (props) => {
   const { type, blockHeader, images, interactiveGallery, locale, className } = props
 
   // Ensure images exist and are an array before proceeding
-  if (!images || !Array.isArray(images) || images.length === 0) {
+  if ((!images || !Array.isArray(images) || images.length === 0) && type !== '04') {
     console.warn('GalleryBlock: No images provided.')
     return null
   }
   // Check if images is an array of numbers or objects
-  const isArrayOfObjects = images.every((image) => typeof image === 'object' && image !== null)
+  const isArrayOfObjects = images?.every((image) => typeof image === 'object' && image !== null)
   if (!isArrayOfObjects) {
     console.warn('GalleryBlock: Images must be an array of objects.')
     return null

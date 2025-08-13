@@ -25,7 +25,7 @@ export const RichText01: React.FC<RichText01Props> = ({
   }
 
   return (
-    <div className="container">
+    <div className="py-space-xl container">
       <div
         className={cn(
           'mx-auto',

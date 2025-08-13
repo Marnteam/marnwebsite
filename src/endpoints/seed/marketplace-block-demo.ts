@@ -1,4 +1,4 @@
-import type { Page, MarketplaceBlock, Media } from '@/payload-types'
+import type { Page, MarketplaceBlock, Media, RichTextBlock } from '@/payload-types'
 import { generateLexicalContent } from '@/utilities/generateLexicalContent'
 
 export const seedMarketplaceBlockDemo = ({
@@ -8,7 +8,7 @@ export const seedMarketplaceBlockDemo = ({
   image169: Media | null
   filterCategory: string | null
 }) => {
-  const marketplaceBlocks: MarketplaceBlock[] = [
+  const marketplaceBlocks: (MarketplaceBlock | RichTextBlock)[] = [
     // Instance 1: Default view, sorted by newest
     {
       blockType: 'marketplaceBlock',
@@ -17,6 +17,24 @@ export const seedMarketplaceBlockDemo = ({
       },
     },
     // Instance 2: Pre-filtered to a specific category
+    {
+      blockType: 'richTextBlock',
+      type: '01',
+      columns: 2,
+      maxWidth: 'default',
+      blockHeader: {
+        type: 'center',
+        headerText: null,
+      },
+      content: generateLexicalContent([
+        { type: 'h2', text: 'عرض مُصفى مسبقًا', direction: 'rtl' },
+        {
+          type: 'p',
+          text: 'هذا مثال على بلوك المتجر مع تطبيق مرشح "بوابات الدفع" مسبقًا.',
+          direction: 'rtl',
+        },
+      ]),
+    },
     {
       blockType: 'marketplaceBlock',
       initialFilters: {
@@ -52,32 +70,11 @@ export const seedMarketplaceBlockDemo = ({
     ],
   }
 
-  const richTextBlock = {
-    blockType: 'richTextBlock',
-    type: '01',
-    columns: 2,
-    maxWidth: 'default',
-    blockHeader: {
-      type: 'center',
-      headerText: generateLexicalContent([
-        { type: 'h2', text: 'عرض مُصفى مسبقًا', direction: 'rtl' },
-      ]),
-    },
-    content: generateLexicalContent([
-      { type: 'h2', text: 'عرض مُصفى مسبقًا', direction: 'rtl' },
-      {
-        type: 'p',
-        text: 'هذا مثال على بلوك المتجر مع تطبيق مرشح "بوابات الدفع" مسبقًا.',
-        direction: 'rtl',
-      },
-    ]),
-  }
-
   const pageData: Omit<Page, 'id' | 'updatedAt' | 'createdAt' | 'sizes'> = {
     title: 'Marketplace Block Demo',
     slug: 'blocks-demo/marketplace-block',
     hero: heroData,
-    layout: [marketplaceBlocks[0], richTextBlock, marketplaceBlocks[1]] as any,
+    layout: marketplaceBlocks as any,
     meta: {
       title: 'Marketplace Block Demo | Marn',
       description: 'عرض توضيحي لخيارات بلوك المتجر.',
