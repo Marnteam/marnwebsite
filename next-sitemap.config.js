@@ -4,10 +4,13 @@ const SITE_URL =
   'https://example.com'
 
 /** @type {import('next-sitemap').IConfig} */
-module.exports = {
+export default {
   siteUrl: SITE_URL,
   generateRobotsTxt: true,
-  exclude: ['/posts-sitemap.xml', '/pages-sitemap.xml', '/*', '/blog/*'],
+  exclude: ['/*', '/blog/*'],
+  generateIndexSitemap: true,
+  // doesn't do anything
+  additionalSitemaps: [`${SITE_URL}/sitemap-ar.xml`, `${SITE_URL}/sitemap-en.xml`],
   robotsTxtOptions: {
     policies: [
       {
@@ -15,6 +18,6 @@ module.exports = {
         disallow: '/admin/*',
       },
     ],
-    additionalSitemaps: [`${SITE_URL}/pages-sitemap.xml`, `${SITE_URL}/posts-sitemap.xml`],
+    additionalSitemaps: [`${SITE_URL}/sitemap-ar.xml`, `${SITE_URL}/sitemap-en.xml`],
   },
 }
