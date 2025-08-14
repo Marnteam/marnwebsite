@@ -1,23 +1,27 @@
-import { APIError, CollectionBeforeValidateHook } from 'payload'
-import { getPlaiceholder } from 'plaiceholder'
+import sharp from 'sharp'
+import { CollectionBeforeChangeHook } from 'payload'
 
-export const generateBlurHash: CollectionBeforeValidateHook = async ({ data, operation, req }) => {
-  if (operation === 'create' || operation === 'update') {
-    try {
-      const buffer = req?.file?.data
-      const mimetype = req?.file?.mimetype
-      if (mimetype && mimetype.startsWith('image/')) {
-        if (buffer) {
-          const { base64 } = await getPlaiceholder(buffer, { size: 32 })
+import { Media } from '@/payload-types'
 
-          return {
-            ...data,
-            blurhash: base64,
-          }
-        }
-      }
-    } catch (error) {
-      throw new APIError('Failed to generate blur data url')
-    }
+export const generateBlurHash: CollectionBeforeChangeHook<Media> = async ({
+  req,
+  operation,
+  data,
+}) => {
+  if (!req.file || !req.file.data || !['create', 'update'].includes(operation)) {
+    return data
   }
+
+  const mimetype = req.file.mimetype
+  const isValidImage = mimetype.startsWith('image/') && mimetype !== 'image/svg+xml'
+  if (!isValidImage) {
+    return data
+  }
+
+  const buffer = await sharp(req.file.data).resize({ width: 8 }).toFormat('webp').toBuffer()
+
+  const base64 = buffer.toString('base64')
+  data.blurhash = `data:${mimetype};base64,${base64}`
+
+  return data
 }
