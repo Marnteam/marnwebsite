@@ -596,6 +596,10 @@ export interface Page {
   publishedAt?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
+  /**
+   * If checked, this page will be hidden from the website.
+   */
+  disablePage?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -3054,6 +3058,7 @@ export interface PagesSelect<T extends boolean = true> {
   publishedAt?: T;
   slug?: T;
   slugLock?: T;
+  disablePage?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
