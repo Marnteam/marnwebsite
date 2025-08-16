@@ -33,6 +33,7 @@ import { seedChangelog } from './changelog'
 
 import { seedFAQs } from './faq'
 import { seedBlogPosts } from './blog-posts'
+import { seedCarouselShowcasePage } from './carousel-showcase-page'
 
 const collections: CollectionSlug[] = [
   'pages',
@@ -778,6 +779,12 @@ export const seed = async ({
     imageSquare: imageSquareDoc,
   })
 
+  const carouselShowcasePageData = seedCarouselShowcasePage({
+    image169: image169Doc,
+    image43: image43Doc,
+    imageSquare: imageSquareDoc,
+  })
+
   // Block demo pages
   const blocksDemoIndexData = seedBlocksDemoIndex({
     image169: image169Doc,
@@ -1013,6 +1020,10 @@ export const seed = async ({
       data: featuresShowcasePageData,
       key: 'features',
     },
+    // {
+    //   data: carouselShowcasePageData,
+    //   key: 'carousel-showcase',
+    // },
     {
       data: blocksDemoIndexData,
       key: 'blocks-demo-index',
