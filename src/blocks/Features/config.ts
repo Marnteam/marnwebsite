@@ -76,16 +76,11 @@ export const FeaturesBlock: Block = {
         { label: '05 - Basic Image with Text (2-Column)', value: '05' },
         { label: '06 - Brief (Card)', value: '06' },
         { label: '07 - Brief (Centered)', value: '07' },
-        { label: '08 - Carousel (Tabs)', value: '08' },
-        { label: '09 - Carousel (Accordion)', value: '09' },
-        { label: '10 - Carousel (Cards)', value: '10' },
-        { label: '11 - Carousel', value: '11' },
-        { label: '12 - Carousel with Modals', value: '12' },
-        { label: '13 - Simple Grid (Mini cards)', value: '13' },
-        { label: '14 - 3 Image with Text, Big CTA', value: '14' },
-        { label: '15 - 3 Image with Text, Big CTA (2)', value: '15' },
-        { label: '16 - 4 Image with Text, Big CTA ', value: '16' },
-        { label: '17 - 4 Image with Text, Small CTA', value: '17' },
+        { label: '08 - Simple Grid (Mini cards)', value: '08' },
+        { label: '09 - 3 Image with Text, Big CTA', value: '09' },
+        { label: '10 - 3 Image with Text, Big CTA (2)', value: '10' },
+        { label: '11 - 4 Image with Text, Big CTA ', value: '11' },
+        { label: '12 - 4 Image with Text, Small CTA', value: '12' },
       ],
       required: true,
     },
@@ -119,7 +114,7 @@ export const FeaturesBlock: Block = {
       ],
       admin: {
         condition: (_, siblingData, { blockData }) =>
-          ['14', '15', '16', '17'].includes(blockData?.type),
+          ['09', '10', '11', '12'].includes(blockData?.type),
       },
     },
     {
@@ -157,21 +152,9 @@ export const FeaturesBlock: Block = {
           localized: true,
           admin: {
             condition: (_, siblingData, { blockData }) =>
-              [
-                '01',
-                '02',
-                '03',
-                '04',
-                '05',
-                '08',
-                '09',
-                '10',
-                '11',
-                '14',
-                '15',
-                '16',
-                '17',
-              ].includes(blockData?.type),
+              ['01', '02', '03', '04', '05', '08', '09', '10', '11', '12'].includes(
+                blockData?.type,
+              ),
           },
         },
         {
@@ -180,7 +163,7 @@ export const FeaturesBlock: Block = {
           label: 'Tab Label',
           localized: true,
           admin: {
-            condition: (_, siblingData, { blockData }) => ['08'].includes(blockData?.type),
+            condition: (_, siblingData, { blockData }) => false, // Removed tabLabel as it's not used in remaining variants
           },
         },
         iconPickerField({
@@ -189,7 +172,7 @@ export const FeaturesBlock: Block = {
           icons: materialIcons,
           admin: {
             condition: (_, siblingData, { blockData }) =>
-              ['06', '07', '09', '11', '12', '13'].includes(blockData?.type),
+              ['06', '07', '08'].includes(blockData?.type),
             description:
               'Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons',
           },
@@ -204,7 +187,7 @@ export const FeaturesBlock: Block = {
               type: 'checkbox',
               admin: {
                 condition: (_, siblingData, { blockData }) =>
-                  ['02', '03', '04', '05', '08'].includes(blockData?.type),
+                  ['02', '03', '04', '05'].includes(blockData?.type),
                 width: '50%',
               },
             },
@@ -214,7 +197,7 @@ export const FeaturesBlock: Block = {
               type: 'checkbox',
               admin: {
                 condition: (_, siblingData, { blockData }) =>
-                  ['02', '03', '04', '05', '08', '09', '10', '11'].includes(blockData?.type),
+                  ['02', '03', '04', '05'].includes(blockData?.type),
                 width: '50%',
               },
             },

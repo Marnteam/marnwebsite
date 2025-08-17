@@ -20,12 +20,14 @@ import { RenderMetricsBlock } from './Metrics/RenderMetricsBlock'
 import { RenderPricingBlock } from './Pricing/RenderPricingBlock'
 import { SearchableIntegrationsGrid } from '@/blocks/Marketplace/SearchableGrid'
 import { RenderBlogBlock } from './Blog/RenderBlogBlock'
+import { RenderCarouselBlock } from './Carousel/RenderCarouselBlock'
 import { cn } from '@/utilities/ui'
 
 const blockComponents = {
   archiveBlock: ArchiveBlock,
   blogBlock: RenderBlogBlock,
   callToActionBlock: RenderCallToActionBlock,
+  carouselBlock: RenderCarouselBlock,
   customHtmlBlock: RenderCustomHtmlBlock,
   dividerBlock: RenderDividerBlock,
   faqBlock: RenderFAQBlock,
