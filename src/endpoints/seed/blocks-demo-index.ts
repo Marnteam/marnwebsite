@@ -118,6 +118,11 @@ export const seedBlocksDemoIndex = (media: {
         },
         {
           type: 'p',
+          text: '• بلوك عرض الشرائح - عرض المحتوى بطريقة تفاعلية',
+          direction: 'rtl',
+        },
+        {
+          type: 'p',
           text: '• بلوك التطبيقات المميزة - عرض التطبيقات والتكاملات',
           direction: 'rtl',
         },
@@ -287,6 +292,11 @@ export const seedBlocksDemoIndex = (media: {
         },
         {
           type: 'p',
+          text: '🎠 بلوك عرض الشرائح - /carousel-showcase (متاح بالفعل)',
+          direction: 'rtl',
+        },
+        {
+          type: 'p',
           text: 'المزيد من البلوكات قريباً...',
           direction: 'rtl',
         },
@@ -324,6 +334,14 @@ export const seedBlocksDemoIndex = (media: {
           type: 'custom',
           url: '/features',
           label: 'عرض بلوك الميزات',
+          newTab: false,
+        } as any,
+      },
+      {
+        link: {
+          type: 'custom',
+          url: '/carousel-showcase',
+          label: 'عرض بلوك الشرائح',
           newTab: false,
         } as any,
       },

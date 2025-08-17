@@ -92,6 +92,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 'archiveBlock',
                 'blogBlock',
                 'callToActionBlock',
+                'carouselBlock',
                 'customHtmlBlock',
                 'dividerBlock',
                 'faqBlock',

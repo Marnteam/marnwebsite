@@ -66,11 +66,6 @@ export const seedFeaturesShowcasePage = (media: {
     '10',
     '11',
     '12',
-    '13',
-    '14',
-    '15',
-    '16',
-    '17',
   ]
 
   const featuresBlocks: FeaturesBlock[] = []
@@ -144,7 +139,7 @@ export const seedFeaturesShowcasePage = (media: {
       columns: [],
     }
 
-    if (['14', '15', '16', '17'].includes(type)) {
+    if (['09', '10', '11', '12'].includes(type)) {
       block.CTALabel = `اكتشف المزيد عن الميزة ${type}`
       block.link = {
         type: 'custom',
@@ -157,7 +152,7 @@ export const seedFeaturesShowcasePage = (media: {
     let numCols = 1
     if (type === '02') {
       numCols = sizesFortype02.length
-    } else if (['01', '08', '09', '10', '11', '12', '13'].includes(type)) {
+    } else if (['01', '08'].includes(type)) {
       numCols = 3
     } else if (type === '03') {
       numCols = 3
@@ -167,9 +162,9 @@ export const seedFeaturesShowcasePage = (media: {
       numCols = 2
     } else if (['06', '07'].includes(type)) {
       numCols = 4
-    } else if (['14', '15'].includes(type)) {
+    } else if (['09', '10'].includes(type)) {
       numCols = 3
-    } else if (['16', '17'].includes(type)) {
+    } else if (['11', '12'].includes(type)) {
       numCols = 4
     }
 
@@ -217,21 +212,17 @@ export const seedFeaturesShowcasePage = (media: {
       // }
 
       // Conditionally add 'image'
-      if (
-        ['01', '02', '03', '04', '05', '08', '09', '10', '11', '14', '15', '16', '17'].includes(
-          type,
-        )
-      ) {
+      if (['01', '02', '03', '04', '05', '08', '09', '10', '11', '12'].includes(type)) {
         columnData.image = media.image43?.id
       }
 
-      // Conditionally add 'tabLabel'
-      if (type === '08') {
-        columnData.tabLabel = `تبويب ${i + 1}`
-      }
+      // Conditionally add 'tabLabel' - removed as it's not used in remaining variants
+      // if (type === '08') {
+      //   columnData.tabLabel = `تبويب ${i + 1}`
+      // }
 
       // Conditionally add 'icon'
-      if (['06', '07', '09', '11', '12', '13'].includes(type)) {
+      if (['06', '07', '08'].includes(type)) {
         columnData.icon = getNextIcon()
       }
 
@@ -242,7 +233,7 @@ export const seedFeaturesShowcasePage = (media: {
       }
 
       // Conditionally add 'enableBadge' and 'badge'
-      const shouldEnableBadge = ['02', '03', '04', '05', '08'].includes(type)
+      const shouldEnableBadge = ['02', '03', '04', '05'].includes(type)
       if (shouldEnableBadge) {
         columnData.enableBadge = true
         // Ensure the badge structure matches what your 'badge' field expects
@@ -253,7 +244,7 @@ export const seedFeaturesShowcasePage = (media: {
       }
 
       // Conditionally add 'enableCta' and 'link'
-      const shouldEnableCta = ['02', '03', '04', '05', '08'].includes(type)
+      const shouldEnableCta = ['02', '03', '04', '05'].includes(type)
       if (shouldEnableCta) {
         columnData.enableCta = true
         // Ensure the link structure matches your 'link' field expects

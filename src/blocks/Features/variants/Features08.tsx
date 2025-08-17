@@ -1,137 +1,57 @@
 'use client'
-
-import React, { useState } from 'react'
+import React from 'react'
 import { FeaturesBlock } from '@/payload-types'
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
-import { Media } from '@/components/Media'
+import { motion } from 'motion/react'
+import { containerVariants, itemsFling } from '@/utilities/motion'
+
 import { cn } from '@/utilities/ui'
-import { Badge } from '@/components/ui/badge'
-import { CMSLink } from '@/components/Link'
+
+import { Card, CardContent } from '@/components/ui/card'
 import { Icon } from '@iconify-icon/react'
-import { Button } from '@/components/ui/button'
 import RichText from '@/components/RichText'
 
-type Features08Props = FeaturesBlock & {
-  readMoreLabel?: string
-}
-
-export const Features08: React.FC<Features08Props> = ({ columns, readMoreLabel }) => {
-  const [carouselIndex, setCarouselIndex] = useState(0)
-  if (!columns?.length) return null
+export const Features08: React.FC<FeaturesBlock> = ({ columns }) => {
+  if (!columns || columns.length === 0) return null
 
   return (
-    <div className="py-xl flex flex-col">
-      <div className="container mb-8 flex justify-center overflow-x-auto [scrollbar-width:none]">
-        <div className="flex min-w-max items-center gap-2">
-          {columns.map((column, index) => {
-            if (column.tabLabel) {
-              return (
-                <Button
-                  key={column.id || `tab-${index}`}
-                  type="button"
-                  size="md"
-                  variant="ghost"
-                  color="neutral"
-                  onClick={() => setCarouselIndex(index)}
-                  className={cn(
-                    'relative inline-flex h-10 items-center gap-1 rounded-full px-5 text-base font-medium transition-colors duration-200',
-                    index === carouselIndex
-                      ? 'bg-neutral hover:bg-neutral/90 text-inverted-primary'
-                      : '',
-                  )}
-                >
-                  {column.icon && (
-                    <Icon
-                      icon={`material-symbols:${column.icon}`}
-                      className="size-4"
-                      height="none"
-                    />
-                  )}
-                  {column?.tabLabel}
-                </Button>
-              )
-            }
-            return null
-          })}
-        </div>
-      </div>
-
-      <Carousel
-        index={carouselIndex}
-        onIndexChange={setCarouselIndex}
-        disableDrag
-        className="w-full"
-      >
-        <CarouselContent
-          className="w-full"
-          transition={{
-            type: 'spring',
-            stiffness: 800,
-            damping: 100,
-            mass: 4,
-          }}
-        >
-          {columns.map((column, index) => {
-            return (
-              <CarouselItem key={column.id || `tab-content-${index}`} className="px-md py-px">
-                {React.createElement(
-                  column.enableCta && column.link?.label ? CMSLink : 'div',
-                  {
-                    key: index,
-                    className: cn(
-                      'gap-xs group bg-background-neutral rounded-space-sm hover:shadow-border grid grid-cols-1 p-4 hover:no-underline md:grid-cols-2',
-                    ),
-                    ...(column.link?.label
-                      ? { ...column.link, label: null, variant: 'inline' }
-                      : {}),
-                  },
-                  <>
-                    <div
-                      className={cn(
-                        'gap-sm p-xs grid h-full grid-rows-[auto_1fr_auto] items-start',
-                      )}
-                    >
-                      {column.enableBadge && column.badge && <Badge {...column.badge} />}
-                      {column.content && (
-                        <div className="gap-xs flex grow auto-rows-auto flex-col">
-                          {column.content.title && (
-                            <h3 className="text-h3 text-base-primary font-medium">
-                              {column.content.title}
-                            </h3>
-                          )}
-                          {column.content.subtitle && (
-                            <RichText
-                              data={column.content.subtitle}
-                              className="[&>p]:text-body-md"
-                            />
-                          )}
-                        </div>
-                      )}
-                      {column.enableCta && column.link?.label && (
-                        <span className="mt-auto flex w-fit flex-row items-center gap-2">
-                          {readMoreLabel}
-                          <Icon
-                            icon="tabler:caret-left-filled"
-                            height="none"
-                            className="size-3 translate-x-1 transition-all duration-300 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180"
-                          />
-                        </span>
-                      )}
-                    </div>
-                    {column.image && (
-                      <Media
-                        resource={column.image}
-                        className="h-auto w-full"
-                        imgClassName="w-full h-auto aspect-[4/3] object-cover rounded-lg"
+    <motion.div
+      className="py-xl gap-xs container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+    >
+      {columns.map((column, index) => {
+        const iconName = column.icon as string
+        const { content } = column
+        return (
+          <motion.div key={index} variants={itemsFling}>
+            <Card className="rounded-space-sm p-md bg-card h-full w-full flex-grow border-0">
+              <CardContent className={cn('gap-md flex flex-col justify-start p-0')}>
+                {iconName && (
+                  <Icon
+                    className="text-base-secondary size-md"
+                    icon={`material-symbols:${iconName}`}
+                    height="none"
+                    color="currentColor"
+                  />
+                )}
+                {content?.title && (
+                  <div className="flex flex-col gap-2">
+                    <h3 className="text-body-lg text-base-primary font-medium">{content?.title}</h3>
+                    {content?.subtitle && (
+                      <RichText
+                        data={content?.subtitle}
+                        className="text-body-md text-base-tertiary"
                       />
                     )}
-                  </>,
+                  </div>
                 )}
-              </CarouselItem>
-            )
-          })}
-        </CarouselContent>
-      </Carousel>
-    </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )
+      })}
+    </motion.div>
   )
 }

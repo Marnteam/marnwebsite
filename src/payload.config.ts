@@ -35,6 +35,7 @@ import { CallToActionBlock } from '@/blocks/CallToAction/config'
 import { CustomHtmlBlock } from '@/blocks/CustomHTML/config'
 import { FeaturedAppsBlock } from '@/blocks/FeaturedApps/config'
 import { FeaturesBlock } from '@/blocks/Features/config'
+import { CarouselBlock } from '@/blocks/Carousel/config'
 import { FormBlock } from '@/blocks/Form/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { StyledList } from '@/blocks/StyledList/config'
@@ -139,6 +140,7 @@ export default buildConfig({
     ArchiveBlock,
     BlogBlock,
     CallToActionBlock,
+    CarouselBlock,
     CustomHtmlBlock,
     DividerBlock,
     FaqBlock,

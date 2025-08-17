@@ -1020,10 +1020,10 @@ export const seed = async ({
       data: featuresShowcasePageData,
       key: 'features',
     },
-    // {
-    //   data: carouselShowcasePageData,
-    //   key: 'carousel-showcase',
-    // },
+    {
+      data: carouselShowcasePageData,
+      key: 'carousel-showcase',
+    },
     {
       data: blocksDemoIndexData,
       key: 'blocks-demo-index',
