@@ -8,6 +8,7 @@ import { cn } from '@/utilities/ui'
 
 import { Card, CardContent } from '@/components/ui/card'
 import { Icon } from '@iconify-icon/react'
+import RichText from '@/components/RichText'
 
 export const Features13: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns || columns.length === 0) return null
@@ -22,11 +23,12 @@ export const Features13: React.FC<FeaturesBlock> = ({ columns }) => {
     >
       {columns.map((column, index) => {
         const iconName = column.icon as string
+        const { content } = column
         return (
           <motion.div key={index} variants={itemsFling}>
             <Card className="rounded-space-sm p-md bg-card h-full w-full flex-grow border-0">
               <CardContent className={cn('gap-md flex flex-col justify-start p-0')}>
-                {column.icon && (
+                {iconName && (
                   <Icon
                     className="text-base-secondary size-md"
                     icon={`material-symbols:${iconName}`}
@@ -34,12 +36,15 @@ export const Features13: React.FC<FeaturesBlock> = ({ columns }) => {
                     color="currentColor"
                   />
                 )}
-                {column.content?.title && (
+                {content?.title && (
                   <div className="flex flex-col gap-2">
-                    <h3 className="text-body-lg text-base-primary font-medium">
-                      {column.content?.title}
-                    </h3>
-                    <p className="text-body-md text-base-tertiary">{column.content?.subtitle}</p>
+                    <h3 className="text-body-lg text-base-primary font-medium">{content?.title}</h3>
+                    {content?.subtitle && (
+                      <RichText
+                        data={content?.subtitle}
+                        className="text-body-md text-base-tertiary"
+                      />
+                    )}
                   </div>
                 )}
               </CardContent>

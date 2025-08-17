@@ -21,7 +21,7 @@ export const Features05: React.FC<FeaturesBlock> = ({ columns }) => {
       viewport={{ once: true, amount: 0.3 }}
     >
       {columns.map((column, index) => {
-        const { image, enableBadge, badge, richTextContent, enableCta, link } = column
+        const { image, enableBadge, badge, content, enableCta, link } = column
         return (
           <motion.div key={index} variants={itemsFling} className="overflow-hidden border-0">
             <Card className="overflow-hidden border-0 p-4">
@@ -37,8 +37,13 @@ export const Features05: React.FC<FeaturesBlock> = ({ columns }) => {
                 )}
                 <div className="gap-xs p-xs flex flex-col">
                   {enableBadge && badge && <Badge {...badge} />}
-                  {richTextContent && (
-                    <RichText className={cn('mx-0')} data={richTextContent} enableGutter={false} />
+                  {content && (
+                    <div className="gap-xs flex flex-col">
+                      {content.title && (
+                        <h3 className="text-h2 text-base-primary font-medium">{content.title}</h3>
+                      )}
+                      {content.subtitle && <RichText data={content.subtitle} />}
+                    </div>
                   )}
                   {enableCta && link?.label && (
                     <CMSLink {...link} variant="primary" className="mt-xs" />

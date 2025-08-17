@@ -1,8 +1,7 @@
-import type { Block } from 'payload'
+import type { Block, Field } from 'payload'
 
 import {
   FixedToolbarFeature,
-  HeadingFeature,
   InlineToolbarFeature,
   lexicalEditor,
   BlocksFeature,
@@ -14,6 +13,7 @@ import { badge } from '@/fields/badge'
 import { iconPickerField } from '@/fields/iconPickerField'
 import materialIcons from '@/fields/iconPickerField/material-symbols-icons.json'
 import { StyledList } from '@/blocks/StyledList/config'
+import deepMerge from '@/utilities/deepMerge'
 
 const richTextEditor = lexicalEditor({
   features: ({ rootFeatures }) => {
@@ -21,11 +21,29 @@ const richTextEditor = lexicalEditor({
       ...rootFeatures,
       FixedToolbarFeature(),
       InlineToolbarFeature(),
-      HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
       BlocksFeature({ blocks: [StyledList] }),
     ]
   },
 })
+
+const textGroup = (options: Partial<Field>) => {
+  const group: Field = {
+    name: 'content',
+    type: 'group',
+    label: false,
+    fields: [
+      { name: 'title', type: 'text', label: 'Title', required: true, localized: true },
+      {
+        name: 'subtitle',
+        type: 'richText',
+        label: 'Subtitle',
+        localized: true,
+        editor: richTextEditor,
+      },
+    ],
+  }
+  return deepMerge(group, options)
+}
 
 const sizeOptions = [
   { label: 'Half', value: 'half' },
@@ -156,7 +174,6 @@ export const FeaturesBlock: Block = {
               ].includes(blockData?.type),
           },
         },
-
         {
           name: 'tabLabel',
           type: 'text',
@@ -166,7 +183,6 @@ export const FeaturesBlock: Block = {
             condition: (_, siblingData, { blockData }) => ['08'].includes(blockData?.type),
           },
         },
-
         iconPickerField({
           name: 'icon',
           label: 'Icon',
@@ -178,36 +194,7 @@ export const FeaturesBlock: Block = {
               'Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons',
           },
         }),
-
-        {
-          type: 'group',
-          label: false,
-          name: 'content',
-          fields: [
-            { name: 'title', type: 'text', label: 'Title', required: true, localized: true },
-            {
-              name: 'subtitle',
-              type: 'textarea',
-              label: 'Subtitle',
-              localized: true,
-            },
-          ],
-          admin: {
-            condition: (_, siblingData, { blockData }) =>
-              !['01', '03', '04', '05', '11'].includes(blockData?.type),
-          },
-        },
-        {
-          name: 'richTextContent',
-          label: 'Content',
-          type: 'richText',
-          editor: richTextEditor,
-          admin: {
-            condition: (_, siblingData, { blockData }) =>
-              ['01', '03', '04', '05', '11', '12'].includes(blockData?.type),
-          },
-          localized: true,
-        },
+        textGroup({}),
         {
           type: 'row',
           fields: [

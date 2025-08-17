@@ -3,7 +3,7 @@ import { getPayload, SanitizedConfig } from 'payload'
 import config from '@payload-config'
 import { unstable_cache } from 'next/cache'
 import { ISitemapField, IAlternateRef } from 'next-sitemap'
-import { hasHeroContent } from '@/utilities/hasHeroContent'
+// import { hasHeroContent } from '@/utilities/hasHeroContent'
 
 const getPagesSitemap = unstable_cache(
   async () => {

@@ -98,7 +98,18 @@ export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) =>
                   <Badge {...activeColumn.badge} />
                 )}
 
-                {activeColumn?.richTextContent && <RichText data={activeColumn.richTextContent} />}
+                {activeColumn?.content && (
+                  <div className="gap-xs flex flex-col">
+                    {activeColumn.content.title && (
+                      <h3 className="text-h2 text-base-primary font-medium">
+                        {activeColumn.content.title}
+                      </h3>
+                    )}
+                    {activeColumn.content.subtitle && (
+                      <RichText data={activeColumn.content.subtitle} />
+                    )}
+                  </div>
+                )}
                 {activeColumn?.enableCta && activeColumn?.link?.label && (
                   <CMSLink size="lg" variant="primary" {...activeColumn.link} />
                 )}

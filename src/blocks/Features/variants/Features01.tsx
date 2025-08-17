@@ -37,7 +37,7 @@ export const Features01: React.FC<FeaturesBlock> = ({ columns }) => {
           })}
         >
           {row?.map((column, index) => {
-            const { richTextContent, image, appReference, size = 'half' } = column // Removed 'content' as it's unused
+            const { content, image, appReference, size = 'half' } = column
             return (
               <motion.div
                 key={index}
@@ -56,8 +56,13 @@ export const Features01: React.FC<FeaturesBlock> = ({ columns }) => {
                     'md:flex-row': size === 'full' || row?.length === 1,
                   })}
                 >
-                  {richTextContent && (
-                    <RichText data={richTextContent} className="pe-md p-xs ps-xs w-full" />
+                  {content && (
+                    <div className="pe-md p-xs ps-xs gap-xs flex w-full flex-col">
+                      {content.title && (
+                        <h3 className="text-h3 text-base-primary font-medium">{content.title}</h3>
+                      )}
+                      {content.subtitle && <RichText data={content.subtitle} />}
+                    </div>
                   )}
                   {image && (
                     <Media

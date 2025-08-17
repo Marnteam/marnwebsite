@@ -7,6 +7,7 @@ import { Icon } from '@iconify-icon/react'
 import { BlockHeader } from '@/components/BlockHeader'
 import { motion } from 'motion/react'
 import { containerVariants, itemsFling } from '@/utilities/motion'
+import RichText from '@/components/RichText'
 
 export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, blockHeader }) => {
   if (!columns || columns.length === 0) return null
@@ -48,7 +49,7 @@ export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, block
               variants={itemsFling}
             >
               {icon && (
-                <div className="bg-background-neutral-subtle p-xs inline rounded-full">
+                <div className="bg-background-neutral-subtle p-xs inline grow-0 rounded-full">
                   <Icon
                     className="text-base-secondary size-sm"
                     height="none"
@@ -62,7 +63,7 @@ export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, block
                   <h3 className="text-body-md text-base-primary font-medium">{content.title}</h3>
                 )}
                 {content?.subtitle && (
-                  <p className="text-body-sm text-base-secondary">{content.subtitle}</p>
+                  <RichText data={content.subtitle} className="[&>p]:text-body-sm" />
                 )}
               </div>
             </motion.div>
