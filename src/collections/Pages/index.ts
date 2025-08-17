@@ -152,6 +152,17 @@ export const Pages: CollectionConfig<'pages'> = {
       },
     },
     ...slugField(),
+    {
+      name: 'disablePage',
+      label: 'Disable Page',
+      type: 'checkbox',
+      defaultValue: false,
+      localized: true,
+      admin: {
+        description: 'If checked, this page will be hidden from the website.',
+        position: 'sidebar',
+      },
+    },
   ],
   hooks: {
     afterChange: [revalidatePage],
