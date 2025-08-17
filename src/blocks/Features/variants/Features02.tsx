@@ -9,6 +9,7 @@ import { CMSLink } from '@/components/Link'
 import { Icon } from '@iconify-icon/react'
 import * as motion from 'motion/react-client'
 import { itemVariants } from '@/utilities/motion'
+import RichText from '@/components/RichText'
 
 const colSpanClass = {
   full: 'md:col-span-4 lg:col-span-12',
@@ -92,9 +93,7 @@ function FeatureCardContent({
             {content.title && (
               <h3 className="text-h3 text-base-primary font-medium">{content.title}</h3>
             )}
-            {content.subtitle && (
-              <p className="text-body-md text-base-tertiary">{content.subtitle}</p>
-            )}
+            {content.subtitle && <RichText data={content.subtitle} />}
           </div>
         )}
         {column.enableCta && column.link?.label && (

@@ -235,22 +235,10 @@ export const seedFeaturesShowcasePage = (media: {
         columnData.icon = getNextIcon()
       }
 
-      // Conditionally add 'content' group (with title and subtitle)
-      // This aligns with FeaturesBlock/config.ts: content group is active when NOT types 01, 03, 04, 05,
-      if (!['01', '03', '04', '05'].includes(type)) {
-        columnData.content = {
-          title: colTitle,
-          subtitle: colSubtitle,
-        }
-      }
-
-      // Conditionally add 'richTextContent'
-      // This aligns with FeaturesBlock/config.ts: richTextContent is active for types 01, 03, 04, 05, 11
-      if (['01', '03', '04', '05', '11'].includes(type)) {
-        columnData.richTextContent = generateLexicalContent([
-          { type: 'h3', text: colTitle, direction: 'rtl' },
-          { type: 'p', text: colSubtitle, direction: 'rtl' },
-        ])
+      // All variants now use the 'content' group with title (text) and subtitle (richText)
+      columnData.content = {
+        title: colTitle,
+        subtitle: generateLexicalContent([{ type: 'p', text: colSubtitle, direction: 'rtl' }]),
       }
 
       // Conditionally add 'enableBadge' and 'badge'

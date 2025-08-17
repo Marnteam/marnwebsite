@@ -1577,25 +1577,24 @@ export interface FeaturesBlock {
          * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
          */
         icon?: string | null;
-        content?: {
+        content: {
           title: string;
-          subtitle?: string | null;
-        };
-        richTextContent?: {
-          root: {
-            type: string;
-            children: {
+          subtitle?: {
+            root: {
               type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
               version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
+            };
+            [k: string]: unknown;
+          } | null;
+        };
         enableBadge?: boolean | null;
         enableCta?: boolean | null;
         reverseOrder?: boolean | null;

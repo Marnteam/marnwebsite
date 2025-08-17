@@ -20,7 +20,7 @@ export const Features03: React.FC<FeaturesBlock> = ({ columns }) => {
   return (
     <div className="bg-background py-xl gap-md container grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12">
       {columns.map((column, index) => {
-        const { image, size = 'full', richTextContent } = column
+        const { image, size = 'full', content } = column
         const lgColSpanClass = colSpanClass[size || 'full']
 
         return (
@@ -47,7 +47,14 @@ export const Features03: React.FC<FeaturesBlock> = ({ columns }) => {
                 })}
               >
                 {column.enableBadge && column.badge && <Badge {...column.badge} />}
-                {richTextContent && <RichText data={richTextContent} />}
+                {content && (
+                  <div className="gap-xs flex flex-col">
+                    {content.title && (
+                      <h3 className="text-h2 text-base-primary font-medium">{content.title}</h3>
+                    )}
+                    {content.subtitle && <RichText data={content.subtitle} />}
+                  </div>
+                )}
                 {column.enableCta && column.link?.label && (
                   <CMSLink className="mt-auto w-fit" size="md" {...column.link} />
                 )}

@@ -12,6 +12,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import RichText from '@/components/RichText'
 
 export const Features09: React.FC<FeaturesBlock> = ({ columns }) => {
   const [activeAccordionId, setActiveAccordionId] = useState<string | null>(
@@ -63,10 +64,8 @@ export const Features09: React.FC<FeaturesBlock> = ({ columns }) => {
               <AccordionContent
                 className={`flex flex-col items-start gap-4 p-0 ${column.icon && 'ps-[clamp(2rem,1.2rem+2vw,3rem)]'}`}
               >
-                {column.content && (
-                  <p className="text-base-secondary text-(length:--text-body-md)">
-                    {column.content.subtitle}
-                  </p>
+                {column.content?.subtitle && (
+                  <RichText data={column.content.subtitle} className="[&>p]:text-body-md" />
                 )}
                 {column.link && <CMSLink variant="inline" {...column.link} />}
                 {column.image && (

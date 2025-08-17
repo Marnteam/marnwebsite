@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge'
 import { CMSLink } from '@/components/Link'
 import { Icon } from '@iconify-icon/react'
 import { Button } from '@/components/ui/button'
+import RichText from '@/components/RichText'
 
 type Features08Props = FeaturesBlock & {
   readMoreLabel?: string
@@ -99,7 +100,10 @@ export const Features08: React.FC<Features08Props> = ({ columns, readMoreLabel }
                             </h3>
                           )}
                           {column.content.subtitle && (
-                            <p className="text-body-md">{column.content.subtitle}</p>
+                            <RichText
+                              data={column.content.subtitle}
+                              className="[&>p]:text-body-md"
+                            />
                           )}
                         </div>
                       )}
