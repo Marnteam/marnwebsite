@@ -244,7 +244,10 @@ export const Posts: CollectionConfig<'blog-posts'> = {
         },
       ],
     },
-    ...slugField(),
+    ...slugField('title', {
+      slugOverrides: { localized: true },
+      checkboxOverrides: { localized: true },
+    }),
   ],
   hooks: {
     afterChange: [revalidatePost],
