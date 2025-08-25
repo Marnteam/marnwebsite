@@ -32,7 +32,7 @@ const NavigationMenu = React.forwardRef<
       {/* Dark overlay that appears when any menu item is open */}
       <div
         className={cn(
-          'bg-background-inverted/20 pointer-events-none fixed inset-0 transition-opacity duration-300',
+          'pointer-events-none fixed inset-0 bg-neutral-950/20 transition-opacity duration-300',
           isOpen ? 'opacity-100' : 'opacity-0',
         )}
         style={{ zIndex: 5 }} // Between content and navigation menu
@@ -100,6 +100,7 @@ const NavigationMenuViewport = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Viewport>
 >(({ className, ...props }, ref) => (
   <div
+    data-theme="dark"
     className={cn('absolute top-full left-1/2 mx-auto flex w-fit -translate-x-1/2 justify-center')}
   >
     <NavigationMenuPrimitive.Viewport

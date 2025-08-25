@@ -47,7 +47,7 @@ export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
       <NavigationImagePreloader tabs={tabs} />
 
       <div className="px-site absolute start-0 end-0 w-full">
-        <NavigationMenu className="" dir="rtl">
+        <NavigationMenu className="">
           <NavigationMenuList className="space-x-0">
             {validTabs.map((tab, i) => {
               if (tab.enableDropdown) {
