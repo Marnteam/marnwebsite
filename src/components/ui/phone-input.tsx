@@ -8,6 +8,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/utilities/ui'
 import { Input } from '@/components/ui/input'
+import { Icon } from '@iconify-icon/react/dist/iconify.mjs'
 
 const phoneInputVariants = cva('flex flex-row-reverse rounded-xl', {
   variants: {
@@ -55,7 +56,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
 
     return (
       <RPNInput.default
-        className={cn(phoneInputVariants({ variant, size }), className)}
+        className={cn(phoneInputVariants({ variant, size }), 'relative', className)}
         international={international}
         defaultCountry={defaultCountry}
         flagComponent={FlagComponent}
@@ -80,7 +81,10 @@ const PhoneInputField = React.forwardRef<HTMLInputElement, React.ComponentProps<
         ref={ref}
         id="tel tel-national"
         data-slot="phone-input"
-        className={cn('z-1 -ms-px rounded-e-none shadow-none focus-visible:z-1', className)}
+        className={cn(
+          'z-1 rounded-e-none border-e-0 shadow-none focus-visible:z-1 focus-visible:border-e',
+          className,
+        )}
         autoComplete={`tel tel-national`}
         {...props}
       />
@@ -119,10 +123,7 @@ const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
           aria-hidden="true"
         >
           <FlagComponent country={value} countryName={value} aria-hidden="true" />
-          <span className="text-base-secondary flex items-center gap-1">
-            <span className="font-medium">{value}</span>
-            <ChevronDownIcon size={16} aria-hidden="true" />
-          </span>
+          <Icon icon="material-symbols:arrow-drop-down-rounded" aria-hidden="true" />
         </div>
         <select
           ref={ref}
