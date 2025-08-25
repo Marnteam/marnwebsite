@@ -76,6 +76,13 @@
   border-radius: var(--style-radius-full);
 }
 
+// .btn--withPopup {
+//   .btn {
+//     border-top-left-radius: var(--style-radius-full);
+//     border-bottom-left-radius: var(--style-radius-full);
+//   }
+// }
+
 .preview-btn,
 .live-preview-toggler {
   border-radius: var(--style-radius-full);
@@ -187,4 +194,20 @@ html:not([dir='RTL']) .btn--withPopup .popup-button {
 
 .form > *:last-child {
   margin-top: calc(var(--base) / 2);
+}
+
+@layer payload-default {
+  .checkbox-input__input {
+    border-radius: 4px;
+  }
+  .checkbox-input:not(.checkbox-input--read-only):active .checkbox-input__input,
+  .checkbox-input:not(.checkbox-input--read-only):active input[type='checkbox'],
+  .checkbox-input:not(.checkbox-input--read-only):focus-within .checkbox-input__input,
+  .checkbox-input:not(.checkbox-input--read-only):focus-within input[type='checkbox'],
+  .checkbox-input:not(.checkbox-input--read-only):focus .checkbox-input__input,
+  .checkbox-input:not(.checkbox-input--read-only):focus input[type='checkbox'] {
+    border: 1px solid var(--theme-elevation-150);
+    outline: 0;
+    box-shadow: 0 0 0 0px var(--theme-elevation-1000) !important;
+  }
 }
