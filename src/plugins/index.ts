@@ -1,5 +1,6 @@
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
+import { hubspotForms } from '@/plugins/hubspot-forms/src'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
@@ -81,6 +82,9 @@ export const plugins: Plugin[] = [
         })
       },
     },
+  }),
+  hubspotForms({
+    collection: 'forms',
   }),
   searchPlugin({
     collections: ['blog-posts'],

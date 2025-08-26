@@ -1134,6 +1134,8 @@ export interface Form {
         id?: string | null;
       }[]
     | null;
+  hubspotPortalId?: string | null;
+  hubspotFormId?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -3701,6 +3703,8 @@ export interface FormsSelect<T extends boolean = true> {
         message?: T;
         id?: T;
       };
+  hubspotPortalId?: T;
+  hubspotFormId?: T;
   updatedAt?: T;
   createdAt?: T;
 }
