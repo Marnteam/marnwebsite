@@ -104,7 +104,7 @@ async function uploadImageToMedia(file: File): Promise<{ id: string } | null> {
     if (!id) return null
     return { id }
   } catch (err) {
-    // eslint-disable-next-line no-console
+     
     console.error('Unexpected error while uploading image', err)
     return null
   }

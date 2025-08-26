@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useId } from 'react'
-import { ChevronDownIcon, PhoneIcon } from 'lucide-react'
+import { PhoneIcon } from 'lucide-react'
 import * as RPNInput from 'react-phone-number-input'
 import { CircleFlag } from 'react-circle-flags'
 import { cva, type VariantProps } from 'class-variance-authority'
