@@ -1,8 +1,8 @@
-import type { TranslateResolver } from '@payload-enchants/translator/resolvers/types'
+import type { Prompt, TranslateResolver } from './types'
 
 import { createGoogleGenerativeAI } from '@ai-sdk/google'
 import { generateObject } from 'ai'
-import { OpenAIPrompt } from '@payload-enchants/translator/resolvers/openAI'
+
 import { z } from 'zod'
 import { chunkArray } from '../utils/chunkArray'
 
@@ -18,14 +18,14 @@ export type AISDKResolverConfig = {
    * @default "gemini-2.0-flash-exp"
    */
   model?: string
-  prompt?: OpenAIPrompt
+  prompt?: Prompt
 }
 
 const translationSchema = z.object({
   translations: z.array(z.string()),
 })
 
-const defaultPrompt: OpenAIPrompt = ({ localeFrom, localeTo, texts }) => {
+const defaultPrompt: Prompt = ({ localeFrom, localeTo, texts }) => {
   return `Provide natural, idiomatic translations for the following texts from ${localeFrom} to ${localeTo}. Adapt phrasing to sound natural in the target language, avoiding literal word-for-word translations where they would be awkward. Note that 'بلّورة' is spelled as 'Ballurh' in English and 'بلّورة' in Arabic. Texts to translate: ${JSON.stringify(texts)}
 
 Output in JSON format: {"translations": ["translated text 1", "translated text 2", ...]}`
