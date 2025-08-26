@@ -1,5 +1,5 @@
 import { getServerSideSitemap } from 'next-sitemap'
-import { getPayload, SanitizedConfig } from 'payload'
+import { getPayload } from 'payload'
 import config from '@payload-config'
 import { unstable_cache } from 'next/cache'
 import { ISitemapField, IAlternateRef } from 'next-sitemap'

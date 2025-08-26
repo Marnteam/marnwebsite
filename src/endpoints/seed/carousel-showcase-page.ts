@@ -3,9 +3,6 @@ import type {
   CarouselBlock,
   Media,
   User,
-  Solution,
-  Integration,
-  BlogPost,
 } from '@/payload-types'
 import { generateLexicalContent } from '@/utilities/generateLexicalContent'
 
@@ -79,7 +76,7 @@ export const seedCarouselShowcasePage = (media: {
       columns: [],
     }
 
-    let numCols = 3 // Default number of columns for carousel items
+    const numCols = 3 // Default number of columns for carousel items
 
     const currentBlockColumns: NonNullable<CarouselBlock['columns']> = []
 
