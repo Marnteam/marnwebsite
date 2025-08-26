@@ -1,8 +1,8 @@
-import { getTranslation } from '@payloadcms/translations';
-import { Button, Popup, PopupList, useTranslation } from '@payloadcms/ui';
+import { getTranslation } from '@payloadcms/translations'
+import { Button, Popup, PopupList, useTranslation } from '@payloadcms/ui'
 
-import { useTranslator } from '../../providers/Translator/context';
-import { LocaleLabel } from '../LocaleLabel';
+import { useTranslator } from '../../providers/Translator/context'
+import { LocaleLabel } from '../LocaleLabel'
 
 export const Content = () => {
   const {
@@ -11,13 +11,13 @@ export const Content = () => {
     resolverT,
     setLocaleToTranslateFrom,
     submit,
-  } = useTranslator();
+  } = useTranslator()
 
-  const { i18n } = useTranslation();
+  const { i18n } = useTranslation()
 
   const localeToTranslateFrom = localesOptions.find(
     (each) => each.code === localeCodeToTranslateFrom,
-  );
+  )
 
   return (
     <div className={'translator__content'}>
@@ -25,29 +25,29 @@ export const Content = () => {
       {localeToTranslateFrom && (
         <Popup
           button={<LocaleLabel locale={localeToTranslateFrom} />}
-          horizontalAlign='center'
+          horizontalAlign="center"
           render={({ close }) => (
             <PopupList.ButtonGroup>
               {localesOptions.map((option) => {
-                const label = getTranslation(option.label, i18n);
+                const label = getTranslation(option.label, i18n)
 
                 return (
                   <PopupList.Button
                     active={option.code === localeCodeToTranslateFrom}
                     key={option.code}
                     onClick={() => {
-                      setLocaleToTranslateFrom(option.code);
-                      close();
+                      setLocaleToTranslateFrom(option.code)
+                      close()
                     }}
                   >
                     {label}
                     {label !== option.code && ` (${option.code})`}
                   </PopupList.Button>
-                );
+                )
               })}
             </PopupList.ButtonGroup>
           )}
-          verticalAlign='bottom'
+          verticalAlign="bottom"
         />
       )}
       <div className={'translator__buttons'}>
@@ -59,5 +59,5 @@ export const Content = () => {
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}

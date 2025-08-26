@@ -175,7 +175,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
     idType: 'uuid',
-    push: false, // disable push mode
+    // push: false, // disable push mode
   }),
   editor: defaultLexical,
   email: resendAdapter({
@@ -192,6 +192,30 @@ export default buildConfig({
   i18n: {
     fallbackLanguage: 'en',
     supportedLanguages: { en, ar },
+    translations: {
+      en: {
+        'plugin-hubspot-forms': {
+          buttonLabel: 'Sync from HubSpot',
+          modalTitle: 'Choose a HubSpot form',
+          confirmButton: 'Use this form',
+          cancelButton: 'Cancel',
+          successMessage: 'Form fields populated from HubSpot. Save to apply.',
+          errorMessage: 'Could not fetch or apply HubSpot form.',
+          searchPlaceholder: 'Search forms…',
+        },
+      },
+      ar: {
+        'plugin-hubspot-forms': {
+          buttonLabel: 'مزامنة من هبوت',
+          modalTitle: 'اختر إشعار من هبوت',
+          confirmButton: 'استخدم هذا الإشعار',
+          cancelButton: 'إلغاء',
+          successMessage: 'تم إنشاء إشعار من هبوت. يرجى حفظه للتطبيق.',
+          errorMessage: 'لم يتم إنشاء إشعار من هبوت.',
+          searchPlaceholder: 'ابحث عن إشعارات من هبوت…',
+        },
+      },
+    },
   },
   localization: {
     locales: [
