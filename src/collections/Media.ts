@@ -81,6 +81,13 @@ export const Media: CollectionConfig = {
         disableListFilter: true,
       },
     },
+
+    // {
+    //   name: 'darkMode',
+    //   label: 'Dark Mode Variant',
+    //   type: 'upload',
+    //   relationTo: 'media',
+    // },
   ],
   upload: {
     // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload
