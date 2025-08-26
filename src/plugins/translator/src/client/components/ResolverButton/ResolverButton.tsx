@@ -1,4 +1,4 @@
-import { Button, CopyIcon, SwapIcon, useTranslation } from '@payloadcms/ui'
+import { CopyIcon, useTranslation } from '@payloadcms/ui'
 
 import type { TranslateResolver } from '../../../resolvers/types'
 import { useTranslator } from '../../providers/Translator/context'

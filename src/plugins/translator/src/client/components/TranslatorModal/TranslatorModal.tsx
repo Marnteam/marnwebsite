@@ -1,6 +1,6 @@
 import './styles.scss'
 
-import { Button, Modal, XIcon } from '@payloadcms/ui'
+import { Modal, XIcon } from '@payloadcms/ui'
 
 import { useTranslator } from '../../providers/Translator/context'
 import { Content } from './Content'
