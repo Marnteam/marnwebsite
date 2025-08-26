@@ -4,6 +4,7 @@ import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
+import { aiSDKResolver, copyResolver, translator } from '@/plugins/translator/src'
 import { Plugin } from 'payload'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
@@ -89,6 +90,29 @@ export const plugins: Plugin[] = [
         return [...defaultFields, ...searchFields]
       },
     },
+  }),
+  translator({
+    // collections with the enabled translator in the admin UI
+    collections: [
+      'pages',
+      'blog-posts',
+      'solutions',
+      'integrations',
+      'categories',
+      'faq',
+      'customers',
+      'media',
+    ],
+    // globals with the enabled translator in the admin UI
+    globals: ['header', 'footer'],
+    // add resolvers that you want to include, examples on how to write your own in ./plugin/src/resolvers
+    resolvers: [
+      copyResolver(),
+      aiSDKResolver({
+        apiKey: process.env.GEMINI_API_KEY!,
+        provider: 'google',
+      }),
+    ],
   }),
   payloadCloudPlugin(),
 ]
