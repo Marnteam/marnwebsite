@@ -1,26 +1,28 @@
-import type { PayloadRequest } from 'payload';
+import type { PayloadRequest } from 'payload'
+
+export type Prompt = (args: { localeFrom: string; localeTo: string; texts: string[] }) => string
 
 export type TranslateResolverArgs = {
   /** Locale to translate from */
-  localeFrom: string;
+  localeFrom: string
   /** Locale to translate to */
-  localeTo: string;
-  req: PayloadRequest;
-  texts: string[];
-};
+  localeTo: string
+  req: PayloadRequest
+  texts: string[]
+}
 
 export type TranslateResolverResponse =
   | {
-      success: false;
+      success: false
     }
   | {
-      success: true;
-      translatedTexts: string[];
-    };
+      success: true
+      translatedTexts: string[]
+    }
 
 export type TranslateResolver = {
-  key: string;
+  key: string
   resolve: (
     args: TranslateResolverArgs,
-  ) => Promise<TranslateResolverResponse> | TranslateResolverResponse;
-};
+  ) => Promise<TranslateResolverResponse> | TranslateResolverResponse
+}
