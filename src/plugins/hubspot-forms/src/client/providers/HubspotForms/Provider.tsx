@@ -60,17 +60,26 @@ export const HubspotFormsProvider = ({ children }: { children: React.ReactNode }
 
   const selectAndApply = useCallback(
     async ({ id: formId }: { id: string }) => {
-      if (!id) {
-        toast.error('Document must be saved before syncing from HubSpot')
-        return
-      }
-      const res = await apiClient.applyForm({ hubspotFormId: formId, docId: String(id) })
+      // if (!id) {
+      //   toast.error('Document must be saved before syncing from HubSpot')
+      //   return
+      // }
+      const res = await apiClient.applyForm({
+        hubspotFormId: formId,
+        ...(id ? { docId: String(id) } : {}),
+      })
       if (!res.success) {
         toast.error(t('plugin-hubspot-forms:errorMessage' as any))
         return
       }
+      // If we created a new form, navigate to its edit route so Save uses a valid ID
+      const adminBase = (config.routes as any)?.admin ?? '/admin'
+      if (!id && res.doc?.id) {
+        window.location.assign(`${adminBase}/collections/${collectionSlug}/${res.doc.id}`)
+        return
+      }
 
-      // refresh form state to reflect updated server data
+      // refresh form state to reflect updated server data (existing doc case)
       const { state } = await getFormState({
         collectionSlug,
         data: (res as any).doc || undefined,

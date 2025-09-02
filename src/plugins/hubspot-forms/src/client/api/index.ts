@@ -33,7 +33,7 @@ export const createClient = ({ api, serverURL }: { api: string; serverURL: strin
 
   const applyForm = async (args: {
     hubspotFormId: string
-    docId: string
+    docId?: string
   }): Promise<{ success: boolean; doc?: any }> => {
     try {
       const res = await fetch(`${serverURL}${api}/hubspot/forms/apply`, {
