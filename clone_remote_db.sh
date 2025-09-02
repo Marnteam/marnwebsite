@@ -19,12 +19,12 @@ export $(grep -v '^#' "$ENV_FILE" | xargs)
 # REMOTE_PASSWORD=""
 
 # Local Docker Postgres container
-LOCAL_CONTAINER="postgres15.8"
-LOCAL_DB="postgres"
+LOCAL_CONTAINER="postgres17.5"
+LOCAL_DB="marn"
 LOCAL_USER="postgres"
 
 # Postgres version to match remote DB
-POSTGRES_VERSION="17.4"
+POSTGRES_VERSION="17.5"
 
 # Docker network shared by containers (default is 'bridge')
 DOCKER_NETWORK="bridge"
