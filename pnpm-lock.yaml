@@ -107,6 +107,12 @@ importers:
       '@radix-ui/react-tabs':
         specifier: ^1.1.13
         version: 1.1.13(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      '@takumi-rs/core':
+        specifier: ^0.28.5
+        version: 0.28.5
+      '@takumi-rs/helpers':
+        specifier: ^0.28.5
+        version: 0.28.5
       ai:
         specifier: ^4.3.19
         version: 4.3.19(react@19.1.1)(zod@3.25.76)
@@ -2773,6 +2779,55 @@ packages:
     resolution: {integrity: sha512-0wDLwCVF5V3x3b1SGXPCDcdsbDHMBe+lkFzBRaHeLvNi+nrrnZ1lA18u+OTWO8iSWU2GxUOCvlXtDuqftc1oiA==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders || >=4.0.0-alpha.20 || >=4.0.0-beta.1'
+
+  '@takumi-rs/core-darwin-arm64@0.28.5':
+    resolution: {integrity: sha512-O79MGKkr2C0iipSQijYPYjW1ekFQs+5QBp3vURn5TOtElsQiqE63U7IpZJFjbNo59Gsm8gOT7Rn5EjpaqcKtSA==}
+    engines: {node: '>= 12.22.0 < 13 || >= 14.17.0 < 15 || >= 15.12.0 < 16 || >= 16.0.0'}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@takumi-rs/core-linux-arm64-gnu@0.28.5':
+    resolution: {integrity: sha512-OpXCsiTNR4Wj/If7txbmawOsk6doGZ+ErRjRWncCvQJwqluyvoPlWs5ytcdVvZafxbW5Iw5UesNdk/rqV2X9pA==}
+    engines: {node: '>= 12.22.0 < 13 || >= 14.17.0 < 15 || >= 15.12.0 < 16 || >= 16.0.0'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@takumi-rs/core-linux-arm64-musl@0.28.5':
+    resolution: {integrity: sha512-VH7pPgdV1ZqcChhE3qXEy0yqaRdXbg/uZSho7bRttBGJZhz6H0nuyJf13stx0m8S0gnV3x+DIcLrsdw7290iGw==}
+    engines: {node: '>= 12.22.0 < 13 || >= 14.17.0 < 15 || >= 15.12.0 < 16 || >= 16.0.0'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@takumi-rs/core-linux-x64-gnu@0.28.5':
+    resolution: {integrity: sha512-UnwS0+/2pUjfo35OvlMm3D5EJFSHrlqRXQLa6ixcXPKkaqV1Pt7bszJdbG68WBPrAcpeMHYRrqFa/NGeZIZOjg==}
+    engines: {node: '>= 12.22.0 < 13 || >= 14.17.0 < 15 || >= 15.12.0 < 16 || >= 16.0.0'}
+    cpu: [x64]
+    os: [linux]
+
+  '@takumi-rs/core-linux-x64-musl@0.28.5':
+    resolution: {integrity: sha512-cSBVQ29Nx3qdO95VZbsmSgFQUe6iqQqHAjzprgfJI2eeoRJQensE1VPWI/cOitKu7kFGayUMp8HSZ15nbfnl4Q==}
+    engines: {node: '>= 12.22.0 < 13 || >= 14.17.0 < 15 || >= 15.12.0 < 16 || >= 16.0.0'}
+    cpu: [x64]
+    os: [linux]
+
+  '@takumi-rs/core-win32-arm64-msvc@0.28.5':
+    resolution: {integrity: sha512-7pXTD+ma51tMS2zaBinkFnCu8ixvAZujgTAZqoTUgrEbmNphotJwgbhrhgtCw6jzo8r6jQlkosNXZ/of2Rodlg==}
+    engines: {node: '>= 12.22.0 < 13 || >= 14.17.0 < 15 || >= 15.12.0 < 16 || >= 16.0.0'}
+    cpu: [arm64]
+    os: [win32]
+
+  '@takumi-rs/core-win32-x64-msvc@0.28.5':
+    resolution: {integrity: sha512-jc9FAwnozm7xLj54ZNP+F4k1/ffg+t00VuOscM6x+hC15s7mQE/zEGHo7CVX5t7BWT2pdnf0t2qSb1yFtfFkTw==}
+    engines: {node: '>= 12.22.0 < 13 || >= 14.17.0 < 15 || >= 15.12.0 < 16 || >= 16.0.0'}
+    cpu: [x64]
+    os: [win32]
+
+  '@takumi-rs/core@0.28.5':
+    resolution: {integrity: sha512-MLnrjjFzsOyVc9sIFzru8Zd4ExmCqWupng0vF8LnIRHZ6ueXfZK88t5HdVNbiPXKEzdcC6UX+u2RGZepJo7+oA==}
+    engines: {node: '>= 12.22.0 < 13 || >= 14.17.0 < 15 || >= 15.12.0 < 16 || >= 16.0.0'}
+
+  '@takumi-rs/helpers@0.28.5':
+    resolution: {integrity: sha512-y0Dwz7R9tjSC8wzgb9Ba6QDrOIfwLoQgsD3Ml6HwfNNH1xnD+9LkydFAfQeCUxSqMlXku5XhPtPXzNYQKLlLXw==}
 
   '@tokenizer/token@0.3.0':
     resolution: {integrity: sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==}
@@ -9245,6 +9300,39 @@ snapshots:
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
       tailwindcss: 4.1.12
+
+  '@takumi-rs/core-darwin-arm64@0.28.5':
+    optional: true
+
+  '@takumi-rs/core-linux-arm64-gnu@0.28.5':
+    optional: true
+
+  '@takumi-rs/core-linux-arm64-musl@0.28.5':
+    optional: true
+
+  '@takumi-rs/core-linux-x64-gnu@0.28.5':
+    optional: true
+
+  '@takumi-rs/core-linux-x64-musl@0.28.5':
+    optional: true
+
+  '@takumi-rs/core-win32-arm64-msvc@0.28.5':
+    optional: true
+
+  '@takumi-rs/core-win32-x64-msvc@0.28.5':
+    optional: true
+
+  '@takumi-rs/core@0.28.5':
+    optionalDependencies:
+      '@takumi-rs/core-darwin-arm64': 0.28.5
+      '@takumi-rs/core-linux-arm64-gnu': 0.28.5
+      '@takumi-rs/core-linux-arm64-musl': 0.28.5
+      '@takumi-rs/core-linux-x64-gnu': 0.28.5
+      '@takumi-rs/core-linux-x64-musl': 0.28.5
+      '@takumi-rs/core-win32-arm64-msvc': 0.28.5
+      '@takumi-rs/core-win32-x64-msvc': 0.28.5
+
+  '@takumi-rs/helpers@0.28.5': {}
 
   '@tokenizer/token@0.3.0': {}
 

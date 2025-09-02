@@ -1,4 +1,5 @@
-import { ImageResponse } from 'next/og'
+import { Renderer } from '@takumi-rs/core'
+import { fromJsx } from '@takumi-rs/helpers/jsx'
 
 // Image metadata
 export const alt = 'About Acme'
@@ -8,6 +9,7 @@ export const size = {
 }
 
 export const contentType = 'image/png'
+export const runtime = 'nodejs'
 
 // Image generation
 export default async function Image({ params }: { params: { slug: string; locale: 'en' | 'ar' } }) {
@@ -21,39 +23,49 @@ export default async function Image({ params }: { params: { slug: string; locale
   const { docs } = await req.json()
 
   const text = docs[0].title
+  // Prepare font and renderer
+  const fontData = await loadGoogleFont('Rubik', text)
+  const renderer = new Renderer({
+    // Convert ArrayBuffer -> Buffer for Takumi
+    fonts: [Buffer.from(new Uint8Array(fontData))],
+    loadDefaultFonts: true,
+  })
 
-  return new ImageResponse(
-    (
-      // ImageResponse JSX element
-      <div
-        dir={locale === 'en' ? 'ltr' : 'rtl'}
-        style={{
-          fontSize: 64,
-          fontWeight: 500,
-          background: 'white',
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          textAlign: 'start',
-        }}
-      >
-        <span>{text}</span>
-      </div>
-    ),
-    // ImageResponse options
-    {
-      // For convenience, we can re-use the exported opengraph-image
-      // size config to also set the ImageResponse's width and height.
-      ...size,
-      fonts: [
-        {
-          name: 'Rubik',
-          data: await loadGoogleFont('Rubik', text),
-          style: 'normal',
-        },
-      ],
-    },
+  // Build JSX and convert to Takumi node
+  const jsx = (
+    <div
+      style={{
+        fontSize: 64,
+        fontWeight: 500,
+        backgroundColor: 'white',
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: locale === 'ar' ? 'flex-end' : 'flex-start',
+        padding: '40px',
+        textAlign: locale === 'ar' ? 'right' : 'left',
+        fontFamily: 'Rubik',
+      }}
+    >
+      <span>{text}</span>
+    </div>
   )
+
+  const node = await fromJsx(jsx)
+  const image = await renderer.renderAsync(node as { type: string }, {
+    width: size.width,
+    height: size.height,
+    format: 'png',
+  })
+
+  return new Response(image, {
+    headers: {
+      'Content-Type': contentType,
+      // Cache aggressively; adjust as needed
+      'Cache-Control': 'public, max-age=31536000, immutable',
+    },
+  })
 }
 
 async function loadGoogleFont(font: string, text: string) {
