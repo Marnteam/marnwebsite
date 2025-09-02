@@ -1,3 +1,5 @@
+import type { PayloadRequest } from 'payload'
+
 export type HubSpotForm = {
   id: string
   name: string
@@ -16,11 +18,24 @@ export type HubSpotField = {
 
 const HUBSPOT_BASE = 'https://api.hubapi.com'
 
-const getToken = () => process.env.HUBSPOT_ACCESS_TOKEN
+const getToken = async (req: PayloadRequest): Promise<string | undefined> => {
+  const envToken = process.env.HUBSPOT_ACCESS_TOKEN
+  if (envToken) return envToken
+  try {
+    const settings: any = await req.payload.findGlobal({ slug: 'settings' })
+    return settings?.hubspotAccessToken
+  } catch (e) {
+    req.payload.logger.info({
+      message: 'HubSpot resolver: failed to read access token from settings.',
+      error: e instanceof Error ? e.message : String(e),
+    })
+    return undefined
+  }
+}
 
-export async function fetchHubSpotForms(): Promise<HubSpotForm[]> {
-  const token = getToken()
-  if (!token) throw new Error('HUBSPOT_ACCESS_TOKEN is not set')
+export async function fetchHubSpotForms(req: PayloadRequest): Promise<HubSpotForm[]> {
+  const token = await getToken(req)
+  if (!token) throw new Error('Hubspot access token is not set')
 
   // Using legacy Forms API v2 for broader availability
   const res = await fetch(`${HUBSPOT_BASE}/forms/v2/forms`, {
@@ -31,9 +46,9 @@ export async function fetchHubSpotForms(): Promise<HubSpotForm[]> {
   return data.map((f) => ({ id: f.guid, name: f.name, portalId: String(f.portalId) }))
 }
 
-export async function fetchHubSpotFormById(id: string): Promise<HubSpotForm> {
-  const token = getToken()
-  if (!token) throw new Error('HUBSPOT_ACCESS_TOKEN is not set')
+export async function fetchHubSpotFormById(req: PayloadRequest, id: string): Promise<HubSpotForm> {
+  const token = await getToken(req)
+  if (!token) throw new Error('Hubspot access token is not set')
 
   const res = await fetch(`${HUBSPOT_BASE}/forms/v2/forms/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
