@@ -97,12 +97,12 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 export async function generateStaticParams({
   params: { locale },
 }: {
-  params: { locale?: 'ar' | 'en' | undefined }
+  params: { locale?: string }
 }) {
   const payload = await getPayload({ config: configPromise })
   const { totalDocs } = await payload.count({
     collection: 'blog-posts',
-    locale: locale,
+    locale: locale as 'ar' | 'en',
     overrideAccess: false,
   })
 
