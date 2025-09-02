@@ -3865,7 +3865,11 @@ export interface Setting {
   customHeadHtml?: string | null;
   customBodyHtml?: string | null;
   tagManagerId?: string | null;
-  analyticsScripts?: string | null;
+  hubspotAccessToken?: string | null;
+  aiTranslatorConfig?: {
+    apiKey?: string | null;
+    systemPrompt?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -4139,7 +4143,13 @@ export interface SettingsSelect<T extends boolean = true> {
   customHeadHtml?: T;
   customBodyHtml?: T;
   tagManagerId?: T;
-  analyticsScripts?: T;
+  hubspotAccessToken?: T;
+  aiTranslatorConfig?:
+    | T
+    | {
+        apiKey?: T;
+        systemPrompt?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
