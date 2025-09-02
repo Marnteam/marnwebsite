@@ -102,12 +102,35 @@ const SiteConfig: GlobalConfig = {
               },
             },
             {
-              name: 'analyticsScripts',
-              label: 'Analytics Scripts',
-              type: 'code',
+              name: 'hubspotAccessToken',
+              label: 'HubSpot Access Token',
+              type: 'text',
               admin: {
-                language: 'html',
+                rtl: false,
               },
+            },
+            {
+              label: 'AI Translator',
+              type: 'collapsible',
+              fields: [
+                {
+                  name: 'aiTranslatorConfig',
+                  label: false,
+                  type: 'group',
+                  fields: [
+                    {
+                      name: 'apiKey',
+                      label: 'Gemini API Key',
+                      type: 'text',
+                    },
+                    {
+                      name: 'systemPrompt',
+                      label: 'System Prompt',
+                      type: 'textarea',
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },

@@ -13,7 +13,7 @@ export const applyFormEndpoint: PayloadHandler = async (req) => {
   const safeDocId = docId && docId !== 'undefined' ? docId : undefined
 
   try {
-    const hsForm = await fetchHubSpotFormById(hubspotFormId)
+    const hsForm = await fetchHubSpotFormById(req, hubspotFormId)
 
     // Only applies to the configured forms collection
     const formsCollection = req.payload.config.custom.hubspotForms.collection ?? 'forms'

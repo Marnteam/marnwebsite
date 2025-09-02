@@ -7,7 +7,7 @@ import { z } from 'zod'
 import { chunkArray } from '../utils/chunkArray'
 
 export type AISDKResolverConfig = {
-  apiKey: string
+  apiKey?: string
   provider?: string
   /**
    * How many texts to include into 1 request
@@ -49,11 +49,36 @@ export const aiSDKResolver = ({
           }
         }
 
+        // Determine API key: prefer provided key, fallback to Site settings
+        let effectiveApiKey = apiKey
+        if (!effectiveApiKey) {
+          try {
+            const settings: any = await req.payload.findGlobal({ slug: 'settings' })
+            const siteKey = settings?.aiTranslatorConfig?.apiKey
+            if (siteKey) effectiveApiKey = siteKey
+          } catch (e) {
+            req.payload.logger.info({
+              message:
+                'AI SDK resolver: failed to read API key from settings for fallback',
+              error: e instanceof Error ? e.message : String(e),
+            })
+          }
+        }
+
+        if (!effectiveApiKey) {
+          req.payload.logger.error(
+            'AI SDK resolver: missing API key. Set GEMINI_API_KEY or settings.aiTranslatorConfig.apiKey',
+          )
+          return {
+            success: false as const,
+          }
+        }
+
         let providerInstance: any
 
         if (provider === 'google') {
           providerInstance = createGoogleGenerativeAI({
-            apiKey,
+            apiKey: effectiveApiKey,
           })
         } else {
           req.payload.logger.error(`Provider ${provider} is not supported`)
