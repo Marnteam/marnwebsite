@@ -1,11 +1,13 @@
 import { Renderer } from '@takumi-rs/core'
-import { fromJsx } from '@takumi-rs/helpers/jsx'
+import { container, percentage, rem, text } from '@takumi-rs/helpers'
+import { readFile } from 'node:fs/promises'
+import { join } from 'node:path'
 
 // Image metadata
-export const alt = 'About Acme'
+export const alt = ''
 export const size = {
-  width: 1200,
-  height: 630,
+  width: 1200 * 1,
+  height: 630 * 1,
 }
 
 export const contentType = 'image/png'
@@ -22,38 +24,54 @@ export default async function Image({ params }: { params: { slug: string; locale
   )
   const { docs } = await req.json()
 
-  const text = docs[0].title
+  const title = docs[0].title
   // Prepare font and renderer
-  const fontData = await loadGoogleFont('Rubik', text)
+  // const fontData = await loadGoogleFont('Rubik', text)
+  // Load the font file from the public/fonts directory
+
+  const fontData = await readFile(join(process.cwd(), 'public/fonts/Rubik-VariableFont_wght.woff2'))
+
   const renderer = new Renderer({
     // Convert ArrayBuffer -> Buffer for Takumi
     fonts: [Buffer.from(new Uint8Array(fontData))],
     loadDefaultFonts: true,
   })
 
-  // Build JSX and convert to Takumi node
-  const jsx = (
-    <div
-      style={{
-        fontSize: 64,
-        fontWeight: 500,
-        backgroundColor: 'white',
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: locale === 'ar' ? 'flex-end' : 'flex-start',
-        padding: '40px',
-        textAlign: locale === 'ar' ? 'right' : 'left',
-        fontFamily: 'Rubik',
-      }}
-    >
-      <span>{text}</span>
-    </div>
-  )
+  const root = container({
+    style: {
+      width: percentage(100),
+      height: percentage(100),
+      display: 'flex',
+      padding: rem(2),
+      backgroundColor: '#F5F5F5',
+    },
+    children: [
+      container({
+        style: {
+          width: percentage(100),
+          height: percentage(100),
+          borderWidth: '1px',
+          borderColor: 'black',
+          // borderRadius: '24px',
+          backgroundColor: 'white',
+        },
+        children: [
+          text('The newest blog post', {
+            color: 'black',
+            width: percentage(100),
+            fontSize: rem(4),
+            lineHeight: rem(4 * 1.5),
+            fontFamily: 'Rubik',
+            fontWeight: '500',
+            textAlign: 'left',
+            padding: rem(4),
+          }),
+        ],
+      }),
+    ],
+  })
 
-  const node = await fromJsx(jsx)
-  const image = await renderer.renderAsync(node as { type: string }, {
+  const image = await renderer.renderAsync(root, {
     width: size.width,
     height: size.height,
     format: 'png',
@@ -62,7 +80,6 @@ export default async function Image({ params }: { params: { slug: string; locale
   return new Response(image, {
     headers: {
       'Content-Type': contentType,
-      // Cache aggressively; adjust as needed
       'Cache-Control': 'public, max-age=31536000, immutable',
     },
   })
