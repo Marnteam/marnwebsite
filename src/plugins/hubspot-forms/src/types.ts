@@ -1,4 +1,4 @@
-import type { CollectionSlug, Plugin } from 'payload'
+import type { CollectionSlug } from 'payload'
 
 export type HubSpotFormsPluginConfig = {
   /** Forms collection slug (defaults to 'forms') */
