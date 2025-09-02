@@ -2,19 +2,19 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-vercel-postg
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
-   DROP INDEX "marketplaceBlock_initial_filters_initial_filters_ecosystem_idx";
-  DROP INDEX "marketplaceBlock_initial_filters_initial_filters_category_idx";
-  DROP INDEX "_marketplaceBlock_v_initial_filters_initial_filters_ecosystem_idx";
-  DROP INDEX "_marketplaceBlock_v_initial_filters_initial_filters_category_idx";
-  DROP INDEX "_pages_v_version_hero_media_desktop_version_hero_media_desktop_light_idx";
-  DROP INDEX "_pages_v_version_hero_media_desktop_version_hero_media_desktop_dark_idx";
-  DROP INDEX "_pages_v_version_hero_media_mobile_version_hero_media_mobile_light_idx";
-  DROP INDEX "_pages_v_version_hero_media_mobile_version_hero_media_mobile_dark_idx";
-  DROP INDEX "customers_testimonial_company_testimonial_company_company_logo_idx";
-  DROP INDEX "customers_testimonial_author_info_testimonial_author_info_avatar_idx";
-  DROP INDEX "_customers_v_version_testimonial_version_testimonial_featured_image_idx";
-  DROP INDEX "_customers_v_version_testimonial_company_version_testimonial_company_company_logo_idx";
-  DROP INDEX "_customers_v_version_testimonial_author_info_version_testimonial_author_info_avatar_idx";
+   DROP INDEX IF EXISTS "marketplaceBlock_initial_filters_initial_filters_ecosystem_idx";
+  DROP INDEX IF EXISTS "marketplaceBlock_initial_filters_initial_filters_category_idx";
+  DROP INDEX IF EXISTS "_marketplaceBlock_v_initial_filters_initial_filters_ecosystem_idx";
+  DROP INDEX IF EXISTS "_marketplaceBlock_v_initial_filters_initial_filters_category_idx";
+  DROP INDEX IF EXISTS "_pages_v_version_hero_media_desktop_version_hero_media_desktop_light_idx";
+  DROP INDEX IF EXISTS "_pages_v_version_hero_media_desktop_version_hero_media_desktop_dark_idx";
+  DROP INDEX IF EXISTS "_pages_v_version_hero_media_mobile_version_hero_media_mobile_light_idx";
+  DROP INDEX IF EXISTS "_pages_v_version_hero_media_mobile_version_hero_media_mobile_dark_idx";
+  DROP INDEX IF EXISTS "customers_testimonial_company_testimonial_company_company_logo_idx";
+  DROP INDEX IF EXISTS "customers_testimonial_author_info_testimonial_author_info_avatar_idx";
+  DROP INDEX IF EXISTS "_customers_v_version_testimonial_version_testimonial_featured_image_idx";
+  DROP INDEX IF EXISTS "_customers_v_version_testimonial_company_version_testimonial_company_company_logo_idx";
+  DROP INDEX IF EXISTS "_customers_v_version_testimonial_author_info_version_testimonial_author_info_avatar_idx";
   ALTER TABLE "forms" ADD COLUMN "hubspot_portal_id" varchar;
   ALTER TABLE "forms" ADD COLUMN "hubspot_form_id" varchar;
   ALTER TABLE "settings" ADD COLUMN "hubspot_access_token" varchar;

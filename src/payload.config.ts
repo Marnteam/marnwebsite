@@ -176,7 +176,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
     idType: 'uuid',
-    // push: false, // disable push mode
+    push: false, // disable push mode
   }),
   editor: defaultLexical,
   email: resendAdapter({
