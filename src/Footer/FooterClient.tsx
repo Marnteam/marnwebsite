@@ -283,7 +283,7 @@ export function FooterClient({ columns, currentYear, locale }: Props) {
               <nav className="pb-site grid grid-cols-2 gap-4 md:col-span-2 md:grid-cols-3 lg:col-span-6 lg:col-start-7">
                 {columns?.map(({ label, navItems }, i) => {
                   return (
-                    <div key={i} className="grid grid-cols-1">
+                    <div key={i} className="flex flex-col">
                       <p className="text-base-tertiary mb-1 text-sm font-medium">{label}</p>
                       {navItems?.map(({ link }, j) => {
                         return (
