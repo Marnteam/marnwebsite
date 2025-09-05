@@ -175,15 +175,9 @@ export const seedMediaBlockDemo = (media: {
         text: 'This page demonstrates the various ways you can use the Media Block.',
       },
     ]),
-    media: {
-      desktop: {
-        light: media.image169?.id,
-        dark: media.image169?.id,
-      },
-      mobile: {
-        light: null,
-        dark: null,
-      },
+    mediaGroup: {
+      media: media.image169?.id,
+      videoControls: {},
     },
     links: [],
   }

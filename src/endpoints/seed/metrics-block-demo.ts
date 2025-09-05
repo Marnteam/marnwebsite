@@ -114,9 +114,9 @@ export const seedMetricsBlockDemo = (media: {
         direction: 'rtl',
       },
     ]),
-    media: {
-      desktop: { light: media.image169?.id, dark: media.image169?.id },
-      mobile: { light: null, dark: null },
+    mediaGroup: {
+      media: media.image169?.id,
+      videoControls: {},
     },
     links: [
       {

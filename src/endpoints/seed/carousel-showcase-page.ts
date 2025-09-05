@@ -1,9 +1,4 @@
-import type {
-  Page,
-  CarouselBlock,
-  Media,
-  User,
-} from '@/payload-types'
+import type { Page, CarouselBlock, Media, User } from '@/payload-types'
 import { generateLexicalContent } from '@/utilities/generateLexicalContent'
 
 // Helper to pick an icon
@@ -151,15 +146,9 @@ export const seedCarouselShowcasePage = (media: {
         direction: 'rtl',
       },
     ]),
-    media: {
-      desktop: {
-        light: media.image169?.id,
-        dark: media.image169?.id,
-      },
-      mobile: {
-        light: null,
-        dark: null,
-      },
+    mediaGroup: {
+      media: media.image169?.id,
+      videoControls: {},
     },
     links: [
       {

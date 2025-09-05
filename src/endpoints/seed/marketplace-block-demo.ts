@@ -54,9 +54,9 @@ export const seedMarketplaceBlockDemo = ({
         direction: 'rtl',
       },
     ]),
-    media: {
-      desktop: { light: image169?.id, dark: image169?.id },
-      mobile: { light: null, dark: null },
+    mediaGroup: {
+      media: image169?.id,
+      videoControls: {},
     },
     links: [
       {
