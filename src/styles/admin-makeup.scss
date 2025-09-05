@@ -13,13 +13,15 @@
 }
 
 html[data-theme='light'] {
-  --theme-bg: oklch(97% 0 0);
+  // --theme-bg: #fff;
+  // --theme-main-content: oklch(97% 0 0);
   --theme-main-content: #fff;
+  --theme-bg: oklch(97% 0 0);
 }
 
 html[data-theme='dark'] {
-  --theme-bg: oklch(14.5% 0 0);
-  --theme-main-content: oklch(20.5% 0 0);
+  --theme-bg: oklch(20.5% 0 0);
+  --theme-main-content: oklch(14.5% 0 0);
   --color-white: #fff;
 }
 
