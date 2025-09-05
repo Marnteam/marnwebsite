@@ -10,7 +10,7 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const { onClick, resource, media, videoClassName } = props
   const { media: mediaResource, videoControls } = media || {}
-
+  const { theme } = useTheme()
   useEffect(() => {
     const { current: video } = videoRef
     if (video) {
@@ -72,8 +72,6 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
 
     mobileDarkSrc = getMediaUrl(url, cacheTag)
   }
-
-  const { theme } = useTheme()
 
   const isDark = theme === 'dark'
 
