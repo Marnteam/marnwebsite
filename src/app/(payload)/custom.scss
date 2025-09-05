@@ -39,6 +39,10 @@
   border-bottom-right-radius: 0;
 }
 
+.file-details {
+  overflow: hidden;
+}
+
 .popup__content {
   border-radius: var(--style-radius-s);
 }
