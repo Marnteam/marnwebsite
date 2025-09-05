@@ -24,30 +24,36 @@ export const StyledListBlock: React.FC<Props> = ({ className, items, listStyle =
     <>
       {style === 'icons' ? (
         <ul className={cn('space-y-3', listClassMap[style], className)}>
-          {items.map((item, index) => (
-            <li
-              key={item.id || `item-${index}`}
-              className="text-base-secondary flex list-none items-center gap-3"
-            >
-              {item.icon && (
-                <Icon
-                  icon={`material-symbols:${item.icon}`}
-                  className="flex-shrink-0"
-                  height={20}
-                  width={20}
-                />
-              )}
-              <span className="mt-0">{item.text}</span>
-            </li>
-          ))}
+          {items.map(
+            (item, index) =>
+              item.text && (
+                <li
+                  key={item.id || `item-${index}`}
+                  className="text-base-tertiary flex list-none items-center gap-3"
+                >
+                  {item.icon && (
+                    <Icon
+                      icon={`material-symbols:${item.icon}`}
+                      className="flex-shrink-0"
+                      height={20}
+                      width={20}
+                    />
+                  )}
+                  <span className="mt-0">{item.text}</span>
+                </li>
+              ),
+          )}
         </ul>
       ) : (
         <ul className={cn('space-y-2', listClassMap[style], className)}>
-          {items.map((item, index) => (
-            <li key={item.id || `item-${index}`} className="text-base-secondary">
-              {item.text}
-            </li>
-          ))}
+          {items.map(
+            (item, index) =>
+              item.text && (
+                <li key={item.id || `item-${index}`} className="text-base-tertiary">
+                  {item.text}
+                </li>
+              ),
+          )}
         </ul>
       )}
     </>

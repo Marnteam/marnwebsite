@@ -39,7 +39,6 @@ export const StyledList: Block = {
         {
           name: 'text',
           type: 'text',
-          required: true,
           localized: true,
         },
         iconPickerField({
@@ -47,7 +46,7 @@ export const StyledList: Block = {
           label: 'Icon',
           icons: materialIcons,
           admin: {
-            condition: (data, siblingData, { blockData }) => blockData.listStyle === 'icons',
+            condition: ({ blockData }) => blockData.listStyle === 'icons',
             description:
               'Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons',
           },

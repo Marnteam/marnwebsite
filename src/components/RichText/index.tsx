@@ -21,6 +21,7 @@ import type {
 import { cn } from '@/utilities/ui'
 import { formatSlug } from '@/hooks/formatSlug'
 import { createElement } from 'react'
+import { StyledListBlock } from '@/blocks/StyledList/Component'
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -78,6 +79,9 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
         textAlign: node.format,
       },
     })
+  },
+  blocks: {
+    styledListBlock: ({ node }) => <StyledListBlock {...node.fields} />,
   },
   ...LinkJSXConverter({ internalDocToHref }),
 })

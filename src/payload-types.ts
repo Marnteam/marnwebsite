@@ -2769,7 +2769,7 @@ export interface MediaBlock {
 export interface StyledListBlock {
   listStyle?: ('bullet' | 'numbered' | 'icons') | null;
   items: {
-    text: string;
+    text?: string | null;
     /**
      * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
      */
