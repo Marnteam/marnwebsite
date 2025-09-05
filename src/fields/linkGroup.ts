@@ -25,7 +25,7 @@ export const linkGroup: LinkGroupType = ({
 } = {}) => {
   const generatedLinkGroup: Field = {
     // name: 'links',
-    label: 'Links',
+    label: 'Buttons',
     type: 'collapsible',
     admin: {
       initCollapsed: true,
@@ -34,7 +34,7 @@ export const linkGroup: LinkGroupType = ({
       {
         name: 'links',
         type: 'array',
-        label: 'Links',
+        label: 'Buttons',
         fields: [
           link({
             variants,

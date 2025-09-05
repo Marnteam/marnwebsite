@@ -59,6 +59,7 @@ export const link: LinkType = ({
 } = {}) => {
   const linkResult: Field = {
     name: 'link',
+    label: false,
     type: 'group',
     admin: {
       hideGutter: true,
