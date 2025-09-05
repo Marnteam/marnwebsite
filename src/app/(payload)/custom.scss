@@ -200,14 +200,24 @@ html:not([dir='RTL']) .btn--withPopup .popup-button {
   .checkbox-input__input {
     border-radius: 4px;
   }
-  .checkbox-input:not(.checkbox-input--read-only):active .checkbox-input__input,
-  .checkbox-input:not(.checkbox-input--read-only):active input[type='checkbox'],
-  .checkbox-input:not(.checkbox-input--read-only):focus-within .checkbox-input__input,
-  .checkbox-input:not(.checkbox-input--read-only):focus-within input[type='checkbox'],
-  .checkbox-input:not(.checkbox-input--read-only):focus .checkbox-input__input,
-  .checkbox-input:not(.checkbox-input--read-only):focus input[type='checkbox'] {
-    border: 1px solid var(--theme-elevation-150);
-    outline: 0;
-    box-shadow: 0 0 0 0px var(--theme-elevation-1000) !important;
+  .checkbox-input {
+    &:not(&--read-only) {
+      &:active,
+      &:focus-within,
+      &:focus {
+        .checkbox-input__input,
+        & input[type='checkbox'] {
+          outline: 0;
+          box-shadow: none !important;
+          border: 1px solid var(--theme-elevation-150);
+        }
+      }
+      &:hover {
+        .checkbox-input__input,
+        & input[type='checkbox'] {
+          border-color: var(--theme-elevation-250);
+        }
+      }
+    }
   }
 }
