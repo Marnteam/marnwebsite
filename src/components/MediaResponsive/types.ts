@@ -20,30 +20,13 @@ export interface Props {
   videoClassName?: string
   resource?: MediaType | string
   media?: {
-    desktop?: {
-      light?: (string | null) | MediaType
-      dark?: (string | null) | MediaType
-      videoControls?: {
-        autoplay?: boolean | null
-        loop?: boolean | null
-        muted?: boolean | null
-        controls?: boolean | null
-        objectFit?: ('cover' | 'contain' | 'fill' | 'none' | 'scale-down') | null
-      }
-    }
-    /**
-     * Optional
-     */
-    mobile?: {
-      light?: (string | null) | MediaType
-      dark?: (string | null) | MediaType
-      videoControls?: {
-        autoplay?: boolean | null
-        loop?: boolean | null
-        muted?: boolean | null
-        controls?: boolean | null
-        objectFit?: ('cover' | 'contain' | 'fill' | 'none' | 'scale-down') | null
-      }
+    media?: (string | null) | MediaType
+    videoControls?: {
+      autoplay?: boolean | null
+      loop?: boolean | null
+      muted?: boolean | null
+      controls?: boolean | null
+      objectFit?: ('cover' | 'contain' | 'fill' | 'none' | 'scale-down') | null
     }
   }
 }

@@ -20,7 +20,7 @@ export const CallToAction05: React.FC<CallToActionProps> = ({
   links,
   caption,
   list,
-  media,
+  mediaGroup,
   className,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -31,7 +31,6 @@ export const CallToAction05: React.FC<CallToActionProps> = ({
   })
   // Parallax: image moves up to -40px as you scroll through the block
   const y = useTransform(scrollYProgress, [0, 1], ['-50%', '50%'])
-  const { desktop, mobile } = media || {}
 
   return (
     <div data-theme="dark" className="py-xl bg-background-neutral" ref={containerRef}>
@@ -58,9 +57,9 @@ export const CallToAction05: React.FC<CallToActionProps> = ({
             })}
           </div>
         </motion.div>
-        {media && (
+        {mediaGroup?.media && (
           <Media
-            media={media}
+            media={mediaGroup}
             className="rounded-space-sm overflow-hidden md:max-w-[32rem] md:basis-1/2"
           />
         )}

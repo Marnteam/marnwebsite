@@ -12,7 +12,7 @@ import { InfiniteSlider } from '@/components/motion-ui/infinite-slider'
 
 export const Hero04: React.FC<Page['hero']> = ({
   richText,
-  media,
+  mediaGroup,
   links,
   caption,
   logos,
@@ -26,17 +26,19 @@ export const Hero04: React.FC<Page['hero']> = ({
   //   setHeaderTheme('light')
   // }, [setHeaderTheme])
 
+  console.log(mediaGroup)
+
   return (
     <section
       className={cn(
         'pb-xl container flex flex-col items-center justify-center pt-(--header-plus-admin-bar-height)',
-        media?.desktop?.light && 'min-h-screen',
+        mediaGroup?.media && 'min-h-screen',
       )}
     >
       <div
         className={cn(
           'flex w-full flex-col items-center gap-4 lg:flex-row',
-          // media?.desktop?.light && 'mt-header',
+          // mediaGroup?.media && 'mt-header',
         )}
       >
         <div className="lg:pe-xl w-full">
@@ -71,12 +73,12 @@ export const Hero04: React.FC<Page['hero']> = ({
           </div>
         </div>
 
-        {media && typeof media?.desktop?.light === 'object' && (
+        {mediaGroup?.media && typeof mediaGroup?.media === 'object' && (
           <Media
             className="rounded-space-sm relative h-auto w-full overflow-hidden select-none"
             imgClassName="object-cover"
             priority
-            media={media}
+            media={mediaGroup}
             // fill
           />
         )}

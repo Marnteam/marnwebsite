@@ -41,12 +41,10 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   let mobileDarkSrc: string = ''
   let blurhash: string = placeholderBlur
 
-  const { light: lightFromDesktop, dark: darkFromDesktop } =
-    media?.desktop || {}
-  const { light: lightFromMobile, dark: darkFromMobile } =
-    media?.mobile || {}
+  if (typeof media?.media !== 'object') return null
 
-  //temporarily switch off compatibility with old resource type
+  const { dark, mobile, mobileDark } = media?.media || {}
+
   if (!src && resource && typeof resource === 'object') {
     const {
       alt: altFromResource,
@@ -66,7 +64,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     darkSrc = getMediaUrl(url, cacheTag)
   }
 
-  if (!src && lightFromDesktop && typeof lightFromDesktop === 'object') {
+  if (!src && media.media && typeof media.media === 'object') {
     const {
       alt: altFromLight,
       filename: fullFilename,
@@ -75,7 +73,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       width: fullWidth,
       blurhash: blurhashFromLight,
       updatedAt: cacheTag,
-    } = lightFromDesktop
+    } = media.media
 
     width = fullWidth!
     height = fullHeight!
@@ -87,7 +85,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     mobileDarkSrc = getMediaUrl(url, cacheTag)
   }
 
-  if (darkFromDesktop && typeof darkFromDesktop === 'object') {
+  if (dark && typeof dark === 'object') {
     const {
       alt: altFromDark,
       filename: fullFilename,
@@ -96,7 +94,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       width: fullWidth,
       blurhash: blurhashFromDark,
       updatedAt: cacheTag,
-    } = darkFromDesktop
+    } = dark
 
     width = fullWidth!
     height = fullHeight!
@@ -108,7 +106,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     mobileDarkSrc = getMediaUrl(url, cacheTag)
   }
 
-  if (lightFromMobile && typeof lightFromMobile === 'object') {
+  if (mobile && typeof mobile === 'object') {
     const {
       alt: altFromLight,
       filename: fullFilename,
@@ -117,7 +115,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       width: fullWidth,
       blurhash: blurhashFromLight,
       updatedAt: cacheTag,
-    } = lightFromMobile
+    } = mobile
 
     width = fullWidth!
     height = fullHeight!
@@ -127,7 +125,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     mobileDarkSrc = getMediaUrl(url, cacheTag)
   }
 
-  if (darkFromMobile && typeof darkFromMobile === 'object') {
+  if (mobileDark && typeof mobileDark === 'object') {
     const {
       alt: altFromLight,
       filename: fullFilename,
@@ -136,7 +134,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       width: fullWidth,
       blurhash: blurhashFromLight,
       updatedAt: cacheTag,
-    } = darkFromMobile
+    } = mobileDark
 
     width = fullWidth!
     height = fullHeight!
@@ -159,14 +157,11 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   const isDark = theme === 'dark'
 
   const srcToUse = isDark && darkSrc ? darkSrc : src
-  const mobileSrcToUse =
-    isDark && mobileDarkSrc ? mobileDarkSrc : mobileSrc
+  const mobileSrcToUse = isDark && mobileDarkSrc ? mobileDarkSrc : mobileSrc
 
   return (
     <picture>
-      {mobileSrcToUse && (
-        <source srcSet={mobileSrcToUse} media="(max-width: 768px)" />
-      )}
+      {mobileSrcToUse && <source srcSet={mobileSrcToUse} media="(max-width: 768px)" />}
       <NextImage
         alt={alt || altFromProps || ''}
         className={cn(imgClassName)}

@@ -29,7 +29,7 @@ export const CallToAction07: React.FC<CTABlockType> = (props) => {
     links,
     caption,
     list,
-    media,
+    mediaGroup,
     form: formFromProps,
     form: { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } = {},
     locale,

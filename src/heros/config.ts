@@ -9,7 +9,7 @@ import {
 
 import { linkGroup } from '@/fields/linkGroup'
 import { badge } from '@/fields/badge'
-import { mediaGroup } from '@/fields/media'
+import { media } from '@/fields/media'
 import { logos } from '@/fields/logos'
 
 export const hero: Field = {
@@ -73,54 +73,7 @@ export const hero: Field = {
       },
       caption: true,
     }),
-    {
-      type: 'collapsible',
-      label: 'Media',
-      admin: {
-        initCollapsed: true,
-      },
-      fields: [
-        {
-          name: 'media',
-          type: 'group',
-          label: false,
-          admin: {
-            hideGutter: true,
-          },
-          fields: [
-            mediaGroup({
-              mediaOverrides: {
-                localized: true,
-                relationTo: 'media',
-                required: false,
-              },
-              overrides: {
-                admin: {
-                  hideGutter: true,
-                },
-                name: 'desktop',
-                label: 'Default (Desktop)',
-              },
-            }),
-            mediaGroup({
-              mediaOverrides: {
-                localized: true,
-                relationTo: 'media',
-                required: false,
-              },
-              overrides: {
-                admin: {
-                  hideGutter: true,
-                  description: 'Optional',
-                },
-                name: 'mobile',
-                label: 'Mobile (Optional)',
-              },
-            }),
-          ],
-        },
-      ],
-    },
+    media({}),
 
     {
       type: 'collapsible',

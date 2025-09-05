@@ -12,7 +12,7 @@ import materialIcons from '@/fields/iconPickerField/material-symbols-icons.json'
 
 import { badge } from '@/fields/badge'
 import { linkGroup } from '@/fields/linkGroup'
-import { mediaGroup } from '@/fields/media'
+import { media } from '@/fields/media'
 
 export const CallToActionBlock: Block = {
   slug: 'callToActionBlock',
@@ -55,54 +55,7 @@ export const CallToActionBlock: Block = {
       }),
       label: false,
     },
-    {
-      type: 'collapsible',
-      label: 'Media',
-      admin: {
-        initCollapsed: true,
-      },
-      fields: [
-        {
-          name: 'media',
-          type: 'group',
-          label: false,
-          admin: {
-            hideGutter: true,
-          },
-          fields: [
-            mediaGroup({
-              mediaOverrides: {
-                localized: true,
-                relationTo: 'media',
-                required: false,
-              },
-              overrides: {
-                admin: {
-                  hideGutter: true,
-                },
-                name: 'desktop',
-                label: 'Default (Desktop)',
-              },
-            }),
-            mediaGroup({
-              mediaOverrides: {
-                localized: true,
-                relationTo: 'media',
-                required: false,
-              },
-              overrides: {
-                admin: {
-                  hideGutter: true,
-                  description: 'Optional',
-                },
-                name: 'mobile',
-                label: 'Mobile (Optional)',
-              },
-            }),
-          ],
-        },
-      ],
-    },
+    media({}),
     linkGroup({
       overrides: {
         maxRows: 2,

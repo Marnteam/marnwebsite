@@ -12,7 +12,7 @@ import { InfiniteSlider } from '@/components/motion-ui/infinite-slider'
 
 export const Hero02: React.FC<Page['hero']> = ({
   richText,
-  media,
+  mediaGroup,
   links,
   caption,
   logos,
@@ -86,12 +86,12 @@ export const Hero02: React.FC<Page['hero']> = ({
             </ul>
           </div>
         )}
-        {media && typeof media === 'object' && (
+        {mediaGroup?.media && typeof mediaGroup?.media === 'object' && (
           <Media
             className="rounded-space-sm relative h-auto w-full overflow-hidden select-none"
             imgClassName="object-cover"
             priority
-            media={media}
+            media={mediaGroup}
             // fill
           />
         )}

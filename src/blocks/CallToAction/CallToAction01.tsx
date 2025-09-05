@@ -20,7 +20,7 @@ export const CallToAction01: React.FC<CallToActionProps> = ({
   links,
   caption,
   list,
-  media,
+  mediaGroup,
   className,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -48,7 +48,7 @@ export const CallToAction01: React.FC<CallToActionProps> = ({
             })}
           </div>
         </div>
-        {media && (
+        {mediaGroup?.media && (
           <motion.div
             style={{ y }}
             className={cn('absolute inset-0 z-0 h-full w-full overflow-hidden')}
@@ -57,7 +57,7 @@ export const CallToAction01: React.FC<CallToActionProps> = ({
               fill
               className="relative h-full w-full object-cover"
               imgClassName="object-cover rounded-space-sm overflow-hidden"
-              media={media}
+              media={mediaGroup}
             />
           </motion.div>
         )}

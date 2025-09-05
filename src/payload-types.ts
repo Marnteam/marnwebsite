@@ -339,6 +339,18 @@ export interface Media {
   locale?: ('en' | 'ar') | null;
   category?: (string | Category)[] | null;
   blurhash?: string | null;
+  /**
+   * Optional: Upload an alternative image to be used when the site is viewed in dark mode.
+   */
+  dark?: (string | null) | Media;
+  /**
+   * Optional: Upload an image optimized for mobile devices.
+   */
+  mobile?: (string | null) | Media;
+  /**
+   * Optional: Upload a mobile-optimized image for dark mode.
+   */
+  mobileDark?: (string | null) | Media;
   folder?: (string | null) | FolderInterface;
   updatedAt: string;
   createdAt: string;
@@ -536,31 +548,14 @@ export interface Page {
         }[]
       | null;
     caption?: string | null;
-    media?: {
-      desktop?: {
-        light?: (string | null) | Media;
-        dark?: (string | null) | Media;
-        videoControls?: {
-          autoplay?: boolean | null;
-          loop?: boolean | null;
-          muted?: boolean | null;
-          controls?: boolean | null;
-          objectFit?: ('cover' | 'contain' | 'fill' | 'none' | 'scale-down') | null;
-        };
-      };
-      /**
-       * Optional
-       */
-      mobile?: {
-        light?: (string | null) | Media;
-        dark?: (string | null) | Media;
-        videoControls?: {
-          autoplay?: boolean | null;
-          loop?: boolean | null;
-          muted?: boolean | null;
-          controls?: boolean | null;
-          objectFit?: ('cover' | 'contain' | 'fill' | 'none' | 'scale-down') | null;
-        };
+    mediaGroup?: {
+      media?: (string | null) | Media;
+      videoControls?: {
+        autoplay?: boolean | null;
+        loop?: boolean | null;
+        muted?: boolean | null;
+        controls?: boolean | null;
+        objectFit?: ('cover' | 'contain' | 'fill' | 'none' | 'scale-down') | null;
       };
     };
     logos?: {
@@ -887,31 +882,14 @@ export interface CallToActionBlock {
     };
     [k: string]: unknown;
   } | null;
-  media?: {
-    desktop?: {
-      light?: (string | null) | Media;
-      dark?: (string | null) | Media;
-      videoControls?: {
-        autoplay?: boolean | null;
-        loop?: boolean | null;
-        muted?: boolean | null;
-        controls?: boolean | null;
-        objectFit?: ('cover' | 'contain' | 'fill' | 'none' | 'scale-down') | null;
-      };
-    };
-    /**
-     * Optional
-     */
-    mobile?: {
-      light?: (string | null) | Media;
-      dark?: (string | null) | Media;
-      videoControls?: {
-        autoplay?: boolean | null;
-        loop?: boolean | null;
-        muted?: boolean | null;
-        controls?: boolean | null;
-        objectFit?: ('cover' | 'contain' | 'fill' | 'none' | 'scale-down') | null;
-      };
+  mediaGroup?: {
+    media?: (string | null) | Media;
+    videoControls?: {
+      autoplay?: boolean | null;
+      loop?: boolean | null;
+      muted?: boolean | null;
+      controls?: boolean | null;
+      objectFit?: ('cover' | 'contain' | 'fill' | 'none' | 'scale-down') | null;
     };
   };
   links?:
@@ -3140,38 +3118,18 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         caption?: T;
-        media?:
+        mediaGroup?:
           | T
           | {
-              desktop?:
+              media?: T;
+              videoControls?:
                 | T
                 | {
-                    light?: T;
-                    dark?: T;
-                    videoControls?:
-                      | T
-                      | {
-                          autoplay?: T;
-                          loop?: T;
-                          muted?: T;
-                          controls?: T;
-                          objectFit?: T;
-                        };
-                  };
-              mobile?:
-                | T
-                | {
-                    light?: T;
-                    dark?: T;
-                    videoControls?:
-                      | T
-                      | {
-                          autoplay?: T;
-                          loop?: T;
-                          muted?: T;
-                          controls?: T;
-                          objectFit?: T;
-                        };
+                    autoplay?: T;
+                    loop?: T;
+                    muted?: T;
+                    controls?: T;
+                    objectFit?: T;
                   };
             };
         logos?:
@@ -3336,6 +3294,9 @@ export interface MediaSelect<T extends boolean = true> {
   locale?: T;
   category?: T;
   blurhash?: T;
+  dark?: T;
+  mobile?: T;
+  mobileDark?: T;
   folder?: T;
   updatedAt?: T;
   createdAt?: T;

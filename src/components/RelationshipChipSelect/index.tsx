@@ -80,7 +80,7 @@ export const RelationshipChipSelect: RelationshipFieldClientComponent = (props) 
   }
 
   return (
-    <div className="payload-custom-field category-chip-select">
+    <div className="category-chip-select field-type">
       <label htmlFor={path} className="field-label">
         {label?.[locale as any] || label}
       </label>

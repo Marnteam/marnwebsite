@@ -12,7 +12,7 @@ import { ConnectingIcons } from './connectingIcons'
 
 export const IntegrationHero: React.FC<
   Page['hero'] & { children?: React.ReactNode; icon?: MediaType }
-> = ({ icon, richText, media, links, caption, logos, badge, children }) => {
+> = ({ icon, richText, mediaGroup, links, caption, logos, badge, children }) => {
   const { logos: logosGroup, headline } = logos || {}
   // const { setHeaderTheme } = useHeaderTheme()
 
@@ -79,12 +79,12 @@ export const IntegrationHero: React.FC<
           </ul>
         </div>
       )}
-      {media && typeof media === 'object' && (media.desktop?.light || media.desktop?.dark) && (
+      {mediaGroup && typeof mediaGroup.media === 'object' && (
         <Media
           className="rounded-space-sm relative h-auto w-full overflow-hidden select-none"
           imgClassName="object-cover"
           priority
-          media={media}
+          media={mediaGroup}
           // fill
         />
       )}

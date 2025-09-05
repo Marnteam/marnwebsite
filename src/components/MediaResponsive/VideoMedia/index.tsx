@@ -7,20 +7,9 @@ import type { Props as MediaProps } from '../types'
 import { getMediaUrl } from '@/utilities/getMediaURL'
 
 export const VideoMedia: React.FC<MediaProps> = (props) => {
-  const { onClick, resource, media, videoClassName } = props
-  const {
-    light: lightFromDesktop,
-    dark: darkFromDesktop,
-    videoControls: desktopControls,
-  } = media?.desktop || {}
-  const {
-    light: lightFromMobile,
-    dark: darkFromMobile,
-    videoControls: mobileControls,
-  } = media?.mobile || {}
-
   const videoRef = useRef<HTMLVideoElement>(null)
-  // const [showFallback] = useState<boolean>()
+  const { onClick, resource, media, videoClassName } = props
+  const { media: mediaResource, videoControls } = media || {}
 
   useEffect(() => {
     const { current: video } = videoRef
@@ -31,6 +20,8 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
       })
     }
   }, [])
+  if (typeof mediaResource !== 'object') return null
+  const { dark, mobile, mobileDark } = mediaResource || {}
 
   let src = ''
   let mobileSrc = ''
@@ -46,8 +37,8 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
     darkSrc = getMediaUrl(url, cacheTag)
   }
 
-  if (!src && lightFromDesktop && typeof lightFromDesktop === 'object') {
-    const { url, updatedAt } = lightFromDesktop
+  if (!src && mediaResource && typeof mediaResource === 'object') {
+    const { url, updatedAt } = mediaResource
 
     const cacheTag = updatedAt
 
@@ -57,8 +48,8 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
     mobileDarkSrc = getMediaUrl(url, cacheTag)
   }
 
-  if (darkFromDesktop && typeof darkFromDesktop === 'object') {
-    const { url, updatedAt } = darkFromDesktop
+  if (dark && typeof dark === 'object') {
+    const { url, updatedAt } = dark
     const cacheTag = updatedAt
 
     if (!src) src = getMediaUrl(url, cacheTag)
@@ -67,16 +58,16 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
     mobileDarkSrc = getMediaUrl(url, cacheTag)
   }
 
-  if (lightFromMobile && typeof lightFromMobile === 'object') {
-    const { url, updatedAt } = lightFromMobile
+  if (mobile && typeof mobile === 'object') {
+    const { url, updatedAt } = mobile
     const cacheTag = updatedAt
 
     mobileSrc = getMediaUrl(url, cacheTag)
     mobileDarkSrc = getMediaUrl(url, cacheTag)
   }
 
-  if (darkFromMobile && typeof darkFromMobile === 'object') {
-    const { url, updatedAt } = darkFromMobile
+  if (mobileDark && typeof mobileDark === 'object') {
+    const { url, updatedAt } = mobileDark
     const cacheTag = updatedAt
 
     mobileDarkSrc = getMediaUrl(url, cacheTag)
@@ -90,8 +81,6 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
   const mobileSrcToUse = isDark && mobileDarkSrc ? mobileDarkSrc : mobileSrc
 
   if (!srcToUse && !mobileSrcToUse) return null
-
-  const videoControls = desktopControls || mobileControls
 
   return (
     <video

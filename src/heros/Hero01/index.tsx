@@ -13,14 +13,13 @@ import { motion, useScroll, useTransform } from 'motion/react'
 
 export const Hero01: React.FC<Page['hero']> = ({
   richText,
-  media,
+  mediaGroup,
   links,
   caption,
   logos,
   badge,
 }) => {
   const { logos: logosGroup, headline } = logos || {}
-  const { desktop, mobile } = media || {}
   const containerRef = useRef<HTMLDivElement>(null)
   // Parallax: as the container scrolls into view, move the image up slightly
   const { scrollYProgress } = useScroll({
@@ -103,7 +102,7 @@ export const Hero01: React.FC<Page['hero']> = ({
             )}
           </div>
 
-          {media && typeof media === 'object' && (
+          {mediaGroup?.media && typeof mediaGroup?.media === 'object' && (
             <motion.div
               style={{ y }}
               className={cn('absolute inset-0 z-0 h-full w-full overflow-hidden')}
@@ -112,7 +111,7 @@ export const Hero01: React.FC<Page['hero']> = ({
                 fill
                 imgClassName="object-cover"
                 className="relative h-full w-full select-none"
-                media={media}
+                media={mediaGroup}
               />
             </motion.div>
           )}

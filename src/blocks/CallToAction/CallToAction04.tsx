@@ -20,11 +20,9 @@ export const CallToAction04: React.FC<CallToActionProps> = ({
   links,
   caption,
   list,
-  media,
+  mediaGroup,
   className,
 }) => {
-  const { desktop, mobile } = media || {}
-
   return (
     <div className={cn('py-xl container', className)}>
       <motion.div

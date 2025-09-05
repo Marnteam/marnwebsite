@@ -71,7 +71,6 @@ export const Media: CollectionConfig = {
         },
       },
     },
-
     {
       name: 'blurhash',
       type: 'text',
@@ -81,13 +80,49 @@ export const Media: CollectionConfig = {
         disableListFilter: true,
       },
     },
-
-    // {
-    //   name: 'darkMode',
-    //   label: 'Dark Mode Variant',
-    //   type: 'upload',
-    //   relationTo: 'media',
-    // },
+    {
+      name: 'dark',
+      label: 'Dark Mode Image',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description:
+          'Optional: Upload an alternative image to be used when the site is viewed in dark mode.',
+      },
+    },
+    {
+      label: 'Mobile Image Variants',
+      type: 'collapsible',
+      admin: {
+        description:
+          'Add alternative images for mobile devices. These will be used on smaller screens for better performance and appearance.',
+      },
+      fields: [
+        {
+          type: 'group',
+          fields: [
+            {
+              name: 'mobile',
+              label: 'Mobile Image',
+              type: 'upload',
+              relationTo: 'media',
+              admin: {
+                description: 'Optional: Upload an image optimized for mobile devices.',
+              },
+            },
+            {
+              name: 'mobileDark',
+              label: 'Mobile Dark Mode Image',
+              type: 'upload',
+              relationTo: 'media',
+              admin: {
+                description: 'Optional: Upload a mobile-optimized image for dark mode.',
+              },
+            },
+          ],
+        },
+      ],
+    },
   ],
   upload: {
     // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload

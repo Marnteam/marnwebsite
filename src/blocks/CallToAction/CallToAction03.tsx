@@ -21,11 +21,9 @@ export const CallToAction03: React.FC<CallToActionProps> = ({
   links,
   caption,
   list,
-  media,
+  mediaGroup,
   className,
 }) => {
-  const { desktop, mobile } = media || {}
-
   return (
     <div className={cn('py-xl container', className)}>
       <motion.div
@@ -45,7 +43,9 @@ export const CallToAction03: React.FC<CallToActionProps> = ({
             })}
           </div>
         </div>
-        {media && <Media media={media} imgClassName="rounded-lg" className="m-4 overflow-hidden" />}
+        {mediaGroup?.media && (
+          <Media media={mediaGroup} imgClassName="rounded-lg" className="m-4 overflow-hidden" />
+        )}
       </motion.div>
     </div>
   )
