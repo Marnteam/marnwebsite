@@ -79,6 +79,7 @@ const PhoneInputField = React.forwardRef<HTMLInputElement, React.ComponentProps<
     return (
       <Input
         ref={ref}
+        dir="ltr"
         id="tel tel-national"
         data-slot="phone-input"
         className={cn(
