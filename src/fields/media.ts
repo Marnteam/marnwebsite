@@ -23,6 +23,7 @@ export const media: MediaType = ({ mediaOverrides = {} } = {}) => {
             name: 'media',
             type: 'upload',
             relationTo: 'media',
+            localized: true,
           },
           {
             label: 'Video controls',
