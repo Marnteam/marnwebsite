@@ -8,7 +8,6 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/utilities/ui'
 import { Input } from '@/components/ui/input'
-import { Icon } from '@iconify-icon/react/dist/iconify.mjs'
 
 const phoneInputVariants = cva('flex rounded-xl', {
   variants: {
