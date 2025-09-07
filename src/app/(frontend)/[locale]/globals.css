@@ -22,15 +22,8 @@
   }
 
   ::selection {
-    background-color: --alpha(var(--color-sky-400) / 20%);
-    color: var(--color-marn-500);
-  }
-
-  [data-theme='dark'] {
-    ::selection {
-      background-color: --alpha(var(--color-sky-700) / 20%);
-      color: var(--color-marn-50);
-    }
+    background-color: --alpha(theme(--color-neutral) / 30%);
+    color: theme(--color-white);
   }
 
   input:autofill,
@@ -170,7 +163,7 @@
     --destructive-foreground: hsl(0 0% 98%);
     --border: --alpha(var(--color-white) / 30%);
     --input: --alpha(var(--color-white) / 30%);
-    --ring: theme(--color-base-secondary);
+    --ring: theme(--color-white);
     --chart-1: hsl(220 70% 50%);
     --chart-2: hsl(160 60% 45%);
     --chart-3: hsl(30 80% 55%);
@@ -396,6 +389,28 @@
     }
     to {
       height: 0;
+    }
+  }
+
+  --animate-shake-enter: shake 0.4s ease-out;
+
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+      transform: translateX(-2px);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+      transform: translateX(2px);
     }
   }
 }
