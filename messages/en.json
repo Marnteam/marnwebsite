@@ -10,6 +10,9 @@
     "readTimeMinute": "1 min read",
     "allArticles": "All articles"
   },
+  "form": {
+    "thisFieldIsRequired": "This field is required"
+  },
   "TestimonialsBlock": {
     "readMore": "Read story"
   },

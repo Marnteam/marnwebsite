@@ -10,6 +10,9 @@
     "readTimeMinute": "دقيقة واحدة للقراءة",
     "allArticles": "جميع المقالات"
   },
+  "form": {
+    "thisFieldIsRequired": "هذا الحقل مطلوب"
+  },
   "TestimonialsBlock": {
     "readMore": "إقرأ القصة"
   },

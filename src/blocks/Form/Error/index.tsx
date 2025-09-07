@@ -1,5 +1,11 @@
+import { useTranslations } from 'next-intl'
 import * as React from 'react'
 
 export const Error: React.FC = () => {
-  return <div className="mt-2 text-red-500 text-sm">This field is required</div>
+  const t = useTranslations('form')
+  return (
+    <div className="animate-shake-enter mt-2 text-sm text-red-600/80">
+      {t('thisFieldIsRequired')}
+    </div>
+  )
 }
