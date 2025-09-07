@@ -5,13 +5,12 @@ import type { PayloadAdminBarProps } from 'payload-admin-bar'
 import { cn } from '@/utilities/ui'
 import { useSelectedLayoutSegments } from 'next/navigation'
 import { PayloadAdminBar } from 'payload-admin-bar'
-import React, { useState, useEffect, useRef, CSSProperties } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 import './index.scss'
 
 import { getClientSideURL } from '@/utilities/getURL'
-import Logo from '@/components/ui/logo'
 
 const baseClass = 'admin-bar'
 
