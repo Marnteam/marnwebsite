@@ -10,7 +10,7 @@ import { cn } from '@/utilities/ui'
 import { Input } from '@/components/ui/input'
 import { Icon } from '@iconify-icon/react/dist/iconify.mjs'
 
-const phoneInputVariants = cva('flex flex-row-reverse rounded-xl', {
+const phoneInputVariants = cva('flex rounded-xl', {
   variants: {
     variant: {
       default: '',
@@ -56,7 +56,8 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
 
     return (
       <RPNInput.default
-        className={cn(phoneInputVariants({ variant, size }), 'relative', className)}
+        dir="ltr"
+        className={cn(phoneInputVariants({ variant, size }), 'phone-input relative', className)}
         international={international}
         defaultCountry={defaultCountry}
         flagComponent={FlagComponent}
@@ -79,11 +80,10 @@ const PhoneInputField = React.forwardRef<HTMLInputElement, React.ComponentProps<
     return (
       <Input
         ref={ref}
-        dir="ltr"
         id="tel tel-national"
         data-slot="phone-input"
         className={cn(
-          'z-1 rounded-e-none border-e-0 shadow-none focus-visible:z-1 focus-visible:border-e',
+          'z-1 rounded-s-none border-s-0 shadow-none focus-visible:z-1 focus-visible:border-e',
           className,
         )}
         autoComplete={`tel tel-national`}
@@ -111,7 +111,8 @@ const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
     return (
       <div
         className={cn(
-          'ring-ring relative z-0 inline-flex h-12 items-center self-stretch rounded-s-none rounded-e-xl border px-3 py-2.5 transition-[color,box-shadow] outline-none',
+          'phone-input-country-select',
+          'ring-ring relative z-0 inline-flex h-12 items-center self-stretch rounded-s-xl rounded-e-none border px-3 py-2.5 transition-[color,box-shadow] outline-none',
           'border-input bg-background text-base-secondary',
           'focus-visible:border-ring focus-visible:ring-ring focus-visible:z-1 focus-visible:ring-1',
           'hover:bg-background-neutral',
@@ -124,7 +125,18 @@ const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
           aria-hidden="true"
         >
           <FlagComponent country={value} countryName={value} aria-hidden="true" />
-          <Icon icon="material-symbols:arrow-drop-down-rounded" aria-hidden="true" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              fill="currentColor"
+              d="M11.475 14.475L7.85 10.85q-.075-.075-.112-.162T7.7 10.5q0-.2.138-.35T8.2 10h7.6q.225 0 .363.15t.137.35q0 .05-.15.35l-3.625 3.625q-.125.125-.25.175T12 14.7t-.275-.05t-.25-.175"
+            ></path>
+          </svg>
         </div>
         <select
           ref={ref}
