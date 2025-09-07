@@ -111,10 +111,9 @@ const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
       <div
         className={cn(
           'phone-input-country-select',
-          'ring-ring relative z-0 inline-flex h-12 items-center self-stretch rounded-s-xl rounded-e-none border border-e-0 px-3 py-2.5 transition-[color,box-shadow] outline-none',
-          'border-input bg-background text-base-secondary',
-          'focus-visible:border-ring focus-visible:ring-ring focus-visible:z-1 focus-visible:ring-1',
-          'hover:bg-background-neutral',
+          'ring-ring relative z-0 -me-0.25 inline-flex h-12 items-center self-stretch rounded-s-xl rounded-e-none border px-3 py-2.5 transition-[color,box-shadow] outline-none',
+          'border-input bg-background text-base-secondary hover:border-neutral/20 dark:hover:border-neutral/40 hover:z-2',
+          'focus-within:border-ring focus-within:ring-ring focus-within:z-2 focus-within:ring-1',
           'has-aria-invalid:border-destructive/60 has-aria-invalid:ring-destructive/20 dark:has-aria-invalid:ring-destructive/40',
           'has-disabled:pointer-events-none has-disabled:opacity-50',
         )}

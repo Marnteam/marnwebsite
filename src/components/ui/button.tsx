@@ -5,7 +5,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/utilities/ui'
 
 const buttonVariants = cva(
-  'ring-offset-background not-prose focus-visible:ring-ring focus-visible:secondary-none inline-flex items-center justify-center gap-2 rounded-full text-(length:--text-body-sm) font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rtl:tracking-normal [&_svg]:pointer-events-none [&_svg]:shrink-0',
+  'not-prose focus-visible:outline-ring inline-flex items-center justify-center gap-2 rounded-full text-base font-medium whitespace-nowrap transition-colors focus-visible:ring-0 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-50 rtl:tracking-normal [&_svg]:pointer-events-none [&_svg]:shrink-0',
   {
     variants: {
       variant: {
@@ -18,7 +18,7 @@ const buttonVariants = cva(
         link: 'text-base-secondary hover:text-base-secondary/90 p-0',
       },
       color: {
-        brand: '',
+        brand: 'focus-visible:outline-brand',
         neutral: '',
       },
       size: {
