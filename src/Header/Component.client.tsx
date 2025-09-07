@@ -3,15 +3,15 @@ import React, { useEffect, useRef, useState } from 'react'
 import type { Header as HeaderType } from '@/payload-types'
 import { Link } from '@/i18n/routing'
 import { usePathname } from 'next/navigation'
+import { motion, useMotionValueEvent, useScroll } from 'motion/react'
+import { AnimatePresence } from 'motion/react'
+
 import { useHeaderObserver } from '@/providers/HeaderIntersectionObserver'
 import { cn } from '@/utilities/ui'
 import Logo from '@/components/ui/logo'
 
-// Assuming DesktopNav and MobileNav will be refactored similarly
 import { DesktopNav } from './DesktopNav'
 import { MobileNav, AnimatedToggle } from './MobileNav'
-import { motion, useMotionValueEvent, useScroll } from 'motion/react'
-import { AnimatePresence } from 'motion/react'
 import { AdminBar } from '@/components/AdminBar'
 import { PayloadAdminBarProps } from 'payload-admin-bar'
 
@@ -81,11 +81,16 @@ export const HeaderClient: React.FC<HeaderType & AdminBarProps> = ({
         y > 20 && 'bg-background shadow-border',
       )}
     >
-      <AdminBar adminBarProps={adminBarProps} />
+      <AdminBar
+        adminBarProps={{
+          ...adminBarProps,
+        }}
+        // className={cn(y > 20 && 'hidden translate-y-full transition-transform duration-300')}
+      />
       {/* Main container with flex layout */}
       <div
         className={cn(
-          'relative container flex h-[var(--header-height)] flex-row items-center justify-between transition-colors',
+          'bg-background relative container flex h-[var(--header-height)] flex-row items-center justify-between transition-colors',
         )}
       >
         <div className="z-50 w-full max-w-54">

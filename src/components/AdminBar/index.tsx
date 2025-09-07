@@ -5,12 +5,13 @@ import type { PayloadAdminBarProps } from 'payload-admin-bar'
 import { cn } from '@/utilities/ui'
 import { useSelectedLayoutSegments } from 'next/navigation'
 import { PayloadAdminBar } from 'payload-admin-bar'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, CSSProperties } from 'react'
 import { useRouter } from 'next/navigation'
 
 import './index.scss'
 
 import { getClientSideURL } from '@/utilities/getURL'
+import Logo from '@/components/ui/logo'
 
 const baseClass = 'admin-bar'
 
@@ -29,13 +30,13 @@ const Title: React.FC = () => <span>Dashboard</span>
 
 export const AdminBar: React.FC<{
   adminBarProps?: PayloadAdminBarProps
+  className?: string
 }> = (props) => {
-  const { adminBarProps } = props || {}
+  const { adminBarProps, className } = props || {}
   const segments = useSelectedLayoutSegments()
   const [show, setShow] = useState(false)
   const collection = collectionLabels?.[segments?.[1]] ? segments?.[1] : 'pages'
   const router = useRouter()
-  const ref = useRef<HTMLDivElement>(null)
 
   const onAuthChange = React.useCallback((user) => {
     setShow(!!user?.id)
@@ -43,8 +44,7 @@ export const AdminBar: React.FC<{
 
   useEffect(() => {
     if (show) {
-      const height = ref.current?.clientHeight
-      document.documentElement.style.setProperty('--admin-bar-height', `${height}px`)
+      document.documentElement.style.setProperty('--admin-bar-height', `2.5rem`)
     } else {
       document.documentElement.style.setProperty('--admin-bar-height', '0rem')
     }
@@ -54,50 +54,41 @@ export const AdminBar: React.FC<{
   }, [show])
 
   return (
-    <div
-      ref={ref}
+    <PayloadAdminBar
+      {...adminBarProps}
       className={cn(
-        baseClass,
-        'z-[10] w-full bg-black text-white',
+        'bg-neutral container w-full',
+        'text-base-secondary z-[10] h-full w-full py-0 text-sm',
+        'flex flex-row items-center',
         'h-0 md:h-10',
-        // '-fixed -top-0 -left-0',
-        {
-          block: show,
-          hidden: !show,
-        },
+        baseClass,
+        className,
       )}
-    >
-      <div className="container h-full">
-        <PayloadAdminBar
-          {...adminBarProps}
-          className="h-full py-0 text-white"
-          classNames={{
-            controls: 'font-medium text-white me-2.5 mr-0',
-            logo: 'text-white me-2.5 mr-0',
-            user: 'text-white me-2.5 mr-0',
-          }}
-          cmsURL={getClientSideURL()}
-          collection={collection}
-          collectionLabels={{
-            plural: collectionLabels[collection]?.plural || 'Pages',
-            singular: collectionLabels[collection]?.singular || 'Page',
-          }}
-          logo={<Title />}
-          onAuthChange={onAuthChange}
-          onPreviewExit={() => {
-            fetch('/next/exit-preview').then(() => {
-              router.push('/')
-              router.refresh()
-            })
-          }}
-          style={{
-            backgroundColor: 'transparent',
-            padding: 0,
-            position: 'relative',
-            zIndex: 'unset',
-          }}
-        />
-      </div>
-    </div>
+      cmsURL={getClientSideURL()}
+      collection={collection}
+      collectionLabels={{
+        plural: collectionLabels[collection]?.plural || 'Pages',
+        singular: collectionLabels[collection]?.singular || 'Page',
+      }}
+      logo={<Title />}
+      logoProps={{ style: { marginInlineEnd: '0.625rem', marginRight: 'auto' } }}
+      userProps={{ style: { marginInlineEnd: '0.625rem', marginRight: 'auto' } }}
+      previewProps={{ style: { marginInlineStart: '0.625rem' } }}
+      onAuthChange={onAuthChange}
+      onPreviewExit={() => {
+        fetch('/next/exit-preview').then(() => {
+          router.push('/')
+          router.refresh()
+        })
+      }}
+      style={{
+        backgroundColor: 'var(--color-neutral)',
+        position: 'relative',
+        zIndex: 'unset',
+        color: 'var(--color-white)',
+        paddingInline: 'var(--spacing-space-site)',
+        fontFamily: 'var(--font-sans)',
+      }}
+    />
   )
 }
