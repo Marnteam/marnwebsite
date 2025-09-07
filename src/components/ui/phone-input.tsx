@@ -82,7 +82,7 @@ const PhoneInputField = React.forwardRef<HTMLInputElement, React.ComponentProps<
         id="tel tel-national"
         data-slot="phone-input"
         className={cn(
-          'z-1 rounded-s-none border-s-0 shadow-none focus-visible:z-1 focus-visible:border-e',
+          'z-1 shadow-none ltr:rounded-l-none rtl:rounded-l-xl rtl:rounded-r-none',
           className,
         )}
         autoComplete={`tel tel-national`}
@@ -111,7 +111,7 @@ const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
       <div
         className={cn(
           'phone-input-country-select',
-          'ring-ring relative z-0 inline-flex h-12 items-center self-stretch rounded-s-xl rounded-e-none border px-3 py-2.5 transition-[color,box-shadow] outline-none',
+          'ring-ring relative z-0 inline-flex h-12 items-center self-stretch rounded-s-xl rounded-e-none border border-e-0 px-3 py-2.5 transition-[color,box-shadow] outline-none',
           'border-input bg-background text-base-secondary',
           'focus-visible:border-ring focus-visible:ring-ring focus-visible:z-1 focus-visible:ring-1',
           'hover:bg-background-neutral',

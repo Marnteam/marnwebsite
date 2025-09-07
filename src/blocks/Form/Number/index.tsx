@@ -1,10 +1,5 @@
 import type { TextField } from '@payloadcms/plugin-form-builder/types'
-import type {
-  FieldErrorsImpl,
-  FieldValues,
-  UseFormRegister,
-  Control,
-} from 'react-hook-form'
+import type { FieldErrorsImpl, FieldValues, UseFormRegister, Control } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 
 import PhoneInput from '@/components/ui/phone-input'
