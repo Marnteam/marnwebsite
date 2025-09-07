@@ -2,8 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "esModuleInterop": true,
-    "target": "ES2022",
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "target": "ES2023",
+    "lib": ["DOM", "DOM.Iterable", "ES2023"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,

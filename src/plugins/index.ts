@@ -78,6 +78,22 @@ export const plugins: Plugin[] = [
               }),
             }
           }
+          // if ('name' in field && field.name === 'fields' && field.type === 'blocks') {
+          //   return {
+          //     ...field,
+          //     blocks: field.blocks.map((block) => {
+          //       if (block.slug !== 'text') return block
+          //       return {
+          //         ...block,
+          //         fields: block.fields.toSpliced(block.fields.length + 1, 0, {
+          //           name: 'hidden',
+          //           type: 'checkbox',
+          //           label: 'Hidden field?',
+          //         }),
+          //       }
+          //     }),
+          //   }
+          // }
           return field
         })
       },
