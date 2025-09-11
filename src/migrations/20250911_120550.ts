@@ -69,7 +69,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   WHERE c."id" = l."_parent_id";
 
   -- Copy image_id data from locales to base table for versioned _carouselBlock_v_columns
-  UPDATE "_carouselBlcok_v_columns" AS c
+  UPDATE "_carouselBlock_v_columns" AS c
   SET "image_id" = l.image_id
   FROM (
     SELECT DISTINCT ON (l."_parent_id")
