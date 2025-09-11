@@ -2746,14 +2746,16 @@ export interface MediaBlock {
  */
 export interface StyledListBlock {
   listStyle?: ('bullet' | 'numbered' | 'icons') | null;
-  items: {
-    text?: string | null;
-    /**
-     * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
-     */
-    icon?: string | null;
-    id?: string | null;
-  }[];
+  items?:
+    | {
+        text?: string | null;
+        /**
+         * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
+         */
+        icon?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'styledListBlock';
