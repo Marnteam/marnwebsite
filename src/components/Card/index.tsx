@@ -25,7 +25,7 @@ export const Card: React.FC<{
   const { card, link } = useClickableCard({})
   const { className, doc, relationTo, showCategories, title: titleFromProps } = props
 
-  const { slug, categories, meta, title, publishedAt, content } = doc || {}
+  const { slug, categories, meta, title, publishedAt, content, heroImage } = doc || {}
   const { description, image: metaImage } = meta || {}
 
   const hasCategories = categories && Array.isArray(categories) && categories.length > 0
@@ -51,12 +51,12 @@ export const Card: React.FC<{
     >
       <div className="relative w-full">
         {!metaImage && <div className="">No image</div>}
-        {metaImage && typeof metaImage !== 'string' && (
+        {heroImage && typeof heroImage !== 'string' && (
           <Media
             imgClassName="group-hover:scale-105 transition-transform"
-            resource={metaImage}
+            resource={heroImage}
             className="overflow-hidden rounded-2xl"
-            size="33vw"
+            size="(width <= 640px) 100vw, 33vw"
           />
         )}
       </div>
