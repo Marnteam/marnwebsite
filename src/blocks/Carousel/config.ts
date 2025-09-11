@@ -87,7 +87,7 @@ export const CarouselBlock: Block = {
           type: 'upload',
           relationTo: 'media',
           label: 'Image',
-          localized: true,
+          // localized: true,
         },
         iconPickerField({
           name: 'icon',
@@ -109,8 +109,7 @@ export const CarouselBlock: Block = {
               label: 'Enable Badge',
               type: 'checkbox',
               admin: {
-                condition: (_, siblingData, { blockData }) =>
-                  ['01'].includes(blockData?.type),
+                condition: (_, siblingData, { blockData }) => ['01'].includes(blockData?.type),
                 width: '50%',
               },
             },
