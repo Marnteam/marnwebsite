@@ -26,6 +26,61 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "featuresBlock_columns_image_idx" ON "featuresBlock_columns" USING btree ("image_id");
   CREATE INDEX "_carouselBlock_v_columns_image_idx" ON "_carouselBlock_v_columns" USING btree ("image_id");
   CREATE INDEX "_featuresBlock_v_columns_image_idx" ON "_featuresBlock_v_columns" USING btree ("image_id");
+  
+  -- Copy image_id data from locales to base table for featuresBlock_columns
+  UPDATE "featuresBlock_columns" AS c
+  SET "image_id" = l.image_id
+  FROM (
+    SELECT DISTINCT ON (l."_parent_id")
+           l."_parent_id",
+           l."image_id"
+    FROM "featuresBlock_columns_locales" l
+    WHERE l."image_id" IS NOT NULL
+    -- Prefer 'en' when present, else 'ar', else first non-null by id
+    ORDER BY l."_parent_id", (l."_locale" = 'ar') DESC, (l."_locale" = 'en') DESC, l.id ASC
+  ) AS l
+  WHERE c."id" = l."_parent_id";
+
+    -- Copy image_id data from locales to base table for carouselBlock_columns
+  UPDATE "carouselBlock_columns" AS c
+  SET "image_id" = l.image_id
+  FROM (
+    SELECT DISTINCT ON (l."_parent_id")
+           l."_parent_id",
+           l."image_id"
+    FROM "carouselBlock_columns_locales" l
+    WHERE l."image_id" IS NOT NULL
+    -- Prefer 'en' when present, else 'ar', else first non-null by id
+    ORDER BY l."_parent_id", (l."_locale" = 'ar') DESC, (l."_locale" = 'en') DESC, l.id ASC
+  ) AS l
+  WHERE c."id" = l."_parent_id";
+  
+  -- Copy image_id data from locales to base table for versioned _featuresBlock_v_columns
+  UPDATE "_featuresBlock_v_columns" AS c
+  SET "image_id" = l.image_id
+  FROM (
+    SELECT DISTINCT ON (l."_parent_id")
+           l."_parent_id",
+           l."image_id"
+    FROM "_featuresBlock_v_columns_locales" l
+    WHERE l."image_id" IS NOT NULL
+    ORDER BY l."_parent_id", (l."_locale" = 'ar') DESC, (l."_locale" = 'en') DESC, l.id ASC
+  ) AS l
+  WHERE c."id" = l."_parent_id";
+
+  -- Copy image_id data from locales to base table for versioned _carouselBlock_v_columns
+  UPDATE "_carouselBlcok_v_columns" AS c
+  SET "image_id" = l.image_id
+  FROM (
+    SELECT DISTINCT ON (l."_parent_id")
+            l."_parent_id",
+            l."image_id"
+    FROM "_carouselBlock_v_columns_locales" l
+    WHERE L."image_id" IS NOT NULL
+    ORDER BY l."_parent_id", (l."_locale" = 'ar') DESC, (l."_locale" = 'en') DESC, l.id ASC
+  ) AS l
+   WHERE c."id" = l."_parent_id";
+  
   ALTER TABLE "carouselBlock_columns_locales" DROP COLUMN "image_id";
   ALTER TABLE "featuresBlock_columns_locales" DROP COLUMN "image_id";
   ALTER TABLE "_carouselBlock_v_columns_locales" DROP COLUMN "image_id";
