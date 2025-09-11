@@ -218,14 +218,14 @@ export function FooterClient({ columns, currentYear, locale }: Props) {
           >
             <div className="container grid grid-cols-1 gap-4 max-lg:gap-y-8 lg:grid-cols-12">
               <div className="flex flex-wrap items-start gap-4 lg:col-span-4">
-                <div id="newsletter" className="md:pe-md flex w-full flex-col gap-3">
+                <div id="newsletter" className="md:pe-md flex w-full flex-col gap-4">
                   <p className="text-base-tertiary text-sm font-medium">{t('newsletterTitle')}</p>
-                  <p className="text-base-secondary -mt-1 text-sm">{t('newsletterDescription')}</p>
-                  <div className="flex w-full max-w-96 items-center space-x-2">
+                  <p className="text-base-tertiary -mt-3 text-sm">{t('newsletterDescription')}</p>
+                  <div className="flex w-full items-center space-x-2 md:max-w-96">
                     <div className="relative w-full">
                       <Input
                         id="email"
-                        className="peer h-11 rounded-full ps-9 text-sm"
+                        className="peer h-11 rounded-full bg-transparent ps-9 text-sm"
                         placeholder={t('newsletterPlaceholder')}
                         type="email"
                         autoComplete={`email`}
@@ -241,7 +241,7 @@ export function FooterClient({ columns, currentYear, locale }: Props) {
                 </div>
                 <div id="social" className="flex w-full flex-col gap-2">
                   <p className="text-base-tertiary text-sm font-medium">{t('followUs')}</p>
-                  <div className="flex w-full flex-row items-start justify-between gap-2 lg:justify-start">
+                  <div className="flex w-full flex-row items-start justify-between gap-1 lg:justify-start">
                     {socialLinks.map(({ label, url, icon: Icon }, i) => (
                       <Button
                         key={i}
@@ -275,7 +275,7 @@ export function FooterClient({ columns, currentYear, locale }: Props) {
                     />
                   </div>
                 </div>
-                <div id="theme" className="flex flex-row items-center gap-4">
+                <div id="theme" className="flex flex-row items-center gap-2">
                   <LanguageSwitcher locale={locale} />
                   <ThemeSelector locale={locale} />
                 </div>
@@ -284,13 +284,13 @@ export function FooterClient({ columns, currentYear, locale }: Props) {
                 {columns?.map(({ label, navItems }, i) => {
                   return (
                     <div key={i} className="flex flex-col">
-                      <p className="text-base-tertiary mb-1 text-sm font-medium">{label}</p>
+                      <p className="text-base-tertiary mb-4 text-sm font-medium">{label}</p>
                       {navItems?.map(({ link }, j) => {
                         return (
                           <CMSLink
                             key={j}
                             variant="inline"
-                            className="hover:text-base-primary h-auto justify-start rounded-none px-0 py-2 text-sm font-medium hover:no-underline"
+                            className="hover:text-base-tertiary text-base-primary h-auto justify-start rounded-none px-0 py-2 text-sm hover:no-underline"
                             {...link}
                           />
                         )

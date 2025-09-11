@@ -21,39 +21,33 @@ export const Carousel01: React.FC<Carousel01Props> = ({ columns, readMoreLabel }
 
   return (
     <div className="py-xl flex flex-col">
-      <div className="container mb-8 flex justify-center overflow-x-auto [scrollbar-width:none]">
-        <div className="flex min-w-max items-center gap-2">
-          {columns.map((column, index) => {
-            if (column.tabLabel) {
-              return (
-                <Button
-                  key={column.id || `tab-${index}`}
-                  type="button"
-                  size="md"
-                  variant="ghost"
-                  color="neutral"
-                  onClick={() => setCarouselIndex(index)}
-                  className={cn(
-                    'relative inline-flex h-10 items-center gap-1 rounded-full px-5 text-base font-medium transition-colors duration-200',
-                    index === carouselIndex
-                      ? 'bg-neutral hover:bg-neutral/90 text-inverted-primary'
-                      : '',
-                  )}
-                >
-                  {column.icon && (
-                    <Icon
-                      icon={`material-symbols:${column.icon}`}
-                      className="size-4"
-                      height="none"
-                    />
-                  )}
-                  {column?.tabLabel}
-                </Button>
-              )
-            }
-            return null
-          })}
-        </div>
+      <div className="container mb-2 flex w-full items-center justify-stretch gap-2 overflow-x-auto [scrollbar-width:none]">
+        {columns.map((column, index) => {
+          if (column.tabLabel) {
+            return (
+              <Button
+                key={column.id || `tab-${index}`}
+                type="button"
+                size="lg"
+                variant="ghost"
+                color="neutral"
+                onClick={() => setCarouselIndex(index)}
+                className={cn(
+                  'relative inline-flex h-20 w-full items-center gap-2 rounded-2xl px-5 text-base font-medium transition-colors duration-200',
+                  index === carouselIndex
+                    ? 'bg-neutral hover:bg-neutral/90 text-inverted-primary'
+                    : '',
+                )}
+              >
+                {column.icon && (
+                  <Icon icon={`material-symbols:${column.icon}`} className="size-5" height="none" />
+                )}
+                {column?.tabLabel}
+              </Button>
+            )
+          }
+          return null
+        })}
       </div>
 
       <Carousel
