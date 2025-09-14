@@ -115,13 +115,9 @@
     margin-inline-start: calc(var(--spacing) * 3);
   }
 
-  ul:where(:not(.not-prose, .not-prose *)) {
+  ul:where(:not(.not-prose, .not-prose *, :has(li.list-none))) {
     padding-inline-start: calc(var(--spacing) * 6);
     list-style-type: disc;
-  }
-
-  ul li:where(:not(.not-prose, .not-prose *)) {
-    padding-inline-start: calc(var(--spacing) * 3);
   }
 
   ul li + li:where(:not(.not-prose, .not-prose *)) {
