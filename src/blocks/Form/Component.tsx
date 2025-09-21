@@ -1,8 +1,9 @@
 'use client'
-import type { Form as FormType } from '@payloadcms/plugin-form-builder/types'
 
-import { useRouter } from 'next/navigation'
-import React, { useCallback, useState } from 'react'
+import type { Form as FormType, FormValues } from './types'
+
+import { usePathname, useRouter } from 'next/navigation'
+import React, { useEffect } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import RichText from '@/components/RichText'
 import { Button } from '@/components/ui/button'
@@ -10,17 +11,7 @@ import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical
 
 import { buildInitialFormState } from './buildInitialFormState'
 import { fields } from './fields'
-import { getClientSideURL } from '@/utilities/getURL'
-
-export type Value = unknown
-
-export interface Property {
-  [key: string]: Value
-}
-
-export interface Data {
-  [key: string]: Property | Property[]
-}
+import { useFormSubmission } from '@/lib/forms/useFormSubmission'
 
 export type FormBlockType = {
   blockName?: string
@@ -39,130 +30,73 @@ export const FormBlock: React.FC<
   const {
     enableIntro,
     form: formFromProps,
-    form: { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } = {},
+    form: { id: formID, confirmationType, redirect, submitButtonLabel, confirmationMessage } = {},
     introContent,
     locale,
   } = props
 
-  const formMethods = useForm({
-    defaultValues: buildInitialFormState(formFromProps.fields),
+  const pathname = usePathname()
+  const formMethods = useForm<FormValues>({
+    defaultValues: buildInitialFormState(formFromProps),
   })
   const {
     control,
     formState: { errors },
     handleSubmit,
     register,
+    reset,
   } = formMethods
 
-  const [isLoading, setIsLoading] = useState(false)
-  const [hasSubmitted, setHasSubmitted] = useState<boolean>()
-  const [error, setError] = useState<{ message: string; status?: string } | undefined>()
   const router = useRouter()
 
-  const onSubmit = useCallback(
-    (data: Data) => {
-      let loadingTimerID: ReturnType<typeof setTimeout>
-      const submitForm = async () => {
-        setError(undefined)
-
-        const dataToSend = Object.entries(data).map(([name, value]) => ({
-          field: name,
-          value,
-        }))
-
-        // delay loading indicator by 1s
-        loadingTimerID = setTimeout(() => {
-          setIsLoading(true)
-        }, 1000)
-
-        try {
-          const req = await fetch(`${getClientSideURL()}/api/form-submissions`, {
-            body: JSON.stringify({
-              form: formID,
-              submissionData: dataToSend,
-            }),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            method: 'POST',
-          })
-
-          const res = await req.json()
-
-          clearTimeout(loadingTimerID)
-
-          if (req.status >= 400) {
-            setIsLoading(false)
-
-            setError({
-              message: res.errors?.[0]?.message || 'Internal Server Error',
-              status: res.status,
-            })
-
-            return
-          }
-
-          setIsLoading(false)
-          setHasSubmitted(true)
-
-          if (confirmationType === 'redirect' && redirect) {
-            const { url } = redirect
-
-            const redirectUrl = url
-
-            if (redirectUrl) router.push(redirectUrl)
-          }
-        } catch (err) {
-          console.warn(err)
-          setIsLoading(false)
-          setError({
-            message: 'Something went wrong.',
-          })
-        }
-      }
-
-      void submitForm()
+  const { submit, status, isLoading, error, confirmation, result } = useFormSubmission({
+    form: formFromProps,
+    metadata: {
+      locale,
+      pagePath: pathname || undefined,
     },
-    [router, formID, redirect, confirmationType],
-  )
+    onSuccess: () => {
+      reset(buildInitialFormState(formFromProps))
+    },
+  })
+
+  useEffect(() => {
+    if (result && confirmationType === 'redirect' && redirect?.url) {
+      router.push(redirect.url)
+    }
+  }, [result, confirmationType, redirect, router])
 
   return (
     <div className="container lg:max-w-[48rem]">
-      {enableIntro && introContent && !hasSubmitted && (
+      {enableIntro && introContent && status !== 'success' && (
         <RichText className="mb-8 lg:mb-12" data={introContent} enableGutter={false} />
       )}
       <div className="p-4 lg:p-6">
         <FormProvider {...formMethods}>
-          {!isLoading && hasSubmitted && confirmationType === 'message' && (
-            <RichText data={confirmationMessage} />
+          {status === 'success' && confirmationType === 'message' && (confirmation || confirmationMessage) && (
+            <RichText data={(confirmation ?? confirmationMessage) as SerializedEditorState} />
           )}
-          {isLoading && !hasSubmitted && <p>Loading, please wait...</p>}
-          {error && <div>{`${error.status || '500'}: ${error.message || ''}`}</div>}
-          {!hasSubmitted && (
-            <form id={formID} onSubmit={handleSubmit(onSubmit)}>
+          {isLoading && status === 'submitting' && <p>Loading, please wait...</p>}
+          {error && <div>{`${error.code || 'error'}: ${error.message}`}</div>}
+          {status !== 'success' && (
+            <form id={formID} onSubmit={handleSubmit(submit)}>
               <div className="mb-4 last:mb-0">
-                {formFromProps &&
-                  formFromProps.fields &&
-                  formFromProps.fields?.map((field, index) => {
-                    const Field: React.FC<any> = fields?.[field.blockType]
-                    if (Field) {
-                      return (
-                        <div className="mb-6 last:mb-0" key={index}>
-                          <Field
-                            form={formFromProps}
-                            // dir={locale === 'ar' ? 'rtl' : 'ltr'}
-                            {...field}
-                            {...formMethods}
-                            control={control}
-                            errors={errors}
-                            register={register}
-                            locale={locale}
-                          />
-                        </div>
-                      )
-                    }
-                    return null
-                  })}
+                {formFromProps?.fields?.map((field, index) => {
+                  const Field = fields?.[field.blockType]
+                  if (!Field) return null
+                  return (
+                    <div className="mb-6 last:mb-0" key={index}>
+                      <Field
+                        form={formFromProps}
+                        {...field}
+                        control={control}
+                        errors={errors}
+                        register={register}
+                        locale={locale}
+                      />
+                    </div>
+                  )
+                })}
               </div>
 
               <Button form={formID} type="submit" variant="primary" color="brand" className="h-12">

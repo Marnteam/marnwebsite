@@ -1,21 +1,21 @@
 'use client'
-import type { Form as FormType } from '@payloadcms/plugin-form-builder/types'
 
-import { useRouter } from 'next/navigation'
-import React, { useCallback, useState } from 'react'
+import type { Form as FormType, FormValues } from '@/blocks/Form/types'
+
+import { usePathname, useRouter } from 'next/navigation'
+import React, { useEffect } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import RichText from '@/components/RichText'
 import { Button } from '@/components/ui/button'
 
 import { buildInitialFormState } from '../Form/buildInitialFormState'
-import { getClientSideURL } from '@/utilities/getURL'
 
 import type { CallToActionBlock } from '@/payload-types'
 import type { CMSLinkType } from '@/components/Link'
 
 import { CMSLink } from '@/components/Link'
-import { Data } from '../Form/Component'
 import { RenderFields } from '../Form/RenderFields'
+import { useFormSubmission } from '@/lib/forms/useFormSubmission'
 
 type CTABlockType = CallToActionBlock & {
   form: FormType
@@ -31,91 +31,34 @@ export const CallToAction07: React.FC<CTABlockType> = (props) => {
     list,
     mediaGroup,
     form: formFromProps,
-    form: { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } = {},
+    form: { id: formID, confirmationType, redirect, submitButtonLabel } = {},
     locale,
   } = props
 
-  const formMethods = useForm({
-    defaultValues: buildInitialFormState(formFromProps.fields),
+  const pathname = usePathname()
+  const formMethods = useForm<FormValues>({
+    defaultValues: formFromProps ? buildInitialFormState(formFromProps) : {},
   })
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-    register,
-  } = formMethods
+  const { handleSubmit, reset } = formMethods
 
-  const [isLoading, setIsLoading] = useState(false)
-  const [hasSubmitted, setHasSubmitted] = useState<boolean>()
-  const [error, setError] = useState<{ message: string; status?: string } | undefined>()
   const router = useRouter()
 
-  const onSubmit = useCallback(
-    (data: Data) => {
-      let loadingTimerID: ReturnType<typeof setTimeout>
-      const submitForm = async () => {
-        setError(undefined)
-
-        const dataToSend = Object.entries(data).map(([name, value]) => ({
-          field: name,
-          value,
-        }))
-
-        // delay loading indicator by 1s
-        loadingTimerID = setTimeout(() => {
-          setIsLoading(true)
-        }, 1000)
-
-        try {
-          const req = await fetch(`${getClientSideURL()}/api/form-submissions`, {
-            body: JSON.stringify({
-              form: formID,
-              submissionData: dataToSend,
-            }),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            method: 'POST',
-          })
-
-          const res = await req.json()
-
-          clearTimeout(loadingTimerID)
-
-          if (req.status >= 400) {
-            setIsLoading(false)
-
-            setError({
-              message: res.errors?.[0]?.message || 'Internal Server Error',
-              status: res.status,
-            })
-
-            return
-          }
-
-          setIsLoading(false)
-          setHasSubmitted(true)
-
-          if (confirmationType === 'redirect' && redirect) {
-            const { url } = redirect
-
-            const redirectUrl = url
-
-            if (redirectUrl) router.push(redirectUrl)
-          }
-        } catch (err) {
-          console.warn(err)
-          setIsLoading(false)
-          setError({
-            message: 'Something went wrong.',
-          })
-        }
-      }
-
-      void submitForm()
+  const { submit, status, isLoading, error, result, confirmation } = useFormSubmission({
+    form: formFromProps,
+    metadata: {
+      locale,
+      pagePath: pathname || undefined,
     },
-    [router, formID, redirect, confirmationType],
-  )
+    onSuccess: () => {
+      reset(formFromProps ? buildInitialFormState(formFromProps) : {})
+    },
+  })
+
+  useEffect(() => {
+    if (result && confirmationType === 'redirect' && redirect?.url) {
+      router.push(redirect.url)
+    }
+  }, [result, confirmationType, redirect, router])
 
   return (
     <div className="py-xl container">
@@ -130,16 +73,16 @@ export const CallToAction07: React.FC<CTABlockType> = (props) => {
             })}
           </div>
         </div>
-        {formID && (
+        {formID && formFromProps && (
           <div className="lg:p-md max-lg:mt-md w-full lg:max-w-[48rem]">
             <FormProvider {...formMethods}>
-              {/* {!isLoading && hasSubmitted && confirmationType === 'message' && (
-                <RichText data={confirmationMessage as SerializedEditorState} />
-              )} */}
-              {isLoading && !hasSubmitted && <p>Loading, please wait...</p>}
-              {error && <div>{`${error.status || '500'}: ${error.message || ''}`}</div>}
-              {!hasSubmitted && (
-                <form id={formID} onSubmit={handleSubmit(onSubmit)}>
+              {status === 'success' && confirmationType === 'message' && confirmation && (
+                <RichText data={confirmation} />
+              )}
+              {isLoading && status === 'submitting' && <p>Loading, please wait...</p>}
+              {error && <div>{`${error.code || 'error'}: ${error.message}`}</div>}
+              {status !== 'success' && (
+                <form id={formID} onSubmit={handleSubmit(submit)}>
                   <div className="mb-4">
                     <RenderFields form={formFromProps} locale={locale} />
                   </div>

@@ -1041,6 +1041,7 @@ export interface Form {
             width?: number | null;
             defaultValue?: string | null;
             required?: boolean | null;
+            hidden?: boolean | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'text';
@@ -2843,6 +2844,8 @@ export interface FormSubmission {
         id?: string | null;
       }[]
     | null;
+  locale?: string | null;
+  pagePath?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -3631,6 +3634,7 @@ export interface FormsSelect<T extends boolean = true> {
               width?: T;
               defaultValue?: T;
               required?: T;
+              hidden?: T;
               id?: T;
               blockName?: T;
             };
@@ -3684,6 +3688,8 @@ export interface FormSubmissionsSelect<T extends boolean = true> {
         value?: T;
         id?: T;
       };
+  locale?: T;
+  pagePath?: T;
   updatedAt?: T;
   createdAt?: T;
 }

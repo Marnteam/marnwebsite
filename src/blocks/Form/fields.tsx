@@ -1,3 +1,5 @@
+import type { ComponentType } from 'react'
+
 import { Checkbox } from './Checkbox'
 import { Country } from './Country'
 import { Email } from './Email'
@@ -8,7 +10,7 @@ import { State } from './State'
 import { Text } from './Text'
 import { Textarea } from './Textarea'
 
-export const fields = {
+export const fields: Record<string, ComponentType<any>> = {
   checkbox: Checkbox,
   country: Country,
   email: Email,

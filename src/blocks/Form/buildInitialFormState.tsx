@@ -1,42 +1,51 @@
-import type { FormFieldBlock } from '@payloadcms/plugin-form-builder/types'
+import type { Form, FormValues, NamedField } from './types'
 
-export const buildInitialFormState = (fields: FormFieldBlock[]) => {
-  return fields?.reduce((initialSchema, field) => {
-    if (field.blockType === 'checkbox') {
-      return {
-        ...initialSchema,
-        [field.name]: field.defaultValue,
+/**
+ * Helper used by react-hook-form initialisation so every field stays aligned with the CMS defaults.
+ */
+export const getInitialValueForField = <Field extends NamedField>(field: Field): unknown => {
+  switch (field.blockType) {
+    case 'checkbox':
+      return field.defaultValue ?? false
+    case 'number':
+      if ('defaultValue' in field) {
+        const defaultValue = field.defaultValue
+        if (typeof defaultValue === 'number') {
+          return String(defaultValue)
+        }
+        if (typeof defaultValue === 'string') {
+          return defaultValue
+        }
       }
-    }
-    if (field.blockType === 'country') {
-      return {
-        ...initialSchema,
-        [field.name]: '',
+      return ''
+    case 'select':
+      if ('defaultValue' in field && typeof field.defaultValue === 'string') {
+        return field.defaultValue
       }
-    }
-    if (field.blockType === 'email') {
-      return {
-        ...initialSchema,
-        [field.name]: '',
+      return ''
+    case 'state':
+    case 'country':
+      return ''
+    case 'text':
+    case 'textarea':
+    case 'email':
+      if ('defaultValue' in field && typeof field.defaultValue === 'string') {
+        return field.defaultValue
       }
-    }
-    if (field.blockType === 'text') {
-      return {
-        ...initialSchema,
-        [field.name]: '',
-      }
-    }
-    if (field.blockType === 'select') {
-      return {
-        ...initialSchema,
-        [field.name]: '',
-      }
-    }
-    if (field.blockType === 'state') {
-      return {
-        ...initialSchema,
-        [field.name]: '',
-      }
-    }
-  }, {})
+      return ''
+    default:
+      return ''
+  }
+}
+
+export const buildInitialFormState = (form: Form): FormValues => {
+  const initial: FormValues = {}
+  const fields = form.fields ?? []
+
+  for (const field of fields) {
+    if (field.blockType === 'message') continue
+    initial[field.name] = getInitialValueForField(field)
+  }
+
+  return initial
 }
