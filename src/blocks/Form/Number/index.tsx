@@ -29,7 +29,8 @@ export const Number: React.FC<
   width,
 }) => {
   return (
-    <Width width={width}>
+    <>
+      {/* <Width width={width}> */}
       <Controller
         name={name}
         control={control}
@@ -43,10 +44,12 @@ export const Number: React.FC<
             onChange={onChange}
             onBlur={onBlur}
             id={name}
+            className="w-full"
           />
         )}
       />
       {requiredFromProps && errors[name] && <Error />}
-    </Width>
+      {/* </Width> */}
+    </>
   )
 }

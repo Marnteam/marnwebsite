@@ -1,7 +1,7 @@
 'use client'
 import { useFormContext } from 'react-hook-form'
 import { fields } from './fields'
-import type { Form as FormType } from '@payloadcms/plugin-form-builder/types'
+import type { Form as FormType } from './types'
 
 export const RenderFields: React.FC<{ form: FormType; locale?: string }> = ({ form, locale }) => {
   const {
@@ -48,13 +48,9 @@ export const RenderFields: React.FC<{ form: FormType; locale?: string }> = ({ fo
           locale,
         }
         fieldComponents.push(
-          <div key={i} className="mb-space-sm gap-space-sm flex flex-col md:flex-row">
-            <div className="flex-1">
-              <Field {...fieldProps} />
-            </div>
-            <div className="flex-1">
-              <NextField {...nextFieldProps} />
-            </div>
+          <div key={i} className="mb-4 flex flex-col gap-4 md:flex-row">
+            <Field {...fieldProps} className="w-full" />
+            <NextField {...nextFieldProps} className="w-full" />
           </div>,
         )
         i += 2
