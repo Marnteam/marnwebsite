@@ -1,7 +1,7 @@
 import { type SubmissionMetadata } from '@/blocks/Form/types'
 
 const ATTRIBUTION_STORAGE_KEY = 'marn:form:attribution'
-const ATTRIBUTION_TTL_MS = 90 * 24 * 60 * 60 * 1000
+const ATTRIBUTION_TTL_MS = 90 * 24 * 60 * 60 * 1000 // 90 days
 const STORAGE_ENABLED = process.env.NEXT_PUBLIC_FORM_METADATA_STORAGE !== 'false'
 
 const UTM_PARAM_MAP: Record<string, string> = {

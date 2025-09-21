@@ -6,7 +6,7 @@ import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { aiSDKResolver, copyResolver, translator } from '@/plugins/translator/src'
-import { Block, Field, Plugin, TextField } from 'payload'
+import { Field, Plugin } from 'payload'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -24,48 +24,6 @@ const generateURL: GenerateURL<BlogPost | Page> = ({ doc }) => {
   const url = getServerSideURL()
 
   return doc?.slug ? `${url}/${doc.slug}` : url
-}
-const Metadata: Block = {
-  slug: 'metadata',
-  fields: [
-    {
-      type: 'row',
-      fields: [
-        {
-          name: 'name',
-          type: 'text',
-          label: 'Name (lowercase, no special characters)',
-          required: true,
-          admin: {
-            width: '50%',
-            rtl: false,
-          },
-        },
-        {
-          name: 'label',
-          type: 'text',
-          label: 'Label',
-          localized: true,
-          admin: {
-            width: '50%',
-          },
-        },
-      ],
-    },
-    {
-      name: 'defaultValue',
-      type: 'text',
-      admin: {
-        width: '50%',
-      },
-      label: 'Default Value',
-      localized: true,
-    },
-  ],
-  labels: {
-    plural: 'Metadata Fields',
-    singular: 'Metadata',
-  },
 }
 
 export const plugins: Plugin[] = [
@@ -137,7 +95,6 @@ export const plugins: Plugin[] = [
           },
         ],
       },
-      metadata: Metadata,
     },
     formOverrides: {
       fields: ({ defaultFields }) => {
@@ -181,27 +138,6 @@ export const plugins: Plugin[] = [
             // }
             return field
           }),
-        ]
-      },
-    },
-    formSubmissionOverrides: {
-      fields: ({ defaultFields }) => {
-        return [
-          ...defaultFields,
-          {
-            name: 'locale',
-            type: 'text',
-            admin: {
-              readOnly: true,
-            },
-          },
-          {
-            name: 'pagePath',
-            type: 'text',
-            admin: {
-              readOnly: true,
-            },
-          },
         ]
       },
     },

@@ -1041,14 +1041,6 @@ export interface Form {
             blockName?: string | null;
             blockType: 'textarea';
           }
-        | {
-            name: string;
-            label?: string | null;
-            defaultValue?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'metadata';
-          }
       )[]
     | null;
   submitButtonLabel?: string | null;
@@ -2837,8 +2829,6 @@ export interface FormSubmission {
         id?: string | null;
       }[]
     | null;
-  locale?: string | null;
-  pagePath?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -3622,15 +3612,6 @@ export interface FormsSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        metadata?:
-          | T
-          | {
-              name?: T;
-              label?: T;
-              defaultValue?: T;
-              id?: T;
-              blockName?: T;
-            };
       };
   submitButtonLabel?: T;
   confirmationType?: T;
@@ -3670,8 +3651,6 @@ export interface FormSubmissionsSelect<T extends boolean = true> {
         value?: T;
         id?: T;
       };
-  locale?: T;
-  pagePath?: T;
   updatedAt?: T;
   createdAt?: T;
 }

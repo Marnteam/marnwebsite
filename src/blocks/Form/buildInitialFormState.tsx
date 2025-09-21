@@ -23,9 +23,6 @@ export const getInitialValueForField = <Field extends NamedField>(field: Field):
         return field.defaultValue
       }
       return ''
-    case 'state':
-    case 'country':
-      return ''
     case 'text':
     case 'textarea':
     case 'email':
