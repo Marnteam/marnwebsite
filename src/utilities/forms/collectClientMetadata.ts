@@ -1,6 +1,7 @@
 import { type SubmissionMetadata } from '@/blocks/Form/types'
 
 const ATTRIBUTION_STORAGE_KEY = 'marn:form:attribution'
+const ATTRIBUTION_TTL_MS = 90 * 24 * 60 * 60 * 1000
 const STORAGE_ENABLED = process.env.NEXT_PUBLIC_FORM_METADATA_STORAGE !== 'false'
 
 const UTM_PARAM_MAP: Record<string, string> = {
@@ -33,21 +34,54 @@ const normaliseValue = (value?: string | null): string | null | undefined => {
   return trimmed.length ? trimmed : undefined
 }
 
+type StoredAttributionPayload = {
+  data: Record<string, unknown>
+  persistedAt?: number | string
+}
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  !!value && typeof value === 'object'
+
+// removes null or undefined keys
+const sanitiseStoredRecord = (record: Record<string, unknown>): SubmissionMetadata => {
+  return Object.entries(record).reduce<SubmissionMetadata>((acc, [key, value]) => {
+    if (typeof value === 'string' && value.length) {
+      acc[key] = value
+    }
+    return acc
+  }, {})
+}
+
 const readStoredMetadata = (): SubmissionMetadata => {
   if (!isBrowser() || !STORAGE_ENABLED) return {}
 
   try {
     const stored = window.localStorage.getItem(ATTRIBUTION_STORAGE_KEY)
     if (!stored) return {}
-    const parsed = JSON.parse(stored) as Record<string, unknown>
+    const parsed = JSON.parse(stored) as unknown
     if (!parsed || typeof parsed !== 'object') return {}
 
-    return Object.entries(parsed).reduce<SubmissionMetadata>((acc, [key, value]) => {
-      if (typeof value === 'string' && value.length) {
-        acc[key] = value
+    // clear stale entries
+    if ('data' in parsed) {
+      const { data, persistedAt } = parsed as StoredAttributionPayload
+      if (!isRecord(data)) return {}
+
+      if (persistedAt) {
+        const timestamp = typeof persistedAt === 'number' ? persistedAt : Date.parse(persistedAt)
+        if (Number.isFinite(timestamp) && Date.now() - timestamp > ATTRIBUTION_TTL_MS) {
+          window.localStorage.removeItem(ATTRIBUTION_STORAGE_KEY)
+          return {}
+        }
       }
-      return acc
-    }, {})
+
+      return sanitiseStoredRecord(data)
+    }
+
+    if (isRecord(parsed)) {
+      return sanitiseStoredRecord(parsed)
+    }
+
+    return {}
   } catch (error) {
     if (process.env.NODE_ENV !== 'production') {
       console.warn('Failed to read stored form metadata', error)
@@ -69,7 +103,11 @@ const persistMetadata = (metadata: SubmissionMetadata) => {
     }
 
     if (Object.keys(payload).length) {
-      window.localStorage.setItem(ATTRIBUTION_STORAGE_KEY, JSON.stringify(payload))
+      const storedPayload: StoredAttributionPayload = {
+        data: payload,
+        persistedAt: Date.now(),
+      }
+      window.localStorage.setItem(ATTRIBUTION_STORAGE_KEY, JSON.stringify(storedPayload))
     } else {
       window.localStorage.removeItem(ATTRIBUTION_STORAGE_KEY)
     }
