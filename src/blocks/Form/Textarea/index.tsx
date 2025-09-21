@@ -5,7 +5,6 @@ import { Textarea as TextAreaComponent } from '@/components/ui/textarea'
 import React from 'react'
 
 import { Error } from '../Error'
-import { Width } from '../Width'
 
 export const Textarea: React.FC<
   TextField & {

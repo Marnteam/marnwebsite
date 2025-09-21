@@ -8,7 +8,6 @@ import { Label } from '@/components/ui/label'
 import React from 'react'
 
 import { Error } from '../Error'
-import { Width } from '../Width'
 
 export const Checkbox: React.FC<
   CheckboxField & {
