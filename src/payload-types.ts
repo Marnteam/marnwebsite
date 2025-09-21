@@ -967,15 +967,6 @@ export interface Form {
             required?: boolean | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'country';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
             blockType: 'email';
           }
         | {
@@ -1030,18 +1021,12 @@ export interface Form {
             name: string;
             label?: string | null;
             width?: number | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'state';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
             defaultValue?: string | null;
             required?: boolean | null;
-            hidden?: boolean | null;
+            /**
+             * Provides a hint to the user agent specifying how to, or indeed whether to, prefill a form control. The attribute value is either the keyword `off` or `on`, or an ordered list of space-separated tokens. See https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete for more info.
+             */
+            autocomplete?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'text';
@@ -1055,6 +1040,14 @@ export interface Form {
             id?: string | null;
             blockName?: string | null;
             blockType: 'textarea';
+          }
+        | {
+            name: string;
+            label?: string | null;
+            defaultValue?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'metadata';
           }
       )[]
     | null;
@@ -3559,16 +3552,6 @@ export interface FormsSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        country?:
-          | T
-          | {
-              name?: T;
-              label?: T;
-              width?: T;
-              required?: T;
-              id?: T;
-              blockName?: T;
-            };
         email?:
           | T
           | {
@@ -3616,16 +3599,6 @@ export interface FormsSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        state?:
-          | T
-          | {
-              name?: T;
-              label?: T;
-              width?: T;
-              required?: T;
-              id?: T;
-              blockName?: T;
-            };
         text?:
           | T
           | {
@@ -3634,7 +3607,7 @@ export interface FormsSelect<T extends boolean = true> {
               width?: T;
               defaultValue?: T;
               required?: T;
-              hidden?: T;
+              autocomplete?: T;
               id?: T;
               blockName?: T;
             };
@@ -3646,6 +3619,15 @@ export interface FormsSelect<T extends boolean = true> {
               width?: T;
               defaultValue?: T;
               required?: T;
+              id?: T;
+              blockName?: T;
+            };
+        metadata?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              defaultValue?: T;
               id?: T;
               blockName?: T;
             };

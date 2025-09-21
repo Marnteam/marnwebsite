@@ -14,8 +14,18 @@ export const Text: React.FC<
       }>
     >
     register: UseFormRegister<FieldValues>
+    autocomplete?: string
   }
-> = ({ name, defaultValue, errors, label, register, required: requiredFromProps, width }) => {
+> = ({
+  name,
+  defaultValue,
+  autocomplete,
+  errors,
+  label,
+  register,
+  required: requiredFromProps,
+  width,
+}) => {
   return (
     <>
       {/* <Width width={width}> */}
@@ -26,7 +36,7 @@ export const Text: React.FC<
         id={name}
         type="text"
         {...register(name, { required: requiredFromProps })}
-        autoComplete={`name given-name ${name}`}
+        autoComplete={autocomplete}
       />
       {requiredFromProps && errors[name] && <Error />}
       {/* </Width> */}
