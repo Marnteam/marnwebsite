@@ -15,7 +15,8 @@ import type { CMSLinkType } from '@/components/Link'
 
 import { CMSLink } from '@/components/Link'
 import { RenderFields } from '../Form/RenderFields'
-import { useFormSubmission } from '@/lib/forms/useFormSubmission'
+import { useFormSubmission } from '@/utilities/forms/useFormSubmission'
+import { useSubmissionMetadata } from '@/utilities/forms/useSubmissionMetadata'
 
 type CTABlockType = CallToActionBlock & {
   form: FormType
@@ -43,12 +44,14 @@ export const CallToAction07: React.FC<CTABlockType> = (props) => {
 
   const router = useRouter()
 
+  const submissionMetadata = useSubmissionMetadata({
+    locale,
+    pagePath: pathname || undefined,
+  })
+
   const { submit, status, isLoading, error, result, confirmation } = useFormSubmission({
     form: formFromProps,
-    metadata: {
-      locale,
-      pagePath: pathname || undefined,
-    },
+    metadata: submissionMetadata,
     onSuccess: () => {
       reset(formFromProps ? buildInitialFormState(formFromProps) : {})
     },

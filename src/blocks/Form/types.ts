@@ -15,10 +15,40 @@ export type NamedField = Extract<FormField, { name: string }>
  */
 export type FormValues = Record<string, unknown>
 
-export type SubmissionMetadata = {
-  locale?: string | null
-  pagePath?: string | null
-}
+export const SUBMISSION_METADATA_KEYS = [
+  'locale',
+  'pagePath',
+  'pageId',
+  'deviceLocale',
+  'referrer',
+  'referringUrl',
+  'userAgent',
+  'ipAddress',
+  'hutk',
+  'utmSource',
+  'utmMedium',
+  'utmCampaign',
+  'utmTerm',
+  'utmContent',
+  'gclid',
+  'fbclid',
+  'ttclid',
+  'msclkid',
+  'gbraid',
+  'wbraid',
+  'sfdcCampaignId',
+  'goToWebinarWebinarKey',
+] as const
+
+export type SubmissionMetadataKey = (typeof SUBMISSION_METADATA_KEYS)[number]
+
+export type SubmissionMetadataValue = string | null | undefined
+
+/**
+ * Metadata mirrors the loose `{ [field]: value }` shape of `FormValues`, but we constrain values to
+ * nullable strings because everything downstream expects serialisable text.
+ */
+export type SubmissionMetadata = Record<string, SubmissionMetadataValue>
 
 export type SubmissionInput = {
   formId: string
@@ -63,7 +93,20 @@ export type PayloadSubmissionEntry = {
  */
 export const normaliseSubmissionMetadata = (
   metadata?: SubmissionMetadata,
-): Required<SubmissionMetadata> => ({
-  locale: metadata?.locale ?? null,
-  pagePath: metadata?.pagePath ?? null,
-})
+): Record<string, string | null> => {
+  const normalised: Record<string, string | null> = {}
+
+  if (metadata) {
+    for (const [key, value] of Object.entries(metadata)) {
+      normalised[key] = value ?? null
+    }
+  }
+
+  for (const key of SUBMISSION_METADATA_KEYS) {
+    if (!(key in normalised)) {
+      normalised[key] = null
+    }
+  }
+
+  return normalised
+}

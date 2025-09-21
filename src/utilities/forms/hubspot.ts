@@ -1,4 +1,8 @@
-import type { SubmissionMetadata, PayloadSubmissionEntry } from '@/blocks/Form/types'
+import type {
+  SubmissionMetadata,
+  SubmissionMetadataKey,
+  PayloadSubmissionEntry,
+} from '@/blocks/Form/types'
 
 type HubspotSubmissionArgs = {
   portalId: string
@@ -15,16 +19,72 @@ export type HubspotSubmissionResult = {
 
 const HUBSPOT_SUBMIT_BASE = 'https://api.hsforms.com/submissions/v3/integration/submit'
 
+const HUBSPOT_METADATA_FIELD_MAP: Record<string, SubmissionMetadataKey> = {
+  utm_source: 'utmSource',
+  utm_medium: 'utmMedium',
+  utm_campaign: 'utmCampaign',
+  utm_term: 'utmTerm',
+  utm_content: 'utmContent',
+  gclid: 'gclid',
+  fbclid: 'fbclid',
+  ttclid: 'ttclid',
+  msclkid: 'msclkid',
+  gbraid: 'gbraid',
+  wbraid: 'wbraid',
+}
+
 const buildContext = (metadata?: SubmissionMetadata) => {
   if (!metadata) return undefined
+
   const context: Record<string, string> = {}
+
+  if (metadata.hutk) {
+    context.hutk = metadata.hutk
+  }
+
+  if (metadata.ipAddress) {
+    context.ipAddress = metadata.ipAddress
+  }
 
   if (metadata.pagePath) {
     context.pageUri = metadata.pagePath
     context.pageName = metadata.pagePath
   }
 
+  if (metadata.pageId) {
+    context.pageId = metadata.pageId
+  }
+
+  if (metadata.sfdcCampaignId) {
+    context.sfdcCampaignId = metadata.sfdcCampaignId
+  }
+
+  if (metadata.goToWebinarWebinarKey) {
+    context.goToWebinarWebinarKey = metadata.goToWebinarWebinarKey
+  }
+
   return Object.keys(context).length ? context : undefined
+}
+
+const buildMetadataFields = (
+  metadata: SubmissionMetadata | undefined,
+  usedFieldNames: Set<string>,
+) => {
+  if (!metadata) return []
+
+  const fields: Array<{ name: string; value: string }> = []
+
+  for (const [fieldName, metadataKey] of Object.entries(HUBSPOT_METADATA_FIELD_MAP)) {
+    if (usedFieldNames.has(fieldName)) continue
+
+    const value = metadata[metadataKey]
+
+    if (!value) continue
+
+    fields.push({ name: fieldName, value })
+  }
+
+  return fields
 }
 
 export const sendHubspotSubmission = async ({
@@ -42,9 +102,15 @@ export const sendHubspotSubmission = async ({
   }
 
   const url = `${HUBSPOT_SUBMIT_BASE}/${encodeURIComponent(portalId)}/${encodeURIComponent(formId)}`
+
+  const baseFields = values.map(({ field, value }) => ({ name: field, value }))
+
+  const usedFieldNames = new Set(baseFields.map(({ name }) => name))
+  const metadataFields = buildMetadataFields(metadata, usedFieldNames)
+
   const payload = {
     submittedAt: Date.now(),
-    fields: values.map(({ field, value }) => ({ name: field, value })),
+    fields: [...baseFields, ...metadataFields],
     context: buildContext(metadata),
   }
 

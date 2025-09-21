@@ -9,13 +9,20 @@ import {
   type SubmissionInput,
   type SubmitFormResult,
 } from '@/blocks/Form/types'
+
 import { buildSubmissionPayload } from '@/blocks/Form/buildPayloadSubmission'
 
-import { sendHubspotSubmission } from '@/lib/forms/hubspot'
+import { sendHubspotSubmission } from '@/utilities/forms/hubspot'
 
 const mapHubspotSuccess = (status?: number) => ({
   forwarded: true as const,
   status,
+})
+
+const mapHubspotFailure = ({ status, error }: { status?: number; error?: string }) => ({
+  forwarded: false as const,
+  status,
+  error,
 })
 
 export const submitFormAction = async (input: SubmissionInput): Promise<SubmitFormResult> => {
@@ -62,17 +69,25 @@ export const submitFormAction = async (input: SubmissionInput): Promise<SubmitFo
     }
   }
 
-  const submissionData = buildSubmissionPayload(form, values)
+  const submissionData = buildSubmissionPayload(form, { values })
   const metadataPayload = normaliseSubmissionMetadata(metadata)
+
+  console.log('metadata payload: ', metadataPayload)
 
   try {
     const created = await payload.create({
       collection: 'form-submissions',
       data: {
         form: formId,
-        submissionData,
-        locale: metadataPayload.locale,
-        pagePath: metadataPayload.pagePath,
+        submissionData: [
+          ...submissionData,
+          ...Object.keys(metadataPayload).map((record) => {
+            return {
+              field: record,
+              value: metadataPayload[record] ?? '',
+            }
+          }),
+        ],
       },
     })
 
@@ -85,11 +100,20 @@ export const submitFormAction = async (input: SubmissionInput): Promise<SubmitFo
       })
 
       if (!hubspotResult.ok) {
-        return {
-          status: 'error',
-          message: hubspotResult.error || 'Failed to forward submission to HubSpot.',
-          code: 'hubspot_forward_failed',
+        payload.logger?.warn?.('HubSpot submission failed; continuing with local success.', {
+          formId,
           submissionId: created.id,
+          status: hubspotResult.status,
+          error: hubspotResult.error,
+        })
+
+        return {
+          status: 'success',
+          submissionId: created.id,
+          hubspot: mapHubspotFailure({
+            status: hubspotResult.status,
+            error: hubspotResult.error,
+          }),
         }
       }
 

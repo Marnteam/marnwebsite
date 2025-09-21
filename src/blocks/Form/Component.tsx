@@ -11,7 +11,8 @@ import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical
 
 import { buildInitialFormState } from './buildInitialFormState'
 import { fields } from './fields'
-import { useFormSubmission } from '@/lib/forms/useFormSubmission'
+import { useFormSubmission } from '@/utilities/forms/useFormSubmission'
+import { useSubmissionMetadata } from '@/utilities/forms/useSubmissionMetadata'
 
 export type FormBlockType = {
   blockName?: string
@@ -49,12 +50,14 @@ export const FormBlock: React.FC<
 
   const router = useRouter()
 
+  const submissionMetadata = useSubmissionMetadata({
+    locale,
+    pagePath: pathname || undefined,
+  })
+
   const { submit, status, isLoading, error, confirmation, result } = useFormSubmission({
     form: formFromProps,
-    metadata: {
-      locale,
-      pagePath: pathname || undefined,
-    },
+    metadata: submissionMetadata,
     onSuccess: () => {
       reset(buildInitialFormState(formFromProps))
     },
@@ -73,9 +76,11 @@ export const FormBlock: React.FC<
       )}
       <div className="p-4 lg:p-6">
         <FormProvider {...formMethods}>
-          {status === 'success' && confirmationType === 'message' && (confirmation || confirmationMessage) && (
-            <RichText data={(confirmation ?? confirmationMessage) as SerializedEditorState} />
-          )}
+          {status === 'success' &&
+            confirmationType === 'message' &&
+            (confirmation || confirmationMessage) && (
+              <RichText data={(confirmation ?? confirmationMessage) as SerializedEditorState} />
+            )}
           {isLoading && status === 'submitting' && <p>Loading, please wait...</p>}
           {error && <div>{`${error.code || 'error'}: ${error.message}`}</div>}
           {status !== 'success' && (
