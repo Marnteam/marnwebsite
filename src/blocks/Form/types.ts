@@ -45,13 +45,11 @@ export const SUBMISSION_METADATA_KEYS = [
 
 export type SubmissionMetadataKey = (typeof SUBMISSION_METADATA_KEYS)[number]
 
-export type SubmissionMetadataValue = string | null | undefined
-
 /**
  * Metadata mirrors the loose `{ [field]: value }` shape of `FormValues`, but we constrain values to
  * nullable strings because everything downstream expects serialisable text.
  */
-export type SubmissionMetadata = Record<string, SubmissionMetadataValue>
+export type SubmissionMetadata = Record<string, string | null | undefined>
 
 export type SubmissionInput = {
   formId: string
