@@ -12,10 +12,13 @@ const UTM_PARAM_MAP: Record<string, string> = {
 }
 
 const CLICK_ID_PARAM_MAP: Record<string, string> = {
-  gclid: 'gclid',
   fbclid: 'fbclid',
+  twclid: 'twclid',
   ttclid: 'ttclid',
+  sscid: 'sscid',
+  li_fat_id: 'li_fat_id',
   msclkid: 'msclkid',
+  gclid: 'gclid',
   gbraid: 'gbraid',
   wbraid: 'wbraid',
 }
