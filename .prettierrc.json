@@ -5,5 +5,7 @@
   "printWidth": 100,
   "semi": false,
   "plugins": ["prettier-plugin-tailwindcss"],
-  "tailwindFunctions": ["cva", "cn"]
+  "tailwindFunctions": ["clsx", "cva", "cn", "tw"],
+  "tailwindStylesheet": "./src/app/(frontend)/[locale]/globals.css",
+  "tailwindAttributes": ["imgClassName"]
 }
