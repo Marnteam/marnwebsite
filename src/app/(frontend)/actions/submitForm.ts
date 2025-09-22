@@ -72,9 +72,8 @@ export const submitFormAction = async (input: SubmissionInput): Promise<SubmitFo
   const submissionData = buildSubmissionPayload(form, { values })
   const metadataPayload = normaliseSubmissionMetadata(metadata)
 
-  console.log('metadata payload: ', metadataPayload)
-
   try {
+    // send to Payload
     const created = await payload.create({
       collection: 'form-submissions',
       data: {
@@ -91,6 +90,7 @@ export const submitFormAction = async (input: SubmissionInput): Promise<SubmitFo
       },
     })
 
+    // send to Hubspot
     if (form.hubspotPortalId && form.hubspotFormId) {
       const hubspotResult = await sendHubspotSubmission({
         portalId: form.hubspotPortalId,
