@@ -13,6 +13,7 @@ import { buildInitialFormState } from './buildInitialFormState'
 import { fields } from './fields'
 import { useFormSubmission } from '@/utilities/forms/useFormSubmission'
 import { useSubmissionMetadata } from '@/utilities/forms/useSubmissionMetadata'
+import { RenderFields } from './RenderFields'
 
 export type FormBlockType = {
   blockName?: string
@@ -85,26 +86,16 @@ export const FormBlock: React.FC<
           {error && <div>{`${error.code || 'error'}: ${error.message}`}</div>}
           {status !== 'success' && (
             <form id={formID} onSubmit={handleSubmit(submit)}>
-              <div className="mb-4 last:mb-0">
-                {formFromProps?.fields?.map((field, index) => {
-                  const Field = fields?.[field.blockType]
-                  if (!Field) return null
-                  return (
-                    <div className="mb-6 last:mb-0" key={index}>
-                      <Field
-                        form={formFromProps}
-                        {...field}
-                        control={control}
-                        errors={errors}
-                        register={register}
-                        locale={locale}
-                      />
-                    </div>
-                  )
-                })}
+              <div className="mb-4">
+                <RenderFields form={formFromProps} locale={locale} />
               </div>
-
-              <Button form={formID} type="submit" variant="primary" color="brand" className="h-12">
+              <Button
+                form={formID}
+                type="submit"
+                variant="primary"
+                color="neutral"
+                className="w-full"
+              >
                 {submitButtonLabel}
               </Button>
             </form>
