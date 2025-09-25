@@ -98,7 +98,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 'faqBlock',
                 'featuredAppsBlock',
                 'featuresBlock',
-                // 'formBlock',
+                'formBlock',
                 'galleryBlock',
                 'logosBlock',
                 'marketplaceBlock',
