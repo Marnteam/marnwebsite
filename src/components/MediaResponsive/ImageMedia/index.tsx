@@ -11,6 +11,7 @@ import type { Props as MediaProps } from '../types'
 
 import { cssVariables } from '@/cssVariables'
 import { getMediaUrl } from '@/utilities/getMediaURL'
+import { Media } from '@/payload-types'
 
 const { breakpoints } = cssVariables
 
@@ -41,11 +42,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   let mobileDarkSrc: string = ''
   let blurhash: string = placeholderBlur
 
-  if (typeof media?.media !== 'object') return null
-
-  const { dark, mobile, mobileDark } = media?.media || {}
-
-  if (!src && resource && typeof resource === 'object') {
+  if (resource && typeof resource === 'object') {
     const {
       alt: altFromResource,
       filename: fullFilename,
@@ -64,7 +61,9 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     darkSrc = getMediaUrl(url, cacheTag)
   }
 
-  if (!src && media.media && typeof media.media === 'object') {
+  const { dark, mobile, mobileDark } = (media?.media ?? {}) as Partial<Media>
+
+  if (!src && media?.media && typeof media.media === 'object') {
     const {
       alt: altFromLight,
       filename: fullFilename,
@@ -158,7 +157,6 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
 
   const srcToUse = isDark && darkSrc ? darkSrc : src
   const mobileSrcToUse = isDark && mobileDarkSrc ? mobileDarkSrc : mobileSrc
-
   return (
     <picture>
       {mobileSrcToUse && <source srcSet={mobileSrcToUse} media="(max-width: 768px)" />}
