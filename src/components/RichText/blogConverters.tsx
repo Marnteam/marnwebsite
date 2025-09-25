@@ -20,6 +20,7 @@ import {
 import { JSXConvertersFunction, LinkJSXConverter } from '@payloadcms/richtext-lexical/react'
 import React from 'react'
 import { Media } from '../MediaResponsive'
+import { RenderCustomHtmlBlock } from '@/blocks/CustomHTML/RenderCustomHtmlBlock'
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -129,6 +130,7 @@ export const blogConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConver
       <RenderCallToActionBlock {...node.fields} className="p-0 !py-0" />
     ),
     styledListBlock: ({ node }) => <StyledListBlock {...node.fields} />,
+    customHtmlBlock: ({ node }) => <RenderCustomHtmlBlock {...node.fields} className="p-0" />,
   },
 })
 

@@ -3,9 +3,10 @@
 import React, { useEffect, useRef } from 'react'
 import { CustomHtmlBlock as CustomHtmlBlockType } from '@/payload-types'
 
-export const RenderCustomHtmlBlock: React.FC<CustomHtmlBlockType> = ({
+export const RenderCustomHtmlBlock: React.FC<CustomHtmlBlockType & { className?: string }> = ({
   blockHeader,
   htmlContent,
+  className,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null)
 
@@ -67,7 +68,7 @@ export const RenderCustomHtmlBlock: React.FC<CustomHtmlBlockType> = ({
   }
 
   return (
-    <section className="custom-html-block container">
+    <section className={`custom-html-block container ${className}`}>
       <div ref={containerRef} suppressHydrationWarning />
     </section>
   )
