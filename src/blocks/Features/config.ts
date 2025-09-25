@@ -12,7 +12,6 @@ import { blockHeader } from '@/components/BlockHeader/config'
 import { badge } from '@/fields/badge'
 import { iconPickerField } from '@/fields/iconPickerField'
 import materialIcons from '@/fields/iconPickerField/material-symbols-icons.json'
-import { StyledList } from '@/blocks/StyledList/config'
 import deepMerge from '@/utilities/deepMerge'
 
 const richTextEditor = lexicalEditor({
@@ -21,7 +20,7 @@ const richTextEditor = lexicalEditor({
       ...rootFeatures,
       FixedToolbarFeature(),
       InlineToolbarFeature(),
-      BlocksFeature({ blocks: [StyledList] }),
+      BlocksFeature({ blocks: ['styledListBlock'] }),
     ]
   },
 })

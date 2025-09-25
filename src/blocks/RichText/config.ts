@@ -7,7 +7,6 @@ import {
   BlocksFeature,
 } from '@payloadcms/richtext-lexical'
 import { blockHeader } from '@/components/BlockHeader/config'
-import { StyledList } from '@/blocks/StyledList/config'
 
 const richTextEditor = lexicalEditor({
   features: ({ rootFeatures }) => {
@@ -16,7 +15,7 @@ const richTextEditor = lexicalEditor({
       FixedToolbarFeature(),
       InlineToolbarFeature(),
       HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
-      BlocksFeature({ blocks: [StyledList] }),
+      BlocksFeature({ blocks: ['styledListBlock'] }),
     ]
   },
 })

@@ -10,7 +10,6 @@ import {
 
 import { linkGroup } from '@/fields/linkGroup'
 import { badge } from '@/fields/badge'
-import { StyledList } from '@/blocks/StyledList/config'
 
 const editorWithStyledList = lexicalEditor({
   features: ({ rootFeatures }) => {
@@ -19,7 +18,7 @@ const editorWithStyledList = lexicalEditor({
       HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
       FixedToolbarFeature(),
       InlineToolbarFeature(),
-      BlocksFeature({ blocks: [StyledList] }),
+      BlocksFeature({ blocks: ['styledListBlock'] }),
     ]
   },
 })

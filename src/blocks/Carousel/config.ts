@@ -21,7 +21,7 @@ const richTextEditor = lexicalEditor({
       ...rootFeatures,
       FixedToolbarFeature(),
       InlineToolbarFeature(),
-      BlocksFeature({ blocks: [StyledList] }),
+      BlocksFeature({ blocks: ['styledListBlock'] }),
     ]
   },
 })
