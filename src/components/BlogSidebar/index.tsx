@@ -22,12 +22,12 @@ export const BlogSidebar = ({ post }: { post: BlogPost }) => {
           </ul>
         </div>
       )} */}
-      <ScrollArea className="bg-background-neutral-subtle relative rounded-3xl lg:h-[calc(100vh-var(--header-plus-admin-bar-height)-160px)] lg:max-h-fit">
+      <ScrollArea className="xlg:max-h-fit relative rounded-3xl bg-background-neutral-subtle lg:max-h-[calc(100vh-var(--header-plus-admin-bar-height)-160px)]">
         <div className="space-y-4 p-6">
           <h2 className="text-body-md font-medium text-(color:--color-base-primary)">
             {t('inThisArticle')}:{' '}
           </h2>
-          <hr className="border-border w-full" />
+          <hr className="w-full border-border" />
           <HeadingLinks
             className="top-(--header-height) ms-0"
             data={post.content}
