@@ -105,12 +105,12 @@ export const Posts: CollectionConfig<'blog-posts'> = {
                     HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
                     BlocksFeature({
                       blocks: [
-                        Banner,
-                        CallToActionBlock,
-                        FaqBlock,
-                        GalleryBlock,
-                        MediaBlock,
-                        StyledList,
+                        'customHtmlBlock',
+                        'callToActionBlock',
+                        'faqBlock',
+                        'galleryBlock',
+                        'mediaBlock',
+                        'styledListBlock',
                       ],
                     }),
                     UploadFeature({}),
