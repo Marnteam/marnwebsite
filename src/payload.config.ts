@@ -30,6 +30,7 @@ import { FAQ } from './collections/FAQ'
 
 //blocks
 import { ArchiveBlock } from '@/blocks/ArchiveBlock/config'
+import { Banner } from './blocks/Banner/config'
 import { BlogBlock } from './blocks/Blog/config'
 import { CallToActionBlock } from '@/blocks/CallToAction/config'
 import { CustomHtmlBlock } from '@/blocks/CustomHTML/config'
@@ -139,6 +140,7 @@ export default buildConfig({
 
   blocks: [
     ArchiveBlock,
+    Banner,
     BlogBlock,
     CallToActionBlock,
     CarouselBlock,
