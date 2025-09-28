@@ -83,7 +83,7 @@ export default async function Post({ params: paramsPromise }: Args) {
       <PayloadRedirects disableNotFound url={url} />
 
       {draft && <LivePreviewListener />}
-      <div className="px-space-site sticky top-(--header-plus-admin-bar-height) mx-auto mb-6 max-w-[96rem]">
+      <div className="sticky top-(--header-plus-admin-bar-height) mx-auto mb-6 max-w-[96rem] px-space-site">
         <Breadcrumb className="xmx-space-site">
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -92,13 +92,15 @@ export default async function Post({ params: paramsPromise }: Args) {
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link href={`/blog/category/${(post.categories?.[0] as Category).slug}`}>
-                  {(post.categories?.[0] as Category).title}
-                </Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
+            {post.categories && post.categories.length > 0 && (
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href={`/blog/category/${(post.categories?.[0] as Category).slug}`}>
+                    {(post.categories?.[0] as Category).title}
+                  </Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            )}
           </BreadcrumbList>
         </Breadcrumb>
       </div>
@@ -107,9 +109,9 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-4">
         <div className="xlg:mx-space-site relative">
-          <div className="px-space-site gap-space-xl *:pt-space-xl z-2 flex w-full flex-col-reverse lg:flex-row lg:items-start lg:justify-between">
+          <div className="z-2 flex w-full flex-col-reverse gap-space-xl px-space-site *:pt-space-xl lg:flex-row lg:items-start lg:justify-between">
             <RichText
-              className="rtl:lg:pr-space-site ltr:lg:pl-space-site mx-0 w-full max-w-4xl overflow-x-hidden"
+              className="mx-0 w-full max-w-4xl overflow-x-hidden ltr:lg:pl-space-site rtl:lg:pr-space-site"
               data={post.content}
               enableGutter={false}
               converters={blogConverters}
