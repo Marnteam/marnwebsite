@@ -1,0 +1,65 @@
+{
+  "?xml": "",
+  "rss": {
+    "channel": {
+      "title": "Marn",
+      "link": "https://marn.com/blog",
+      "description": "مدونة مرن لأحدث أخبار تكنولوجيا المدفوعات",
+      "pubDate": "Mon, 22 Sep 2025 14:43:10 +0000",
+      "language": "en-US",
+      "wp:wxr_version": 1.2,
+      "wp:base_site_url": "https://marn.com/blog",
+      "wp:base_blog_url": "https://marn.com/blog",
+      "wp:author": [
+        {
+          "wp:author_id": 13,
+          "wp:author_login": "m.sewaidan",
+          "wp:author_email": "msewaidan@marn.com",
+          "wp:author_display_name": "فريق مرن",
+          "wp:author_first_name": "Mennah",
+          "wp:author_last_name": "Sewaidan"
+        },
+        {
+          "wp:author_id": 14,
+          "wp:author_login": "hady",
+          "wp:author_email": "abdelhady.s3d@gmail.com",
+          "wp:author_display_name": "hady",
+          "wp:author_first_name": "",
+          "wp:author_last_name": ""
+        },
+        {
+          "wp:author_id": 8,
+          "wp:author_login": "Ziyad",
+          "wp:author_email": "Ziyad@marn.com",
+          "wp:author_display_name": "Ziyad",
+          "wp:author_first_name": "",
+          "wp:author_last_name": ""
+        },
+        {
+          "wp:author_id": 18,
+          "wp:author_login": "Omar",
+          "wp:author_email": "omar@byvalence.com",
+          "wp:author_display_name": "Omar",
+          "wp:author_first_name": "Omar",
+          "wp:author_last_name": ""
+        },
+        {
+          "wp:author_id": 19,
+          "wp:author_login": "Walaa",
+          "wp:author_email": "w.alabdullah@marn.com",
+          "wp:author_display_name": "Walaa Alabdullah",
+          "wp:author_first_name": "Walaa",
+          "wp:author_last_name": "Alabdullah"
+        },
+        {
+          "wp:author_id": 15,
+          "wp:author_login": "Mohhamed AlHefzy",
+          "wp:author_email": "alhefzy@marn.com",
+          "wp:author_display_name": "Mohammed AlHefzy",
+          "wp:author_first_name": "Mohammed",
+          "wp:author_last_name": "AlHefzy"
+        }
+      ]
+    }
+  }
+}
