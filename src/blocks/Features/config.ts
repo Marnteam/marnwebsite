@@ -91,7 +91,7 @@ export const FeaturesBlock: Block = {
       admin: {
         condition: (_, siblingData, { blockData }) => ['04', '06', '07'].includes(blockData?.type),
       },
-      // localized: true,
+      localized: true,
     },
     {
       type: 'collapsible',
@@ -148,7 +148,7 @@ export const FeaturesBlock: Block = {
           type: 'upload',
           relationTo: 'media',
           label: 'Image',
-          // localized: true,
+          localized: true,
           admin: {
             condition: (_, siblingData, { blockData }) =>
               ['01', '02', '03', '04', '05', '08', '09', '10', '11', '12'].includes(

@@ -87,7 +87,7 @@ export const CarouselBlock: Block = {
           type: 'upload',
           relationTo: 'media',
           label: 'Image',
-          // localized: true,
+          localized: true,
         },
         iconPickerField({
           name: 'icon',
