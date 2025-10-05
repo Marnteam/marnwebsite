@@ -10,7 +10,6 @@ import {
   lexicalEditor,
   UploadFeature,
 } from '@payloadcms/richtext-lexical'
-import { ImagePasteFeature } from '@/components/RichText/ImagePasteFeature/feature.server'
 
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
@@ -114,7 +113,6 @@ export const Posts: CollectionConfig<'blog-posts'> = {
                       ],
                     }),
                     UploadFeature({}),
-                    ImagePasteFeature(),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),
