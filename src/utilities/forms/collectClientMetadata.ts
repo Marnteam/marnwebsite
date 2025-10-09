@@ -3,6 +3,7 @@ import { type SubmissionMetadata } from '@/blocks/Form/types'
 const ATTRIBUTION_STORAGE_KEY = 'marn:form:attribution'
 const ATTRIBUTION_TTL_MS = 90 * 24 * 60 * 60 * 1000 // 90 days
 const STORAGE_ENABLED = process.env.NEXT_PUBLIC_FORM_METADATA_STORAGE !== 'false'
+const HUBSPOT_COOKIE_NAME = 'hubspotutk'
 
 const UTM_PARAM_MAP: Record<string, string> = {
   utmSource: 'utm_source',
@@ -147,6 +148,38 @@ const extractReferrerHost = (referrer: string): string | undefined => {
   }
 }
 
+const readCookie = (name: string): string | undefined => {
+  if (!isBrowser() || typeof document === 'undefined') return undefined
+
+  const cookieString = document.cookie || ''
+  if (!cookieString) return undefined
+
+  const pairs = cookieString.split(';')
+
+  for (const pair of pairs) {
+    const [rawKey, ...rawValueParts] = pair.split('=')
+    if (!rawKey) continue
+
+    if (rawKey.trim() !== name) continue
+
+    const rawValue = rawValueParts.join('=')
+    if (!rawValue) return undefined
+
+    const trimmedValue = rawValue.trim()
+
+    try {
+      const decoded = decodeURIComponent(trimmedValue)
+      const normalised = normaliseValue(decoded)
+      if (normalised) return normalised
+    } catch {
+      const normalised = normaliseValue(trimmedValue)
+      if (normalised) return normalised
+    }
+  }
+
+  return undefined
+}
+
 const collectBrowserMetadata = (): SubmissionMetadata => {
   if (!isBrowser()) return {}
 
@@ -178,6 +211,11 @@ const collectBrowserMetadata = (): SubmissionMetadata => {
     if (pagePath) {
       metadata.pagePath = pagePath
     }
+  }
+
+  const hutk = readCookie(HUBSPOT_COOKIE_NAME)
+  if (hutk) {
+    metadata.hutk = hutk
   }
 
   return metadata
