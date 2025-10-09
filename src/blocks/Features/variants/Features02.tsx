@@ -31,7 +31,7 @@ export const Features02: React.FC<Features02Props> = ({ columns, readMoreLabel }
   if (!safeColumns.length) return null
 
   return (
-    <div className="gap-xs py-xl container grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12">
+    <div className="container grid grid-cols-1 gap-xs py-xl md:grid-cols-4 lg:grid-cols-12">
       {safeColumns.map((column, index) => {
         const { content, image, size } = column
         const lgColSpanClass = colSpanClass[size || 'full']
@@ -44,7 +44,7 @@ export const Features02: React.FC<Features02Props> = ({ columns, readMoreLabel }
             viewport={{ once: true, amount: 0.3 }}
             variants={itemVariants}
             className={cn(
-              'gap-xs group rounded-space-sm bg-background-neutral col-span-4 flex flex-col p-4',
+              'group col-span-4 flex flex-col gap-xs rounded-3xl bg-background-neutral p-4',
               lgColSpanClass,
               {
                 'lg:flex-row': size === 'full',
@@ -83,15 +83,15 @@ function FeatureCardContent({
   return (
     <>
       <div
-        className={cn('gap-xs p-xs flex w-full flex-col', {
-          'lg:pe-md lg:basis-1/2': size === 'full',
+        className={cn('flex w-full flex-col gap-xs p-xs', {
+          'lg:basis-1/2 lg:pe-md': size === 'full',
         })}
       >
         {column.enableBadge && column.badge && <Badge {...column.badge} />}
         {content && (
-          <div className="gap-xs flex flex-col">
+          <div className="flex flex-col gap-xs">
             {content.title && (
-              <h3 className="text-h3 text-base-primary font-medium">{content.title}</h3>
+              <h3 className="text-h3 font-medium text-base-primary">{content.title}</h3>
             )}
             {content.subtitle && <RichText data={content.subtitle} />}
           </div>
@@ -110,10 +110,10 @@ function FeatureCardContent({
       {image && (
         <Media
           resource={image}
-          className={cn('group bg-background w-full flex-1 overflow-hidden rounded-lg', {
+          className={cn('group w-full flex-1 overflow-hidden rounded-lg bg-background', {
             'flex-auto lg:basis-1/2': size === 'full',
           })}
-          imgClassName="w-full group-hover:scale-102 transition-all duration-300 h-full object-cover"
+          imgClassName="h-full w-full object-cover transition-all duration-300 group-hover:scale-102"
         />
       )}
     </>

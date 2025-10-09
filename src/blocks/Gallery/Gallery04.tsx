@@ -59,7 +59,7 @@ export const Gallery04: React.FC<Gallery04Props> = ({ interactiveGallery, classN
   if (!interactiveGallery || interactiveGallery.length === 0) return null
 
   return (
-    <div className={cn('py-xl relative container w-full', className)}>
+    <div className={cn('relative container w-full py-xl', className)}>
       <Carousel
         slidesPerView={1}
         className="w-full"
@@ -72,14 +72,14 @@ export const Gallery04: React.FC<Gallery04Props> = ({ interactiveGallery, classN
               {typeof item.image === 'object' && item.image !== null && (
                 <Media
                   resource={item.image}
-                  className="rounded-space-sm bg-background-neutral-subtle h-full w-full overflow-clip object-cover"
+                  className="h-full w-full overflow-clip rounded-3xl bg-background-neutral-subtle object-cover"
                 />
               )}
             </CarouselItem>
           ))}
         </CarouselContent>
       </Carousel>
-      <div className="max-lg:mt-sm space-y-sm p-sm z-1 h-fit w-full overflow-hidden rounded-xl bg-neutral-950 max-lg:relative lg:absolute lg:right-[calc(var(--spacing-site)*2)] lg:bottom-[calc(var(--spacing-xl)+var(--spacing-site))] lg:max-w-[400px]">
+      <div className="z-1 h-fit w-full space-y-sm overflow-hidden rounded-xl bg-neutral-950 p-sm max-lg:relative max-lg:mt-sm lg:absolute lg:right-[calc(var(--spacing-site)*2)] lg:bottom-[calc(var(--spacing-xl)+var(--spacing-site))] lg:max-w-[400px]">
         <TransitionPanel
           activeIndex={activeIndex}
           variants={{
@@ -117,7 +117,7 @@ export const Gallery04: React.FC<Gallery04Props> = ({ interactiveGallery, classN
             </div>
           ))}
         </TransitionPanel>
-        <div className="text-body-sm end-sm top-sm absolute text-white/70">
+        <div className="absolute end-sm top-sm text-body-sm text-white/70">
           {activeIndex + 1} / {interactiveGallery.length}
         </div>
         <div className="flex justify-between">

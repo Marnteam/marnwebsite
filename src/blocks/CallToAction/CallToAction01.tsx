@@ -33,11 +33,11 @@ export const CallToAction01: React.FC<CallToActionProps> = ({
   const y = useTransform(scrollYProgress, [0, 1], ['-50%', '50%'])
 
   return (
-    <div className={cn('py-xl container', className)} ref={containerRef}>
-      <div className="rounded-space-sm relative overflow-hidden">
+    <div className={cn('container py-xl', className)} ref={containerRef}>
+      <div className="relative overflow-hidden rounded-3xl">
         <div
           data-theme="dark"
-          className="rounded-space-sm p-md gap-sm relative z-1 flex aspect-[9/16] h-auto w-full flex-col items-start justify-end overflow-hidden bg-transparent md:aspect-video md:flex-row md:items-end md:justify-between"
+          className="relative z-1 flex aspect-[9/16] h-auto w-full flex-col items-start justify-end gap-sm overflow-hidden rounded-3xl bg-transparent p-md md:aspect-video md:flex-row md:items-end md:justify-between"
         >
           {richText && (
             <RichText className="mx-0 lg:max-w-[32rem]" data={richText} enableGutter={false} />
@@ -56,7 +56,7 @@ export const CallToAction01: React.FC<CallToActionProps> = ({
             <Media
               fill
               className="relative h-full w-full object-cover"
-              imgClassName="object-cover rounded-space-sm overflow-hidden"
+              imgClassName="overflow-hidden rounded-3xl object-cover"
               media={mediaGroup}
             />
           </motion.div>

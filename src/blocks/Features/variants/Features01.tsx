@@ -28,11 +28,11 @@ export const Features01: React.FC<FeaturesBlock> = ({ columns }) => {
   }
 
   return (
-    <div className="bg-background gap-xs py-xl container grid grid-cols-1">
+    <div className="container grid grid-cols-1 gap-xs bg-background py-xl">
       {rows.map((row, index) => (
         <div
           key={index}
-          className={cn('gap-xs grid w-full grid-cols-1', {
+          className={cn('grid w-full grid-cols-1 gap-xs', {
             'md:grid-cols-2': row?.length === 2,
           })}
         >
@@ -46,20 +46,20 @@ export const Features01: React.FC<FeaturesBlock> = ({ columns }) => {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.3 }}
                 variants={itemVariants}
-                className={cn('rounded-space-sm bg-background-neutral w-full p-4')}
+                className={cn('w-full rounded-3xl bg-background-neutral p-4')}
               >
                 {appReference && (
-                  <AppReference appReference={appReference} className="py-xs px-xs" />
+                  <AppReference appReference={appReference} className="px-xs py-xs" />
                 )}
                 <div
-                  className={cn('gap-xs flex flex-col', {
+                  className={cn('flex flex-col gap-xs', {
                     'md:flex-row': size === 'full' || row?.length === 1,
                   })}
                 >
                   {content && (
-                    <div className="pe-md p-xs ps-xs gap-xs flex w-full flex-col">
+                    <div className="flex w-full flex-col gap-xs p-xs ps-xs pe-md">
                       {content.title && (
-                        <h3 className="text-h3 text-base-primary font-medium">{content.title}</h3>
+                        <h3 className="text-h3 font-medium text-base-primary">{content.title}</h3>
                       )}
                       {content.subtitle && <RichText data={content.subtitle} />}
                     </div>
@@ -67,8 +67,8 @@ export const Features01: React.FC<FeaturesBlock> = ({ columns }) => {
                   {image && (
                     <Media
                       resource={image}
-                      className="group bg-background h-auto w-full overflow-hidden rounded-lg"
-                      imgClassName="w-full group-hover:scale-105 transition-all duration-300 h-auto aspect-[4/3] object-cover"
+                      className="group h-auto w-full overflow-hidden rounded-lg bg-background"
+                      imgClassName="aspect-[4/3] h-auto w-full object-cover transition-all duration-300 group-hover:scale-105"
                     />
                   )}
                 </div>

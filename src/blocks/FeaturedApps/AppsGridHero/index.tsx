@@ -77,7 +77,7 @@ const ContentSection: React.FC<{ blockHeader: BlockHeaderType }> = ({ blockHeade
   const { badge, headerText, links } = blockHeader || {}
 
   return (
-    <div className="p-site gap-sm flex h-full flex-col items-center justify-center text-center">
+    <div className="flex h-full flex-col items-center justify-center gap-sm p-site text-center">
       {headerText && (
         <RichText
           className="mx-auto text-center text-balance [&_p]:leading-relaxed"
@@ -132,7 +132,7 @@ const AnimatedAppIcon: React.FC<{
       <Media
         resource={app.icon as MediaType}
         className="h-full w-full"
-        imgClassName="object-cover rounded-2xl lg:rounded-3xl w-full h-full"
+        imgClassName="h-full w-full rounded-2xl object-cover lg:rounded-3xl"
       />
     </motion.div>
   )
@@ -248,7 +248,7 @@ export const AppsGridHero: React.FC<AppsGridClientProps> = ({ apps, blockHeader 
             <div
               key={idx}
               className={cn(
-                'bg-neutral/2 hover:bg-background relative rounded-2xl transition-colors lg:rounded-3xl',
+                'relative rounded-2xl bg-neutral/2 transition-colors hover:bg-background lg:rounded-3xl',
                 cell.isReserved && 'pointer-events-none opacity-0',
               )}
             >
@@ -267,7 +267,7 @@ export const AppsGridHero: React.FC<AppsGridClientProps> = ({ apps, blockHeader 
 
           {/*  central content block  */}
           <div
-            className="rounded-space-sm absolute z-1"
+            className="absolute z-1 rounded-3xl"
             style={{
               gridColumn: `${RESERVED.START_COL + 1} / span ${
                 RESERVED.END_COL - RESERVED.START_COL + 1

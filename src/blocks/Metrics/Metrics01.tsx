@@ -17,7 +17,7 @@ export const Metrics01: React.FC<MetricsBlockProps> = ({ stats, enableLogos, log
         return (
           <Icon
             icon="material-symbols:arrow-upward-alt-rounded"
-            className="text-base-tertiary size-6"
+            className="size-6 text-base-tertiary"
             height="none"
           />
         )
@@ -25,7 +25,7 @@ export const Metrics01: React.FC<MetricsBlockProps> = ({ stats, enableLogos, log
         return (
           <Icon
             icon="material-symbols:arrow-downward-alt-rounded"
-            className="text-base-tertiary size-6"
+            className="size-6 text-base-tertiary"
             height="none"
           />
         )
@@ -80,10 +80,10 @@ export const Metrics01: React.FC<MetricsBlockProps> = ({ stats, enableLogos, log
   }
 
   return (
-    <div className="py-xl container">
+    <div className="container py-xl">
       <div
         className={cn(
-          'gap-xs grid grid-cols-2 content-center',
+          'grid grid-cols-2 content-center gap-xs',
           stats?.length === 1 && 'grid-cols-1 lg:grid-cols-2',
           stats?.length === 3 && 'lg:grid-cols-3',
         )}
@@ -93,18 +93,18 @@ export const Metrics01: React.FC<MetricsBlockProps> = ({ stats, enableLogos, log
             key={stat.id || index}
             id={`stat-${index}`}
             className={cn(
-              'bg-card rounded-space-sm p-6',
+              'rounded-3xl bg-card p-6',
               stats?.length === 3 && index === 2 && 'max-lg:col-span-2',
             )}
           >
             <div className="flex h-full flex-col items-center justify-between">
               <StatDisplay
                 value={stat.value}
-                className="text-base-primary flex-1 text-(length:--text-h3) font-medium"
+                className="flex-1 text-(length:--text-h3) font-medium text-base-primary"
               />
               <div className="flex flex-row items-center justify-center text-center">
                 {renderIndicator(stat.indicator)}
-                <p className="text-base-tertiary text-body-md">{stat.label}</p>
+                <p className="text-body-md text-base-tertiary">{stat.label}</p>
               </div>
             </div>
           </div>
@@ -113,14 +113,14 @@ export const Metrics01: React.FC<MetricsBlockProps> = ({ stats, enableLogos, log
           <div
             key={'logos'}
             className={cn(
-              'bg-background-neutral rounded-space-sm flex w-full flex-row items-center p-6 pb-8',
+              'flex w-full flex-row items-center rounded-3xl bg-background-neutral p-6 pb-8',
               stats?.length === 1 && 'lg:col-span-1',
               stats?.length === 3 && 'col-span-2 lg:col-span-3',
               stats?.length === 4 && 'lg:col-span-2',
               'col-span-full',
             )}
           >
-            <div className="gap-space-md flex w-full flex-col items-center">
+            <div className="flex w-full flex-col items-center gap-space-md">
               {headline && <p className="text-body-md text-base-tertiary">{headline}</p>}
               <ul
                 dir="ltr"

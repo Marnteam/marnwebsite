@@ -32,9 +32,9 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, linkLabe
   const { companyLogo } = company
 
   return (
-    <div className="bg-background-neutral rounded-space-sm grid w-full max-w-[90rem] grid-cols-1 lg:grid-cols-2 lg:items-stretch">
-      <div className="gap-md p-md pb-xs md:pb-md flex w-full flex-col justify-start md:justify-between">
-        <div className="gap-sm flex flex-grow flex-col justify-start">
+    <div className="grid w-full max-w-[90rem] grid-cols-1 rounded-3xl bg-background-neutral lg:grid-cols-2 lg:items-stretch">
+      <div className="flex w-full flex-col justify-start gap-md p-md pb-xs md:justify-between md:pb-md">
+        <div className="flex flex-grow flex-col justify-start gap-sm">
           {companyLogo && (
             <Media
               resource={companyLogo}
@@ -45,14 +45,14 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, linkLabe
             <RichText
               data={quote}
               enableProse={false}
-              className="text-base-primary text-(length:--text-h3) font-medium"
+              className="text-(length:--text-h3) font-medium text-base-primary"
             />
           )}
         </div>
 
         {stats && stats.length > 0 && (
           <div
-            className="border-neutral/10 gap-xs pt-xs grid w-full grid-cols-2 border-t lg:grid-cols-[repeat(var(--cols),minmax(0,1fr))]"
+            className="grid w-full grid-cols-2 gap-xs border-t border-neutral/10 pt-xs lg:grid-cols-[repeat(var(--cols),minmax(0,1fr))]"
             style={
               {
                 '--cols': stats?.length || 0,
@@ -66,24 +66,24 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, linkLabe
         )}
         <div className="flex flex-row items-center justify-between">
           {authorInfo && (
-            <div className="gap-xs flex flex-row items-center">
+            <div className="flex flex-row items-center gap-xs">
               {authorInfo.avatar && (
                 <Media
                   resource={authorInfo.avatar}
                   fill
-                  className="size-lg relative overflow-hidden rounded-full"
+                  className="relative size-lg overflow-hidden rounded-full"
                   imgClassName="object-cover"
                 />
               )}
               <div>
-                <p className="text-base-primary text-body-sm font-medium">{authorInfo.name}</p>
+                <p className="text-body-sm font-medium text-base-primary">{authorInfo.name}</p>
                 <p className="text-body-sm text-base-secondary">{authorInfo.title}</p>
               </div>
             </div>
           )}
           {enableCaseStudy && slug && (
             <CMSLink
-              className="text-body-md text-base-secondary relative font-medium"
+              className="relative text-body-md font-medium text-base-secondary"
               variant="link"
               url={`/customers/${slug}`}
             >
@@ -93,7 +93,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, linkLabe
         </div>
       </div>
       {featuredImage && (
-        <div className="p-xs flex items-start justify-start">
+        <div className="flex items-start justify-start p-xs">
           <Media
             resource={featuredImage}
             fill
@@ -108,18 +108,18 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, linkLabe
 
 export const TestimonialsBlock03: React.FC<Props> = ({ testimonials, linkLabel }) => {
   return (
-    <section className="py-xl relative container">
+    <section className="relative container py-xl">
       <Carousel slidesPerView={1}>
         <CarouselContent className="-ms-sm">
           {testimonials.map((testimonial, index) => (
-            <CarouselItem key={testimonial.id || index} className="ps-sm basis-full">
+            <CarouselItem key={testimonial.id || index} className="basis-full ps-sm">
               <TestimonialCard testimonial={testimonial} linkLabel={linkLabel} />
             </CarouselItem>
           ))}
         </CarouselContent>
         {testimonials.length > 1 && (
           <>
-            <CarouselNavigation className="mt-xs relative justify-between" />
+            <CarouselNavigation className="relative mt-xs justify-between" />
             <CarouselIndicator className="absolute bottom-0 h-10" />
           </>
         )}

@@ -37,21 +37,21 @@ export const Hero01: React.FC<Page['hero']> = ({
 
   return (
     <section ref={containerRef} className="bg-background">
-      <div className="pb-site container h-screen pt-(--header-plus-admin-bar-height)">
-        <div className="rounded-space-sm relative z-0 h-full w-full overflow-hidden">
+      <div className="container h-screen pt-(--header-plus-admin-bar-height) pb-site">
+        <div className="relative z-0 h-full w-full overflow-hidden rounded-3xl">
           <div
             data-theme="dark"
-            className="p-md lg:p-xl absolute bottom-0 z-1 flex w-full flex-col justify-between gap-4"
+            className="absolute bottom-0 z-1 flex w-full flex-col justify-between gap-4 p-md lg:p-xl"
           >
             <div className="flex w-full flex-col justify-between gap-4 lg:flex-row lg:items-center">
-              <div className="gap-md flex h-full max-w-[36rem] flex-col items-start justify-center">
+              <div className="flex h-full max-w-[36rem] flex-col items-start justify-center gap-md">
                 {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
 
                 {richText && (
                   <RichText
                     className={cn(
                       'flex w-full flex-col items-start text-start font-medium',
-                      '[&>h3,h4,p]:text-base-tertiary [&>h3,h4,p]:mt-space-xs [&>h3,h4,p]:leading-normal [&>p]:text-(length:--text-body-lg) [&>p]:font-medium',
+                      '[&>h3,h4,p]:mt-space-xs [&>h3,h4,p]:leading-normal [&>h3,h4,p]:text-base-tertiary [&>p]:text-(length:--text-body-lg) [&>p]:font-medium',
                     )}
                     data={richText}
                     enableGutter={false}
@@ -70,13 +70,13 @@ export const Hero01: React.FC<Page['hero']> = ({
                     })}
                   </ul>
                 )}
-                {caption && <p className="text-base-tertiary text-sm">{caption}</p>}
+                {caption && <p className="text-sm text-base-tertiary">{caption}</p>}
               </div>
             </div>
             {logos && logosGroup && logosGroup.length > 0 && (
-              <div className="gap-space-md md:gap-space-lg flex w-full flex-col items-center">
+              <div className="flex w-full flex-col items-center gap-space-md md:gap-space-lg">
                 {headline && (
-                  <p className="text-body-sm text-base-quaternary font-medium">{headline}</p>
+                  <p className="text-body-sm font-medium text-base-quaternary">{headline}</p>
                 )}
                 <ul
                   dir="ltr"

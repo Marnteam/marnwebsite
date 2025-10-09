@@ -16,7 +16,7 @@ export const Carousel03: React.FC<CarouselBlock> = ({ columns }) => {
   if (!columns || columns.length === 0) return null
 
   return (
-    <div className="py-md container pt-0">
+    <div className="container py-md pt-0">
       <Carousel
         slidesPerView={{
           sm: 1, //   ≥640px: 1 slide
@@ -24,7 +24,7 @@ export const Carousel03: React.FC<CarouselBlock> = ({ columns }) => {
           lg: 3, //  ≥1024px: 4 slides
         }}
       >
-        {columns.length > 1 && <CarouselNavigation className="mb-xs relative justify-start" />}
+        {columns.length > 1 && <CarouselNavigation className="relative mb-xs justify-start" />}
         <CarouselContent className="-ms-xs">
           {columns.map((column, index) => {
             const { image, content } = column
@@ -32,17 +32,17 @@ export const Carousel03: React.FC<CarouselBlock> = ({ columns }) => {
             return (
               <CarouselItem key={index} className="ps-xs">
                 <Card className="h-full w-full p-4 transition-colors">
-                  <CardContent className="rounded-space-sm gap-xs flex h-full flex-col items-start">
+                  <CardContent className="flex h-full flex-col items-start gap-xs rounded-3xl">
                     {image && (
                       <Media
                         resource={image}
                         className="h-auto w-full overflow-hidden rounded-lg"
-                        imgClassName="w-full h-auto aspect-square object-cover"
+                        imgClassName="aspect-square h-auto w-full object-cover"
                       />
                     )}
                     {content && (
-                      <div className="p-xs pe-md flex flex-col">
-                        <h3 className="text-body-lg text-base-primary font-medium">
+                      <div className="flex flex-col p-xs pe-md">
+                        <h3 className="text-body-lg font-medium text-base-primary">
                           {content.title}
                         </h3>
                         {content.subtitle && (
@@ -57,7 +57,7 @@ export const Carousel03: React.FC<CarouselBlock> = ({ columns }) => {
             )
           })}
         </CarouselContent>
-        {columns.length > 1 && <CarouselIndicator className="mt-xs relative bottom-0 h-10" />}
+        {columns.length > 1 && <CarouselIndicator className="relative bottom-0 mt-xs h-10" />}
       </Carousel>
     </div>
   )

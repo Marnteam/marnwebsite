@@ -26,19 +26,19 @@ export const Stat: React.FC<{
   <div
     key={stat.id || index}
     className={cn(
-      'bg-background-neutral rounded-space-sm flex flex-col justify-center p-(length:--spacing-md)',
+      'flex flex-col justify-center rounded-3xl bg-background-neutral p-(length:--spacing-md)',
       className,
     )}
   >
-    <span className="text-h3 text-base-primary font-medium">{stat.value}</span>
+    <span className="text-h3 font-medium text-base-primary">{stat.value}</span>
     <div className="flex items-center gap-1">
       {stat.indicator === 'increase' && (
-        <ChevronUp className="text-base-tertiary size-4 flex-none" />
+        <ChevronUp className="size-4 flex-none text-base-tertiary" />
       )}
       {stat.indicator === 'decrease' && (
-        <ChevronDown className="text-base-tertiary size-4 flex-none" />
+        <ChevronDown className="size-4 flex-none text-base-tertiary" />
       )}
-      <span className="text-base-tertiary text-body-sm font-normal">{stat.label}</span>
+      <span className="text-body-sm font-normal text-base-tertiary">{stat.label}</span>
     </div>
   </div>
 )

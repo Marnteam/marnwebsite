@@ -25,11 +25,11 @@ export const IntegrationCard: React.FC<{
     // Use background variable and explicit rounding from Figma
     <Link
       href={href}
-      className="bg-background-neutral group hover:shadow-border rounded-space-sm flex h-full w-full flex-col overflow-hidden lg:flex-row"
+      className="group flex h-full w-full flex-col overflow-hidden rounded-3xl bg-background-neutral hover:shadow-border lg:flex-row"
     >
       {/* Content Section */}
-      <div className="p-md flex w-full flex-col justify-between text-start">
-        <div className="gap-sm flex flex-col items-start justify-start">
+      <div className="flex w-full flex-col justify-between p-md text-start">
+        <div className="flex flex-col items-start justify-start gap-sm">
           {/* Integration Badge (Icon + Name) */}
           <div className="flex items-start justify-end gap-4">
             {icon && (
@@ -40,7 +40,7 @@ export const IntegrationCard: React.FC<{
               />
             )}
             <div className="flex flex-col gap-2">
-              {name && <span className="text-body-lg text-base-secondary font-medium">{name}</span>}
+              {name && <span className="text-body-lg font-medium text-base-secondary">{name}</span>}
               {categories && (
                 <span className="flex flex-wrap gap-2">
                   {ecosystem &&
@@ -75,21 +75,21 @@ export const IntegrationCard: React.FC<{
             </div>
           </div>
           {/* Title and Description */}
-          <div className="gap-xs flex flex-col">
+          <div className="flex flex-col gap-xs">
             {/* {tagline && <h3 className="text-h3 text-base-primary font-medium">{tagline}</h3>} */}
             {/* Render summary using RichText component with `data` prop */}
             {summary && (
               <RichText
                 data={summary}
                 enableGutter={false}
-                className="text-body-sm text-base-secondary font-normal"
+                className="text-body-sm font-normal text-base-secondary"
               />
             )}
           </div>
         </div>
         {/* Link Button */}
         {link && (
-          <div className="text-body-sm mt-xs text-base-tertiary hover:text-base-primary flex w-fit flex-row items-center gap-2 px-0 py-0 hover:bg-transparent">
+          <div className="mt-xs flex w-fit flex-row items-center gap-2 px-0 py-0 text-body-sm text-base-tertiary hover:bg-transparent hover:text-base-primary">
             <span>{locale === 'ar' ? 'المزيد' : 'Learn More'}</span>
             <Icon
               icon="tabler:caret-left-filled"

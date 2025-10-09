@@ -18,7 +18,7 @@ export const Features03: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns?.length) return null
 
   return (
-    <div className="bg-background py-xl gap-md container grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12">
+    <div className="container grid grid-cols-1 gap-md bg-background py-xl md:grid-cols-4 lg:grid-cols-12">
       {columns.map((column, index) => {
         const { image, size = 'full', content } = column
         const lgColSpanClass = colSpanClass[size || 'full']
@@ -26,31 +26,31 @@ export const Features03: React.FC<FeaturesBlock> = ({ columns }) => {
         return (
           <div key={index} className={cn('col-span-full', lgColSpanClass)}>
             <div
-              className={cn('gap-sm flex flex-col', {
+              className={cn('flex flex-col gap-sm', {
                 'md:flex-row md:items-center md:justify-start': size === 'full',
               })}
             >
               {image && (
                 <Media
                   resource={image}
-                  className={cn('rounded-space-sm overflow-hidden', {
+                  className={cn('overflow-hidden rounded-3xl', {
                     'lg:basis-1/2': size === 'full', // Adjust width for full-size columns
                     'w-full': size !== 'full', // Full width for non-full-size columns
                   })}
-                  imgClassName="w-full h-auto aspect-[16/9] object-cover"
+                  imgClassName="aspect-[16/9] h-auto w-full object-cover"
                 />
               )}
               <div
-                className={cn('gap-sm flex flex-col items-start', {
-                  'md:px-md w-full lg:basis-1/2': size === 'full',
+                className={cn('flex flex-col items-start gap-sm', {
+                  'w-full md:px-md lg:basis-1/2': size === 'full',
                   'md:px-sm': size !== 'full',
                 })}
               >
                 {column.enableBadge && column.badge && <Badge {...column.badge} />}
                 {content && (
-                  <div className="gap-xs flex flex-col">
+                  <div className="flex flex-col gap-xs">
                     {content.title && (
-                      <h3 className="text-h2 text-base-primary font-medium">{content.title}</h3>
+                      <h3 className="text-h2 font-medium text-base-primary">{content.title}</h3>
                     )}
                     {content.subtitle && <RichText data={content.subtitle} />}
                   </div>

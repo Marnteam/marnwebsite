@@ -13,8 +13,8 @@ export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, block
   if (!columns || columns.length === 0) return null
 
   return (
-    <div className="gap-md rounded-space-sm py-xl container flex flex-col">
-      <div className="gap-md flex flex-col">
+    <div className="container flex flex-col gap-xs rounded-3xl py-xl">
+      <div className="flex flex-col gap-md">
         {blockHeader && <BlockHeader {...blockHeader} className="px-0" />}
         <motion.div
           variants={containerVariants}
@@ -25,15 +25,15 @@ export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, block
           {blockImage && (
             <Media
               resource={blockImage}
-              className="rounded-space-sm h-auto w-full overflow-hidden lg:basis-1/2"
-              imgClassName="w-full h-auto aspect-[16/9] object-cover"
+              className="h-auto w-full overflow-hidden rounded-3xl lg:basis-1/2"
+              imgClassName="aspect-[16/9] h-auto w-full object-cover"
             />
           )}
         </motion.div>
       </div>
-      <hr className="border-border" />
+
       <motion.div
-        className="gap-xs grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4"
+        className="grid grid-cols-2 gap-xs md:grid-cols-2 lg:grid-cols-(--columns)"
         style={{ '--columns': `repeat(${columns.length}, minmax(0, 1fr))` } as React.CSSProperties}
         variants={containerVariants}
         initial="hidden"
@@ -45,13 +45,13 @@ export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, block
           return (
             <motion.div
               key={index}
-              className="gap-sm bg-background-neutral rounded-space-sm p-sm flex flex-col items-start"
+              className="flex flex-col items-start gap-sm rounded-3xl bg-background-neutral p-sm pe-md"
               variants={itemsFling}
             >
               {icon && (
-                <div className="bg-background-neutral-subtle p-xs inline grow-0 rounded-full">
+                <div className="inline-flex grow-0 rounded-full bg-background-neutral-subtle p-xs">
                   <Icon
-                    className="text-base-secondary size-sm"
+                    className="size-sm text-base-secondary"
                     height="none"
                     icon={`material-symbols:${icon}`}
                     color="currentColor"
@@ -60,7 +60,7 @@ export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, block
               )}
               <div className="flex flex-col gap-2">
                 {content?.title && (
-                  <h3 className="text-body-md text-base-primary font-medium">{content.title}</h3>
+                  <h3 className="text-body-md font-medium text-base-primary">{content.title}</h3>
                 )}
                 {content?.subtitle && (
                   <RichText data={content.subtitle} className="[&>p]:text-body-sm" />

@@ -36,7 +36,7 @@ export const TestimonialsBlock01: React.FC<TestimonialsBlock01> = ({ testimonial
     }
   })
   return (
-    <section className="py-space-xl md:py-space-2xl lg:py-space-3xl container">
+    <section className="container py-space-xl md:py-space-2xl lg:py-space-3xl">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {gridItems.map((customer) => {
           const { id, testimonial: testimonialData, cellType, sizeClasses } = customer
@@ -49,7 +49,7 @@ export const TestimonialsBlock01: React.FC<TestimonialsBlock01> = ({ testimonial
 
           // Theme V: Background, Radius (Padding removed)
           const baseClasses =
-            'bg-background-neutral flex flex-col justify-between overflow-hidden rounded-space-sm'
+            'bg-background-neutral flex flex-col justify-between overflow-hidden rounded-3xl'
           // Apply size classes and conditionally add padding
           const itemClasses = cn(
             baseClasses,
@@ -67,13 +67,13 @@ export const TestimonialsBlock01: React.FC<TestimonialsBlock01> = ({ testimonial
                     <RichText
                       data={quote}
                       enableProse={false}
-                      className="text-base-primary text-h4 font-medium"
+                      className="text-h4 font-medium text-base-primary"
                     />
                   </div>
-                  <div className="border-base pt-sm text-body-sm mt-auto border-t font-medium">
+                  <div className="border-base mt-auto border-t pt-sm text-body-sm font-medium">
                     {authorInfo?.name}
                     {authorInfo?.title && (
-                      <span className="text-muted-foreground text-caption block">
+                      <span className="text-caption block text-muted-foreground">
                         {authorInfo.title}
                       </span>
                     )}
@@ -86,7 +86,7 @@ export const TestimonialsBlock01: React.FC<TestimonialsBlock01> = ({ testimonial
                   resource={avatar}
                   fill
                   className="relative h-full w-full rounded-lg"
-                  imgClassName="rounded-lg h-full w-full object-cover"
+                  imgClassName="h-full w-full rounded-lg object-cover"
                 />
               )}
 
@@ -103,11 +103,11 @@ export const TestimonialsBlock01: React.FC<TestimonialsBlock01> = ({ testimonial
               {/* )} */}
 
               {cellType === 'logo' && logo && (
-                <div className="p-md flex h-full w-full flex-col items-center justify-center">
+                <div className="flex h-full w-full flex-col items-center justify-center p-md">
                   <Media
                     resource={logo}
                     className="w-full"
-                    imgClassName="w-full h-auto mx-auto opacity-70"
+                    imgClassName="mx-auto h-auto w-full opacity-70"
                   />
                 </div>
               )}

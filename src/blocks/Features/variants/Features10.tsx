@@ -9,24 +9,24 @@ export const Features10: React.FC<FeaturesBlock> = ({ columns, link, CTALabel })
   if (!columns?.length) return null
   const limitedColumns = columns.slice(0, 3)
   return (
-    <div className="py-xl container grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div className="container grid grid-cols-1 gap-4 py-xl md:grid-cols-2">
       {limitedColumns.map((column, index) => {
         const { image, content } = column
         return (
           <Card key={index} className="p-4">
-            <CardContent className="gap-sm grid grid-cols-2 items-center bg-transparent p-0 md:items-center">
+            <CardContent className="grid grid-cols-2 items-center gap-sm bg-transparent p-0 md:items-center">
               {image && (
                 <div className="h-auto w-full">
                   <Media
                     resource={image}
                     className="h-auto w-full"
-                    imgClassName="w-full h-auto aspect-square object-cover rounded-lg "
+                    imgClassName="aspect-square h-auto w-full rounded-lg object-cover"
                   />
                 </div>
               )}
               {content && (
                 <div className="">
-                  <h3 className="text-body-lg text-base-primary mb-2 font-medium">
+                  <h3 className="mb-2 text-body-lg font-medium text-base-primary">
                     {content?.title}
                   </h3>
                   {content.subtitle && (
@@ -42,7 +42,13 @@ export const Features10: React.FC<FeaturesBlock> = ({ columns, link, CTALabel })
         )
       })}
       {link?.label && (
-        <LinkBlock link={link} className="" label={link?.label} CTALabel={CTALabel || ''} />
+        <LinkBlock
+          link={link}
+          className=""
+          label={link?.label}
+          CTALabel={CTALabel || ''}
+          position="corner"
+        />
       )}
     </div>
   )

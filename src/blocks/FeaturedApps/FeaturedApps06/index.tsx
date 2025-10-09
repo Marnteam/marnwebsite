@@ -20,7 +20,7 @@ interface FeaturedApps06Props {
 
 export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({ cards }) => {
   return (
-    <div className="py-xl container">
+    <div className="container py-xl">
       {/* disable carousel in less than md */}
       <Carousel
         slidesPerView={{
@@ -29,34 +29,34 @@ export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({ cards }) => {
           lg: 3, //  ≥1024px: 3 slides
         }}
       >
-        <CarouselContent className="max-md:gap-space-xs max-md:flex-col">
+        <CarouselContent className="max-md:flex-col max-md:gap-space-xs">
           {cards?.map(({ title, subtitle, appReference, id }) => (
             <CarouselItem key={id} className="md:not-first:ps-space-xs">
               <Card key={id} className="h-full w-full">
-                <CardContent className="rounded-space-sm gap-sm bg-background-neutral">
-                  <div className="gap-xs flex flex-col">
+                <CardContent className="gap-sm rounded-3xl bg-background-neutral">
+                  <div className="flex flex-col gap-xs">
                     <h3 className="text-h3">{title}</h3>
-                    <p className="text-body-md text-base-secondary font-normal">{subtitle}</p>
+                    <p className="text-body-md font-normal text-base-secondary">{subtitle}</p>
                   </div>
-                  <hr className="border-border w-full" />
-                  <div className="gap-xs flex flex-col">
+                  <hr className="w-full border-border" />
+                  <div className="flex flex-col gap-xs">
                     {appReference?.map((app) => {
                       if (typeof app.value === 'string') return null
 
                       return (
                         <CMSLink
                           key={app.value?.id}
-                          className="text-body-lg group text-base-secondary hover:text-base-primary gap-xs flex h-fit flex-row items-center justify-between font-medium hover:no-underline"
+                          className="group flex h-fit flex-row items-center justify-between gap-xs text-body-lg font-medium text-base-secondary hover:text-base-primary hover:no-underline"
                           variant="inline"
                           {...app.value.link}
                           label={null}
                         >
-                          <span className="gap-xs text-body-lg inline-flex items-center">
+                          <span className="inline-flex items-center gap-xs text-body-lg">
                             {app.value?.icon && (
                               <Media
                                 resource={app.value?.icon as MediaType}
                                 className="size-8 shrink-0"
-                                imgClassName="w-full h-full rounded-md aspect-square"
+                                imgClassName="aspect-square h-full w-full rounded-md"
                               />
                             )}
                             {app.value?.name}
@@ -77,7 +77,7 @@ export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({ cards }) => {
         </CarouselContent>
         {cards && cards.length > 1 && (
           <>
-            <CarouselNavigation className="mt-xs relative justify-between max-md:hidden" />
+            <CarouselNavigation className="relative mt-xs justify-between max-md:hidden" />
             <CarouselIndicator className="absolute bottom-0 h-10 max-md:hidden" />
           </>
         )}

@@ -21,7 +21,7 @@ export const Metrics02: React.FC<MetricsBlockProps> = ({
         return (
           <Icon
             icon="material-symbols:arrow-upward-alt-rounded"
-            className="text-base-tertiary size-6"
+            className="size-6 text-base-tertiary"
             height="none"
           />
         )
@@ -29,7 +29,7 @@ export const Metrics02: React.FC<MetricsBlockProps> = ({
         return (
           <Icon
             icon="material-symbols:arrow-downward-alt-rounded"
-            className="text-base-tertiary size-6"
+            className="size-6 text-base-tertiary"
             height="none"
           />
         )
@@ -86,15 +86,15 @@ export const Metrics02: React.FC<MetricsBlockProps> = ({
   }
 
   return (
-    <div className="py-xl container">
-      <div className="gap-xl grid lg:grid-cols-2 lg:items-center">
+    <div className="container py-xl">
+      <div className="grid gap-xl lg:grid-cols-2 lg:items-center">
         {/* Image Section */}
         {media && typeof media === 'object' && (
           <div className="order-2 lg:order-1">
             <Media
               resource={media}
               className="h-auto w-full"
-              imgClassName="w-full h-auto rounded-space-sm object-cover"
+              imgClassName="h-auto w-full rounded-3xl object-cover"
             />
           </div>
         )}
@@ -106,15 +106,15 @@ export const Metrics02: React.FC<MetricsBlockProps> = ({
           )}
         >
           {stats?.map((stat, index) => (
-            <div key={stat.id || index} className="bg-card rounded-space-sm p-6">
+            <div key={stat.id || index} className="rounded-3xl bg-card p-6">
               <div className="flex h-full flex-col items-center justify-between">
                 <StatDisplay
                   value={stat.value}
-                  className="text-base-primary flex-1 text-(length:--text-h3) font-medium"
+                  className="flex-1 text-(length:--text-h3) font-medium text-base-primary"
                 />
                 <div className="flex flex-row items-center justify-center text-center">
                   {renderIndicator(stat.indicator)}
-                  <p className="text-base-tertiary text-body-md">{stat.label}</p>
+                  <p className="text-body-md text-base-tertiary">{stat.label}</p>
                 </div>
               </div>
             </div>
@@ -123,16 +123,16 @@ export const Metrics02: React.FC<MetricsBlockProps> = ({
             <div
               key={'logos'}
               className={cn(
-                'bg-card rounded-space-sm flex w-full flex-row items-center p-6',
+                'flex w-full flex-row items-center rounded-3xl bg-card p-6',
 
                 stats?.length === 1 && 'lg:col-span-1',
                 stats?.length === 3 && 'lg:col-span-3',
                 stats?.length === 4 && 'lg:col-span-2',
               )}
             >
-              <div className="gap-space-md md:gap-space-lg flex w-full flex-col items-start">
+              <div className="flex w-full flex-col items-start gap-space-md md:gap-space-lg">
                 {headline && (
-                  <p className="text-body-sm text-base-quaternary font-medium">{headline}</p>
+                  <p className="text-body-sm font-medium text-base-quaternary">{headline}</p>
                 )}
                 <ul
                   dir="ltr"

@@ -27,16 +27,16 @@ export const Hero02: React.FC<Page['hero']> = ({
   // }, [setHeaderTheme])
 
   return (
-    <section className="mt-header md:mt-header-plus-admin-bar container">
-      <div className="pb-site bg-background-neutral rounded-space-sm gap-space-3xl pt-header container flex flex-col items-center">
-        <div className="gap-md flex max-w-[36rem] flex-col items-center">
+    <section className="container mt-header md:mt-header-plus-admin-bar">
+      <div className="container flex flex-col items-center gap-space-3xl rounded-3xl bg-background-neutral pt-header pb-site">
+        <div className="flex max-w-[36rem] flex-col items-center gap-md">
           {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
 
           {richText && (
             <RichText
               className={cn(
                 'flex w-full flex-col items-center text-center font-medium',
-                '[&>h3,h4,p]:text-base-tertiary [&>h3,h4,p]:mt-space-xs [&>h3,h4,p]:leading-normal [&>p]:text-(length:--text-body-lg) [&>p]:font-medium',
+                '[&>h3,h4,p]:mt-space-xs [&>h3,h4,p]:leading-normal [&>h3,h4,p]:text-base-tertiary [&>p]:text-(length:--text-body-lg) [&>p]:font-medium',
               )}
               data={richText}
               enableGutter={false}
@@ -55,14 +55,14 @@ export const Hero02: React.FC<Page['hero']> = ({
                 })}
               </ul>
             )}
-            {caption && <p className="text-base-tertiary text-sm">{caption}</p>}
+            {caption && <p className="text-sm text-base-tertiary">{caption}</p>}
           </div>
         </div>
 
         {logos && logosGroup && logosGroup.length > 0 && (
-          <div className="gap-space-md md:gap-space-lg flex w-full flex-col items-center">
+          <div className="flex w-full flex-col items-center gap-space-md md:gap-space-lg">
             {headline && (
-              <p className="text-body-sm text-base-quaternary font-medium">{headline}</p>
+              <p className="text-body-sm font-medium text-base-quaternary">{headline}</p>
             )}
             <ul
               dir="ltr"
@@ -88,7 +88,7 @@ export const Hero02: React.FC<Page['hero']> = ({
         )}
         {mediaGroup?.media && typeof mediaGroup?.media === 'object' && (
           <Media
-            className="rounded-space-sm relative h-auto w-full overflow-hidden select-none"
+            className="relative h-auto w-full overflow-hidden rounded-3xl select-none"
             imgClassName="object-cover"
             priority
             media={mediaGroup}

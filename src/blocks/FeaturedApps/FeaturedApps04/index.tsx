@@ -27,22 +27,22 @@ const AppCard: React.FC<{ app: Integration; locale?: TypedLocale }> = ({ app, lo
   const { name, icon, tagline, summary, link } = app
 
   return (
-    <div className="bg-background-neutral rounded-space-sm flex h-full w-full flex-col overflow-hidden lg:flex-row">
-      <div className="p-md flex w-full flex-col justify-between text-start">
-        <div className="gap-sm flex flex-col items-start justify-start">
+    <div className="flex h-full w-full flex-col overflow-hidden rounded-3xl bg-background-neutral lg:flex-row">
+      <div className="flex w-full flex-col justify-between p-md text-start">
+        <div className="flex flex-col items-start justify-start gap-sm">
           {/* App Badge (Icon + Name) */}
-          <div className="gap-xs flex items-center justify-end">
+          <div className="flex items-center justify-end gap-xs">
             {icon && <Media resource={icon} className="size-8 overflow-hidden rounded-md" />}
-            {name && <span className="text-body-lg text-base-secondary font-medium">{name}</span>}
+            {name && <span className="text-body-lg font-medium text-base-secondary">{name}</span>}
           </div>
           {/* Title and Description */}
-          <div className="gap-xs flex flex-col">
-            {tagline && <h3 className="text-h4 text-base-primary font-medium">{tagline}</h3>}
+          <div className="flex flex-col gap-xs">
+            {tagline && <h3 className="text-h4 font-medium text-base-primary">{tagline}</h3>}
             {summary && (
               <RichText
                 data={summary}
                 enableGutter={true}
-                className="text-body-sm text-base-secondary font-normal"
+                className="text-body-sm font-normal text-base-secondary"
               />
             )}
           </div>
@@ -52,7 +52,7 @@ const AppCard: React.FC<{ app: Integration; locale?: TypedLocale }> = ({ app, lo
           <CMSLink
             {...link}
             // Use text size, color variables, and explicit gap
-            className="text-body-lg mt-space-xs text-base-tertiary hover:text-base-primary w-fit px-0 py-0 hover:bg-transparent"
+            className="mt-space-xs w-fit px-0 py-0 text-body-lg text-base-tertiary hover:bg-transparent hover:text-base-primary"
             label={locale === 'ar' ? 'المزيد' : 'Learn More'}
             variant="link"
           />
@@ -70,7 +70,7 @@ export const FeaturedApps04: React.FC<AppsCarouselClientProps> = (props) => {
   }
 
   return (
-    <div className="py-md container">
+    <div className="container py-md">
       <Carousel
         slidesPerView={{
           sm: 1, //   ≥640px: 1 slide
@@ -87,7 +87,7 @@ export const FeaturedApps04: React.FC<AppsCarouselClientProps> = (props) => {
         </CarouselContent>
         {apps.length > 1 && (
           <>
-            <CarouselNavigation className="mt-xs relative justify-between" />
+            <CarouselNavigation className="relative mt-xs justify-between" />
             <CarouselIndicator className="absolute bottom-0 h-10" />
           </>
         )}

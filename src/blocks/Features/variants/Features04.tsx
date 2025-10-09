@@ -51,7 +51,7 @@ export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) =>
         <div className="container">
           <motion.div
             className={cn(
-              'gap-xs flex flex-col items-center md:flex-row',
+              'flex flex-col items-center gap-xs md:flex-row',
               // activeColumn?.reverseOrder && 'md:flex-row-reverse',
             )}
           >
@@ -62,15 +62,13 @@ export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) =>
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: scrollDirection === 'down' ? -20 : 20 }}
                 transition={{ duration: 0.3 }}
-                className={cn(
-                  'rounded-space-sm bg-background-neutral-subtle w-full overflow-hidden',
-                )}
+                className={cn('w-full overflow-hidden rounded-3xl bg-background-neutral-subtle')}
               >
                 {activeColumn?.image && (
                   <Media
                     resource={activeColumn.image}
                     className="h-auto w-full"
-                    imgClassName="w-full h-auto object-cover"
+                    imgClassName="h-auto w-full object-cover"
                   />
                 )}
               </motion.div>
@@ -90,7 +88,7 @@ export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) =>
                 }}
                 transition={{ duration: 0.3, delay: 0.1 }}
                 className={cn(
-                  'gap-sm md:px-xl mt-sm flex w-full flex-col items-start justify-start md:mt-0',
+                  'mt-sm flex w-full flex-col items-start justify-start gap-sm md:mt-0 md:px-xl',
                   // { 'md:pe-xl': activeColumn.reverseOrder },
                 )}
               >
@@ -99,9 +97,9 @@ export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) =>
                 )}
 
                 {activeColumn?.content && (
-                  <div className="gap-xs flex flex-col">
+                  <div className="flex flex-col gap-xs">
                     {activeColumn.content.title && (
-                      <h3 className="text-h2 text-base-primary font-medium">
+                      <h3 className="text-h2 font-medium text-base-primary">
                         {activeColumn.content.title}
                       </h3>
                     )}

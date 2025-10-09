@@ -64,9 +64,9 @@ export const CallToAction06: React.FC<CTABlockType> = (props) => {
   }, [result, confirmationType, redirect, router])
 
   return (
-    <div className="py-xl container">
-      <div className="gap-sm px-md rounded-space-sm py-lg flex flex-col items-center">
-        <div className="gap-lg flex flex-col items-center">
+    <div className="container py-xl">
+      <div className="flex flex-col items-center gap-sm rounded-3xl px-md py-lg">
+        <div className="flex flex-col items-center gap-lg">
           {richText && (
             <RichText className="mb-0 text-center" data={richText} enableGutter={false} />
           )}

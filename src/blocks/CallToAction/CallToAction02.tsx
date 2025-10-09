@@ -22,17 +22,17 @@ export const CallToAction02: React.FC<CallToActionProps> = ({
   className,
 }) => {
   return (
-    <div className={cn('py-xl relative container overflow-hidden', className)}>
+    <div className={cn('relative container overflow-hidden py-xl', className)}>
       <motion.div
         className={cn(
-          'gap-xl px-xl rounded-space-sm relative flex flex-col items-center overflow-hidden py-[calc(var(--spacing-xl)*2)]',
+          'relative flex flex-col items-center gap-xl overflow-hidden rounded-3xl px-xl py-[calc(var(--spacing-xl)*2)]',
         )}
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: false, amount: 0.1 }}
       >
-        <motion.div className="gap-lg z-1 flex flex-col items-center">
+        <motion.div className="z-1 flex flex-col items-center gap-lg">
           {richText && (
             <motion.div variants={itemsFling}>
               <RichText className="mb-0 text-center" data={richText} enableGutter={false} />
@@ -44,10 +44,10 @@ export const CallToAction02: React.FC<CallToActionProps> = ({
             })}
           </motion.div>
         </motion.div>
-        <motion.hr variants={itemsFling} className="border-border z-1 w-full" />
+        <motion.hr variants={itemsFling} className="z-1 w-full border-border" />
         {list && (
           <div
-            className="gap-sm z-1 grid w-full grid-cols-2 md:grid-cols-(--columns)"
+            className="z-1 grid w-full grid-cols-2 gap-sm md:grid-cols-(--columns)"
             style={
               { '--columns': `repeat(${list?.length}, minmax(0, 1fr))` } as React.CSSProperties
             }
@@ -58,12 +58,12 @@ export const CallToAction02: React.FC<CallToActionProps> = ({
                 <motion.div
                   key={index}
                   variants={itemsFling}
-                  className="gap-sm flex flex-col items-start"
+                  className="flex flex-col items-start gap-sm"
                 >
                   {icon && (
-                    <div className="bg-background-neutral-subtle p-xs inline aspect-square rounded-full">
+                    <div className="inline aspect-square rounded-full bg-background-neutral-subtle p-xs">
                       <Icon
-                        className="text-base-secondary size-sm"
+                        className="size-sm text-base-secondary"
                         height="none"
                         icon={`material-symbols:${icon}`}
                         color="currentColor"
@@ -72,7 +72,7 @@ export const CallToAction02: React.FC<CallToActionProps> = ({
                   )}
                   <div className="flex flex-col gap-2">
                     {title && (
-                      <h3 className="text-body-md text-base-primary font-medium">{title}</h3>
+                      <h3 className="text-body-md font-medium text-base-primary">{title}</h3>
                     )}
                     {subtitle && <p className="text-body-sm text-base-secondary">{subtitle}</p>}
                   </div>
@@ -104,7 +104,7 @@ export const CallToAction02: React.FC<CallToActionProps> = ({
             },
           }}
           viewport={{ once: false, amount: 0.05 }}
-          className="bg-background-neutral absolute inset-0 mx-auto rounded-3xl"
+          className="absolute inset-0 mx-auto rounded-3xl bg-background-neutral"
         />
       </motion.div>
     </div>

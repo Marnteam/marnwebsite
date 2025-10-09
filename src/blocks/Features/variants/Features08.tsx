@@ -15,7 +15,7 @@ export const Features08: React.FC<FeaturesBlock> = ({ columns }) => {
 
   return (
     <motion.div
-      className="py-xl gap-xs container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3"
+      className="container grid grid-cols-1 gap-xs py-xl sm:grid-cols-2 md:grid-cols-3"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
@@ -26,11 +26,11 @@ export const Features08: React.FC<FeaturesBlock> = ({ columns }) => {
         const { content } = column
         return (
           <motion.div key={index} variants={itemsFling}>
-            <Card className="rounded-space-sm p-md bg-card h-full w-full flex-grow border-0">
-              <CardContent className={cn('gap-md flex flex-col justify-start p-0')}>
+            <Card className="h-full w-full flex-grow rounded-3xl border-0 bg-card p-md">
+              <CardContent className={cn('flex flex-col justify-start gap-md p-0')}>
                 {iconName && (
                   <Icon
-                    className="text-base-secondary size-md"
+                    className="size-md text-base-secondary"
                     icon={`material-symbols:${iconName}`}
                     height="none"
                     color="currentColor"
@@ -38,7 +38,7 @@ export const Features08: React.FC<FeaturesBlock> = ({ columns }) => {
                 )}
                 {content?.title && (
                   <div className="flex flex-col gap-2">
-                    <h3 className="text-body-lg text-base-primary font-medium">{content?.title}</h3>
+                    <h3 className="text-body-lg font-medium text-base-primary">{content?.title}</h3>
                     {content?.subtitle && (
                       <RichText
                         data={content?.subtitle}

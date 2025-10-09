@@ -11,17 +11,17 @@ import RichText from '@/components/RichText'
 export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, blockHeader }) => {
   if (!columns || columns.length === 0) return null
   return (
-    <div className="bg-background-neutral-subtle py-xl w-full">
-      <div className="py-xl container">
+    <div className="w-full bg-background py-xl">
+      <div className="container py-xl">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          className="rounded-space-sm bg-background-neutral gap-xs flex flex-col p-4"
+          className="flex flex-col gap-xs rounded-3xl bg-background-neutral p-4"
         >
-          <div className="gap-xs flex flex-col md:flex-row">
-            <div className="gap-md mt-xs px-xs flex w-full flex-col lg:basis-1/2">
+          <div className="flex flex-col gap-xs md:flex-row">
+            <div className="mt-xs flex w-full flex-col gap-md px-xs lg:basis-1/2">
               {blockHeader && (
                 <BlockHeader
                   {...blockHeader}
@@ -35,12 +35,12 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
               <Media
                 resource={blockImage}
                 className="h-auto w-full overflow-hidden rounded-lg lg:basis-1/2"
-                imgClassName="w-full h-auto aspect-square object-cover"
+                imgClassName="aspect-square h-auto w-full object-cover"
               />
             )}
           </div>
           <motion.div
-            className="gap-xs p-xs grid grid-cols-2 md:grid-cols-(--columns)"
+            className="grid grid-cols-2 gap-xs p-xs md:grid-cols-(--columns)"
             style={
               { '--columns': `repeat(${columns.length}, minmax(0, 1fr))` } as React.CSSProperties
             }
@@ -54,13 +54,13 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
               return (
                 <motion.div
                   key={index}
-                  className="gap-sm flex flex-col items-start"
+                  className="flex flex-col items-start gap-sm pe-sm"
                   variants={itemsFling}
                 >
                   {icon && (
-                    <div className="bg-background-neutral-subtle p-xs inline rounded-full">
+                    <div className="flex rounded-full bg-background-neutral-subtle p-xs">
                       <Icon
-                        className="text-base-secondary size-sm"
+                        className="size-sm text-base-secondary"
                         height="none"
                         icon={`material-symbols:${icon}`}
                         color="currentColor"
@@ -69,7 +69,7 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
                   )}
                   <div className="flex flex-col gap-2">
                     {content?.title && (
-                      <h3 className="text-body-md text-base-primary font-medium">
+                      <h3 className="text-body-md font-medium text-base-primary">
                         {content.title}
                       </h3>
                     )}

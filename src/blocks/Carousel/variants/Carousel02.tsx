@@ -22,13 +22,13 @@ export const Carousel02: React.FC<CarouselBlock> = ({ columns }) => {
   if (!columns || columns.length === 0) return null
 
   return (
-    <div className="py-xl gap-xs container flex flex-col md:grid md:grid-cols-2 md:items-start">
+    <div className="container flex flex-col gap-xs py-xl md:grid md:grid-cols-2 md:items-start">
       <Accordion
         type="single"
         collapsible={false}
         value={activeAccordionId || undefined}
         onValueChange={(value) => setActiveAccordionId(value)}
-        className="md:pe-xs flex flex-col"
+        className="flex flex-col md:pe-xs"
       >
         {columns.map((column, index) => {
           const iconName = column.icon as string
@@ -39,11 +39,11 @@ export const Carousel02: React.FC<CarouselBlock> = ({ columns }) => {
               key={index}
               value={String(index)}
               className={cn(
-                'rounded-space-sm p-sm border-0 transition-colors duration-200',
+                'rounded-3xl border-0 p-sm transition-colors duration-200',
                 isActive && 'bg-background-neutral',
               )}
             >
-              <AccordionTrigger className="text-base-tertiary gap-xs flex items-center justify-start bg-transparent p-0 hover:no-underline">
+              <AccordionTrigger className="flex items-center justify-start gap-xs bg-transparent p-0 text-base-tertiary hover:no-underline">
                 {column.icon && (
                   <div className={`flex-shrink-0`}>
                     <Icon
@@ -58,7 +58,7 @@ export const Carousel02: React.FC<CarouselBlock> = ({ columns }) => {
                   </div>
                 )}
                 {column.content?.title && (
-                  <h3 className="text-body-lg text-start font-medium">{column.content.title}</h3>
+                  <h3 className="text-start text-body-lg font-medium">{column.content.title}</h3>
                 )}
               </AccordionTrigger>
               <AccordionContent
@@ -72,7 +72,7 @@ export const Carousel02: React.FC<CarouselBlock> = ({ columns }) => {
                   <Media
                     resource={column.image}
                     className="h-auto w-full overflow-hidden rounded-lg md:hidden"
-                    imgClassName="w-full h-auto object-cover"
+                    imgClassName="h-auto w-full object-cover"
                   />
                 )}
               </AccordionContent>
@@ -85,8 +85,8 @@ export const Carousel02: React.FC<CarouselBlock> = ({ columns }) => {
           {columns[parseInt(activeAccordionId)].image && (
             <Media
               resource={columns[parseInt(activeAccordionId)].image || undefined}
-              className="rounded-space-sm hidden h-auto w-full overflow-hidden md:sticky md:top-[calc(var(--header-height)+var(--admin-bar-height))] md:block"
-              imgClassName="w-full h-auto object-cover"
+              className="hidden h-auto w-full overflow-hidden rounded-3xl md:sticky md:top-[calc(var(--header-height)+var(--admin-bar-height))] md:block"
+              imgClassName="h-auto w-full object-cover"
             />
           )}
         </>

@@ -9,11 +9,11 @@ export const PricingToggle = ({ className }: { className?: string }) => {
 
   return (
     <div className={cn('flex items-center justify-center', className)}>
-      <div className="bg-background-neutral-subtle rounded-space-sm relative flex items-center p-1">
+      <div className="relative flex items-center rounded-3xl bg-background-neutral-subtle p-1">
         <button
           onClick={() => setIsMonthly(false)}
           className={cn(
-            'rounded-space-xs px-space-md py-space-sm text-body-sm relative z-10 font-medium transition-all',
+            'rounded-space-xs relative z-10 px-space-md py-space-sm text-body-sm font-medium transition-all',
             !isMonthly
               ? 'bg-background-neutral text-base-primary shadow-sm'
               : 'text-base-tertiary hover:text-base-secondary',
@@ -24,7 +24,7 @@ export const PricingToggle = ({ className }: { className?: string }) => {
         <button
           onClick={() => setIsMonthly(true)}
           className={cn(
-            'rounded-space-xs px-space-md py-space-sm text-body-sm relative z-10 font-medium transition-all',
+            'rounded-space-xs relative z-10 px-space-md py-space-sm text-body-sm font-medium transition-all',
             isMonthly
               ? 'bg-background-neutral text-base-primary shadow-sm'
               : 'text-base-tertiary hover:text-base-secondary',

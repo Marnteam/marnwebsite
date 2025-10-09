@@ -36,14 +36,14 @@ export const TestimonialsBlock02: React.FC<Props> = ({ testimonials, linkLabel }
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
         variants={containerVariants}
-        className="py-lg container"
+        className="container py-lg"
       >
         <motion.div
           variants={itemVariants} // Animate the main card as one item
-          className="bg-background-neutral rounded-space-sm grid grid-cols-1 md:grid-cols-2 lg:items-stretch"
+          className="grid grid-cols-1 rounded-3xl bg-background-neutral md:grid-cols-2 lg:items-stretch"
         >
-          <div className="gap-md p-md pb-xs md:pb-md flex flex-col justify-start">
-            <div className="gap-md flex flex-grow flex-col justify-start">
+          <div className="flex flex-col justify-start gap-md p-md pb-xs md:pb-md">
+            <div className="flex flex-grow flex-col justify-start gap-md">
               {companyLogo && (
                 <Media resource={companyLogo} imgClassName="h-8 w-auto opacity-50 dark:invert" />
               )}
@@ -51,12 +51,12 @@ export const TestimonialsBlock02: React.FC<Props> = ({ testimonials, linkLabel }
                 <RichText
                   data={quote}
                   enableProse={false}
-                  className="text-base-primary text-(length:--text-h3) font-medium"
+                  className="text-(length:--text-h3) font-medium text-base-primary"
                 />
               )}
             </div>
             {authorInfo && (
-              <div className="gap-xs flex flex-row items-center">
+              <div className="flex flex-row items-center gap-xs">
                 {authorInfo.avatar && (
                   <Media
                     resource={authorInfo.avatar}
@@ -66,14 +66,14 @@ export const TestimonialsBlock02: React.FC<Props> = ({ testimonials, linkLabel }
                   />
                 )}
                 <div>
-                  <p className="text-base-primary text-body-sm font-medium">{authorInfo.name}</p>
+                  <p className="text-body-sm font-medium text-base-primary">{authorInfo.name}</p>
                   <p className="text-body-sm text-base-secondary">{authorInfo.title}</p>
                 </div>
               </div>
             )}
           </div>
           {featuredImage && (
-            <motion.div variants={itemVariants} className="p-xs flex items-center justify-center">
+            <motion.div variants={itemVariants} className="flex items-center justify-center p-xs">
               <Media
                 resource={featuredImage}
                 fill
@@ -84,7 +84,7 @@ export const TestimonialsBlock02: React.FC<Props> = ({ testimonials, linkLabel }
           )}
         </motion.div>
         {stats && stats.length > 0 && (
-          <div className="mt-space-xs gap-xs grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-space-xs grid grid-cols-2 gap-xs sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((stat, index) => (
               <motion.div key={stat.id || index} variants={itemsFling}>
                 {<Stat stat={stat} index={index} />}

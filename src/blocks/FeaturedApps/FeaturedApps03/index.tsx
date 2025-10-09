@@ -27,25 +27,25 @@ const AppCard: React.FC<{ app: Integration }> = ({ app }) => {
 
   return (
     // Use background variable and explicit rounding from Figma
-    <div className="bg-background-neutral rounded-space-sm flex w-full flex-col overflow-hidden lg:flex-row">
+    <div className="flex w-full flex-col overflow-hidden rounded-3xl bg-background-neutral lg:flex-row">
       {/* Content Section */}
-      <div className="p-md flex w-full flex-col justify-between text-start">
-        <div className="gap-sm flex flex-col items-start justify-start">
+      <div className="flex w-full flex-col justify-between p-md text-start">
+        <div className="flex flex-col items-start justify-start gap-sm">
           {/* Integration Badge (Icon + Name) */}
-          <div className="gap-xs flex items-center justify-end">
+          <div className="flex items-center justify-end gap-xs">
             {icon && <Media resource={icon} className="size-16 overflow-hidden rounded-xl" />}
-            {name && <span className="text-h3 text-base-secondary font-medium">{name}</span>}
+            {name && <span className="text-h3 font-medium text-base-secondary">{name}</span>}
           </div>
           {/* Title and Description */}
-          <div className="gap-xs flex flex-col">
-            {tagline && <h3 className="text-h3 text-base-primary font-medium">{tagline}</h3>}
+          <div className="flex flex-col gap-xs">
+            {tagline && <h3 className="text-h3 font-medium text-base-primary">{tagline}</h3>}
             {/* Render summary using RichText component with `data` prop */}
             {summary && (
-              <div className="text-body-lg text-base-secondary font-normal">
+              <div className="text-body-lg font-normal text-base-secondary">
                 <RichText
                   data={summary}
                   enableGutter={false}
-                  className="text-body-lg text-base-secondary font-normal"
+                  className="text-body-lg font-normal text-base-secondary"
                 />
               </div>
             )}
@@ -55,7 +55,7 @@ const AppCard: React.FC<{ app: Integration }> = ({ app }) => {
         {link && (
           <CMSLink
             {...link}
-            className="text-body-md text-base-tertiary hover:text-base-primary w-fit px-0 py-0 hover:bg-transparent"
+            className="w-fit px-0 py-0 text-body-md text-base-tertiary hover:bg-transparent hover:text-base-primary"
             label="المزيد"
           />
         )}
@@ -73,7 +73,7 @@ export const FeaturedApps03: React.FC<AppsCarouselClientProps> = ({ apps }) => {
   }
 
   return (
-    <div className="py-md container">
+    <div className="container py-md">
       <Carousel slidesPerView={1}>
         <CarouselContent className="-ms-xs">
           {apps.map((app, index) => (
@@ -84,7 +84,7 @@ export const FeaturedApps03: React.FC<AppsCarouselClientProps> = ({ apps }) => {
         </CarouselContent>
         {apps.length > 1 && (
           <>
-            <CarouselNavigation className="mt-xs relative justify-between" />
+            <CarouselNavigation className="relative mt-xs justify-between" />
             <CarouselIndicator className="absolute bottom-0 h-10" />
           </>
         )}

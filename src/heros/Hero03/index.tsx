@@ -26,15 +26,15 @@ export const Hero03: React.FC<Page['hero'] & { children?: React.ReactNode }> = (
   // }, [setHeaderTheme])
 
   return (
-    <section className="pb-xl gap-space-3xl container flex flex-col items-center pt-[calc(var(--header-plus-admin-bar-height)*2)]">
-      <div className="gap-md flex max-w-[36rem] flex-col items-center">
+    <section className="container flex flex-col items-center gap-space-3xl pt-[calc(var(--header-plus-admin-bar-height)*2)] pb-xl">
+      <div className="flex max-w-[36rem] flex-col items-center gap-md">
         {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
 
         {richText && (
           <RichText
             className={cn(
               'flex w-full flex-col items-center text-center font-medium',
-              '[&>h3,h4,p]:text-base-tertiary [&>h3,h4,p]:mt-space-xs [&>h3,h4,p]:leading-normal [&>p]:text-(length:--text-body-lg) [&>p]:font-medium',
+              '[&>h3,h4,p]:mt-space-xs [&>h3,h4,p]:leading-normal [&>h3,h4,p]:text-base-tertiary [&>p]:text-(length:--text-body-lg) [&>p]:font-medium',
             )}
             data={richText}
             enableGutter={false}
@@ -53,14 +53,14 @@ export const Hero03: React.FC<Page['hero'] & { children?: React.ReactNode }> = (
               })}
             </ul>
           )}
-          {caption && <p className="text-base-tertiary text-sm">{caption}</p>}
+          {caption && <p className="text-sm text-base-tertiary">{caption}</p>}
         </div>
         {children}
       </div>
 
       {logos && logosGroup && logosGroup.length > 0 && (
-        <div className="gap-space-md md:gap-space-lg flex w-full flex-col items-center">
-          {headline && <p className="text-body-sm text-base-quaternary font-medium">{headline}</p>}
+        <div className="flex w-full flex-col items-center gap-space-md md:gap-space-lg">
+          {headline && <p className="text-body-sm font-medium text-base-quaternary">{headline}</p>}
           <ul
             dir="ltr"
             className="-mask-x-to-10% flex w-full flex-wrap items-center justify-center mask-x-from-90% mask-x-to-100% md:justify-between"
@@ -85,7 +85,7 @@ export const Hero03: React.FC<Page['hero'] & { children?: React.ReactNode }> = (
       )}
       {mediaGroup?.media && typeof mediaGroup?.media === 'object' && (
         <Media
-          className="rounded-space-sm relative h-auto w-full overflow-hidden select-none"
+          className="relative h-auto w-full overflow-hidden rounded-3xl select-none"
           imgClassName="object-cover"
           priority
           media={mediaGroup}

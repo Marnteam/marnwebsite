@@ -16,19 +16,19 @@ export const Features12: React.FC<FeaturesBlock> = ({ columns, blockHeader }) =>
           const { image, content } = column
           return (
             <Card key={index} className="overflow-hidden rounded-none border-0 bg-transparent">
-              <CardContent className="gap-sm grid grid-cols-2 items-start bg-transparent p-0 md:grid-cols-1">
+              <CardContent className="grid grid-cols-2 items-start gap-sm bg-transparent p-0 md:grid-cols-1">
                 {image && (
                   <div className="h-auto w-full">
                     <Media
                       resource={image}
                       className="h-auto w-full"
-                      imgClassName="w-full h-auto aspect-square object-cover rounded-space-sm"
+                      imgClassName="aspect-square h-auto w-full rounded-3xl object-cover"
                     />
                   </div>
                 )}
                 {content && (
                   <div>
-                    <h3 className="text-body-lg text-base-primary mb-2 font-medium">
+                    <h3 className="mb-2 text-body-lg font-medium text-base-primary">
                       {content?.title}
                     </h3>
                     {content.subtitle && (

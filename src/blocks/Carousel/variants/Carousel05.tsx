@@ -35,7 +35,7 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
   if (!columns || columns.length === 0) return null
 
   return (
-    <div className="py-md container">
+    <div className="container py-md">
       <Carousel
         className="w-full"
         slidesPerView={{
@@ -46,7 +46,7 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
         index={index}
         onIndexChange={setIndex}
       >
-        {columns.length > 1 && <CarouselNavigation className="mb-xs relative justify-start" />}
+        {columns.length > 1 && <CarouselNavigation className="relative mb-xs justify-start" />}
         <CarouselContent className="">
           {columns.map((column, idx) => {
             const { image, content, link, icon } = column
@@ -62,19 +62,19 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
                   <MorphingDialogTrigger className="h-full w-full">
                     <Card
                       dir={locale === 'ar' ? 'rtl' : 'ltr'}
-                      className="pb-xl hover:bg-background-neutral/90 relative h-full w-full border border-none text-start transition-colors"
+                      className="relative h-full w-full border border-none pb-xl text-start transition-colors hover:bg-background-neutral/90"
                     >
-                      <CardContent className="rounded-space-sm pe-md flex flex-col items-start gap-2 pb-4">
+                      <CardContent className="flex flex-col items-start gap-2 rounded-3xl pe-md pb-4">
                         {icon && (
                           <Icon
-                            className="text-base-secondary mb-sm size-md"
+                            className="mb-sm size-md text-base-secondary"
                             icon={`material-symbols:${icon}`}
                             height="none"
                             color="currentColor"
                           />
                         )}
                         {content?.title && (
-                          <MorphingDialogTitle className="text-base-primary text-body-lg font-medium">
+                          <MorphingDialogTitle className="text-body-lg font-medium text-base-primary">
                             {content.title}
                           </MorphingDialogTitle>
                         )}
@@ -85,8 +85,8 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
                         )}
                       </CardContent>
                       <div className="absolute end-4 bottom-4 w-full">
-                        <div className="bg-neutral/10 hover:bg-neutral/30 text-base-secondary ms-auto flex size-8 items-center justify-center rounded-full px-2 py-2">
-                          <Plus className="text-base-secondary size-sm" strokeWidth={2.5} />
+                        <div className="ms-auto flex size-8 items-center justify-center rounded-full bg-neutral/10 px-2 py-2 text-base-secondary hover:bg-neutral/30">
+                          <Plus className="size-sm text-base-secondary" strokeWidth={2.5} />
                         </div>
                       </div>
                     </Card>
@@ -96,7 +96,7 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
                       style={{
                         borderRadius: 'var(--radius-space-sm)',
                       }}
-                      className="border-border bg-background-neutral relative h-auto w-[calc(100vw-(var(--spacing-space-site)*2))] max-w-3xl"
+                      className="relative h-auto w-[calc(100vw-(var(--spacing-space-site)*2))] max-w-3xl border-border bg-background-neutral"
                     >
                       <ScrollArea
                         dir={locale === 'ar' ? 'rtl' : 'ltr'}
@@ -104,18 +104,18 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
                         type="scroll"
                       >
                         <Card className="h-full border border-none transition-colors">
-                          <CardContent className="rounded-space-sm gap-xs flex h-full flex-col items-start p-0">
-                            <MorphingDialogClose className="bg-neutral/10 hover:bg-neutral/30 text-base-secondary h-10 w-10 rounded-full px-2 py-2" />
+                          <CardContent className="flex h-full flex-col items-start gap-xs rounded-3xl p-0">
+                            <MorphingDialogClose className="h-10 w-10 rounded-full bg-neutral/10 px-2 py-2 text-base-secondary hover:bg-neutral/30" />
                             {icon && (
                               <Icon
-                                className="text-base-secondary size-md my-2"
+                                className="my-2 size-md text-base-secondary"
                                 icon={`material-symbols:${icon}`}
                                 height="none"
                                 color="currentColor"
                               />
                             )}
                             {content?.title && (
-                              <MorphingDialogTitle className="text-base-primary text-body-lg font-medium">
+                              <MorphingDialogTitle className="text-body-lg font-medium text-base-primary">
                                 {content.title}
                               </MorphingDialogTitle>
                             )}
@@ -124,12 +124,12 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
                                 {content.subtitle && <RichText data={content.subtitle} />}
                               </MorphingDialogSubtitle>
                             )}
-                            <hr className="border-border w-full" />
+                            <hr className="w-full border-border" />
                             {column.image && (
                               <Media
                                 resource={column.image}
-                                className="rounded-space-sm mt-xs h-auto w-full overflow-hidden"
-                                imgClassName="w-full h-auto object-cover"
+                                className="mt-xs h-auto w-full overflow-hidden rounded-3xl"
+                                imgClassName="h-auto w-full object-cover"
                               />
                             )}
                             {content?.subtitle && (

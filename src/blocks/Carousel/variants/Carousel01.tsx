@@ -19,9 +19,46 @@ export const Carousel01: React.FC<Carousel01Props> = ({ columns, readMoreLabel }
   const [carouselIndex, setCarouselIndex] = useState(0)
   if (!columns?.length) return null
 
+  const carouselSlide = (column) => {
+    return (
+      <>
+        <div className={cn('grid h-full grid-rows-[auto_1fr_auto] items-start gap-sm p-xs')}>
+          {column.enableBadge && column.badge && <Badge {...column.badge} size="lg" />}
+          {column.content && (
+            <div className="flex grow auto-rows-auto flex-col gap-xs">
+              {column.content.title && (
+                <h3 className="text-h3 font-medium text-base-primary">{column.content.title}</h3>
+              )}
+              {column.content.subtitle && (
+                <RichText data={column.content.subtitle} className="[&>p]:text-body-md" />
+              )}
+            </div>
+          )}
+          {column.enableCta && column.link?.label && (
+            <span className="mt-auto flex w-fit flex-row items-center gap-2">
+              {readMoreLabel}
+              <Icon
+                icon="tabler:caret-left-filled"
+                height="none"
+                className="size-3 translate-x-1 transition-all duration-300 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180"
+              />
+            </span>
+          )}
+        </div>
+        {column.image && (
+          <Media
+            resource={column.image}
+            className="h-auto w-full"
+            imgClassName="aspect-[4/3] h-auto w-full rounded-lg object-cover"
+          />
+        )}
+      </>
+    )
+  }
+
   return (
-    <div className="py-xl flex flex-col">
-      <div className="container mb-2 flex w-full items-center justify-stretch gap-2 overflow-x-auto [scrollbar-width:none]">
+    <div className="flex flex-col py-xl">
+      <div className="container mb-xs flex w-full items-center justify-stretch gap-xs overflow-x-auto [scrollbar-width:none]">
         {columns.map((column, index) => {
           if (column.tabLabel) {
             return (
@@ -35,7 +72,7 @@ export const Carousel01: React.FC<Carousel01Props> = ({ columns, readMoreLabel }
                 className={cn(
                   'relative inline-flex h-20 w-full items-center gap-2 rounded-2xl px-5 text-base font-medium transition-colors duration-200',
                   index === carouselIndex
-                    ? 'bg-neutral hover:bg-neutral/90 text-inverted-primary'
+                    ? 'bg-neutral text-inverted-primary hover:bg-neutral/90'
                     : '',
                 )}
               >
@@ -73,53 +110,13 @@ export const Carousel01: React.FC<Carousel01Props> = ({ columns, readMoreLabel }
                   {
                     key: index,
                     className: cn(
-                      'gap-xs group bg-background-neutral rounded-space-sm hover:shadow-border grid grid-cols-1 p-4 hover:no-underline md:grid-cols-2',
+                      'group grid w-full grid-cols-1 gap-xs rounded-3xl bg-background-neutral p-4 hover:no-underline hover:shadow-border md:grid-cols-2',
                     ),
                     ...(column.link?.label
                       ? { ...column.link, label: null, variant: 'inline' }
                       : {}),
                   },
-                  <>
-                    <div
-                      className={cn(
-                        'gap-sm p-xs grid h-full grid-rows-[auto_1fr_auto] items-start',
-                      )}
-                    >
-                      {column.enableBadge && column.badge && <Badge {...column.badge} />}
-                      {column.content && (
-                        <div className="gap-xs flex grow auto-rows-auto flex-col">
-                          {column.content.title && (
-                            <h3 className="text-h3 text-base-primary font-medium">
-                              {column.content.title}
-                            </h3>
-                          )}
-                          {column.content.subtitle && (
-                            <RichText
-                              data={column.content.subtitle}
-                              className="[&>p]:text-body-md"
-                            />
-                          )}
-                        </div>
-                      )}
-                      {column.enableCta && column.link?.label && (
-                        <span className="mt-auto flex w-fit flex-row items-center gap-2">
-                          {readMoreLabel}
-                          <Icon
-                            icon="tabler:caret-left-filled"
-                            height="none"
-                            className="size-3 translate-x-1 transition-all duration-300 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180"
-                          />
-                        </span>
-                      )}
-                    </div>
-                    {column.image && (
-                      <Media
-                        resource={column.image}
-                        className="h-auto w-full"
-                        imgClassName="w-full h-auto aspect-[4/3] object-cover rounded-lg"
-                      />
-                    )}
-                  </>,
+                  carouselSlide(column),
                 )}
               </CarouselItem>
             )
