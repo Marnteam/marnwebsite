@@ -19,7 +19,6 @@ import { SlugComponent as SlugComponent_92cc057d0a2abb4f6cf0307edf59f986 } from 
 import { CustomButtonWithTranslator as CustomButtonWithTranslator_56073ec6c53263525e29c8cf5dad4fd4 } from 'src/plugins/translator/src/client/components/CustomButton/CustomButtonWithTranslator'
 import { TableFeatureClient as TableFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { HorizontalRuleFeatureClient as HorizontalRuleFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
-import { ImagePasteFeatureClient as ImagePasteFeatureClient_aa614d5c19777ef8f703c634caca1fa2 } from 'src/components/RichText/ImagePasteFeature/feature.client.ts'
 import { UploadFeatureClient as UploadFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BlocksFeatureClient as BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BlockquoteFeatureClient as BlockquoteFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
@@ -72,7 +71,6 @@ export const importMap = {
   "src/plugins/translator/src/client/components/CustomButton/CustomButtonWithTranslator#CustomButtonWithTranslator": CustomButtonWithTranslator_56073ec6c53263525e29c8cf5dad4fd4,
   "@payloadcms/richtext-lexical/client#TableFeatureClient": TableFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#HorizontalRuleFeatureClient": HorizontalRuleFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
-  "src/components/RichText/ImagePasteFeature/feature.client.ts#ImagePasteFeatureClient": ImagePasteFeatureClient_aa614d5c19777ef8f703c634caca1fa2,
   "@payloadcms/richtext-lexical/client#UploadFeatureClient": UploadFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#BlocksFeatureClient": BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#BlockquoteFeatureClient": BlockquoteFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
