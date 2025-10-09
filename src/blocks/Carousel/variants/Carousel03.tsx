@@ -50,7 +50,7 @@ export const Carousel03: React.FC<CarouselBlock> = ({ columns }) => {
                         )}
                       </div>
                     )}
-                    {column.link && <CMSLink {...column.link} />}
+                    {column.enableCta && column.link && <CMSLink {...column.link} />}
                   </CardContent>
                 </Card>
               </CarouselItem>
