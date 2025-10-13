@@ -25,17 +25,17 @@ html[data-theme='dark'] {
   --color-white: #fff;
 }
 
-.field-type.text:not(.has-many) input {
-  &:disabled {
-    background: var(--theme-elevation-100);
-    color: white;
-    border-color: var(--theme-elevation-200);
-    opacity: 0.3;
-  }
-  &:focus {
-    border-color: var(--theme-elevation-400);
-  }
-}
+// .field-type.text:not(.has-many) input {
+//   &:disabled {
+//     background: var(--theme-elevation-100);
+//     color: var(--theme-elevation-600);
+//     border-color: var(--theme-elevation-200);
+//     opacity: 0.3;
+//   }
+//   &:focus {
+//     border-color: var(--theme-elevation-400);
+//   }
+// }
 
 .btn--style-primary.btn--disabled {
   --bg-color: var(--theme-elevation-100);

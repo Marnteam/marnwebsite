@@ -1,8 +1,5 @@
 import type { Block, Field } from 'payload'
 
-
-
-
 import { blockHeader } from '@/components/BlockHeader/config'
 
 const fields: Field[] = [
@@ -23,7 +20,7 @@ const fields: Field[] = [
   {
     name: 'media',
     type: 'upload',
-    // localized: true,
+    localized: true,
     relationTo: 'media',
     admin: {
       condition: (_, siblingData, { blockData }) => {

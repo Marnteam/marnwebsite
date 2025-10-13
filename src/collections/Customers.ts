@@ -30,7 +30,7 @@ export const Customers: CollectionConfig = {
       url: ({ data, req, locale }) => {
         const path = generatePreviewPath({
           slug: typeof data?.slug === 'string' ? data.slug : '',
-          locale: locale as any,
+          locale: locale.code,
           collection: 'customers' as any,
           req,
         })

@@ -3,14 +3,18 @@ export const traverseRichText = ({
   root,
   siblingData,
 }: {
-  onText: (siblingData: Record<string, unknown>) => void;
-  root: Record<string, unknown>;
-  siblingData?: Record<string, unknown>;
+  onText: (siblingData: Record<string, unknown>) => void
+  root: Record<string, unknown>
+  siblingData?: Record<string, unknown>
 }) => {
-  siblingData = siblingData ?? root;
+  siblingData = siblingData ?? root
 
   if (siblingData.text) {
-    onText(siblingData);
+    onText(siblingData)
+  }
+
+  if (siblingData.direction) {
+    siblingData.direction = 'auto'
   }
 
   if (Array.isArray(siblingData?.children)) {
@@ -19,7 +23,7 @@ export const traverseRichText = ({
         onText,
         root,
         siblingData: child,
-      });
+      })
     }
   }
-};
+}
