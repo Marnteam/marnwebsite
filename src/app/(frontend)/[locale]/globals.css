@@ -426,27 +426,30 @@
   box-shadow: 0 0 0 1px var(--color-border);
 }
 
-.group\/outer:has(.row-start-1:hover) .bg {
+.group\/anim-bg:has(.row-start-1:hover, .col-start-1:hover) .bg {
   --x: 0%;
 }
-.group\/outer:has(.row-start-2:hover) .bg {
+.group\/anim-bg:has(.row-start-2:hover, .col-start-2:hover) .bg {
   --x: 100%;
 }
-.group\/outer:has(.row-start-3:hover) .bg {
+.group\/anim-bg:has(.row-start-3:hover, .col-start-3:hover) .bg {
   --x: 200%;
 }
-.group\/outer:has(.row-start-4:hover) .bg {
+.group\/anim-bg:has(.row-start-4:hover, .col-start-4:hover) .bg {
   --x: 300%;
 }
-.group\/outer:has(.row-start-5:hover) .bg {
+.group\/anim-bg:has(.row-start-5:hover, .col-start-5:hover) .bg {
   --x: 400%;
 }
-.group\/outer:has(.row-start-6:hover) .bg {
+.group\/anim-bg:has(.row-start-6:hover, .col-start-6:hover) .bg {
   --x: 500%;
 }
-.group\/outer:has(.row-start-7:hover) .bg {
+.group\/anim-bg:has(.row-start-7:hover, .col-start-7:hover) .bg {
   --x: 600%;
 }
-.group\/outer:has(.row-start-8:hover) .bg {
+.group\/anim-bg:has(.row-start-8:hover, .col-start-8:hover) .bg {
   --x: 700%;
+}
+.group\/anim-bg:has(.row-start-9:hover, .col-start-9:hover) .bg {
+  --x: 800%;
 }

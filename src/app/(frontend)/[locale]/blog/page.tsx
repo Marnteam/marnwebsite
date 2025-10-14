@@ -13,38 +13,38 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { draftMode } from 'next/headers'
 import { generateMeta } from '@/utilities/generateMeta'
 import { Link } from '@/i18n/routing'
-
-export const dynamic = 'force-static'
-export const revalidate = 600
+import { CategoriesList } from '@/components/CategoriesList'
 
 type Args = {
   params: Promise<{
     locale?: 'ar' | 'en' | undefined
   }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export default async function Page({ params: paramsPromise }: Args) {
-  const { locale = 'ar' } = await paramsPromise
+export default async function Page({ params, searchParams }: Args) {
+  const { locale = 'ar' } = await params
+  const { category = 'all', page = 1 } = await searchParams
   const slug = 'blog'
   const payload = await getPayload({ config: configPromise })
 
-  let page: PageType | null
+  let pageData: PageType | null
 
-  page = await queryPageBySlug({
+  pageData = await queryPageBySlug({
     slug,
     locale,
   })
 
-  const { hero, layout } = page
+  const { hero, layout } = pageData
 
-  if (!page) {
-    page = null
+  if (!pageData) {
+    pageData = null
   }
 
   const posts = await payload.find({
     collection: 'blog-posts',
     depth: 1,
-    limit: 12,
+    limit: 6,
     overrideAccess: false,
     select: {
       title: true,
@@ -54,6 +54,16 @@ export default async function Page({ params: paramsPromise }: Args) {
       content: true,
       publishedAt: true,
     },
+    pagination: true,
+    page: Number(page),
+    where:
+      category !== 'all'
+        ? {
+            'categories.slug': {
+              in: category,
+            },
+          }
+        : undefined,
   })
 
   const categories: Category[] = []
@@ -73,41 +83,18 @@ export default async function Page({ params: paramsPromise }: Args) {
   // }
 
   return (
-    <article className="bg-background overflow-x-clip">
+    <article className="overflow-x-clip bg-background">
       <PageClient />
 
       <RenderHero {...hero} />
 
-      <RenderBlocks blocks={layout as any} locale={locale} />
       {/* <h2 className="mb-space-sm text-h2 font-medium">{t('allArticles')}</h2> */}
 
-      <div className="py-md container flex flex-row items-center justify-between">
-        {categories.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            <Link
-              href="/blog"
-              className="text-base-primary bg-background-neutral hover:text-base-secondary hover:bg-background-neutral-subtle rounded-full px-4 py-2 text-sm font-medium transition-colors"
-            >
-              {locale === 'ar' ? 'الكل' : 'All'}
-            </Link>
-            {categories?.map((category, index) => {
-              return (
-                <Link
-                  href={`/blog/category/${category.slug}`}
-                  key={index}
-                  className="text-base-primary bg-background-neutral hover:text-base-secondary hover:bg-background-neutral-subtle rounded-full px-4 py-2 text-sm font-medium transition-colors"
-                >
-                  {category.title}
-                </Link>
-              )
-            })}
-          </div>
-        )}
-      </div>
+      <CategoriesList categories={categories} />
 
       <CollectionArchive posts={posts.docs as BlogPost[]} />
 
-      <div className="my-space-xl container flex flex-col items-center justify-between gap-4 md:flex-row">
+      <div className="container my-space-xl flex flex-col items-center justify-between gap-4 md:flex-row">
         {posts.totalPages > 1 && posts.page && (
           <Pagination className="my-0" page={posts.page} totalPages={posts.totalPages} />
         )}
@@ -115,10 +102,11 @@ export default async function Page({ params: paramsPromise }: Args) {
           className="w-fit shrink-0"
           collection="posts"
           currentPage={posts.page}
-          limit={12}
+          limit={6}
           totalDocs={posts.totalDocs}
         />
       </div>
+      <RenderBlocks blocks={layout as any} locale={locale} />
     </article>
   )
 }

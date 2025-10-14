@@ -487,6 +487,7 @@ async function migrateBlog() {
       publishedAt: new Date(blogPost.pubDate).toISOString(),
       // layout: [],
       categories: postCategories,
+      heroImage: mediaCache.get(normalizeWpFilename(metadata.imageURL ?? ''))?.id,
       content: lexical as any,
       meta: {
         title: blogPost['title'],
