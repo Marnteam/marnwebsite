@@ -1388,10 +1388,16 @@ export interface FeaturedAppsBlock {
    * Select the apps to link to.
    */
   apps?:
-    | {
-        relationTo: 'integrations';
-        value: string | Integration;
-      }[]
+    | (
+        | {
+            relationTo: 'integrations';
+            value: string | Integration;
+          }
+        | {
+            relationTo: 'solutions';
+            value: string | Solution;
+          }
+      )[]
     | null;
   cards?:
     | {

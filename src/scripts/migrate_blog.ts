@@ -487,7 +487,7 @@ async function migrateBlog() {
       publishedAt: new Date(blogPost.pubDate).toISOString(),
       // layout: [],
       categories: postCategories,
-      content: lexical,
+      content: lexical as any,
       meta: {
         title: blogPost['title'],
         description: metadata.description,
