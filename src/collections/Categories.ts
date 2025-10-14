@@ -24,6 +24,12 @@ export const Categories: CollectionConfig = {
       required: true,
     },
 
-    ...slugField(),
+    ...slugField('title', {
+      slugOverrides: { localized: true },
+      checkboxOverrides: { localized: true },
+    }),
   ],
+  versions: {
+    maxPerDoc: 50,
+  },
 }

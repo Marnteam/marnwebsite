@@ -825,6 +825,10 @@ export interface User {
   id: string;
   name?: string | null;
   avatar?: (string | null) | Media;
+  /**
+   * Temporary field for uniyfing user data shape with Wordpress site
+   */
+  author_login?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -1384,10 +1388,16 @@ export interface FeaturedAppsBlock {
    * Select the apps to link to.
    */
   apps?:
-    | {
-        relationTo: 'integrations';
-        value: string | Integration;
-      }[]
+    | (
+        | {
+            relationTo: 'integrations';
+            value: string | Integration;
+          }
+        | {
+            relationTo: 'solutions';
+            value: string | Solution;
+          }
+      )[]
     | null;
   cards?:
     | {
@@ -3515,6 +3525,7 @@ export interface ChangelogSelect<T extends boolean = true> {
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
   avatar?: T;
+  author_login?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

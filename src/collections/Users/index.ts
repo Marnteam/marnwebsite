@@ -28,6 +28,13 @@ export const Users: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
     },
+    {
+      name: 'author_login',
+      type: 'text',
+      admin: {
+        description: 'Temporary field for uniyfing user data shape with Wordpress site',
+      },
+    },
   ],
   timestamps: true,
 }

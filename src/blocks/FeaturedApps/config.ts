@@ -32,7 +32,7 @@ const fields: Field[] = [
     name: 'apps',
     type: 'relationship',
     label: 'Apps to link to',
-    relationTo: ['integrations'],
+    relationTo: ['integrations', 'solutions'],
     hasMany: true,
     // localized: true,
     admin: {
