@@ -1,0 +1,86 @@
+[
+  {
+    "Category name": "قطاع التجزئة والخدمات",
+    "Slug": "قطاع-التجزئة",
+    "Number of articles": "48",
+    "Parent/ Sub": "parent"
+  },
+  {
+    "Category name": "الإدارة والحلول اللوجستية",
+    "Slug": "ادارة-المتاجر",
+    "Number of articles": "7",
+    "Parent/ Sub": "قطاع-التجزئة"
+  },
+  {
+    "Category name": "التسويق وزيادة المبيعات",
+    "Slug": "التسويق-التجزئة",
+    "Number of articles": "10",
+    "Parent/ Sub": "قطاع-التجزئة"
+  },
+  {
+    "Category name": "النمو والتوسع",
+    "Slug": "نمو-المتاجر",
+    "Number of articles": "15",
+    "Parent/ Sub": "قطاع-التجزئة"
+  },
+  {
+    "Category name": "قطاع المطاعم والمقاهي",
+    "Slug": "المطاعم-المقاهي",
+    "Number of articles": "168",
+    "Parent/ Sub": "parent"
+  },
+  {
+    "Category name": "افتتاح مشاريع مطاعم",
+    "Slug": "افتتاح-مشاريع-مطاعم",
+    "Number of articles": "14",
+    "Parent/ Sub": "المطاعم-المقاهي"
+  },
+  {
+    "Category name": "الادارة والحلول اللوجستية",
+    "Slug": "ادارة-المطاعم",
+    "Number of articles": "58",
+    "Parent/ Sub": "المطاعم-المقاهي"
+  },
+  {
+    "Category name": "التسويق وزيادة المبيعات",
+    "Slug": "التسويق-مطاعم",
+    "Number of articles": "68",
+    "Parent/ Sub": "المطاعم-المقاهي"
+  },
+  {
+    "Category name": "الطلب أونلاين",
+    "Slug": "الطلب-أونلاين",
+    "Number of articles": "3",
+    "Parent/ Sub": "المطاعم-المقاهي"
+  },
+  {
+    "Category name": "النمو والتوسع",
+    "Slug": "نمو-المطاعم",
+    "Number of articles": "21",
+    "Parent/ Sub": "المطاعم-المقاهي"
+  },
+  {
+    "Category name": "منتجات مرن",
+    "Slug": "منتجات-مرن",
+    "Number of articles": "2",
+    "Parent/ Sub": "parent"
+  },
+  {
+    "Category name": "الأسئلة والاستفسارات",
+    "Slug": "معلومات",
+    "Number of articles": "3",
+    "Parent/ Sub": "منتجات-مرن"
+  },
+  {
+    "Category name": "كاشير مرن",
+    "Slug": "كاشير-مرن",
+    "Number of articles": "11",
+    "Parent/ Sub": "منتجات-مرن"
+  },
+  {
+    "Category name": "لوحة التحكم",
+    "Slug": "لوحة-التحكم",
+    "Number of articles": "0",
+    "Parent/ Sub": "منتجات-مرن"
+  }
+]
