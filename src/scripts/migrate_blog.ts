@@ -359,7 +359,7 @@ export async function convertRenderedToLexical({
       type: 'root',
       children,
       direction: null,
-      format: '' as '',
+      format: '',
       indent: 0,
       version: 1,
     },
