@@ -167,9 +167,15 @@ async function checkMediaCache(
   return undefined
 }
 
-async function uploadMissingMedia(imgsrc: string, mediacache: Map<string, MediaCacheEntry>) {
+async function uploadMissingMedia(
+  imgsrc: string,
+  mediacache: Map<string, MediaCacheEntry>,
+): Promise<string | false> {
   if (!imgsrc) return false
+  if (imgsrc.endsWith('transparent.gif')) return false
   try {
+    const normalized = normalizeWpFilename(imgsrc)
+    console.log('uploading missing media: ', imgsrc, normalized)
     const res = await fetch(imgsrc)
     if (!res.ok) {
       console.warn(`Skipping ${imgsrc}, failed to fetch with status ${res.status}`)
@@ -177,7 +183,9 @@ async function uploadMissingMedia(imgsrc: string, mediacache: Map<string, MediaC
     }
     const arrayBuffer = await res.arrayBuffer()
     const buffer = Buffer.from(new Uint8Array(arrayBuffer))
-    const safeFilename = normalizeWpFilename(imgsrc)
+    const mimetype = res.headers.get('content-type') || ''
+    const ext = mimetype.split('/').pop()
+    const safeFilename = normalized.includes('.') ? normalized : normalized + '.' + ext
 
     const data = await payload.create({
       collection: 'media',
@@ -189,12 +197,12 @@ async function uploadMissingMedia(imgsrc: string, mediacache: Map<string, MediaC
       },
       file: {
         data: buffer,
-        mimetype: res.headers.get('content-type') || mime.getType(safeFilename) || '',
+        mimetype,
         name: safeFilename,
         size: buffer.length,
       },
     })
-    mediacache.set(safeFilename, { id: data.id, filename: safeFilename })
+    mediacache.set(normalized, { id: data.id, filename: safeFilename })
     return data.id
   } catch (error) {
     console.log('fetch and upload failed: ', imgsrc, error)
@@ -305,9 +313,9 @@ async function splitRenderedHtmlIntoSegments(
         continue
       }
 
-      const mediaEntry = await checkMediaCache(mediaCache, parsedUrl.toString())
-      if (mediaEntry) {
-        resolvedSrc = parsedUrl.toString()
+      const mediaEntry = await checkMediaCache(mediaCache, candidate)
+      if (mediaEntry && mediaEntry.id) {
+        resolvedSrc = candidate
         resolvedMedia = mediaEntry
         break
       }
@@ -463,13 +471,11 @@ export async function convertRenderedToLexical({
   const children: any[] = []
   for (const seg of segments) {
     if (seg.kind === 'text') {
-      console.log('htmltolexical: ', seg.html)
       const imported = await htmlChunkToLexicalChildren(editor, seg.html)
       children.push(...imported)
     } else if (seg.kind === 'image') {
+      console.log(seg)
       if (seg.mediaId) {
-        console.log('img block: ', seg.src)
-
         // Add a little breathing room around images (optional)
         // if (children.length && children[children.length - 1]?.type !== 'paragraph') {
         //   children.push(para())
@@ -481,7 +487,6 @@ export async function convertRenderedToLexical({
         children.push(para())
       } else {
         // fallback: keep original <img> with its source
-        console.log('img else block: ', seg.src)
         const html = `<p><img src="${seg.src || ''}" alt=""/></p>`
         const imported = await htmlChunkToLexicalChildren(editor, html)
         children.push(...imported)
@@ -577,16 +582,18 @@ async function migrateBlog() {
     ).then((response) => response.json())
 
     // const parsedData = parse(blogPost['content:encoded'])
-    // const parsedData = parse(fetchedData.content.rendered)
-    const renderedHtml = fetchedData?.content?.rendered
-    // || blogPost['content:encoded'] || ''
-    //
+
+    const renderedHtml = fetchedData?.content?.rendered ?? blogPost['content:encoded'] ?? ''
     fs.writeFileSync('./renderedHTML.html', renderedHtml)
+
+    // fs.writeFileSync('./fetchedData.json', JSON.stringify(fetchedData, null, 2))
+
     const lexical = await convertRenderedToLexical({
       payload,
       mediaCache,
       renderedHtml,
     })
+
     const authors = await payload.find({
       collection: 'users',
       where: {
@@ -595,6 +602,7 @@ async function migrateBlog() {
         },
       },
     })
+
     const author = authors.docs[0]
 
     let postCategories: any[] = []
@@ -613,35 +621,12 @@ async function migrateBlog() {
       postCategories.push(blogCategoriesMap.get(blogPost.category))
     }
 
-    const $post = await cheerio.fromURL(blogPost.link)
+    const { title, description, og_image } = fetchedData['yoast_head_json']
 
-    const metadata = $post.extract({
-      title: { selector: 'title' },
-      description: {
-        selector: 'meta[name=description]',
-        value: 'content',
-      },
-      imageURL: {
-        selector: 'meta[property="og:image"]',
-        value: 'content',
-      },
-    })
-
-    const heroImageSrc = (metadata.imageURL ?? '').replace(/amp;/g, '').trim()
-    let heroImageEntry: MediaCacheEntry | undefined
-    if (heroImageSrc) {
-      try {
-        const parsedHero = new URL(heroImageSrc)
-        if (['http:', 'https:'].includes(parsedHero.protocol)) {
-          heroImageEntry = await checkMediaCache(
-            mediaCache,
-            parsedHero.toString(),
-            blogPost['wp:post_name'],
-          )
-        }
-      } catch {
-        console.warn(`Unable to parse hero image URL for ${blogPost.link}`, heroImageSrc)
-      }
+    const metadata = {
+      title,
+      description,
+      imageURL: og_image[0].url,
     }
 
     const newBlogPostData: Partial<BlogPost> = {
@@ -652,12 +637,12 @@ async function migrateBlog() {
       publishedAt: new Date(blogPost.pubDate).toISOString(),
       // layout: [],
       categories: postCategories,
-      heroImage: heroImageEntry?.id,
+      heroImage: mediaCache.get(normalizeWpFilename(metadata.imageURL ?? ''))?.id,
       content: lexical as any,
       meta: {
         title: blogPost['title'],
         description: metadata.description,
-        image: heroImageEntry?.id,
+        image: mediaCache.get(normalizeWpFilename(metadata.imageURL ?? ''))?.id,
       },
       _status: 'published',
     }
