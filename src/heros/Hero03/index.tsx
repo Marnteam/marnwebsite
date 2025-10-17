@@ -26,7 +26,7 @@ export const Hero03: React.FC<Page['hero'] & { children?: React.ReactNode }> = (
   // }, [setHeaderTheme])
 
   return (
-    <section className="container flex flex-col items-center gap-space-3xl pt-[calc(var(--header-plus-admin-bar-height)*2)] pb-xl">
+    <section className="container flex flex-col items-center gap-space-3xl pt-[calc(var(--header-plus-admin-bar-height)+var(--text-h1))] pb-xl">
       <div className="flex max-w-[36rem] flex-col items-center gap-md">
         {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
 
@@ -41,9 +41,9 @@ export const Hero03: React.FC<Page['hero'] & { children?: React.ReactNode }> = (
           />
         )}
 
-        <div className="flex flex-col items-center gap-4">
-          {Array.isArray(links) && links.length > 0 && (
-            <ul className="flex flex-row items-center justify-center gap-1">
+        {Array.isArray(links) && links.length > 0 && (
+          <div className="flex flex-col items-center gap-4">
+            <ul className="mb-4 flex flex-row items-center justify-center gap-1">
               {links.map(({ link }, i) => {
                 return (
                   <li key={i}>
@@ -52,9 +52,9 @@ export const Hero03: React.FC<Page['hero'] & { children?: React.ReactNode }> = (
                 )
               })}
             </ul>
-          )}
-          {caption && <p className="text-sm text-base-tertiary">{caption}</p>}
-        </div>
+            {caption && <p className="text-sm text-base-tertiary">{caption}</p>}
+          </div>
+        )}
         {children}
       </div>
 

@@ -11,6 +11,7 @@ import { fileURLToPath } from 'url'
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
 import { generateBlurHash } from '@/utilities/generateBlurHash'
+import { createS3SafeFilename } from '@/utilities/createS3SafeName'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -174,6 +175,7 @@ export const Media: CollectionConfig = {
         return data
       },
       generateBlurHash,
+      createS3SafeFilename,
     ],
   },
 }

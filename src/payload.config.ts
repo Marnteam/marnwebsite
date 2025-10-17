@@ -263,8 +263,8 @@ export default buildConfig({
         region: process.env.S3_REGION,
         endpoint: process.env.S3_ENDPOINT,
       },
-      // enabled: true,
-      enabled: process.env.NODE_ENV === 'production', // Use in production only
+      enabled: true,
+      // enabled: process.env.NODE_ENV === 'production', // Use in production only
     }),
   ],
   secret: process.env.PAYLOAD_SECRET,

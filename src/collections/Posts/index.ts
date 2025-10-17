@@ -246,11 +246,11 @@ export const Posts: CollectionConfig<'blog-posts'> = {
       checkboxOverrides: { localized: true },
     }),
   ],
-  hooks: {
-    afterChange: [revalidatePost],
-    afterRead: [populateAuthors],
-    afterDelete: [revalidateDelete],
-  },
+  // hooks: {
+  //   afterChange: [revalidatePost],
+  //   afterRead: [populateAuthors],
+  //   afterDelete: [revalidateDelete],
+  // },
   versions: {
     drafts: {
       // autosave: {

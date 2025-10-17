@@ -33,7 +33,7 @@ const PostCard: React.FC<{
     <article data-index={index} className={`group/inner z-1 ${className}`}>
       <div className="flex w-full flex-row items-start rounded-2xl transition-colors">
         {/* Image */}
-        <div className="relative aspect-square h-auto w-[33.33%] shrink-0 p-4">
+        <div className="relative aspect-square h-auto w-[33.33%] shrink-0 p-space-sm">
           {post.meta?.image && typeof post.meta?.image === 'object' ? (
             <Media
               resource={post.meta?.image}
@@ -41,12 +41,12 @@ const PostCard: React.FC<{
               imgClassName="h-full w-full object-cover transition-transform duration-300 group-hover/inner:scale-105"
             />
           ) : (
-            <div className="bg-background-neutral-subtle h-full w-full rounded-lg" />
+            <div className="h-full w-full rounded-lg bg-background-neutral-subtle" />
           )}
         </div>
 
         {/* Content */}
-        <div className="pe-space-md py-space-sm flex w-full flex-col justify-between self-stretch ps-0">
+        <div className="flex w-full flex-col justify-between self-stretch py-space-sm pe-space-sm">
           <div>
             {/* Category Badge */}
             {category && typeof category === 'object' && (
@@ -55,25 +55,25 @@ const PostCard: React.FC<{
                 label={category.title}
                 color="gray"
                 size="md"
-                className="group-hover/inner:bg-background-neutral mb-2"
+                className="mb-2 group-hover/inner:bg-background-neutral"
               />
             )}
 
             {/* Title */}
-            <h3 className="mb-space-2xs text-h4 text-base-primary group-hover/inner:text-brand-primary line-clamp-2 font-medium transition-colors">
+            <h3 className="mb-space-2xs line-clamp-2 text-h4 font-medium text-base-primary transition-colors group-hover/inner:text-brand-primary">
               <Link href={href}>{post.title}</Link>
             </h3>
 
             {/* Excerpt */}
             {excerpt && (
-              <p className="mb-space-xs text-base-secondary group-hover/inner:text-base-tertiary line-clamp-3 text-sm transition-colors">
+              <p className="mb-space-xs line-clamp-3 text-sm text-base-secondary transition-colors group-hover/inner:text-base-tertiary">
                 {excerpt.slice(0, 60)}...
               </p>
             )}
           </div>
 
           {/* Meta */}
-          <div className="text-base-tertiary border-border pt-space-xs flex items-center justify-between border-t text-sm">
+          <div className="flex items-center justify-between border-t border-border pt-space-xs text-sm text-base-tertiary">
             <span>{text}</span>
             <span>{post.publishedAt && formatDateTime(post.publishedAt)}</span>
           </div>
@@ -86,6 +86,39 @@ const PostCard: React.FC<{
   )
 }
 
+const PostsColumn: React.FC<{
+  title?: string | null
+  description?: string | null
+  posts: BlogPost[]
+  locale: 'en' | 'ar'
+}> = ({ title, description, posts, locale }) => {
+  if (posts.length === 0) return null
+  return (
+    <div className="w-full rounded-3xl bg-background-neutral">
+      {title && (
+        <div className="p-space-md pb-0">
+          <h3 className="mb-space-2xs text-h3 font-medium text-base-primary">{title}</h3>
+          {description && <p className="text-body-lg text-base-secondary">{description}</p>}
+        </div>
+      )}
+      <div className="group/anim-bg grid grid-cols-1 grid-rows-3 p-2 lg:p-4">
+        <div className="bg col-start-1 row-start-1 h-full w-full translate-y-(--x) rounded-2xl bg-background-neutral-subtle opacity-0 ease-in-out-cubic group-[:has(article:hover)]/anim-bg:opacity-100 group-[:has(article:hover)]/anim-bg:transition-all"></div>
+        {posts.slice(0, 3).map((post, index) => {
+          return (
+            <PostCard
+              className={`col-start-1 row-start-${index + 1}`}
+              index={index}
+              key={post.id}
+              post={post}
+              locale={locale}
+            />
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 export const TwoColumns: React.FC<BlogBlockType> = ({
   recentPostsList,
   editorsPicksList,
@@ -95,79 +128,16 @@ export const TwoColumns: React.FC<BlogBlockType> = ({
 }) => {
   const t = useTranslations('Blog')
   return (
-    <div className="pb-xl container pt-0">
-      <div className="mx-auto">
-        <div className="gap-space-sm flex flex-col">
-          {/* Posts Sections */}
-          <div className="gap-space-sm flex flex-col lg:flex-row">
-            {/* Popular Posts */}
-            {recentPosts.length > 0 && (
-              <div className="bg-background-neutral w-full rounded-3xl">
-                {recentPostsList?.title && (
-                  <div className="p-space-md pb-0">
-                    <h3 className="mb-space-2xs text-h3 text-base-primary font-medium">
-                      {recentPostsList?.title}
-                    </h3>
+    <div className="container py-xl">
+      {/* Posts Sections */}
+      <div className="mx-auto flex flex-col gap-xs lg:flex-row">
+        {/* Popular Posts */}
+        <PostsColumn {...recentPostsList} locale={locale} posts={recentPosts} />
 
-                    {recentPostsList.description && (
-                      <p className="text-body-lg text-base-secondary">
-                        {recentPostsList.description}
-                      </p>
-                    )}
-                  </div>
-                )}
-                <div className="group/outer grid grid-cols-1 grid-rows-3 p-2 lg:p-4">
-                  <div className="bg bg-background-neutral-subtle ease-in-out-cubic col-start-1 row-start-1 h-full w-full translate-y-(--x) rounded-2xl opacity-0 group-[:has(article:hover)]/outer:opacity-100 group-[:has(article:hover)]/outer:transition-all"></div>
-                  {recentPosts.slice(0, 3).map((post, index) => {
-                    return (
-                      <PostCard
-                        className={`col-start-1 row-start-${index + 1}`}
-                        index={index}
-                        key={post.id}
-                        post={post}
-                        locale={locale}
-                      />
-                    )
-                  })}
-                </div>
-              </div>
-            )}
-
-            {/* Latest Posts */}
-            {editorsPicks.length > 0 && (
-              <div className="bg-background-neutral w-full rounded-3xl">
-                {editorsPicksList?.title && (
-                  <div className="p-space-md pb-0">
-                    <h3 className="mb-space-2xs text-h3 text-base-primary font-medium">
-                      {editorsPicksList.title}
-                    </h3>
-                    {editorsPicksList.description && (
-                      <p className="text-body-lg text-base-secondary">
-                        {editorsPicksList.description}
-                      </p>
-                    )}
-                  </div>
-                )}
-                <div className="group/outer grid grid-cols-1 grid-rows-3 p-2 lg:p-4">
-                  <div className="bg bg-background-neutral-subtle ease-in-out-cubic col-start-1 row-start-1 h-full w-full translate-y-(--x) rounded-2xl opacity-0 group-[:has(article:hover)]/outer:opacity-100 group-[:has(article:hover)]/outer:transition-all"></div>
-                  {editorsPicks.slice(0, 3).map((post, index) => {
-                    return (
-                      <>
-                        <PostCard
-                          className={`col-start-1 row-start-${index + 1}`}
-                          index={index}
-                          key={post.id}
-                          post={post}
-                          locale={locale}
-                        />
-                      </>
-                    )
-                  })}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+        {/* Latest Posts */}
+        {editorsPicks.length > 0 && (
+          <PostsColumn {...editorsPicksList} locale={locale} posts={editorsPicks} />
+        )}
       </div>
     </div>
   )

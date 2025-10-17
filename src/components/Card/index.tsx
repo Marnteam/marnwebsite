@@ -49,18 +49,18 @@ export const Card: React.FC<{
       className={cn('group overflow-hidden border-none hover:cursor-pointer', className)}
       ref={card.ref}
     >
-      <div className="relative w-full">
+      <div className="relative w-full p-2">
         {!metaImage && <div className="">No image</div>}
         {heroImage && typeof heroImage !== 'string' && (
           <Media
-            imgClassName="group-hover:scale-105 transition-transform"
+            imgClassName="object-fill transition-transform group-hover:scale-105"
             resource={heroImage}
-            className="overflow-hidden rounded-2xl"
+            className="aspect-video h-auto w-full overflow-hidden rounded-2xl"
             size="(width <= 640px) 100vw, 33vw"
           />
         )}
       </div>
-      <div className="p-4">
+      <div className="p-space-sm">
         {showCategories && hasCategories && (
           <div className="mb-4 text-sm uppercase">
             {showCategories && hasCategories && (
@@ -91,19 +91,19 @@ export const Card: React.FC<{
           </div>
         )}
         {titleToUse && (
-          <h3 className="text-h4 text-base-primary group-hover:text-brand-primary font-medium transition-colors">
+          <h3 className="text-h5 font-medium text-base-primary transition-colors group-hover:text-brand-primary">
             <Link className="not-prose w-full" href={href} ref={link.ref}>
               {titleToUse}
             </Link>
           </h3>
         )}
         {description && (
-          <p className="group-hover:text-base-tertiary mt-4 transition-colors">
+          <p className="mt-4 transition-colors group-hover:text-base-tertiary">
             {sanitizedDescription}
           </p>
         )}
-        <hr className="border-border my-4" />
-        <div className="text-base-tertiary flex flex-row items-center gap-2">
+        <hr className="my-4 border-border" />
+        <div className="flex flex-row items-center gap-2 text-base-tertiary">
           <p className="text-sm">
             {new Date(publishedAt || '').toLocaleDateString(locale, {
               year: 'numeric',
