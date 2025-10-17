@@ -8,6 +8,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
+import { usePathname } from '@/i18n/routing'
 import { cn } from '@/utilities/ui'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useCallback } from 'react'
@@ -19,6 +20,8 @@ export const Pagination: React.FC<{
 }> = (props) => {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const pathname = usePathname()
+  console.log(pathname)
 
   const updateSearchParams = useCallback(
     (updates: Record<string, string | undefined>) => {
@@ -52,7 +55,8 @@ export const Pagination: React.FC<{
             <PaginationPrevious
               aria-disabled={!hasPrevPage}
               className={cn({ 'pointer-events-none opacity-50': !hasPrevPage })}
-              onClick={() => hasPrevPage && updateSearchParams({ page: String(page - 1) })}
+              // onClick={() => hasPrevPage && updateSearchParams({ page: String(page - 1) })}
+              href={`${pathname}?page=${page - 1}`}
             />
           </PaginationItem>
 
@@ -64,23 +68,17 @@ export const Pagination: React.FC<{
 
           {hasPrevPage && (
             <PaginationItem>
-              <PaginationLink
-                onClick={() => {
-                  // router.push(`/blog/page/${page - 1}`)
-                  updateSearchParams({ page: String(page - 1) })
-                }}
-              >
-                {page - 1}
-              </PaginationLink>
+              <PaginationLink href={`${pathname}?page=${page - 1}`}>{page - 1}</PaginationLink>
             </PaginationItem>
           )}
 
           <PaginationItem>
             <PaginationLink
               isActive
-              onClick={() => {
-                updateSearchParams({ page: String(page) })
-              }}
+              // onClick={() => {
+              //   updateSearchParams({ page: String(page) })
+              // }}
+              href={pathname}
             >
               {page}
             </PaginationLink>
@@ -89,10 +87,11 @@ export const Pagination: React.FC<{
           {hasNextPage && (
             <PaginationItem>
               <PaginationLink
-                onClick={() => {
-                  // router.push(`/blog/page/${page + 1}`)
-                  updateSearchParams({ page: String(page + 1) })
-                }}
+                // onClick={() => {
+                //   // router.push(`/blog/page/${page + 1}`)
+                //   updateSearchParams({ page: String(page + 1) })
+                // }}
+                href={`${pathname}?page=${page + 1}`}
               >
                 {page + 1}
               </PaginationLink>
@@ -109,7 +108,7 @@ export const Pagination: React.FC<{
             <PaginationNext
               aria-disabled={!hasNextPage}
               className={cn({ 'pointer-events-none opacity-50': !hasNextPage })}
-              onClick={() => hasNextPage && updateSearchParams({ page: String(page + 1) })}
+              href={`${pathname}?page=${page + 1}`}
             />
           </PaginationItem>
         </PaginationContent>
