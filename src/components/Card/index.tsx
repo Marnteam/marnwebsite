@@ -49,13 +49,13 @@ export const Card: React.FC<{
       className={cn('group overflow-hidden border-none hover:cursor-pointer', className)}
       ref={card.ref}
     >
-      <div className="relative w-full">
+      <div className="relative w-full p-2">
         {!metaImage && <div className="">No image</div>}
         {heroImage && typeof heroImage !== 'string' && (
           <Media
-            imgClassName="transition-transform group-hover:scale-105"
+            imgClassName="object-fill transition-transform group-hover:scale-105"
             resource={heroImage}
-            className="overflow-hidden rounded-2xl"
+            className="aspect-video h-auto w-full overflow-hidden rounded-2xl"
             size="(width <= 640px) 100vw, 33vw"
           />
         )}
@@ -91,7 +91,7 @@ export const Card: React.FC<{
           </div>
         )}
         {titleToUse && (
-          <h3 className="text-h4 font-medium text-base-primary transition-colors group-hover:text-brand-primary">
+          <h3 className="text-h5 font-medium text-base-primary transition-colors group-hover:text-brand-primary">
             <Link className="not-prose w-full" href={href} ref={link.ref}>
               {titleToUse}
             </Link>
