@@ -32,7 +32,7 @@ export const CollectionArchive: React.FC<Props> = (props) => {
         {posts?.map((result, index) => {
           if (typeof result === 'object' && result !== null) {
             return (
-              <div className="col-span-3" key={index}>
+              <div className="col-span-4" key={index}>
                 <Card
                   className="h-full rounded-3xl bg-background-neutral"
                   doc={result}

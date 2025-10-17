@@ -41,10 +41,12 @@ export default async function Page({ params, searchParams }: Args) {
     pageData = null
   }
 
+  const limit = 24
+
   const posts = await payload.find({
     collection: 'blog-posts',
     depth: 1,
-    limit: 24,
+    limit,
     overrideAccess: false,
     select: {
       heroImage: true,
@@ -90,6 +92,7 @@ export default async function Page({ params, searchParams }: Args) {
       <RenderHero {...hero} />
 
       {/* <h2 className="mb-space-sm text-h2 font-medium">{t('allArticles')}</h2> */}
+      <RenderBlocks blocks={layout as any} locale={locale} />
 
       <CategoriesList categories={categories} />
 
@@ -103,11 +106,10 @@ export default async function Page({ params, searchParams }: Args) {
           className="w-fit shrink-0"
           collection="posts"
           currentPage={posts.page}
-          limit={6}
+          limit={limit}
           totalDocs={posts.totalDocs}
         />
       </div>
-      <RenderBlocks blocks={layout as any} locale={locale} />
     </article>
   )
 }
