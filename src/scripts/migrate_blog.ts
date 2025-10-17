@@ -586,7 +586,7 @@ async function migrateBlog() {
     const renderedHtml = fetchedData?.content?.rendered ?? blogPost['content:encoded'] ?? ''
     fs.writeFileSync('./renderedHTML.html', renderedHtml)
 
-    // fs.writeFileSync('./fetchedData.json', JSON.stringify(fetchedData, null, 2))
+    fs.writeFileSync('./fetchedData.json', JSON.stringify(fetchedData, null, 2))
 
     const lexical = await convertRenderedToLexical({
       payload,
@@ -629,6 +629,8 @@ async function migrateBlog() {
       imageURL: og_image[0].url,
     }
 
+    const metaImage = await checkMediaCache(mediaCache, metadata.imageURL)
+
     const newBlogPostData: Partial<BlogPost> = {
       slug: decodeURIComponent(blogPost['wp:post_name']),
       slugLock: false,
@@ -637,12 +639,12 @@ async function migrateBlog() {
       publishedAt: new Date(blogPost.pubDate).toISOString(),
       // layout: [],
       categories: postCategories,
-      heroImage: mediaCache.get(normalizeWpFilename(metadata.imageURL ?? ''))?.id,
+      heroImage: metaImage?.id,
       content: lexical as any,
       meta: {
         title: blogPost['title'],
         description: metadata.description,
-        image: mediaCache.get(normalizeWpFilename(metadata.imageURL ?? ''))?.id,
+        image: metaImage?.id,
       },
       _status: 'published',
     }
