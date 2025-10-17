@@ -1,4 +1,5 @@
 import { BlogPost } from '@/payload-types'
+import { getServerSideURL } from '@/utilities/getURL'
 import { Renderer } from '@takumi-rs/core'
 import { container, text } from '@takumi-rs/helpers'
 import { fromJsx } from '@takumi-rs/helpers/jsx'
@@ -35,8 +36,10 @@ export default async function Image({ params }: { params: { slug: string; locale
 
   const decodedSlug = encodeURIComponent(slug)
 
+  const url = getServerSideURL()
+
   const req = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/blog-posts?where[slug][equals]=${decodedSlug}&depth=2&draft=false&locale=${locale}&limit=1&pagination=false&trash=false`,
+    `${url}/api/blog-posts?where[slug][equals]=${decodedSlug}&depth=2&draft=false&locale=${locale}&limit=1&pagination=false&trash=false`,
   )
   const { docs } = await req.json()
 
