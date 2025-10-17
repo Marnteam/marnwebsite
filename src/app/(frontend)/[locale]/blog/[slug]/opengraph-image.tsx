@@ -1,5 +1,6 @@
 import { Renderer } from '@takumi-rs/core'
 import { container, percentage, rem, text } from '@takumi-rs/helpers'
+import { NextResponse } from 'next/server'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
@@ -71,13 +72,15 @@ export default async function Image({ params }: { params: { slug: string; locale
     ],
   })
 
-  const image = await renderer.renderAsync(root, {
+  const image = await renderer.render(root, {
     width: size.width,
     height: size.height,
     format: 'png',
   })
 
-  return new Response(image, {
+  const body = new Uint8Array(image)
+
+  return new NextResponse(body, {
     headers: {
       'Content-Type': contentType,
       'Cache-Control': 'public, max-age=31536000, immutable',

@@ -44,9 +44,10 @@ export default async function Page({ params, searchParams }: Args) {
   const posts = await payload.find({
     collection: 'blog-posts',
     depth: 1,
-    limit: 6,
+    limit: 24,
     overrideAccess: false,
     select: {
+      heroImage: true,
       title: true,
       slug: true,
       categories: true,
