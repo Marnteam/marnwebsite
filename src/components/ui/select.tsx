@@ -32,8 +32,8 @@ function SelectTrigger({
       data-size={size}
       className={cn(
         'flex w-fit items-center justify-between gap-2 rounded-xl bg-background px-3 py-2.5 text-sm whitespace-nowrap text-base-primary ring-ring outline-ring/50 transition-[color,box-shadow] data-[placeholder]:text-base-quaternary',
-        'border border-input',
-        "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-base-tertiary",
+        'border border-input hover:border-base-primary',
+        "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-input hover:[&_svg:not([class*='text-'])]:text-base-primary",
         "hover:bg-background focus-visible:border-ring focus-visible:bg-background-neutral focus-visible:ring-1 focus-visible:outline-none data-[state=open]:bg-background-neutral hover:[&_svg:not([class*='text-'])]:text-base-primary",
         'aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
         'disabled:cursor-not-allowed disabled:opacity-50',
