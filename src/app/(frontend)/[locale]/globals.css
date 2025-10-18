@@ -123,7 +123,7 @@
     /* use for background */
     --background: var(--color-neutral-50);
     --background-light: var(--color-white);
-    --background-medium: var(--color-neutral-100);
+    --background-medium: var(--color-neutral-200);
     --background-inverted: var(--color-neutral-950);
 
     /*for foreground (text & icons) */
