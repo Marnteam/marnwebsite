@@ -8,12 +8,12 @@ export const Metrics03: React.FC<MetricsBlockProps> = ({ table, enableLogos, log
   const { logos: logosGroup, headline } = logos || {}
 
   return (
-    <div className="py-xl relative container">
+    <div className="relative container py-xl">
       {table && <StructuredTable table={table} />}
       {enableLogos && logos && logosGroup && logosGroup.length > 0 && (
-        <div className="gap-space-md mt-md md:gap-space-lg flex w-full flex-col items-start">
-          {headline && <p className="text-body-sm text-base-tertiary font-medium">{headline}</p>}
-          <ul
+        <div className="mt-md flex w-full flex-col items-start gap-space-md md:gap-space-lg">
+          {headline && <p className="text-body-sm font-medium text-base-tertiary">{headline}</p>}
+          <div
             dir="ltr"
             className="-mask-x-to-10% flex w-full flex-wrap items-center justify-center mask-x-from-90% mask-x-to-100% md:justify-between"
           >
@@ -28,7 +28,7 @@ export const Metrics03: React.FC<MetricsBlockProps> = ({ table, enableLogos, log
                 )
               })}
             </InfiniteSlider>
-          </ul>
+          </div>
         </div>
       )}
     </div>
