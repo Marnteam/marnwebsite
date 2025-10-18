@@ -26,8 +26,6 @@ export const Hero04: React.FC<Page['hero']> = ({
   //   setHeaderTheme('light')
   // }, [setHeaderTheme])
 
-  console.log(mediaGroup)
-
   return (
     <section
       className={cn(

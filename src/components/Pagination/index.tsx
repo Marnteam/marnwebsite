@@ -10,35 +10,14 @@ import {
 } from '@/components/ui/pagination'
 import { usePathname } from '@/i18n/routing'
 import { cn } from '@/utilities/ui'
-import { useRouter, useSearchParams } from 'next/navigation'
-import React, { useCallback } from 'react'
+import React from 'react'
 
 export const Pagination: React.FC<{
   className?: string
   page: number
   totalPages: number
 }> = (props) => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
   const pathname = usePathname()
-  console.log(pathname)
-
-  const updateSearchParams = useCallback(
-    (updates: Record<string, string | undefined>) => {
-      const params = new URLSearchParams(searchParams.toString())
-
-      Object.entries(updates).forEach(([key, value]) => {
-        if (value && value !== '') {
-          params.set(key, value)
-        } else {
-          params.delete(key)
-        }
-      })
-
-      router.replace(`?${params.toString()}`, { scroll: false })
-    },
-    [router, searchParams],
-  )
 
   const { className, page, totalPages } = props
   const hasNextPage = page < totalPages
