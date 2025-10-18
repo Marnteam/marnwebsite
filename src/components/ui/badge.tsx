@@ -1,19 +1,25 @@
 import * as React from 'react'
-
-import { cva } from 'class-variance-authority'
+import { Slot } from '@radix-ui/react-slot'
+import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/utilities/ui'
-import { Icon } from '@iconify-icon/react'
-import { Solution, Integration, Media as MediaType } from '@/payload-types'
-import { Media } from '../Media'
 
 const badgeVariants = cva(
-  'focus:ring-ring inline-flex max-w-max items-center gap-1 rounded-full px-4 py-1.5 text-sm font-medium transition-colors select-none focus:ring-2 focus:ring-offset-2 focus:outline-none',
+  'inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-md border px-4 py-1.5 text-xs font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3',
   {
     variants: {
+      // kept for shadcn/ui compatiblity, not needed for now
+      variant: {
+        default: 'border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90',
+        secondary:
+          'border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90',
+        destructive:
+          'border-transparent bg-destructive text-white focus-visible:ring-destructive/20 dark:bg-destructive/60 dark:focus-visible:ring-destructive/40 [a&]:hover:bg-destructive/90',
+        outline: 'text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground',
+      },
       color: {
-        default: 'text-base-tertiary bg-transparent',
-        blue: 'text-marn-500 dark:text-marn-400 bg-sky-100 disabled:bg-sky-50 disabled:text-blue-500/70 dark:bg-sky-950',
+        default: 'bg-transparent text-(color:--color-base-tertiary)',
+        blue: 'bg-sky-100 text-marn-500 disabled:bg-sky-50 disabled:text-blue-500/70 dark:bg-sky-950 dark:text-sky-400',
         red: 'bg-tomato-100 text-tomato-600 disabled:bg-tomato-50 disabled:text-tomato-500/70 dark:bg-tomato-950',
         green:
           'bg-lime-400 text-lime-900 disabled:bg-lime-50 disabled:text-lime-500/70 dark:bg-lime-950 dark:text-lime-500',
@@ -25,95 +31,62 @@ const badgeVariants = cva(
         inverted: 'bg-background-inverted text-inverted-secondary',
       },
       size: {
-        sm: 'text-sm',
+        sm: 'text-xs',
         md: 'h-6 px-3 text-(length:--text-xs)',
         lg: 'h-8 text-sm',
       },
+      type: {
+        default: '',
+        label: '',
+        reference: 'gap-2 rounded-none border border-red-500 bg-transparent p-0 text-base-tertiary',
+      },
     },
     defaultVariants: {
-      color: 'blue',
-      size: 'sm',
+      variant: 'default',
+      color: 'default',
+      type: 'default',
     },
+    compoundVariants: [
+      {
+        type: 'reference',
+        size: 'sm',
+        className: 'h-6',
+      },
+      {
+        type: 'reference',
+        size: 'md',
+        className: 'h-8 text-body-sm',
+      },
+      {
+        type: 'reference',
+        size: 'lg',
+        className: 'h-10 text-(length:--text-body-lg)',
+      },
+    ],
   },
 )
 
-export interface BadgeProps {
-  type?: ('label' | 'reference') | null
-  label?: string | null
-  color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'violet' | 'inverted') | null
-  reference?:
-    | ({
-        relationTo: 'solutions'
-        value: string | Solution
-      } | null)
-    | ({
-        relationTo: 'integrations'
-        value: string | Integration
-      } | null)
-  icon?: string | null
-  icon_position?: ('flex-row' | 'flex-row-reverse') | null
-  className?: string | null
-  size?: 'sm' | 'md' | 'lg' | null
-}
-
 function Badge({
-  type,
   className,
-  icon,
-  icon_position,
-  label,
-  reference,
-  color,
+  variant,
+  color = 'default',
   size,
+  type,
+  asChild = false,
+  children,
   ...props
-}: BadgeProps) {
-  const iconName = icon ? (icon as string) : undefined
-  const referenceValue = reference?.value as Solution | Integration
+}: React.ComponentProps<'span'> & VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
+  const Comp = asChild ? Slot : 'span'
 
-  if (type === 'label') {
-    return (
-      <div className={cn(badgeVariants({ color, size }), icon_position, className)} {...props}>
-        {iconName && (
-          <Icon
-            icon={`material-symbols:${iconName}`}
-            color="currentColor"
-            size={16}
-            height="none"
-          />
-        )}
-        <p>{label}</p>
-      </div>
-    )
-  } else if (type === 'reference') {
-    return (
-      <div
-        className={cn(
-          badgeVariants({ size, color: 'default' }),
-          'gap-2 rounded-none bg-transparent p-0',
-          size === 'md' && 'gap-3',
-          size === 'lg' && 'gap-3',
-          className,
-        )}
-        {...props}
-      >
-        {referenceValue?.icon && (
-          <Media
-            imgClassName={cn(
-              'overflow-hidden rounded-md',
-              size === 'sm' && 'size-6',
-              size === 'md' && 'size-8',
-              size === 'lg' && 'size-10',
-            )}
-            resource={referenceValue?.icon as MediaType}
-            priority
-          />
-        )}
-        <p className={cn(size === 'md' && 'text-base', size === 'lg' && 'text-body-md')}>
-          {referenceValue?.name}
-        </p>
-      </div>
-    )
-  }
+  return (
+    <Comp
+      data-slot="badge"
+      className={cn(badgeVariants({ color, size, type }), className)}
+      {...props}
+    >
+      {children}
+    </Comp>
+  )
 }
 
 export { Badge, badgeVariants }
