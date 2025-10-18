@@ -56,8 +56,8 @@ export const IntegrationHero: React.FC<
 
       {logos && logosGroup && logosGroup.length > 0 && (
         <div className="flex w-full flex-col items-center gap-space-md md:gap-space-lg">
-          {headline && <p className="text-body-sm font-medium text-base-quaternary">{headline}</p>}
-          <ul
+          {headline && <p className="text-body-sm font-medium text-base-tertiary">{headline}</p>}
+          <div
             dir="ltr"
             className="-mask-x-to-10% flex w-full flex-wrap items-center justify-center mask-x-from-90% mask-x-to-100% md:justify-between"
           >
@@ -76,7 +76,7 @@ export const IntegrationHero: React.FC<
                 )
               })}
             </InfiniteSlider>
-          </ul>
+          </div>
         </div>
       )}
       {mediaGroup && typeof mediaGroup.media === 'object' && (

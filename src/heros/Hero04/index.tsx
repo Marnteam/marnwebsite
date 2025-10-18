@@ -84,9 +84,9 @@ export const Hero04: React.FC<Page['hero']> = ({
         )}
       </div>
       {logos && logosGroup && logosGroup.length > 0 && (
-        <div className="-mt-xs flex w-full flex-col items-start gap-space-md md:gap-space-lg">
-          {headline && <p className="text-body-sm font-medium text-base-quaternary">{headline}</p>}
-          <ul
+        <div className="mt-4 flex w-full flex-col items-start gap-space-md md:gap-space-lg">
+          {headline && <p className="text-body-sm font-medium text-base-tertiary">{headline}</p>}
+          <div
             dir="ltr"
             className="-mask-x-to-10% flex w-full flex-wrap items-center justify-center mask-x-from-90% mask-x-to-100% md:justify-between"
           >
@@ -95,17 +95,13 @@ export const Hero04: React.FC<Page['hero']> = ({
                 return (
                   <li key={i} className="flex items-center justify-center">
                     {logo && typeof logo === 'object' && (
-                      <Media
-                        imgClassName="h-space-md w-auto object-contain"
-                        priority
-                        resource={logo}
-                      />
+                      <Media imgClassName="h-space-md w-auto" priority resource={logo} />
                     )}
                   </li>
                 )
               })}
             </InfiniteSlider>
-          </ul>
+          </div>
         </div>
       )}
     </section>

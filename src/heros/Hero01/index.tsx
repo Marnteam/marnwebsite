@@ -78,7 +78,7 @@ export const Hero01: React.FC<Page['hero']> = ({
                 {headline && (
                   <p className="text-body-sm font-medium text-base-quaternary">{headline}</p>
                 )}
-                <ul
+                <div
                   dir="ltr"
                   className="flex w-full flex-wrap items-center justify-center mask-x-from-90% mask-x-to-100% md:justify-between"
                 >
@@ -97,7 +97,7 @@ export const Hero01: React.FC<Page['hero']> = ({
                       )
                     })}
                   </InfiniteSlider>
-                </ul>
+                </div>
               </div>
             )}
           </div>

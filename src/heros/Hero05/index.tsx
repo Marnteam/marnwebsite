@@ -29,12 +29,12 @@ export const Hero05: React.FC<Page['hero']> = ({
   return (
     <section
       className={cn(
-        'container flex flex-col items-stretch gap-xs pt-(--header-plus-admin-bar-height) pb-xl',
+        'container mt-(--header-plus-admin-bar-height) flex flex-col items-stretch gap-xs pb-xl',
         mediaGroup?.media && 'min-h-screen',
       )}
     >
       <div className="flex w-full grow flex-col items-center justify-stretch gap-xs lg:flex-row lg:items-stretch">
-        <div className="w-full rounded-3xl bg-background-neutral p-xl">
+        <div className="w-full basis-1/2 rounded-3xl bg-background-neutral p-xl">
           <div className="flex h-full max-w-[36rem] flex-col items-start justify-center gap-md">
             {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
 
@@ -65,21 +65,21 @@ export const Hero05: React.FC<Page['hero']> = ({
             </div>
           </div>
         </div>
-
-        {mediaGroup && typeof mediaGroup?.media === 'object' && (
-          <Media
-            className="relative h-auto w-full overflow-hidden rounded-3xl select-none"
-            imgClassName="object-cover"
-            priority
-            media={mediaGroup}
-            fill
-          />
-        )}
+        <div className="flex-grow basis-1/2">
+          {mediaGroup && typeof mediaGroup?.media === 'object' && (
+            <Media
+              className="relative h-full overflow-hidden rounded-3xl select-none"
+              imgClassName="h-full object-cover"
+              priority
+              media={mediaGroup}
+            />
+          )}
+        </div>
       </div>
       {logos && logosGroup && logosGroup.length > 0 && (
         <div className="flex w-full flex-col items-start gap-space-md rounded-3xl bg-background-neutral p-md pb-lg">
-          {headline && <p className="text-body-sm font-medium text-base-quaternary">{headline}</p>}
-          <ul
+          {headline && <p className="text-body-sm font-medium text-base-tertiary">{headline}</p>}
+          <div
             dir="ltr"
             className="-mask-x-to-10% flex w-full flex-wrap items-center justify-center mask-x-from-90% mask-x-to-100% md:justify-between"
           >
@@ -98,7 +98,7 @@ export const Hero05: React.FC<Page['hero']> = ({
                 )
               })}
             </InfiniteSlider>
-          </ul>
+          </div>
         </div>
       )}
     </section>
