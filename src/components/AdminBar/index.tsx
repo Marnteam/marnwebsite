@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 import './index.scss'
 
 import { getClientSideURL } from '@/utilities/getURL'
+import { useMediaQuery } from '@/utilities/useMediaQuery'
 
 const baseClass = 'admin-bar'
 
@@ -36,6 +37,15 @@ export const AdminBar: React.FC<{
   const [show, setShow] = useState(false)
   const collection = collectionLabels?.[segments?.[1]] ? segments?.[1] : 'pages'
   const router = useRouter()
+  const isMobile = useMediaQuery('(max-width:768px)')
+
+  useEffect(() => {
+    if (isMobile) {
+      setShow(false)
+    } else {
+      setShow(true)
+    }
+  }, [isMobile])
 
   const onAuthChange = React.useCallback((user) => {
     setShow(!!user?.id)
@@ -52,14 +62,16 @@ export const AdminBar: React.FC<{
     }
   }, [show])
 
+  if (!show) return null
+
   return (
     <PayloadAdminBar
       {...adminBarProps}
       className={cn(
-        'bg-neutral container w-full',
-        'text-base-secondary z-[10] h-full w-full py-0 text-sm',
+        'container w-full bg-neutral',
+        'z-[10] h-full w-full py-0 text-sm text-base-secondary',
         'flex flex-row items-center',
-        'h-0 md:h-10',
+        'h-(--admin-bar) max-md:hidden',
         baseClass,
         className,
       )}
