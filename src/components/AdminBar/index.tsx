@@ -8,8 +8,6 @@ import { PayloadAdminBar } from 'payload-admin-bar'
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
-import './index.scss'
-
 import { getClientSideURL } from '@/utilities/getURL'
 import { useMediaQuery } from '@/utilities/useMediaQuery'
 
@@ -34,22 +32,23 @@ export const AdminBar: React.FC<{
 }> = (props) => {
   const { adminBarProps, className } = props || {}
   const segments = useSelectedLayoutSegments()
-  const [show, setShow] = useState(false)
+  const [isAuthorized, setIsAuthorized] = useState(Boolean(adminBarProps?.preview))
   const collection = collectionLabels?.[segments?.[1]] ? segments?.[1] : 'pages'
   const router = useRouter()
   const isMobile = useMediaQuery('(max-width:768px)')
 
   useEffect(() => {
-    if (isMobile) {
-      setShow(false)
-    } else {
-      setShow(true)
-    }
-  }, [isMobile])
+    setIsAuthorized(Boolean(adminBarProps?.preview))
+  }, [adminBarProps?.preview])
 
-  const onAuthChange = React.useCallback((user) => {
-    setShow(!!user?.id)
-  }, [])
+  const onAuthChange = React.useCallback(
+    (user) => {
+      setIsAuthorized(Boolean(user?.id) || Boolean(adminBarProps?.preview))
+    },
+    [adminBarProps?.preview],
+  )
+
+  const show = !isMobile && isAuthorized
 
   useEffect(() => {
     if (show) {

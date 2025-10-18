@@ -12,33 +12,36 @@ import Logo from '@/components/ui/logo'
 
 import { DesktopNav } from './DesktopNav'
 import { MobileNav, AnimatedToggle } from './MobileNav'
-import { AdminBar } from '@/components/AdminBar'
-import { PayloadAdminBarProps } from 'payload-admin-bar'
+import type { PayloadAdminBarProps } from 'payload-admin-bar'
+import dynamic from 'next/dynamic'
 
-interface AdminBarProps {
+interface HeaderAdminBarProps {
   adminBarProps: PayloadAdminBarProps
 }
 
-export const HeaderClient: React.FC<HeaderType & AdminBarProps> = ({
+// Dynamically import AdminBar only when preview mode is active
+const AdminBar = dynamic<{ adminBarProps?: PayloadAdminBarProps; className?: string }>(
+  () => import('@/components/AdminBar').then((mod) => mod.AdminBar),
+  { ssr: false },
+)
+
+export const HeaderClient: React.FC<HeaderType & HeaderAdminBarProps> = ({
   cta,
   tabs,
   adminBarProps,
 }) => {
+  const { headerTheme, setHeaderTheme } = useHeaderObserver()
+  const pathname = usePathname()
+  const { scrollY } = useScroll()
+  const lastScrollY = useRef(0)
+  // const [scrollDirection, setScrollDirection] = useState('down')
+  const [y, setY] = useState(0)
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
   const [hideBackground, setHideBackground] = useState(true)
-  const lastScrollY = useRef(0)
-
-  const pathname = usePathname()
-
-  const { headerTheme, setHeaderTheme } = useHeaderObserver()
-
-  const { scrollY } = useScroll()
-  const [scrollDirection, setScrollDirection] = useState('down')
-  const [y, setY] = useState(0)
 
   useMotionValueEvent(scrollY, 'change', (current) => {
     const diff = current - (scrollY.getPrevious() ?? 0)
-    setScrollDirection(diff > 0 ? 'down' : 'up')
+    // setScrollDirection(diff > 0 ? 'down' : 'up')
     setY(current)
   })
 
@@ -77,26 +80,27 @@ export const HeaderClient: React.FC<HeaderType & AdminBarProps> = ({
         'fixed top-0 left-0 z-10 w-full max-w-screen border-0 bg-transparent transition-colors duration-300',
         '-md:top-[var(--admin-bar-height,0px)]',
         hideBackground && 'before:opacity-0 after:opacity-0',
-        isMobileNavOpen && 'bg-background border-none',
+        isMobileNavOpen && 'border-none bg-background',
         y > 20 && 'bg-background shadow-border',
       )}
     >
-      <AdminBar
-        adminBarProps={{
-          ...adminBarProps,
-        }}
-        // className={cn(y > 20 && 'hidden translate-y-full transition-transform duration-300')}
-      />
+      {adminBarProps?.preview && (
+        <AdminBar
+          adminBarProps={{
+            ...adminBarProps,
+          }}
+        />
+      )}
       {/* Main container with flex layout */}
       <div
         className={cn(
-          'bg-background relative container flex h-[var(--header-height)] flex-row items-center justify-between transition-colors',
+          'relative container flex h-[var(--header-height)] flex-row items-center justify-between bg-background transition-colors',
         )}
       >
         <div className="z-50 w-full max-w-54">
           <Link
             href="/"
-            className="hover:text-base-secondary text-base-primary flex-shrink-0 transition-colors"
+            className="flex-shrink-0 text-base-primary transition-colors hover:text-base-secondary"
           >
             <Logo className="h-6 w-auto" />
           </Link>
@@ -133,7 +137,7 @@ export const HeaderClient: React.FC<HeaderType & AdminBarProps> = ({
               mass: 1,
             }}
             className={cn(
-              'px-site pb-site fixed inset-x-0 top-[var(--header-height)] bottom-0 z-50 overflow-y-auto lg:hidden',
+              'fixed inset-x-0 top-[var(--header-height)] bottom-0 z-50 overflow-y-auto px-site pb-site lg:hidden',
               // 'animate-in slide-in-from-top-4 duration-300 ease-out',
             )}
           >

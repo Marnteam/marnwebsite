@@ -52,11 +52,6 @@ export default async function RootLayout({
       </head>
       <body>
         <Providers initialTheme={initialTheme}>
-          {/* <DynamicAdminBarLoader
-            adminBarProps={{
-              preview: isEnabled,
-            }}
-          /> */}
           <Header adminBarProps={{ preview: isEnabled }} />
           {children}
           <Footer />
