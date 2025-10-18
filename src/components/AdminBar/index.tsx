@@ -68,7 +68,7 @@ export const AdminBar: React.FC<{
       {...adminBarProps}
       className={cn(
         'container w-full bg-neutral',
-        'z-[10] h-full w-full py-0 text-sm text-base-secondary',
+        'z-[10] h-full w-full py-0 text-sm hover:text-brand-primary',
         'flex flex-row items-center',
         'h-(--admin-bar) max-md:hidden',
         baseClass,
@@ -97,7 +97,6 @@ export const AdminBar: React.FC<{
         zIndex: 'unset',
         color: 'var(--color-base-secondary)',
         paddingInline: 'var(--spacing-space-site)',
-        fontFamily: 'var(--font-sans)',
       }}
     />
   )
