@@ -68,12 +68,7 @@ function CMSBadge<C extends ElementType = typeof Badge>({
       {label && <p>{label}</p>}
       {!label && referenceValue?.icon && (
         <Media
-          imgClassName={cn(
-            'overflow-hidden rounded-md',
-            badgeSize === 'sm' && 'size-6',
-            badgeSize === 'md' && 'size-8',
-            badgeSize === 'lg' && 'size-10',
-          )}
+          imgClassName="h-full overflow-hidden rounded-md"
           resource={referenceValue?.icon as MediaType}
           priority
         />
