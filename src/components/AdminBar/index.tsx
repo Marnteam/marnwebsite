@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation'
 
 import { getClientSideURL } from '@/utilities/getURL'
 import { useMediaQuery } from '@/utilities/useMediaQuery'
+import { useIsomorphicLayoutEffect } from '@/utilities/useIsomorphicLayoutEffect'
 
 const baseClass = 'admin-bar'
 
@@ -50,14 +51,12 @@ export const AdminBar: React.FC<{
 
   const show = !isMobile && isAuthorized
 
-  useEffect(() => {
-    if (show) {
-      document.documentElement.style.setProperty('--admin-bar-height', `2.5rem`)
-    } else {
-      document.documentElement.style.setProperty('--admin-bar-height', '0rem')
-    }
+  useIsomorphicLayoutEffect(() => {
+    const root = document.documentElement
+    const height = show ? '2.5rem' : '0rem'
+    root.style.setProperty('--admin-bar-height', height)
     return () => {
-      document.documentElement.style.setProperty('--admin-bar-height', '0rem')
+      root.style.setProperty('--admin-bar-height', '0rem')
     }
   }, [show])
 
