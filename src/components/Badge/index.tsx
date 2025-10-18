@@ -40,7 +40,7 @@ export type BadgeProps<C extends ElementType = typeof Badge> = PolymorphicCompon
 >
 
 function CMSBadge<C extends ElementType = typeof Badge>({
-  type,
+  type = 'label',
   className,
   icon,
   icon_position,
@@ -89,7 +89,6 @@ function CMSBadge<C extends ElementType = typeof Badge>({
     <Component
       className={cn(badgeVariants({ color, size, type }), className)}
       data-slot="cms-badge"
-      data-color={color}
       data-type={type}
       {...props}
     >

@@ -38,7 +38,7 @@ const badgeVariants = cva(
       type: {
         default: '',
         label: '',
-        reference: 'gap-2 rounded-none border border-red-500 bg-transparent p-0 text-base-tertiary',
+        reference: 'gap-2 rounded-none bg-transparent p-0 text-base-tertiary',
       },
     },
     defaultVariants: {
