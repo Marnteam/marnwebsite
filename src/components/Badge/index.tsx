@@ -59,6 +59,7 @@ function CMSBadge<C extends ElementType = typeof Badge>({
       : undefined
 
   const badgeSize = size ?? 'sm'
+  const badgeColor = type === 'reference' ? 'default' : color
 
   const badgeContent = (
     <>
@@ -82,7 +83,7 @@ function CMSBadge<C extends ElementType = typeof Badge>({
 
   return (
     <Component
-      className={cn(badgeVariants({ color, size, type }), className)}
+      className={cn(badgeVariants({ color: badgeColor, size, type }), className)}
       data-slot="cms-badge"
       data-type={type}
       {...props}
