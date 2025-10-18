@@ -1,14 +1,10 @@
-'use client'
 import { cn } from '@/utilities/ui'
-import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
 import React from 'react'
 import { useLocale, useTranslations } from 'next-intl'
-
 import type { BlogPost } from '@/payload-types'
-
 import { Media } from '@/components/Media'
-import { Badge } from '../ui/badge'
+import { Badge } from '@/components/ui/badge'
 import { getReadTimeFromLexical } from '@/utilities/extractTextFromLexical'
 
 // export type CardPostData = Pick<Post, 'slug' | 'categories' | 'meta' | 'title' | 'publishedAt' >
@@ -22,11 +18,11 @@ export const Card: React.FC<{
   title?: string
 }> = (props) => {
   const locale = useLocale()
-  const { card, link } = useClickableCard({})
+
   const { className, doc, relationTo, showCategories, title: titleFromProps } = props
 
   const { slug, categories, meta, title, publishedAt, content, heroImage } = doc || {}
-  const { description, image: metaImage } = meta || {}
+  const { description } = meta || {}
 
   const hasCategories = categories && Array.isArray(categories) && categories.length > 0
   const titleToUse = titleFromProps || title
@@ -46,11 +42,10 @@ export const Card: React.FC<{
 
   return (
     <article
-      className={cn('group overflow-hidden border-none hover:cursor-pointer', className)}
-      ref={card.ref}
+      className={cn('group relative border-none hover:cursor-pointer', className)}
+      // ref={card.ref}
     >
       <div className="relative w-full p-2">
-        {!metaImage && <div className="">No image</div>}
         {heroImage && typeof heroImage !== 'string' && (
           <Media
             imgClassName="object-fill transition-transform group-hover:scale-105"
@@ -67,20 +62,21 @@ export const Card: React.FC<{
               <div className="flex flex-wrap gap-1">
                 {categories?.map((category, index) => {
                   if (typeof category === 'object') {
-                    const { title: titleFromCategory } = category
+                    const { title: titleFromCategory, slug } = category
 
                     const categoryTitle = titleFromCategory || 'Untitled category'
-
-                    const isLast = index === categories.length - 1
 
                     return (
                       <Badge
                         key={index}
                         size="md"
-                        label={categoryTitle}
                         type="label"
                         color="gray"
-                      />
+                        className="z-1"
+                        asChild
+                      >
+                        <Link href={`/blog/category/${slug}`}>{categoryTitle}</Link>
+                      </Badge>
                     )
                   }
 
@@ -91,14 +87,15 @@ export const Card: React.FC<{
           </div>
         )}
         {titleToUse && (
-          <h3 className="text-h5 font-medium text-base-primary transition-colors group-hover:text-brand-primary">
-            <Link className="not-prose w-full" href={href} ref={link.ref}>
+          <h3 className="text-2xl font-medium text-base-primary transition-colors hover:text-base-tertiary">
+            <Link className="not-prose w-full" href={href}>
+              <span className="absolute inset-0 z-0"></span>
               {titleToUse}
             </Link>
           </h3>
         )}
         {description && (
-          <p className="mt-4 transition-colors group-hover:text-base-tertiary">
+          <p className="mt-2 transition-colors group-hover:text-base-tertiary">
             {sanitizedDescription}
           </p>
         )}
