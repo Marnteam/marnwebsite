@@ -92,10 +92,10 @@ export const AdminBar: React.FC<{
         })
       }}
       style={{
-        backgroundColor: 'black',
+        backgroundColor: 'var(--color-background-neutral-subtle)',
         position: 'relative',
         zIndex: 'unset',
-        color: 'white',
+        color: 'var(--color-base-secondary)',
         paddingInline: 'var(--spacing-space-site)',
         fontFamily: 'var(--font-sans)',
       }}
