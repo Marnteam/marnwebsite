@@ -7,7 +7,7 @@ import {
 
 import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Carousel } from '@/components/ui/carousel'
 
 import { Icon } from '@iconify-icon/react'
@@ -32,14 +32,14 @@ export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({ cards }) => {
         <CarouselContent className="max-md:flex-col max-md:gap-space-xs">
           {cards?.map(({ title, subtitle, appReference, id }) => (
             <CarouselItem key={id} className="md:not-first:ps-space-xs">
-              <Card key={id} className="h-full w-full">
-                <CardContent className="gap-sm rounded-3xl bg-background-neutral">
-                  <div className="flex flex-col gap-xs">
-                    <h3 className="text-h3">{title}</h3>
-                    <p className="text-body-md font-normal text-base-secondary">{subtitle}</p>
-                  </div>
+              <Card key={id} className="h-full w-full space-y-sm">
+                <CardHeader className="flex flex-col gap-xs">
+                  <h3 className="text-h3">{title}</h3>
+                  <p className="text-body-md font-normal text-base-secondary">{subtitle}</p>
+                </CardHeader>
+                <CardContent className="gap-sm">
                   <hr className="w-full border-border" />
-                  <div className="flex flex-col gap-xs">
+                  <div className="flex w-full flex-col gap-xs">
                     {appReference?.map((app) => {
                       if (typeof app.value === 'string') return null
 

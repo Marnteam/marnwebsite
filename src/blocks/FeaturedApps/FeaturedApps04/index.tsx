@@ -14,6 +14,7 @@ import { CMSLink } from '@/components/Link'
 import RichText from '@/components/RichText'
 import { TypedLocale } from 'payload'
 import { BlockHeaderType } from '@/types/blockHeader'
+import { Card, CardContent } from '@/components/ui/card'
 
 interface AppsCarouselClientProps {
   apps: Integration[]
@@ -21,44 +22,41 @@ interface AppsCarouselClientProps {
   locale?: TypedLocale
 }
 
-// AppCard component, similar to before but ensure fields exist
-// Adapt this based on your actual App type fields
 const AppCard: React.FC<{ app: Integration; locale?: TypedLocale }> = ({ app, locale }) => {
   const { name, icon, tagline, summary, link } = app
 
   return (
-    <div className="flex h-full w-full flex-col overflow-hidden rounded-3xl bg-background-neutral lg:flex-row">
-      <div className="flex w-full flex-col justify-between p-md text-start">
-        <div className="flex flex-col items-start justify-start gap-sm">
-          {/* App Badge (Icon + Name) */}
-          <div className="flex items-center justify-end gap-xs">
-            {icon && <Media resource={icon} className="size-8 overflow-hidden rounded-md" />}
-            {name && <span className="text-body-lg font-medium text-base-secondary">{name}</span>}
-          </div>
-          {/* Title and Description */}
-          <div className="flex flex-col gap-xs">
-            {tagline && <h3 className="text-h4 font-medium text-base-primary">{tagline}</h3>}
-            {summary && (
-              <RichText
-                data={summary}
-                enableGutter={true}
-                className="text-body-sm font-normal text-base-secondary"
-              />
-            )}
-          </div>
+    <Card className="relative z-1 flex h-full w-full flex-col justify-between hover:border-border">
+      <CardContent className="gap-sm">
+        {/* App Badge (Icon + Name) */}
+        <div className="flex items-center justify-end gap-xs">
+          {icon && <Media resource={icon} className="size-8 overflow-hidden rounded-md" />}
+          {name && <span className="text-body-lg font-medium text-base-secondary">{name}</span>}
         </div>
-        {/* Link Button */}
-        {link && (
-          <CMSLink
-            {...link}
-            // Use text size, color variables, and explicit gap
-            className="mt-space-xs w-fit px-0 py-0 text-body-lg text-base-tertiary hover:bg-transparent hover:text-base-primary"
-            label={locale === 'ar' ? 'المزيد' : 'Learn More'}
-            variant="link"
-          />
-        )}
-      </div>
-    </div>
+        {/* Title and Description */}
+        <div className="flex flex-col gap-xs">
+          {tagline && <h3 className="text-h4 font-medium text-base-primary">{tagline}</h3>}
+          {summary && (
+            <RichText
+              data={summary}
+              enableGutter={true}
+              className="text-body-sm font-normal text-base-secondary"
+            />
+          )}
+        </div>
+      </CardContent>
+      {/* Link Button */}
+      {link && (
+        <CMSLink
+          {...link}
+          className="mt-space-xs w-fit px-0 py-0 text-body-lg text-base-tertiary hover:bg-transparent hover:text-base-primary"
+          label={locale === 'ar' ? 'المزيد' : 'Learn More'}
+          variant="link"
+        >
+          <span className="absolute inset-0 z-0"></span>
+        </CMSLink>
+      )}
+    </Card>
   )
 }
 

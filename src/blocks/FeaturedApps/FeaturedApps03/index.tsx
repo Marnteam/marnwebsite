@@ -14,6 +14,8 @@ import { CMSLink } from '@/components/Link'
 import RichText from '@/components/RichText'
 import { TypedLocale } from 'payload'
 import { BlockHeaderType } from '@/types/blockHeader'
+import { CMSBadge } from '@/components/Badge'
+import { Card, CardContent } from '@/components/ui/card'
 
 // Props for the client component
 interface AppsCarouselClientProps {
@@ -22,52 +24,46 @@ interface AppsCarouselClientProps {
   locale?: TypedLocale
 }
 
-const AppCard: React.FC<{ app: Integration }> = ({ app }) => {
+const AppCard: React.FC<{ app: Integration; locale?: TypedLocale }> = ({ app, locale }) => {
   const { name, icon, tagline, summary, link } = app
 
   return (
-    // Use background variable and explicit rounding from Figma
-    <div className="flex w-full flex-col overflow-hidden rounded-3xl bg-background-neutral lg:flex-row">
-      {/* Content Section */}
-      <div className="flex w-full flex-col justify-between p-md text-start">
-        <div className="flex flex-col items-start justify-start gap-sm">
-          {/* Integration Badge (Icon + Name) */}
-          <div className="flex items-center justify-end gap-xs">
-            {icon && <Media resource={icon} className="size-16 overflow-hidden rounded-xl" />}
-            {name && <span className="text-h3 font-medium text-base-secondary">{name}</span>}
-          </div>
-          {/* Title and Description */}
-          <div className="flex flex-col gap-xs">
-            {tagline && <h3 className="text-h3 font-medium text-base-primary">{tagline}</h3>}
-            {/* Render summary using RichText component with `data` prop */}
-            {summary && (
-              <div className="text-body-lg font-normal text-base-secondary">
-                <RichText
-                  data={summary}
-                  enableGutter={false}
-                  className="text-body-lg font-normal text-base-secondary"
-                />
-              </div>
-            )}
-          </div>
+    <Card className="relative z-1 flex h-full w-full flex-col justify-between hover:border-border">
+      <CardContent className="gap-sm">
+        {/* App Badge (Icon + Name) */}
+        <div className="flex items-center justify-end gap-xs">
+          {icon && <Media resource={icon} className="size-8 overflow-hidden rounded-md" />}
+          {name && <span className="text-body-lg font-medium text-base-secondary">{name}</span>}
         </div>
-        {/* Link Button */}
-        {link && (
-          <CMSLink
-            {...link}
-            className="w-fit px-0 py-0 text-body-md text-base-tertiary hover:bg-transparent hover:text-base-primary"
-            label="المزيد"
-          />
-        )}
-      </div>
-
-      {/* Image Section - Placeholder */}
-    </div>
+        {/* Title and Description */}
+        <div className="flex flex-col gap-xs">
+          {tagline && <h3 className="text-h4 font-medium text-base-primary">{tagline}</h3>}
+          {summary && (
+            <RichText
+              data={summary}
+              enableGutter={true}
+              className="text-body-sm font-normal text-base-secondary"
+            />
+          )}
+        </div>
+      </CardContent>
+      {/* Link Button */}
+      {link && (
+        <CMSLink
+          {...link}
+          className="mt-space-xs w-fit px-0 py-0 text-body-lg text-base-tertiary hover:bg-transparent hover:text-base-primary"
+          label={locale === 'ar' ? 'المزيد' : 'Learn More'}
+          variant="link"
+        >
+          <span className="absolute inset-0 z-0"></span>
+        </CMSLink>
+      )}
+    </Card>
   )
 }
 
 // Main Client Component for the Carousel
-export const FeaturedApps03: React.FC<AppsCarouselClientProps> = ({ apps }) => {
+export const FeaturedApps03: React.FC<AppsCarouselClientProps> = ({ apps, locale }) => {
   if (!apps || apps.length === 0) {
     return null // Or render an empty state
   }
@@ -78,7 +74,7 @@ export const FeaturedApps03: React.FC<AppsCarouselClientProps> = ({ apps }) => {
         <CarouselContent className="-ms-xs">
           {apps.map((app, index) => (
             <CarouselItem key={app.id || index} className="ps-xs">
-              <AppCard app={app} />
+              <AppCard app={app} locale={locale} />
             </CarouselItem>
           ))}
         </CarouselContent>
