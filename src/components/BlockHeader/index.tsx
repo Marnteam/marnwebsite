@@ -1,7 +1,7 @@
 import React from 'react'
 import { CMSLink } from '@/components/Link'
 import RichText from '@/components/RichText'
-import { Badge } from '@/components/ui/badge'
+import { CMSBadge as Badge } from '@/components/Badge'
 import { cn } from '@/utilities/ui'
 import { BlockHeaderType } from '@/types/blockHeader'
 import { countWords, extractTextFromLexical } from '@/utilities/extractTextFromLexical'
@@ -25,8 +25,8 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
   return (
     <div
       className={cn(
-        'gap-y-space-md container grid grid-cols-1 justify-items-start pt-[clamp(4rem,2.4rem+4vw,6rem)]',
-        type === 'split' && 'md:gap-space-sm md:grid-cols-2',
+        'container grid grid-cols-1 justify-items-start gap-y-space-md pt-[clamp(4rem,2.4rem+4vw,6rem)]',
+        type === 'split' && 'md:grid-cols-2 md:gap-space-sm',
         type === 'center' && 'justify-items-center',
         className,
       )}

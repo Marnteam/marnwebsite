@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { cn } from '@/utilities/ui'
 import type { Media as MediaType, Integration, Solution, BlogPost, Page } from '@/payload-types'
 import { Media } from '@/components/MediaResponsive'
-import { Badge } from '@/components/ui/badge'
+import { CMSBadge as Badge } from '@/components/Badge'
 import { ChevronDown, CircleCheck, X } from 'lucide-react'
 import { CMSLink } from '@/components/Link'
 import { SaudiRiyal } from '@/icons/saudi-riyal'
@@ -123,7 +123,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
       }
       style={{ borderRadius: 24 }}
       className={cn(
-        'bg-background-neutral relative space-y-4',
+        'relative space-y-4 bg-background-neutral',
         type === 'featured' && 'bg-background-neutral p-card-xl',
         type === 'basic' && 'bg-background-neutral-subtle p-card-xl',
         type === null && 'p-space-md',
@@ -149,21 +149,21 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
             {title && (
               <h3
                 className={cn(
-                  'text-base-primary text-(length:--text-h3) font-medium',
+                  'text-(length:--text-h3) font-medium text-base-primary',
                   type === null && 'text-(length:--text-body-lg)',
                 )}
               >
                 {title}
               </h3>
             )}
-            {subtitle && <p className="text-base-tertiary text-body-sm">{subtitle}</p>}
+            {subtitle && <p className="text-body-sm text-base-tertiary">{subtitle}</p>}
           </div>
         </div>
 
         {price && (
           <p
             className={cn(
-              'text-base-primary inline-block space-x-[0.15em] text-start text-(length:--text-h2)/none font-medium',
+              'inline-block space-x-[0.15em] text-start text-(length:--text-h2)/none font-medium text-base-primary',
               type === null && 'text-(length:--text-h4)/none',
             )}
           >
@@ -176,7 +176,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                 // type === null && '-size-(length:--text-h6)',
               )}
             />
-            <span className="text-base-tertiary text-body-sm/none inline-block align-baseline font-normal">
+            <span className="inline-block align-baseline text-body-sm/none font-normal text-base-tertiary">
               /{isMonthly ? translations.monthly : translations.annually}
             </span>
           </p>
@@ -199,15 +199,15 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
           style={{ borderRadius: 12 }}
           onClick={() => setIsExpanded(!isExpanded)}
           data-state={isExpanded ? 'expanded' : 'collapsed'}
-          className="hover:bg-neutral/5 data-[state=expanded]:hover:bg-neutral/10 data-[state=expanded]:bg-neutral/5 w-full space-y-4 rounded-xl px-4 py-3 pt-2 transition-colors duration-200 max-md:px-0 data-[state=expanded]:max-md:px-4"
+          className="w-full space-y-4 rounded-xl px-4 py-3 pt-2 transition-colors duration-200 hover:bg-neutral/5 data-[state=expanded]:bg-neutral/5 data-[state=expanded]:hover:bg-neutral/10 max-md:px-0 data-[state=expanded]:max-md:px-4"
         >
           <motion.div layout className="-me-2 flex w-full flex-row items-center justify-between">
-            <p className="text-base-tertiary text-sm font-normal">
+            <p className="text-sm font-normal text-base-tertiary">
               {translations.includedSolutions}
             </p>
             <ChevronDown
               data-state={isExpanded ? 'expanded' : 'collapsed'}
-              className="text-base-tertiary size-5 transition-transform duration-200 data-[state=expanded]:rotate-180"
+              className="size-5 text-base-tertiary transition-transform duration-200 data-[state=expanded]:rotate-180"
             />
           </motion.div>
           <motion.ul
@@ -250,8 +250,8 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                             }}
                           >
                             <div className="text-center">
-                              <p className="text-inverted-secondary text-sm font-medium">{name}</p>
-                              <p className="text-inverted-tertiary text-sm">{tagline}</p>
+                              <p className="text-sm font-medium text-inverted-secondary">{name}</p>
+                              <p className="text-sm text-inverted-tertiary">{tagline}</p>
                             </div>
                           </TooltipContent>
                         </>
@@ -280,8 +280,8 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                           }}
                           className="flex flex-col items-start justify-start text-start"
                         >
-                          <p className="text-base-secondary text-base font-medium">{name}</p>
-                          <p className="text-base-tertiary text-sm">{tagline}</p>
+                          <p className="text-base font-medium text-base-secondary">{name}</p>
+                          <p className="text-sm text-base-tertiary">{tagline}</p>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -297,7 +297,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
       {/* Featured Integrations */}
       {featuredIntegrations && featuredIntegrations.length > 0 && (
         <div className="px-4 max-md:px-0">
-          <p className="text-body-sm text-base-tertiary mb-4 font-normal">
+          <p className="mb-4 text-body-sm font-normal text-base-tertiary">
             {translations.integrations}
           </p>
           <div className="flex flex-wrap gap-1">
@@ -325,9 +325,9 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
             {features.map((feature, featureIndex) => (
               <li key={featureIndex} className="flex items-center justify-start gap-2">
                 {feature.enabled ? (
-                  <CircleCheck className="text-base-secondary size-5 flex-shrink-0" />
+                  <CircleCheck className="size-5 flex-shrink-0 text-base-secondary" />
                 ) : (
-                  <X className="text-base-tertiary size-5 flex-shrink-0" />
+                  <X className="size-5 flex-shrink-0 text-base-tertiary" />
                 )}
                 <span
                   className={cn(

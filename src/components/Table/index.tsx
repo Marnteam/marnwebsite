@@ -10,7 +10,7 @@ import {
   TableHead,
   TableCell,
 } from '@/components/ui/table'
-import { Badge } from '@/components/ui/badge'
+import { CMSBadge as Badge } from '@/components/Badge'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@iconify-icon/react'
 import { cn } from '@/utilities/ui'
@@ -104,13 +104,13 @@ export const StructuredTable: React.FC<PricingTableProps> = ({ table, badges }) 
       <Table
         className={cn(
           'overflow-hidden rounded-3xl',
-          styling?.bordered && 'border-border border',
+          styling?.bordered && 'border border-border',
           styling?.compact && 'text-sm',
         )}
       >
         <TableHeader
           className={cn(
-            'hover:bg-background-neutral bg-background-neutral rounded-b-3xl [&_tr]:border-0',
+            'rounded-b-3xl bg-background-neutral hover:bg-background-neutral [&_tr]:border-0',
             styling?.bordered && '[&_tr]:border-b',
           )}
         >
@@ -142,7 +142,7 @@ export const StructuredTable: React.FC<PricingTableProps> = ({ table, badges }) 
                 <TableRow
                   className={cn(
                     styling?.striped
-                      ? 'even:bg-background-neutral even:hover:bg-background-neutral odd:bg-background odd:hover:bg-background'
+                      ? 'odd:bg-background even:bg-background-neutral odd:hover:bg-background even:hover:bg-background-neutral'
                       : 'hover:bg-background-neutral',
                     styling?.bordered && 'border-b',
                   )}
@@ -163,7 +163,7 @@ export const StructuredTable: React.FC<PricingTableProps> = ({ table, badges }) 
                       >
                         <Icon
                           data-expanded={isExpanded ? 'true' : 'false'}
-                          className="text-base-secondary size-4 transition-transform duration-200 data-[expanded=true]:-rotate-90 ltr:rotate-180 ltr:data-[expanded=true]:rotate-270"
+                          className="size-4 text-base-secondary transition-transform duration-200 data-[expanded=true]:-rotate-90 ltr:rotate-180 ltr:data-[expanded=true]:rotate-270"
                           height="none"
                           icon="material-symbols:chevron-left-rounded"
                         />

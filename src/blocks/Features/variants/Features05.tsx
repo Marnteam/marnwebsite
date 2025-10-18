@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'
-import { Badge } from '@/components/ui/badge'
+import { CMSBadge as Badge } from '@/components/Badge'
 import { motion } from 'motion/react'
 import { containerVariants, itemsFling } from '@/utilities/motion'
 
@@ -13,7 +13,7 @@ export const Features05: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns?.length) return null
   return (
     <motion.div
-      className="py-xl gap-xs container grid grid-cols-1 md:grid-cols-2"
+      className="container grid grid-cols-1 gap-xs py-xl md:grid-cols-2"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
@@ -24,22 +24,22 @@ export const Features05: React.FC<FeaturesBlock> = ({ columns }) => {
         return (
           <motion.div key={index} variants={itemsFling} className="overflow-hidden border-0">
             <Card className="overflow-hidden border-0 p-4">
-              <CardContent className="gap-xs flex flex-col">
+              <CardContent className="flex flex-col gap-xs">
                 {image && (
                   <div className="h-auto w-full">
                     <Media
                       resource={image}
                       className="h-auto w-full overflow-hidden rounded-lg"
-                      imgClassName="w-full h-auto object-cover"
+                      imgClassName="h-auto w-full object-cover"
                     />
                   </div>
                 )}
-                <div className="gap-xs p-xs flex flex-col">
+                <div className="flex flex-col gap-xs p-xs">
                   {enableBadge && badge && <Badge {...badge} />}
                   {content && (
-                    <div className="gap-xs flex flex-col">
+                    <div className="flex flex-col gap-xs">
                       {content.title && (
-                        <h3 className="text-h2 text-base-primary font-medium">{content.title}</h3>
+                        <h3 className="text-h2 font-medium text-base-primary">{content.title}</h3>
                       )}
                       {content.subtitle && <RichText data={content.subtitle} />}
                     </div>

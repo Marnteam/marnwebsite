@@ -7,7 +7,7 @@ import { Media } from '@/components/Media'
 import { cn } from '@/utilities/ui'
 import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'
-import { Badge } from '@/components/ui/badge'
+import { CMSBadge as Badge } from '@/components/Badge'
 
 export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) => {
   const [activeIndex, setActiveIndex] = useState(0)

@@ -1,6 +1,6 @@
 import React from 'react'
 import { FeaturesBlock } from '@/payload-types'
-import { Badge } from '@/components/ui/badge'
+import { CMSBadge as Badge } from '@/components/Badge'
 import { Media } from '@/components/Media'
 import { cn } from '@/utilities/ui'
 import RichText from '@/components/RichText'

@@ -1,6 +1,6 @@
 import { Category, Integration } from '@/payload-types'
 import { Media } from '@/components/MediaResponsive'
-import { Badge } from '@/components/ui/badge'
+import { CMSBadge as Badge } from '@/components/Badge'
 import { TypedLocale } from 'payload'
 import { getEcosystemBadgeColorFromObject } from '@/utilities/getEcosystemBadgeColor'
 import { useTranslations } from 'next-intl'
@@ -14,10 +14,10 @@ const InfoCard: React.FC<{
 }> = ({ id, label, icon, children }) => (
   <div
     id={id}
-    className="bg-background-neutral flex flex-col items-center justify-center gap-2 rounded-3xl p-4"
+    className="flex flex-col items-center justify-center gap-2 rounded-3xl bg-background-neutral p-4"
   >
     <div className="flex h-full flex-wrap items-center justify-center gap-2">{children}</div>
-    <span className="text-body-sm text-base-secondary flex flex-row items-center gap-2">
+    <span className="flex flex-row items-center gap-2 text-body-sm text-base-secondary">
       {icon && <Icon icon={icon} className="size-5" height="none" />}
       {label}
     </span>
@@ -26,7 +26,7 @@ const InfoCard: React.FC<{
 
 const renderBadges = (
   items: Category[],
-  color: 'blue' | 'red' | 'green' | 'yellow' | 'gray' | 'violet' | 'inverted' | null | undefined,
+  color: 'blue' | 'red' | 'green' | 'yellow' | 'gray' | 'violet' | 'inverted' | undefined,
 ) => {
   return items
     ?.filter((item) => item && typeof item === 'object')
@@ -51,7 +51,7 @@ export const IntegrationPane: React.FC<{
 
   return (
     <div className="container">
-      <div className="gap-space-xs grid grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-space-xs lg:grid-cols-4">
         <InfoCard
           id="company"
           label={t('company')}
@@ -64,7 +64,7 @@ export const IntegrationPane: React.FC<{
               imgClassName="size-10 overflow-hidden rounded-xl"
             />
           )}
-          <p className="text-body-sm ms-2 font-medium">{company?.name}</p>
+          <p className="ms-2 text-body-sm font-medium">{company?.name}</p>
         </InfoCard>
 
         <InfoCard
@@ -91,7 +91,7 @@ export const IntegrationPane: React.FC<{
           label={t('pricing')}
           icon="material-symbols:payments-outline-rounded"
         >
-          <span className="text-body-sm text-base-secondary font-medium">{pricing}</span>
+          <span className="text-body-sm font-medium text-base-secondary">{pricing}</span>
         </InfoCard>
       </div>
     </div>
