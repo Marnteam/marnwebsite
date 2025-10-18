@@ -25,7 +25,7 @@ export const generateMeta = async (args: {
 }): Promise<Metadata> => {
   const { doc } = args || {}
 
-  const ogImage = getImageURL(doc?.meta?.image)
+  // const ogImage = getImageURL(doc?.meta?.image)
 
   const title = doc?.meta?.title ? doc?.meta?.title + ' | منظومة مرن' : 'منظومة مرن'
 
@@ -33,13 +33,13 @@ export const generateMeta = async (args: {
     description: doc?.meta?.description,
     openGraph: mergeOpenGraph({
       description: doc?.meta?.description || '',
-      images: ogImage
-        ? [
-            {
-              url: ogImage,
-            },
-          ]
-        : undefined,
+      // images: ogImage
+      //   ? [
+      //       {
+      //         url: ogImage,
+      //       },
+      //     ]
+      //   : undefined,
       title,
       url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
     }),
