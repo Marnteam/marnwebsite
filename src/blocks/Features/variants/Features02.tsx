@@ -6,7 +6,6 @@ import { cn } from '@/utilities/ui'
 
 import { CMSLink } from '@/components/Link'
 
-import { Icon } from '@iconify-icon/react'
 import * as motion from 'motion/react-client'
 import { itemVariants } from '@/utilities/motion'
 import RichText from '@/components/RichText'
@@ -44,27 +43,15 @@ export const Features02: React.FC<Features02Props> = ({ columns, readMoreLabel }
             viewport={{ once: true, amount: 0.3 }}
             variants={itemVariants}
             className={cn(
-              'group col-span-4 flex flex-col gap-xs rounded-3xl bg-background-neutral p-4',
+              'group relative col-span-4 flex flex-col rounded-3xl bg-background-neutral p-4',
               lgColSpanClass,
               {
                 'lg:flex-row': size === 'full',
                 'hover:shadow-border': column.enableCta && column.link?.label,
-                // 'lg:col-span-3': size === 'oneThird',
               },
             )}
           >
-            {column.enableCta && column.link?.label ? (
-              <CMSLink
-                {...column.link}
-                label={null}
-                variant="inline"
-                className="contents hover:no-underline"
-              >
-                <FeatureCardContent column={column} readMoreLabel={readMoreLabel} />
-              </CMSLink>
-            ) : (
-              <FeatureCardContent column={column} readMoreLabel={readMoreLabel} />
-            )}
+            <FeatureCardContent column={column} readMoreLabel={readMoreLabel} />
           </motion.div>
         )
       })}
@@ -83,11 +70,11 @@ function FeatureCardContent({
   return (
     <>
       <div
-        className={cn('flex w-full flex-col gap-xs p-xs', {
+        className={cn('flex w-full flex-col gap-xs p-xs pe-md', {
           'lg:basis-1/2 lg:pe-md': size === 'full',
         })}
       >
-        {column.enableBadge && column.badge && <Badge {...column.badge} />}
+        {column.enableBadge && column.badge && <Badge size="md" {...column.badge} />}
         {content && (
           <div className="flex flex-col gap-xs">
             {content.title && (
@@ -97,14 +84,10 @@ function FeatureCardContent({
           </div>
         )}
         {column.enableCta && column.link?.label && (
-          <span className="mt-auto flex w-fit flex-row items-center gap-1">
+          <CMSLink variant="link" className="mt-auto flex w-fit flex-row items-center gap-1">
             {readMoreLabel}
-            <Icon
-              icon="tabler:caret-left-filled"
-              height="none"
-              className="size-3 translate-x-1 transition-all duration-300 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180"
-            />
-          </span>
+            <span className="absolute inset-0 z-0"></span>
+          </CMSLink>
         )}
       </div>
       {image && (
