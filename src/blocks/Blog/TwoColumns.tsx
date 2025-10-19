@@ -52,11 +52,12 @@ const PostCard: React.FC<{
             {category && typeof category === 'object' && (
               <Badge
                 type="label"
-                label={category.title}
                 color="gray"
                 size="md"
                 className="mb-2 group-hover/inner:bg-background-neutral"
-              />
+              >
+                {category.title}
+              </Badge>
             )}
 
             {/* Title */}
