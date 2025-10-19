@@ -36,8 +36,6 @@ export const revalidate = 0
 export default async function Image({ params }: { params: { slug: string; locale: 'en' | 'ar' } }) {
   const { slug, locale } = params
 
-  console.log('og image: ', params)
-
   const decodedSlug = encodeURIComponent(slug)
 
   const url = getServerSideURL()
@@ -55,7 +53,10 @@ export default async function Image({ params }: { params: { slug: string; locale
   if (docs && docs.length > 0) {
     const post: Integration = docs[0]
     if (post.name) title = post.name
-    if (post.tagline) title += ` - ${post.tagline}`
+    if (post.tagline) {
+      title += ` - ${post.tagline}`
+      tagline = post.tagline
+    }
     if (post.icon && typeof post.icon === 'object' && post.icon.url) iconSrc = url + post.icon.url
   }
 
