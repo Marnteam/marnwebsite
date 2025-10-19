@@ -42,7 +42,6 @@ export const PostHero: React.FC<{
   const eased = scrollYProgress
 
   useMotionValueEvent(scrollY, 'change', (current) => {
-    console.log(current)
     if (current > 0.1) {
       setIsCollapsed(true)
     } else {

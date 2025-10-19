@@ -112,12 +112,14 @@ export const generateMeta = async ({
         url: canonical,
         siteName: fallbackTitle,
         locale,
+        images: `${url}/next/og?locale=${locale}&slug=${pathSegment}`,
       }
 
   const metadata: Metadata = {
     title,
     description,
     openGraph: mergeOpenGraph(openGraphInput),
+
     alternates: {
       canonical,
       languages: {

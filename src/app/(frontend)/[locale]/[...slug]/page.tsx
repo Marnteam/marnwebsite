@@ -91,15 +91,15 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   const awaitedp = await params
   const { slug: slugSegments = ['home'], locale = 'ar' } = await params
 
-  console.log('awaited p', awaitedp)
   const slugPath = slugSegments.join('/') || 'home'
 
   const page = await queryPageBySlug({
     slug: slugPath,
     locale,
   })
+  const meta = await generateMeta({ doc: page, locale })
 
-  return generateMeta({ doc: page, locale })
+  return meta
 }
 
 const queryPageBySlug = cache(async ({ slug, locale }: { slug: string; locale?: 'ar' | 'en' }) => {
