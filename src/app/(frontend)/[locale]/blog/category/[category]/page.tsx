@@ -94,7 +94,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   // }
 
   return (
-    <article className="bg-background overflow-x-clip">
+    <article className="overflow-x-clip bg-background">
       <PageClient />
 
       <RenderHero {...hero} />
@@ -130,7 +130,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
     locale,
   })
 
-  return generateMeta({ doc: page })
+  return generateMeta({ doc: page, locale })
 }
 
 const queryPageBySlug = cache(async ({ slug, locale }: { slug: string; locale?: 'ar' | 'en' }) => {

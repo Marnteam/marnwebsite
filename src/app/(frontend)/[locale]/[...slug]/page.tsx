@@ -51,9 +51,9 @@ type Args = {
   }>
 }
 
-export default async function Page({ params: paramsPromise }: Args) {
+export default async function Page({ params }: Args) {
   const { isEnabled: draft } = await draftMode()
-  const { slug: slugSegments = ['home'], locale = 'ar' } = await paramsPromise
+  const { slug: slugSegments = ['home'], locale = 'ar' } = await params
   const slugPath = slugSegments.join('/') || 'home'
   const url = `/${locale}/${slugPath}`
 
@@ -75,7 +75,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { hero, layout } = page
 
   return (
-    <article className="bg-background overflow-x-clip">
+    <article className="overflow-x-clip bg-background">
       <PageClient />
       <PayloadRedirects disableNotFound url={url} />
 
@@ -87,8 +87,11 @@ export default async function Page({ params: paramsPromise }: Args) {
   )
 }
 
-export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { slug: slugSegments = ['home'], locale = 'ar' } = await paramsPromise
+export async function generateMetadata({ params }: Args): Promise<Metadata> {
+  const awaitedp = await params
+  const { slug: slugSegments = ['home'], locale = 'ar' } = await params
+
+  console.log('awaited p', awaitedp)
   const slugPath = slugSegments.join('/') || 'home'
 
   const page = await queryPageBySlug({
@@ -96,7 +99,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
     locale,
   })
 
-  return generateMeta({ doc: page })
+  return generateMeta({ doc: page, locale })
 }
 
 const queryPageBySlug = cache(async ({ slug, locale }: { slug: string; locale?: 'ar' | 'en' }) => {

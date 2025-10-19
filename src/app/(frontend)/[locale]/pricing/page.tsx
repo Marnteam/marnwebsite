@@ -29,7 +29,10 @@ type Args = {
   }>
 }
 
-export default async function Page({ params: paramsPromise, searchParams: searchParamsPromise }: Args) {
+export default async function Page({
+  params: paramsPromise,
+  searchParams: searchParamsPromise,
+}: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug: slugSegments = [], locale = 'ar' } = await paramsPromise
 
@@ -55,7 +58,7 @@ export default async function Page({ params: paramsPromise, searchParams: search
 
   return (
     <PricingProvider>
-      <article className="bg-background overflow-x-clip">
+      <article className="overflow-x-clip bg-background">
         <PageClient />
         <PayloadRedirects disableNotFound url={url} />
 
@@ -81,25 +84,27 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
     locale,
   })
 
-  return generateMeta({ doc: page })
+  return generateMeta({ doc: page, locale })
 }
 
-const queryPageBySlug = cache(async ({ slug, locale }: { slug: string; locale?: 'ar' | 'en' | undefined }) => {
-  const payload = await getPayload({ config: configPromise })
-  const { isEnabled: draft } = await draftMode()
-  const result = await payload.find({
-    collection: 'pages',
-    locale: locale,
-    draft,
-    limit: 1,
-    pagination: false,
-    overrideAccess: draft,
-    where: {
-      slug: {
-        equals: slug,
+const queryPageBySlug = cache(
+  async ({ slug, locale }: { slug: string; locale?: 'ar' | 'en' | undefined }) => {
+    const payload = await getPayload({ config: configPromise })
+    const { isEnabled: draft } = await draftMode()
+    const result = await payload.find({
+      collection: 'pages',
+      locale: locale,
+      draft,
+      limit: 1,
+      pagination: false,
+      overrideAccess: draft,
+      where: {
+        slug: {
+          equals: slug,
+        },
       },
-    },
-  })
+    })
 
-  return result.docs?.[0] || null
-})
+    return result.docs?.[0] || null
+  },
+)

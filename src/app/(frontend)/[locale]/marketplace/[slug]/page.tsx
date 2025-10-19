@@ -81,7 +81,7 @@ export default async function Post({ params: paramsPromise }: Args) {
 export async function generateMetadata({ params }: Args): Promise<Metadata> {
   const { slug = '', locale = 'ar' } = await params
   const integration = await queryIntegrationBySlug({ slug, locale })
-  return generateMeta({ doc: integration })
+  return generateMeta({ doc: integration, locale })
 }
 
 const queryIntegrationBySlug = cache(

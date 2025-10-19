@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/breadcrumb'
 import { Link } from '@/i18n/routing'
 import { BlogPost, Category, Page } from '@/payload-types'
+import { generateMeta } from '@/utilities/generateMeta'
 
 export const dynamicParams = true
 
@@ -133,7 +134,7 @@ export default async function Post({ params: paramsPromise }: Args) {
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { slug = '', locale = 'ar' } = await paramsPromise
   const post = await queryPostBySlug({ slug, locale })
-  return generateMeta({ doc: post })
+  return generateMeta({ doc: post, locale })
 }
 
 const queryPostBySlug = cache(
@@ -176,30 +177,3 @@ const queryPostBySlug = cache(
     return post.docs?.[0] || null
   },
 )
-
-const generateMeta = async (args: {
-  doc: Partial<Page> | Partial<BlogPost>
-}): Promise<Metadata> => {
-  const { doc } = args || {}
-
-  // const ogImage = getImageURL(doc?.meta?.image)
-
-  const title = doc?.meta?.title ? doc?.meta?.title + ' | منظومة مرن' : 'منظومة مرن'
-
-  return {
-    description: doc?.meta?.description,
-    openGraph: {
-      description: doc?.meta?.description || '',
-      // images: ogImage
-      //   ? [
-      //       {
-      //         url: ogImage,
-      //       },
-      //     ]
-      //   : undefined,
-      title,
-      url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
-    },
-    title,
-  }
-}
