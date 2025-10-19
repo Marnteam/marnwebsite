@@ -10,12 +10,12 @@ import configPromise from '@payload-config'
 import { fromJsx } from '@takumi-rs/helpers/jsx'
 
 export const runtime = 'nodejs'
-export const alt = ''
-export const size = {
+
+const size = {
   width: 1200,
   height: 630,
 }
-export const contentType = 'image/png'
+const contentType = 'image/png'
 
 const VALID_LOCALES = ['en', 'ar'] as const
 type SupportedLocale = (typeof VALID_LOCALES)[number]
@@ -85,7 +85,6 @@ const normalizeSlug = (value?: string | null) => {
   if (!value) {
     return 'home'
   }
-
   const decoded = decodeURIComponent(value)
   const stripped = decoded.replace(/^\/+|\/+$/g, '')
   return stripped.length > 0 ? stripped : 'home'
@@ -95,7 +94,6 @@ const buildEyebrow = (slug: string, locale: SupportedLocale) => {
   if (slug === 'home') {
     return FALLBACK_COPY[locale].eyebrow
   }
-
   return slug
     .split('/')
     .filter(Boolean)
