@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from 'next-intl'
 import type { BlogPost } from '@/payload-types'
 import { Media } from '@/components/Media'
 import { Badge } from '@/components/ui/badge'
+import { Card as CardComp } from '@/components/ui/card'
 import { getReadTimeFromLexical } from '@/utilities/extractTextFromLexical'
 
 // export type CardPostData = Pick<Post, 'slug' | 'categories' | 'meta' | 'title' | 'publishedAt' >
@@ -42,13 +43,16 @@ export const Card: React.FC<{
 
   return (
     <article
-      className={cn('group relative border-none hover:cursor-pointer', className)}
+      className={cn(
+        'group relative isolate border border-transparent hover:cursor-pointer hover:border-border',
+        className,
+      )}
       // ref={card.ref}
     >
       <div className="relative w-full p-2">
         {heroImage && typeof heroImage !== 'string' && (
           <Media
-            imgClassName="object-fill transition-transform group-hover:scale-105"
+            imgClassName="h-full w-full object-fill transition-transform group-hover:scale-105"
             resource={heroImage}
             className="aspect-video h-auto w-full overflow-hidden rounded-2xl"
             size="(width <= 640px) 100vw, 33vw"
@@ -72,7 +76,7 @@ export const Card: React.FC<{
                         size="md"
                         type="label"
                         color="gray"
-                        className="z-1"
+                        className="z-2"
                         asChild
                       >
                         <Link href={`/blog/category/${slug}`}>{categoryTitle}</Link>
@@ -89,7 +93,7 @@ export const Card: React.FC<{
         {titleToUse && (
           <h3 className="text-2xl font-medium text-base-primary transition-colors hover:text-base-tertiary">
             <Link className="not-prose w-full" href={href}>
-              <span className="absolute inset-0 z-0"></span>
+              <span className="absolute inset-0 z-1"></span>
               {titleToUse}
             </Link>
           </h3>
