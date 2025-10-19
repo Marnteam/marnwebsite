@@ -28,9 +28,19 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { slugField } from '@/fields/slug'
-import { CallToActionBlock } from '@/blocks/CallToAction/config'
-import { FaqBlock } from '@/blocks/FAQ/config'
-import { GalleryBlock } from '@/blocks/Gallery/config'
+
+const EMPTY_CONTENT = {
+  root: {
+    children: [
+      { children: [], direction: null, format: '', indent: 0, type: 'paragraph', version: 1 },
+    ],
+    direction: null,
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+}
 
 export const Posts: CollectionConfig<'blog-posts'> = {
   slug: 'blog-posts',
@@ -121,6 +131,7 @@ export const Posts: CollectionConfig<'blog-posts'> = {
               }),
               label: false,
               required: true,
+              defaultValue: EMPTY_CONTENT,
             },
           ],
           label: 'Content',

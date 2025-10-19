@@ -14,6 +14,19 @@ import { badge } from '@/fields/badge'
 import { linkGroup } from '@/fields/linkGroup'
 import { media } from '@/fields/media'
 
+const EMPTY_CONTENT = {
+  root: {
+    children: [
+      { children: [], direction: null, format: '', indent: 0, type: 'paragraph', version: 1 },
+    ],
+    direction: null,
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+}
+
 export const CallToActionBlock: Block = {
   slug: 'callToActionBlock',
   interfaceName: 'CallToActionBlock',
@@ -54,6 +67,7 @@ export const CallToActionBlock: Block = {
         },
       }),
       label: false,
+      defaultValue: EMPTY_CONTENT,
     },
     media({}),
     linkGroup({

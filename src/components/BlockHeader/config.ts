@@ -23,6 +23,19 @@ const editorWithStyledList = lexicalEditor({
   },
 })
 
+const EMPTY_CONTENT = {
+  root: {
+    children: [
+      { children: [], direction: null, format: '', indent: 0, type: 'paragraph', version: 1 },
+    ],
+    direction: null,
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+}
+
 export const blockHeader: Field = {
   name: 'blockHeader',
   type: 'group',
@@ -57,6 +70,7 @@ export const blockHeader: Field = {
       editor: editorWithStyledList,
       label: false,
       localized: true,
+      defaultValue: EMPTY_CONTENT,
     },
     linkGroup({
       overrides: {
