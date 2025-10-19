@@ -22,7 +22,7 @@ export const BlogSidebar = ({ post }: { post: BlogPost }) => {
           </ul>
         </div>
       )} */}
-      <ScrollArea className="xlg:max-h-fit relative rounded-3xl bg-background-neutral-subtle lg:max-h-[calc(100vh-var(--header-plus-admin-bar-height)-160px)]">
+      <ScrollArea className="xlg:max-h-fit relative rounded-3xl bg-background-neutral lg:max-h-[calc(100vh-var(--header-plus-admin-bar-height)-160px)]">
         <div className="space-y-4 p-6">
           <h2 className="text-body-md font-medium text-(color:--color-base-primary)">
             {t('inThisArticle')}:{' '}

@@ -38,9 +38,11 @@ export const PostHero: React.FC<{
   const [isCollapsed, setIsCollapsed] = useState(false)
 
   const { scrollY, scrollYProgress } = useScroll({ target: undefined })
+
   const eased = scrollYProgress
 
   useMotionValueEvent(scrollY, 'change', (current) => {
+    console.log(current)
     if (current > 0.1) {
       setIsCollapsed(true)
     } else {
@@ -82,10 +84,11 @@ export const PostHero: React.FC<{
     return () => window.removeEventListener('resize', updateDimensions)
   }, [])
 
-  // const cardWidth = useTransform(eased, [0, 0.2], [width - cardOffsetRef.current * 2, width])
-  // const cardRadius = useTransform(eased, [0, 0.2], ['24px', '0px'])
-  const cardWidth = isCollapsed ? width : width - cardOffsetRef.current * 2
-  const cardRadius = isCollapsed ? '0px' : '24px'
+  const cardWidth = useTransform(eased, [0, 0.01], [width - cardOffsetRef.current * 2, width])
+  const cardRadius = useTransform(eased, [0, 0.1], ['24px', '0px'])
+
+  // const cardWidth = isCollapsed ? width : width - cardOffsetRef.current * 2
+  // const cardRadius = isCollapsed ? '0px' : '24px'
 
   const { title, meta, content, heroImage, populatedAuthors, publishedAt } = post
 
@@ -141,8 +144,8 @@ export const PostHero: React.FC<{
 
   return (
     <LayoutGroup id="post-hero">
-      <div className="sticky top-(--header-plus-admin-bar-height) z-1 mx-auto w-full max-w-[96rem] overflow-hidden">
-        <motion.div layout="size" layoutId="hero-card" className="relative">
+      <div className="sticky top-(--header-plus-admin-bar-height) z-9 mx-auto w-full max-w-[96rem] overflow-hidden">
+        <motion.div layout="size" layoutId="hero-card" className="relative z-100">
           <AnimatePresence mode="popLayout">
             {isCollapsed && (
               <motion.div
@@ -159,7 +162,7 @@ export const PostHero: React.FC<{
                 <motion.h1
                   layout="size"
                   variants={metaVariants}
-                  className="text-base-primary text-body-md relative z-2 w-full font-medium"
+                  className="relative z-2 w-full text-base font-medium text-base-primary"
                 >
                   {title}
                 </motion.h1>
@@ -182,14 +185,14 @@ export const PostHero: React.FC<{
                   layout="size"
                   initial={false}
                   variants={metaVariants}
-                  className="text-base-primary text-h2 md:text-h1 relative z-2 w-full max-w-4xl font-medium"
+                  className="relative z-2 w-full max-w-4xl text-h2 font-medium text-base-primary md:text-h1"
                 >
                   {title}
                 </motion.h1>
                 <motion.div layout="size" className="z-1 mt-6 space-y-6">
                   <motion.p
                     variants={metaVariants}
-                    className="text-body-md md:text-h4 text-base-tertiary max-w-4xl font-medium"
+                    className="max-w-4xl text-body-md text-base-tertiary md:text-h4"
                   >
                     {meta?.description}
                   </motion.p>
@@ -209,12 +212,12 @@ export const PostHero: React.FC<{
                                   key={author.id}
                                   resource={author.avatar as MediaType}
                                   imgClassName="object-cover"
-                                  className="ring-background-neutral size-6 shrink-0 overflow-hidden rounded-full ring-3 md:size-8 lg:size-10"
+                                  className="size-6 shrink-0 overflow-hidden rounded-full ring-3 ring-background-neutral md:size-8 lg:size-10"
                                 />
                               )
                             })}
                           </div>
-                          <p className="text-body-md text-base-secondary font-medium">
+                          <p className="text-body-md font-medium text-base-secondary">
                             {formatAuthors(populatedAuthors)}
                           </p>
                         </div>
@@ -223,10 +226,10 @@ export const PostHero: React.FC<{
                         <div className="flex flex-row items-center gap-2">
                           <Icon
                             icon="material-symbols:calendar-today-outline-rounded"
-                            className="text-base-tertiary size-5"
+                            className="size-[0.8lh] text-base-tertiary"
                             height="none"
                           />
-                          <time dateTime={publishedAt} className="text-body-md text-base-tertiary">
+                          <time dateTime={publishedAt} className="text-body-sm text-base-tertiary">
                             {formatDateTime(publishedAt)}
                           </time>
                         </div>
@@ -235,10 +238,10 @@ export const PostHero: React.FC<{
                         <div className="flex flex-row items-center gap-2">
                           <Icon
                             icon="material-symbols:nest-clock-farsight-analog-outline-rounded"
-                            className="text-base-tertiary size-5"
+                            className="size-[0.8lh] text-base-tertiary"
                             height="none"
                           />
-                          <p className="text-body-md text-base-tertiary">{readTime.text}</p>
+                          <p className="text-body-sm text-base-tertiary">{readTime.text}</p>
                         </div>
                       )}
                     </div>
@@ -291,10 +294,11 @@ export const PostHero: React.FC<{
               borderRadius: cardRadius,
               willChange: 'transform',
               overflow: 'hidden',
-              borderBottom: !isCollapsed ? 'none' : '1px solid var(--border)',
+              // borderBottom: '1px solid',
+              // borderBottomColor: borderBottomColor,
             }}
             layout
-            className="bg-background-neutral z-0 h-full"
+            className="z-0 h-full bg-background-neutral"
           >
             <motion.div
               style={{
@@ -303,7 +307,7 @@ export const PostHero: React.FC<{
                 transform: 'translate3d(0, 0, 0)',
               }}
               layout="position"
-              className="bg-brand absolute inset-0 z-10 h-0.5"
+              className="absolute inset-0 h-0.5 bg-brand"
             />
           </motion.div>
         </motion.div>
