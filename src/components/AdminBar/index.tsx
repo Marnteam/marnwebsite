@@ -69,7 +69,7 @@ export const AdminBar: React.FC<{
         'container w-full bg-neutral',
         'z-[10] h-full w-full py-0 text-sm hover:text-brand-primary',
         'flex flex-row items-center',
-        'h-(--admin-bar) max-md:hidden',
+        'h-(--admin-bar-height) max-md:hidden',
         baseClass,
         className,
       )}

@@ -77,7 +77,7 @@ export const HeaderClient: React.FC<HeaderType & HeaderAdminBarProps> = ({
     <header
       data-theme={headerTheme || 'light'}
       className={cn(
-        'fixed top-0 left-0 z-10 box-border h-[var(--header-height)] w-full max-w-screen border-b border-transparent bg-transparent transition-colors duration-300',
+        'fixed top-0 left-0 z-10 box-border w-full max-w-screen border-b border-transparent bg-transparent transition-colors duration-300',
         '-md:top-[var(--admin-bar-height,0px)]',
         hideBackground && 'before:opacity-0 after:opacity-0',
         isMobileNavOpen && 'bg-background',
@@ -92,7 +92,7 @@ export const HeaderClient: React.FC<HeaderType & HeaderAdminBarProps> = ({
         />
       )}
       {/* Main container with flex layout */}
-      <div className="container flex h-full flex-row items-center justify-between">
+      <div className="container flex h-(--header-height) flex-row items-center justify-between">
         <div className="w-full max-w-54">
           <Link
             href="/"
