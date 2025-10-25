@@ -1,6 +1,7 @@
 import type { Block } from 'payload'
 
 import {
+  BlocksFeature,
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
@@ -63,6 +64,7 @@ export const CallToActionBlock: Block = {
             HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
             FixedToolbarFeature(),
             InlineToolbarFeature(),
+            BlocksFeature({ blocks: ['styledListBlock'] }),
           ]
         },
       }),
