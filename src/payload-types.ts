@@ -190,7 +190,7 @@ export interface ArchiveBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -485,7 +485,7 @@ export interface Page {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -856,7 +856,7 @@ export interface CallToActionBlock {
   badge?: {
     type?: ('label' | 'reference') | null;
     label?: string | null;
-    color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+    color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
     reference?:
       | ({
           relationTo: 'solutions';
@@ -1118,7 +1118,7 @@ export interface CustomHtmlBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -1211,7 +1211,7 @@ export interface FaqBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -1318,7 +1318,7 @@ export interface FeaturedAppsBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -1432,7 +1432,7 @@ export interface FeaturesBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -1563,7 +1563,7 @@ export interface FeaturesBlock {
         badge?: {
           type?: ('label' | 'reference') | null;
           label?: string | null;
-          color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+          color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
           reference?:
             | ({
                 relationTo: 'solutions';
@@ -1641,7 +1641,7 @@ export interface GalleryBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -1743,7 +1743,7 @@ export interface LogoBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -1823,7 +1823,7 @@ export interface RichTextBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -1925,7 +1925,7 @@ export interface TestimonialsBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -2185,7 +2185,7 @@ export interface CarouselBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -2281,7 +2281,7 @@ export interface CarouselBlock {
         badge?: {
           type?: ('label' | 'reference') | null;
           label?: string | null;
-          color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+          color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
           reference?:
             | ({
                 relationTo: 'solutions';
@@ -2356,7 +2356,7 @@ export interface MetricsBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -2523,7 +2523,7 @@ export interface PricingBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -2597,7 +2597,7 @@ export interface PricingBlock {
         badge?: {
           type?: ('label' | 'reference') | null;
           label?: string | null;
-          color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+          color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
           reference?:
             | ({
                 relationTo: 'solutions';
