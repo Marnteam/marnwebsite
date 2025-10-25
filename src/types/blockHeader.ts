@@ -9,7 +9,7 @@ export interface BlockHeaderType {
   badge?: {
     type?: ('label' | 'reference') | null
     label?: string | null
-    color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null
+    color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null
     reference?:
       | ({
           relationTo: 'solutions'

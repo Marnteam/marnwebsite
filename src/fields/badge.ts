@@ -5,7 +5,7 @@ import deepMerge from '@/utilities/deepMerge'
 
 import { iconPickerField } from './iconPickerField'
 
-export type BadgeColors = 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted'
+export type BadgeColors = 'blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted'
 
 export const colorOptions: Record<BadgeColors, { label: string; value: string }> = {
   blue: {
@@ -24,9 +24,9 @@ export const colorOptions: Record<BadgeColors, { label: string; value: string }>
     label: 'Yellow',
     value: 'yellow',
   },
-  purple: {
-    label: 'Purple',
-    value: 'purple',
+  violet: {
+    label: 'Violet',
+    value: 'violet',
   },
   gray: {
     label: 'Gray',
@@ -86,7 +86,7 @@ export const badge: BadgeType = ({ colors, icon = true, overrides = {} } = {}) =
               width: '50%',
               condition: (_, siblingData) => siblingData?.type === 'label',
             },
-            defaultValue: 'blue',
+            defaultValue: 'gray',
             options: colorOptionsToUse,
             dbName: 'badge_color',
           },

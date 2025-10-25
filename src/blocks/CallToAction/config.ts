@@ -123,5 +123,11 @@ export const CallToActionBlock: Block = {
         condition: (_, { type }) => ['06', '07'].includes(type),
       },
     },
+    // {
+    //   name: 'callToActionDoc',
+    //   type: 'relationship',
+    //   relationTo: 'callToAction',
+    //   required: false,
+    // },
   ],
 }
