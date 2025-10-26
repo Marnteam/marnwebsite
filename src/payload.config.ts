@@ -17,6 +17,7 @@ import { Header } from './Header/config'
 import Site from './collections/Site'
 
 //collections
+import { CallToAction } from './collections/CallToAction'
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
@@ -168,6 +169,7 @@ export default buildConfig({
     Media,
     Customers,
     Categories,
+    CallToAction,
     FAQ,
     Changelog,
     Users,
