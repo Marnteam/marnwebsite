@@ -54,7 +54,7 @@ NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName
 const NavigationMenuItem = NavigationMenuPrimitive.Item
 
 const navigationMenuTriggerStyle = cva(
-  'group inline-flex h-9 w-max items-center justify-start rounded-lg bg-transparent px-4 py-3 text-sm font-medium text-base-secondary transition-colors hover:bg-background-neutral-subtle hover:text-base-primary hover:no-underline focus:bg-background-neutral-subtle focus:text-base-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-background-neutral-subtle data-[state=open]:text-base-primary data-[state=open]:focus:bg-background',
+  'group inline-flex h-8 w-max items-center justify-start rounded-full bg-transparent px-4 py-2 text-sm font-medium text-base-secondary transition-colors hover:bg-background-neutral-subtle hover:text-base-primary hover:no-underline focus:bg-background-neutral-subtle focus:text-base-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-background-neutral-subtle data-[state=open]:text-base-primary data-[state=open]:focus:bg-background',
 )
 
 const NavigationMenuTrigger = React.forwardRef<
@@ -63,10 +63,10 @@ const NavigationMenuTrigger = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <NavigationMenuPrimitive.Trigger
     ref={ref}
-    className={cn(navigationMenuTriggerStyle(), 'group', className)}
+    className={cn(navigationMenuTriggerStyle(), className)}
     {...props}
   >
-    {children}{' '}
+    {children}
     {/* <ChevronDown
       className="relative top-[1px] ml-1 h-3 w-3 transition duration-300 group-data-[state=open]:rotate-180"
       aria-hidden="true"
@@ -103,7 +103,7 @@ const NavigationMenuViewport = React.forwardRef<
   >
     <NavigationMenuPrimitive.Viewport
       className={cn(
-        'origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-3xl bg-background-neutral text-base-tertiary data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]',
+        'origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-3xl bg-background-neutral text-base-tertiary transition-[width,_height] data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]',
         className,
       )}
       ref={ref}
