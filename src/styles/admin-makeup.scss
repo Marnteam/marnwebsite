@@ -474,6 +474,11 @@ html[data-theme='dark'] .nav__link:hover {
   content: '';
 }
 
+.nav-group .nav__link[id*='callToAction']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:call-to-action-rounded.svg');
+  content: '';
+}
+
 .nav-group .nav__link[id*='form']::before {
   mask-image: url('https://api.iconify.design/material-symbols:format-list-bulleted.svg');
   content: '';
