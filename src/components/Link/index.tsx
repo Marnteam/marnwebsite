@@ -23,10 +23,10 @@ export type CMSLinkType = {
   type?: 'custom' | 'reference' | null
   url?: string | null
   icon?: string | null
-  onClick?: () => void
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>
 }
 
-export const CMSLink: React.FC<CMSLinkType> = (props) => {
+export const CMSLink = React.forwardRef<HTMLAnchorElement, CMSLinkType>((props, forwardedRef) => {
   const {
     type,
     color = 'neutral',
@@ -39,6 +39,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     size: sizeFromProps,
     url,
     icon,
+    ...rest
   } = props
 
   // const href =
@@ -48,8 +49,6 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
 
   const href = getHref(props)
 
-  if (!href) return null
-
   const size = variant === 'inline' ? 'clear' : sizeFromProps
   const newTabProps = newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
 
@@ -57,9 +56,11 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   if (variant === 'inline') {
     return (
       <Link
+        ref={forwardedRef}
         className={cn('text-base-secondary underline-offset-4 hover:underline', className)}
-        href={href || url || ''}
+        href={href ?? url}
         {...newTabProps}
+        {...rest}
       >
         {label && label}
         {children && children}
@@ -68,19 +69,27 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   }
 
   return (
-    <Button asChild className={className} size={size} variant={variant} color={color || 'neutral'}>
-      <Link className={cn('group', className)} href={href || url || ''} {...newTabProps}>
-        {icon && <Icon icon={`material-symbols:${icon}`} className="size-3" />}
+    <Button
+      asChild
+      className={cn('group', className)}
+      size={size}
+      variant={variant}
+      color={color || 'neutral'}
+    >
+      <Link ref={forwardedRef} href={href ?? url} {...newTabProps} {...rest}>
+        {icon && <Icon icon={`material-symbols:${icon}`} className="size-[0.8lh]" height="none" />}
         {label && label}
         {children && children}
         {variant === 'link' && (
           <Icon
             icon="tabler:caret-left-filled"
             height="none"
-            className="size-3 shrink-0 translate-x-1 transition-all duration-150 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180"
+            className="size-3 shrink-0 translate-x-1 transition-[translate] duration-150 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180"
           />
         )}
       </Link>
     </Button>
   )
-}
+})
+
+CMSLink.displayName = 'CMSLink'
