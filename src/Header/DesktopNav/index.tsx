@@ -12,12 +12,15 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
+import { Card } from '@/components/ui/card'
+import { buttonVariants } from '@/components/ui/button'
+
 import Image from 'next/image'
 import { CMSLink } from '@/components/Link'
-import type { Header as HeaderType } from '@/payload-types'
 import RichText from '@/components/RichText'
 import { Icon } from '@iconify-icon/react'
 import MarnIcon from '@/components/ui/marn-icon'
+import type { Header as HeaderType } from '@/payload-types'
 
 import { NavigationImagePreloader } from '../NavigationIconPreloader'
 
@@ -26,7 +29,8 @@ interface DesktopNavProps extends Omit<HeaderType, 'id' | 'updatedAt' | 'created
 }
 
 // Define the type for a single nav item directly based on HeaderType structure
-type NavItem = NonNullable<NonNullable<HeaderType['tabs']>[number]['navItems']>[number]
+type Tab = NonNullable<HeaderType['tabs']>[number]
+type NavItem = NonNullable<Tab['navItems']>[number]
 
 // Explicitly define props for ListItem based on the NavItem structure
 interface ListItemProps {
@@ -39,6 +43,15 @@ interface ListItemProps {
   [key: string]: any // Allow other props temporarily
 }
 
+interface DropdownTabProps {
+  label: NonNullable<Tab['label']>
+  enableDirectLink: NonNullable<Tab['enableDirectLink']>
+  link: NonNullable<Tab['link']>
+  description: NonNullable<Tab['description']>
+  descriptionLinks: NonNullable<Tab['descriptionLinks']>
+  navItems: ListItemProps[]
+}
+
 export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
   const validTabs = tabs || []
   return (
@@ -46,69 +59,15 @@ export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
       {/* Preload all navigation images */}
       <NavigationImagePreloader tabs={tabs} />
 
-      <NavigationMenu className="">
+      <NavigationMenu>
         <NavigationMenuList className="space-x-0">
           {validTabs.map((tab, i) => {
             if (tab.enableDropdown) {
-              return (
-                <NavigationMenuItem key={i + 'dropdown'}>
-                  {tab.enableDirectLink && tab.link ? (
-                    <NavigationMenuTrigger className="rounded-full">
-                      <CMSLink
-                        {...tab.link}
-                        variant="inline"
-                        className="group hover:text-base-primary hover:no-underline"
-                      >
-                        {tab.label}
-                      </CMSLink>
-                    </NavigationMenuTrigger>
-                  ) : (
-                    <NavigationMenuTrigger className="rounded-full">
-                      {tab.label}
-                    </NavigationMenuTrigger>
-                  )}
-                  <NavigationMenuContent>
-                    <ul
-                      className="olg:grid-cols-[repeat(var(--lgColumns),minmax(332px,1fr))] grid w-[400px] gap-4 p-4 md:w-full md:grid-cols-2 lg:w-(--content-width) lg:grid-cols-[var(--lgColumns)]"
-                      style={
-                        {
-                          '--lgColumns': `repeat(${tab.navItems?.length || 1}, minmax(0, 1fr))`,
-                          '--content-width': `${(tab.navItems?.length || 1) * 332 + ((tab.navItems?.length || 1) - 1) * 16 + 32}px`,
-                        } as React.CSSProperties
-                      }
-                    >
-                      {
-                        (tab.description || tab.descriptionLinks) && null
-                        // <li className="row-span-3 md:col-span-1">
-                        //   {' '}
-                        //   {/* Adjust span based on grid */}
-                        //   <NavigationMenuLink asChild>
-                        //     <a
-                        //       className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-gradient-to-b p-6 no-underline outline-none select-none focus:shadow-md"
-                        //       href={tab.descriptionLinks?.[0]?.link?.url || '#'}
-                        //     >
-                        //       <div className="mt-4 mb-2 text-lg font-medium">{tab.label}</div>
-                        //       <p className="text-base-tertiary text-sm leading-tight">
-                        //         {tab.description}
-                        //       </p>
-                        //     </a>
-                        //   </NavigationMenuLink>
-                        // </li>
-                      }
-                      {tab.navItems?.map((navItem) => (
-                        <li key={navItem.id}>
-                          {/* Use navItem.id as key */}
-                          <ListItem {...navItem} />
-                        </li>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              )
+              return <DropdownTab key={i + ' - dropdown'} {...(tab as any)} />
             }
             if (tab.enableDirectLink && tab.link) {
               return (
-                <NavigationMenuItem key={i + 'directLink'}>
+                <NavigationMenuItem key={i + ' - directLink'}>
                   <NavigationMenuLink asChild>
                     <CMSLink
                       className={cn(navigationMenuTriggerStyle(), 'rounded-full')}
@@ -148,19 +107,24 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
     switch (style) {
       case 'featured':
         itemContent = (
-          <div ref={ref as React.Ref<HTMLDivElement>} className={cn('p-3', className)} {...props}>
+          <div
+            ref={ref as React.Ref<HTMLDivElement>}
+            className={cn('p-3 pe-8', className)}
+            {...props}
+          >
             {featuredLink?.tag && (
-              <div className="mb-1 text-xs font-semibold text-base-tertiary">
-                {featuredLink.tag}
-              </div>
+              <div className="mb-2 text-xs font-medium text-base-tertiary">{featuredLink.tag}</div>
             )}
-
-            <RichText data={featuredLink?.label} />
-            <div className="mt-2 flex flex-col space-y-1">
+            <RichText
+              data={featuredLink?.label}
+              className="[&_p]:font-medium [&_p]:text-base-secondary"
+            />
+            <div className="mt-4 flex flex-row gap-2">
               {featuredLink?.links?.map((subLink, i) => (
                 <CMSLink
                   key={i}
                   {...subLink.link}
+                  variant="link"
                   className="text-sm text-base-tertiary hover:text-base-secondary"
                 />
               ))}
@@ -170,13 +134,13 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
         break
       case 'list':
         itemContent = (
-          <div ref={ref as React.Ref<HTMLDivElement>} className={cn('', className)} {...props}>
+          <div ref={ref as React.Ref<HTMLDivElement>} className={cn('pt-3', className)} {...props}>
             {listLinks?.tag && (
-              <div className="mb-1 px-4 text-xs font-normal text-base-tertiary">
+              <div className="mb-2 px-3 text-xs font-medium text-base-tertiary">
                 {listLinks.tag}
               </div>
             )}
-            <div className="mt-1 flex flex-col gap-0">
+            <div className="mt-1 flex flex-col gap-1">
               {listLinks?.links?.map((subLink, i) => {
                 return (
                   <CMSLink
@@ -187,7 +151,7 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
                     variant="inline"
                     className={cn(
                       navigationMenuTriggerStyle(),
-                      'relative h-fit w-full gap-4 rounded-2xl px-3 text-base transition-all duration-300 ease-in-out-quad hover:px-4 [&_svg]:size-5',
+                      'relative h-fit w-full items-center justify-center gap-2 rounded-2xl px-3 text-base [&_svg]:size-5',
                       subLink.link.type === 'reference' &&
                         subLink.link.reference?.value?.icon &&
                         'items-start',
@@ -232,7 +196,7 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
                     <Icon
                       icon="tabler:caret-left-filled"
                       height="none"
-                      className="size-4 shrink-0 translate-x-[4px] text-base-tertiary opacity-0 transition-all group-hover:translate-x-0 group-hover:text-base-tertiary group-hover:opacity-100"
+                      className="size-4 shrink-0 translate-x-0 text-base-tertiary opacity-0 transition-[translate,_opacity] group-hover:text-base-tertiary group-hover:opacity-100 ltr:rotate-180 ltr:group-hover:translate-x-1 rtl:rotate-0 rtl:group-hover:-translate-x-1"
                     />
                   </CMSLink>
                 )
@@ -246,22 +210,35 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
         if (!defaultLink?.link) return null
         return (
           <NavigationMenuLink asChild>
-            <CMSLink
-              ref={ref as React.Ref<HTMLAnchorElement>}
+            {/*<LinkBlock
+              link={defaultLink}
+              className="h-full w-full"
+              label={defaultLink.description}
+              position="corner"
+            />*/}
+            <div
               className={cn(
-                'block space-y-1 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+                buttonVariants({ color: 'neutral', variant: 'ghost' }),
+                'relative flex h-full w-full flex-col items-start justify-start gap-2 rounded-2xl p-4 pe-8',
                 className,
               )}
-              {...defaultLink.link}
-              {...props}
             >
-              <div className="text-sm leading-none font-medium">{defaultLink.link.label}</div>
+              <CMSLink
+                ref={ref as React.Ref<HTMLAnchorElement>}
+                className="h-fit"
+                {...defaultLink.link}
+                {...props}
+                label={null}
+              >
+                {defaultLink.link.label}
+                <span className="absolute inset-0" />
+              </CMSLink>
               {defaultLink.description && (
-                <p className="line-clamp-2 text-sm leading-snug text-base-tertiary">
+                <p className="line-clamp-4 w-full text-sm whitespace-normal text-base-tertiary">
                   {defaultLink.description}
                 </p>
               )}
-            </CMSLink>
+            </div>
           </NavigationMenuLink>
         )
     }
@@ -270,3 +247,76 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
   },
 )
 ListItem.displayName = 'ListItem'
+
+const DropdownTab = React.forwardRef<HTMLAnchorElement | HTMLDivElement, DropdownTabProps>(
+  ({ label, enableDirectLink, link, description, descriptionLinks, navItems, ...props }, ref) => {
+    let itemContent: React.ReactNode | null = null
+
+    let columnsCount = navItems?.length || 1
+    if (description) columnsCount++
+
+    itemContent = (
+      <NavigationMenuItem>
+        <NavigationMenuTrigger asChild>
+          {enableDirectLink && link && (link.url || link.reference?.value) ? (
+            <CMSLink {...link} variant="inline" className={navigationMenuTriggerStyle()}>
+              {label}
+            </CMSLink>
+          ) : (
+            <span>{label}</span>
+          )}
+        </NavigationMenuTrigger>
+        <NavigationMenuContent>
+          <ul
+            className="grid w-[400px] max-w-[94rem] grid-rows-1 gap-1 p-2 md:w-full md:grid-cols-2 lg:w-auto lg:min-w-[960px] lg:grid-cols-[var(--lgColumns)]"
+            style={
+              {
+                '--lgColumns': `repeat(12, minmax(0, 1fr))`,
+                '--content-width': `${columnsCount * 224 + (columnsCount - 1) * 16 + 32}px`,
+                transition: 'all 1s ease',
+              } as React.CSSProperties
+            }
+          >
+            {description && (
+              <li
+                className={cn('col-span-3', {
+                  'col-span-4': navItems.length === 2 && description,
+                })}
+              >
+                <Card className="_bg-background-inverted _text-inverted-secondary flex h-full flex-col justify-between gap-6 rounded-lg p-4">
+                  <span className="text-base leading-relaxed font-medium text-base-primary">
+                    {description}
+                  </span>
+                  {descriptionLinks.length > 0 &&
+                    descriptionLinks.map((descriptionLink, idx) => (
+                      <CMSLink
+                        key={idx}
+                        {...descriptionLink.link}
+                        color="brand"
+                        variant="link"
+                        className="pointer-events-auto h-fit w-fit px-0 text-base"
+                      />
+                    ))}
+                </Card>
+              </li>
+            )}
+            {navItems?.map((navItem, idx) => (
+              <li
+                key={idx}
+                className={cn('col-span-3', {
+                  'col-span-6':
+                    navItem.style === 'featured' || (navItems.length === 2 && !description),
+                  'col-span-4': navItems.length === 2 && description,
+                })}
+              >
+                <ListItem {...navItem} />
+              </li>
+            ))}
+          </ul>
+        </NavigationMenuContent>
+      </NavigationMenuItem>
+    )
+    return itemContent
+  },
+)
+DropdownTab.displayName = 'DropdownTab'
