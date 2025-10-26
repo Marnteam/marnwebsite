@@ -89,7 +89,7 @@
       --header-height: 60px;
     }
 
-    --admin-bar-height: 0px;
+    --admin-bar-height: 0rem;
     --header-plus-admin-bar-height: calc(var(--header-height) + var(--admin-bar-height));
 
     /* --background: hsl(0 0% 100%);
