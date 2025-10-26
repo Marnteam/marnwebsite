@@ -7,7 +7,7 @@ const CustomRowLabelNavItems: PayloadClientReactComponent<RowLabelComponent> = (
   const { data } = useRowLabel<any>()
 
   if (data.style === 'default') {
-    return data.defaultLink?.link.label
+    return data.defaultLink?.tag
   }
   if (data.style === 'featured') {
     return data.featuredLink?.tag
