@@ -4130,6 +4130,10 @@ export interface Header {
                          * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
                          */
                         icon?: string | null;
+                        /**
+                         * Choose how the link should be rendered.
+                         */
+                        variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
                       };
                       id?: string | null;
                     }[]
@@ -4357,6 +4361,7 @@ export interface HeaderSelect<T extends boolean = true> {
                                 url?: T;
                                 label?: T;
                                 icon?: T;
+                                variant?: T;
                               };
                           id?: T;
                         };

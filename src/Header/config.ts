@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 
 import { authenticated } from '../access/authenticated'
 import { link } from '../fields/link'
@@ -132,6 +132,7 @@ export const Header: GlobalConfig = {
                     {
                       name: 'description',
                       type: 'textarea',
+                      localized: true,
                     },
                   ],
                 },
@@ -145,17 +146,19 @@ export const Header: GlobalConfig = {
                     {
                       name: 'tag',
                       type: 'text',
+                      localized: true,
                     },
                     {
                       name: 'label',
                       type: 'richText',
+                      localized: true,
                     },
                     {
                       name: 'links',
                       type: 'array',
                       fields: [
                         link({
-                          variants: false,
+                          // variants: ['primary', 'secondary', 'tertiary', ''],
                           colors: false,
                           icon: true,
                           description: false,
@@ -177,6 +180,7 @@ export const Header: GlobalConfig = {
                     {
                       name: 'tag',
                       type: 'text',
+                      localized: true,
                     },
                     {
                       name: 'links',
@@ -217,6 +221,12 @@ export const Header: GlobalConfig = {
     },
   ],
   hooks: {
-    afterChange: [() => revalidatePath('/', 'layout')],
+    afterChange: [
+      ({ doc, req }) => {
+        revalidatePath(`/${req.locale}`, 'layout')
+        revalidateTag('global_header')
+        return doc
+      },
+    ],
   },
 }
