@@ -210,6 +210,11 @@ export const Header: GlobalConfig = {
       name: 'cta',
       label: 'Header CTA Buttons',
       type: 'array',
+      admin: {
+        components: {
+          RowLabel: '@/Header/CustomRowLabelCTA',
+        },
+      },
       fields: [
         link({
           icon: false,
