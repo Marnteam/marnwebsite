@@ -95,6 +95,7 @@ export interface Config {
     media: Media;
     customers: Customer;
     categories: Category;
+    callToAction: CallToAction;
     faq: Faq;
     changelog: Changelog;
     users: User;
@@ -121,6 +122,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     customers: CustomersSelect<false> | CustomersSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    callToAction: CallToActionSelect<false> | CallToActionSelect<true>;
     faq: FaqSelect<false> | FaqSelect<true>;
     changelog: ChangelogSelect<false> | ChangelogSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -190,7 +192,7 @@ export interface ArchiveBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -485,7 +487,7 @@ export interface Page {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -856,7 +858,7 @@ export interface CallToActionBlock {
   badge?: {
     type?: ('label' | 'reference') | null;
     label?: string | null;
-    color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
+    color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
     reference?:
       | ({
           relationTo: 'solutions';
@@ -942,6 +944,7 @@ export interface CallToActionBlock {
       }[]
     | null;
   form?: (string | null) | Form;
+  callToActionRef?: (string | null) | CallToAction;
   id?: string | null;
   blockName?: string | null;
   blockType: 'callToActionBlock';
@@ -1110,6 +1113,105 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "callToAction".
+ */
+export interface CallToAction {
+  id: string;
+  type: '01' | '02' | '03' | '04' | '05' | '06' | '07';
+  badge?: {
+    type?: ('label' | 'reference') | null;
+    label?: string | null;
+    color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
+    reference?:
+      | ({
+          relationTo: 'solutions';
+          value: string | Solution;
+        } | null)
+      | ({
+          relationTo: 'integrations';
+          value: string | Integration;
+        } | null);
+    /**
+     * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
+     */
+    icon?: string | null;
+    icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+  };
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  mediaGroup?: {
+    media?: (string | null) | Media;
+    videoControls?: {
+      autoplay?: boolean | null;
+      loop?: boolean | null;
+      muted?: boolean | null;
+      controls?: boolean | null;
+      objectFit?: ('cover' | 'contain' | 'fill' | 'none' | 'scale-down') | null;
+    };
+  };
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: string | Page;
+              } | null)
+            | ({
+                relationTo: 'blog-posts';
+                value: string | BlogPost;
+              } | null)
+            | ({
+                relationTo: 'solutions';
+                value: string | Solution;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose the button style.
+           */
+          color?: ('brand' | 'neutral') | null;
+          /**
+           * Choose how the link should be rendered.
+           */
+          variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  caption?: string | null;
+  list?:
+    | {
+        /**
+         * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
+         */
+        icon?: string | null;
+        title?: string | null;
+        subtitle?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  form?: (string | null) | Form;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CustomHtmlBlock".
  */
 export interface CustomHtmlBlock {
@@ -1118,7 +1220,7 @@ export interface CustomHtmlBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -1211,7 +1313,7 @@ export interface FaqBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -1318,7 +1420,7 @@ export interface FeaturedAppsBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -1432,7 +1534,7 @@ export interface FeaturesBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -1563,7 +1665,7 @@ export interface FeaturesBlock {
         badge?: {
           type?: ('label' | 'reference') | null;
           label?: string | null;
-          color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
+          color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
           reference?:
             | ({
                 relationTo: 'solutions';
@@ -1641,7 +1743,7 @@ export interface GalleryBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -1743,7 +1845,7 @@ export interface LogoBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -1823,7 +1925,7 @@ export interface RichTextBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -1925,7 +2027,7 @@ export interface TestimonialsBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -2185,7 +2287,7 @@ export interface CarouselBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -2281,7 +2383,7 @@ export interface CarouselBlock {
         badge?: {
           type?: ('label' | 'reference') | null;
           label?: string | null;
-          color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
+          color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
           reference?:
             | ({
                 relationTo: 'solutions';
@@ -2356,7 +2458,7 @@ export interface MetricsBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -2523,7 +2625,7 @@ export interface PricingBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -2597,7 +2699,7 @@ export interface PricingBlock {
         badge?: {
           type?: ('label' | 'reference') | null;
           label?: string | null;
-          color?: ('blue' | 'red' | 'green' | 'yellow' | 'purple' | 'gray' | 'inverted') | null;
+          color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
           reference?:
             | ({
                 relationTo: 'solutions';
@@ -3025,6 +3127,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'categories';
         value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'callToAction';
+        value: string | CallToAction;
       } | null)
     | ({
         relationTo: 'faq';
@@ -3490,6 +3596,66 @@ export interface CategoriesSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "callToAction_select".
+ */
+export interface CallToActionSelect<T extends boolean = true> {
+  type?: T;
+  badge?:
+    | T
+    | {
+        type?: T;
+        label?: T;
+        color?: T;
+        reference?: T;
+        icon?: T;
+        icon_position?: T;
+      };
+  richText?: T;
+  mediaGroup?:
+    | T
+    | {
+        media?: T;
+        videoControls?:
+          | T
+          | {
+              autoplay?: T;
+              loop?: T;
+              muted?: T;
+              controls?: T;
+              objectFit?: T;
+            };
+      };
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              color?: T;
+              variant?: T;
+            };
+        id?: T;
+      };
+  caption?: T;
+  list?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        subtitle?: T;
+        id?: T;
+      };
+  form?: T;
   updatedAt?: T;
   createdAt?: T;
 }

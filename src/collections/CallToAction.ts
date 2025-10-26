@@ -1,4 +1,7 @@
-import type { Block } from 'payload'
+import type { CollectionConfig } from 'payload'
+
+import { authenticated } from '../access/authenticated'
+import { authenticatedOrPublished } from '../access/authenticatedOrPublished'
 
 import {
   BlocksFeature,
@@ -28,13 +31,17 @@ const EMPTY_CONTENT = {
   },
 }
 
-export const CallToActionBlock: Block = {
-  slug: 'callToActionBlock',
-  interfaceName: 'CallToActionBlock',
-  dbName: 'callToActionBlock',
+export const CallToAction: CollectionConfig<'callToAction'> = {
+  slug: 'callToAction',
+  access: {
+    create: authenticated,
+    delete: authenticated,
+    read: authenticatedOrPublished,
+    update: authenticated,
+  },
   labels: {
     singular: 'Call to Action',
-    plural: 'Calls to Action',
+    plural: 'Call to Action',
   },
   fields: [
     {
@@ -122,12 +129,6 @@ export const CallToActionBlock: Block = {
       admin: {
         condition: (_, { type }) => ['06', '07'].includes(type),
       },
-    },
-    {
-      name: 'callToActionRef',
-      type: 'relationship',
-      relationTo: 'callToAction',
-      required: false,
     },
   ],
 }
