@@ -33,7 +33,7 @@ export const CallToAction01: React.FC<CallToActionProps> = ({
   const y = useTransform(scrollYProgress, [0, 1], ['-50%', '50%'])
 
   return (
-    <div className={cn('container py-xl', className)} ref={containerRef}>
+    <div className={cn('container py-space-xl', className)} ref={containerRef}>
       <div className="relative overflow-hidden rounded-3xl">
         <div
           data-theme="dark"

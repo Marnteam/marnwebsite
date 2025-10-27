@@ -30,7 +30,7 @@ export const Features02: React.FC<Features02Props> = ({ columns, readMoreLabel }
   if (!safeColumns.length) return null
 
   return (
-    <div className="container grid grid-cols-1 gap-space-xs py-xl md:grid-cols-4 lg:grid-cols-12">
+    <div className="container grid grid-cols-1 gap-space-xs py-space-xl md:grid-cols-4 lg:grid-cols-12">
       {safeColumns.map((column, index) => {
         const { content, image, size } = column
         const lgColSpanClass = colSpanClass[size || 'full']

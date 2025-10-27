@@ -16,7 +16,7 @@ export const Carousel04: React.FC<CarouselBlock> = ({ columns }) => {
   if (!columns || columns.length === 0) return null
 
   return (
-    <div className="container py-md">
+    <div className="container py-space-md">
       <Carousel
         slidesPerView={{
           sm: 1, //   ≥640px: 1 slide

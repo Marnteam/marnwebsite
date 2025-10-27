@@ -20,7 +20,7 @@ interface FeaturedApps06Props {
 
 export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({ cards }) => {
   return (
-    <div className="container py-xl">
+    <div className="container py-space-xl">
       {/* disable carousel in less than md */}
       <Carousel
         slidesPerView={{
@@ -32,7 +32,7 @@ export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({ cards }) => {
         <CarouselContent className="max-md:flex-col max-md:gap-space-xs">
           {cards?.map(({ title, subtitle, appReference, id }) => (
             <CarouselItem key={id} className="md:not-first:ps-space-xs">
-              <Card key={id} className="h-full w-full space-y-sm">
+              <Card key={id} className="space-y-sm h-full w-full">
                 <CardHeader className="flex flex-col gap-space-xs">
                   <h3 className="text-h3">{title}</h3>
                   <p className="text-body-md font-normal text-base-secondary">{subtitle}</p>

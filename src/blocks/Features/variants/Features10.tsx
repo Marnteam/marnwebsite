@@ -9,7 +9,7 @@ export const Features10: React.FC<FeaturesBlock> = ({ columns, link, CTALabel })
   if (!columns?.length) return null
   const limitedColumns = columns.slice(0, 3)
   return (
-    <div className="container grid grid-cols-1 gap-4 py-xl md:grid-cols-2">
+    <div className="container grid grid-cols-1 gap-4 py-space-xl md:grid-cols-2">
       {limitedColumns.map((column, index) => {
         const { image, content } = column
         return (

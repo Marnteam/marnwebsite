@@ -30,13 +30,13 @@ export const TestimonialsBlock02: React.FC<Props> = ({ testimonials, linkLabel }
   const { companyLogo } = company
 
   return (
-    <section className="bg-background py-lg">
+    <section className="bg-background py-space-lg">
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
         variants={containerVariants}
-        className="container py-lg"
+        className="container py-space-lg"
       >
         <motion.div
           variants={itemVariants} // Animate the main card as one item

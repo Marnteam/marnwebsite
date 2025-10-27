@@ -68,7 +68,7 @@ export const FeaturedApps04: React.FC<AppsCarouselClientProps> = (props) => {
   }
 
   return (
-    <div className="container py-md">
+    <div className="container py-space-md">
       <Carousel
         slidesPerView={{
           sm: 1, //   ≥640px: 1 slide

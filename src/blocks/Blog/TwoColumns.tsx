@@ -129,7 +129,7 @@ export const TwoColumns: React.FC<BlogBlockType> = ({
 }) => {
   const t = useTranslations('Blog')
   return (
-    <div className="container py-xl">
+    <div className="container py-space-xl">
       {/* Posts Sections */}
       <div className="mx-auto flex flex-col gap-space-xs lg:flex-row">
         {/* Popular Posts */}

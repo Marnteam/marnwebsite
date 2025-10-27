@@ -28,7 +28,7 @@ export const Features01: React.FC<FeaturesBlock> = ({ columns }) => {
   }
 
   return (
-    <div className="container grid grid-cols-1 gap-space-xs bg-background py-xl">
+    <div className="container grid grid-cols-1 gap-space-xs bg-background py-space-xl">
       {rows.map((row, index) => (
         <div
           key={index}
@@ -49,7 +49,7 @@ export const Features01: React.FC<FeaturesBlock> = ({ columns }) => {
                 className={cn('w-full rounded-3xl bg-background-neutral p-4')}
               >
                 {appReference && (
-                  <AppReference appReference={appReference} className="px-xs py-xs" />
+                  <AppReference appReference={appReference} className="px-space-xs py-space-xs" />
                 )}
                 <div
                   className={cn('flex flex-col gap-space-xs', {

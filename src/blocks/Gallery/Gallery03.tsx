@@ -17,7 +17,7 @@ export const Gallery03: React.FC<Gallery03Props> = ({ images, className }) => {
   }
 
   return (
-    <div dir="ltr" className={cn('relative w-full py-xl', className)}>
+    <div dir="ltr" className={cn('relative w-full py-space-xl', className)}>
       <InfiniteSlider className="w-full">
         {images.map((image, index) => (
           <Media

@@ -74,7 +74,7 @@ export const SearchableIntegrationsGrid: React.FC<SearchableIntegrationsGridProp
   }
 
   return (
-    <div className="py-xl space-y-md container">
+    <div className="space-y-md container py-space-xl">
       <SearchFilters
         categories={categories.docs}
         ecosystems={ecosystems.docs}

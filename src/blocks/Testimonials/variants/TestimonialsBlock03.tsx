@@ -71,7 +71,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, linkLabe
                 <Media
                   resource={authorInfo.avatar}
                   fill
-                  className="relative size-lg overflow-hidden rounded-full"
+                  className="size-lg relative overflow-hidden rounded-full"
                   imgClassName="object-cover"
                 />
               )}
@@ -108,7 +108,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, linkLabe
 
 export const TestimonialsBlock03: React.FC<Props> = ({ testimonials, linkLabel }) => {
   return (
-    <section className="relative container py-xl">
+    <section className="relative container py-space-xl">
       <Carousel slidesPerView={1}>
         <CarouselContent className="-ms-space-sm">
           {testimonials.map((testimonial, index) => (

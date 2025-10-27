@@ -86,7 +86,7 @@ export const Metrics02: React.FC<MetricsBlockProps> = ({
   }
 
   return (
-    <div className="container py-xl">
+    <div className="container py-space-xl">
       <div className="grid gap-space-xl lg:grid-cols-2 lg:items-center">
         {/* Image Section */}
         {media && typeof media === 'object' && (

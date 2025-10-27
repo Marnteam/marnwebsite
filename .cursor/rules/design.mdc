@@ -9,7 +9,7 @@ Working with the project's design system.
 **1. Prioritize Theme Variables (`globals.css` `@theme`):**
 
 - **Golden Rule:** Always favor using Tailwind utility classes generated from the CSS variables defined within the `@theme { ... }` block in `src/app/(frontend)/[locale]/globals.css`.
-- **Correct Usage:** Use classes like `text-base-primary`, `bg-background-neutral`, `p-space-md`, `gap-space-sm`, `text-h3`, `rounded-3xl`, etc.
+- **Correct Usage:** Use classes like `text-base-primary`, `bg-background-neutral`, `p-space-md`, `gap-space-sm`, `text-h4`, `rounded-3xl`, etc.
 - **Avoid:**
   - Directly using variables defined only in `:root` or `[data-theme='dark']` (like `--neutral-primary`) in Tailwind classes, as these might not have corresponding utility classes.
   - Hardcoding pixel/rem values (e.g., `p-8`, `text-[31px]`, `gap-4`) when a theme spacing or text size variable (`p-space-lg`, `text-h3`, `gap-space-sm`) provides a semantic equivalent.

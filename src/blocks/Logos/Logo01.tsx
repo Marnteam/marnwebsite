@@ -16,7 +16,7 @@ export const Logo01: React.FC<Logo01Props> = ({ logos, className }) => {
   }
 
   return (
-    <div className={cn('py-xl container w-full overflow-hidden', className)}>
+    <div className={cn('container w-full overflow-hidden py-space-xl', className)}>
       <ul
         dir="ltr"
         className="flex w-full flex-wrap items-center justify-center mask-x-from-90% mask-x-to-100% md:justify-between"

@@ -25,7 +25,7 @@ export const CallToAction03: React.FC<CallToActionProps> = ({
   className,
 }) => {
   return (
-    <div className={cn('container py-xl', className)}>
+    <div className={cn('container py-space-xl', className)}>
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -33,7 +33,7 @@ export const CallToAction03: React.FC<CallToActionProps> = ({
         viewport={{ once: true, amount: 0.3 }}
         className="flex flex-col items-center gap-space-sm rounded-3xl bg-background-neutral"
       >
-        <div className="flex flex-col items-center gap-space-sm px-md pt-space-2xl">
+        <div className="flex flex-col items-center gap-space-sm px-space-md pt-space-2xl">
           {richText && (
             <RichText className="mb-0 text-center" data={richText} enableGutter={false} />
           )}

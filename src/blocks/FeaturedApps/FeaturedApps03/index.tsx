@@ -69,7 +69,7 @@ export const FeaturedApps03: React.FC<AppsCarouselClientProps> = ({ apps, locale
   }
 
   return (
-    <div className="container py-md">
+    <div className="container py-space-md">
       <Carousel slidesPerView={1}>
         <CarouselContent className="-ms-space-xs">
           {apps.map((app, index) => (

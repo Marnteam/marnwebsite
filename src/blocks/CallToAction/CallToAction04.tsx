@@ -24,7 +24,7 @@ export const CallToAction04: React.FC<CallToActionProps> = ({
   className,
 }) => {
   return (
-    <div className={cn('container py-xl', className)}>
+    <div className={cn('container py-space-xl', className)}>
       <motion.div
         variants={containerVariants}
         initial="hidden"

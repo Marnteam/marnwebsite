@@ -11,8 +11,8 @@ import RichText from '@/components/RichText'
 export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, blockHeader }) => {
   if (!columns || columns.length === 0) return null
   return (
-    <div className="w-full bg-background py-xl">
-      <div className="container py-xl">
+    <div className="w-full bg-background py-space-xl">
+      <div className="container py-space-xl">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -21,7 +21,7 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
           className="flex flex-col gap-space-xs rounded-3xl bg-background-neutral p-4"
         >
           <div className="flex flex-col gap-space-xs md:flex-row">
-            <div className="mt-space-xs flex w-full flex-col gap-space-md px-xs lg:basis-1/2">
+            <div className="mt-space-xs flex w-full flex-col gap-space-md px-space-xs lg:basis-1/2">
               {blockHeader && (
                 <BlockHeader
                   {...blockHeader}

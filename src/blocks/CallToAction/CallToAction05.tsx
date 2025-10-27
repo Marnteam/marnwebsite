@@ -33,10 +33,10 @@ export const CallToAction05: React.FC<CallToActionProps> = ({
   const y = useTransform(scrollYProgress, [0, 1], ['-50%', '50%'])
 
   return (
-    <div data-theme="dark" className="bg-background-neutral py-xl" ref={containerRef}>
+    <div data-theme="dark" className="bg-background-neutral py-space-xl" ref={containerRef}>
       <div
         className={cn(
-          'container flex flex-col items-center gap-space-md rounded-3xl px-md py-xl md:flex-row md:items-center md:justify-between',
+          'container flex flex-col items-center gap-space-md rounded-3xl px-space-md py-space-xl md:flex-row md:items-center md:justify-between',
           className,
         )}
       >

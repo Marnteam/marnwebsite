@@ -61,7 +61,7 @@ export const Carousel01: React.FC<Carousel01Props> = ({ columns, readMoreLabel }
   }
 
   return (
-    <div className="flex flex-col py-xl">
+    <div className="flex flex-col py-space-xl">
       <div className="container mb-space-xs flex w-full items-center justify-stretch gap-space-xs overflow-x-auto [scrollbar-width:none]">
         {columns.map((column, index) => {
           if (column.tabLabel) {
@@ -108,7 +108,7 @@ export const Carousel01: React.FC<Carousel01Props> = ({ columns, readMoreLabel }
         >
           {columns.map((column, index) => {
             return (
-              <CarouselItem key={column.id || `tab-content-${index}`} className="px-md py-px">
+              <CarouselItem key={column.id || `tab-content-${index}`} className="px-space-md py-px">
                 {React.createElement(
                   column.enableCta && column.link?.label ? CMSLink : 'div',
                   {

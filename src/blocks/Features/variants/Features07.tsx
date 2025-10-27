@@ -13,7 +13,7 @@ export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, block
   if (!columns || columns.length === 0) return null
 
   return (
-    <div className="container flex flex-col gap-space-xs rounded-3xl py-xl">
+    <div className="container flex flex-col gap-space-xs rounded-3xl py-space-xl">
       <div className="flex flex-col gap-space-md">
         {blockHeader && <BlockHeader {...blockHeader} className="px-0" />}
         <motion.div

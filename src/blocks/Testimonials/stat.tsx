@@ -26,7 +26,7 @@ export const Stat: React.FC<{
   <div
     key={stat.id || index}
     className={cn(
-      'flex flex-col justify-center rounded-3xl bg-background-neutral p-(length:--spacing-md)',
+      'flex flex-col justify-center rounded-3xl bg-background-neutral p-(length:--spacing-space-md)',
       className,
     )}
   >

@@ -41,7 +41,7 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
             'mx-0 w-full max-w-4xl',
             type === 'center' && 'text-center text-pretty',
             type === 'split' &&
-              'md:col-span-2 md:grid md:grid-cols-subgrid [&>*:is(h1,h2,h3,h4,h5,h6)]:pe-(length:--spacing-xl)',
+              'md:col-span-2 md:grid md:grid-cols-subgrid [&>*:is(h1,h2,h3,h4,h5,h6)]:pe-(length:--spacing-space-xl)',
             '[&_p]:text-body-lg',
             richTextClassName,
           )}

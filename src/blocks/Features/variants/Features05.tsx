@@ -13,7 +13,7 @@ export const Features05: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns?.length) return null
   return (
     <motion.div
-      className="container grid grid-cols-1 gap-space-xs py-xl md:grid-cols-2"
+      className="container grid grid-cols-1 gap-space-xs py-space-xl md:grid-cols-2"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"

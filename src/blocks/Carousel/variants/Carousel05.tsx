@@ -35,7 +35,7 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
   if (!columns || columns.length === 0) return null
 
   return (
-    <div className="container py-md">
+    <div className="container py-space-md">
       <Carousel
         className="w-full"
         slidesPerView={{
@@ -53,7 +53,7 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
           {columns.map((column, idx) => {
             const { image, content, link, icon } = column
             return (
-              <CarouselItem key={idx} className="px-2xs">
+              <CarouselItem key={idx} className="px-space-2xs">
                 <MorphingDialog
                   onOpenChange={(isOpen) => {
                     if (!isOpen) {
@@ -69,7 +69,7 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
                       <CardContent className="flex flex-col items-start gap-2 rounded-3xl pe-space-md pb-4">
                         {icon && (
                           <Icon
-                            className="mb-space-sm size-md text-base-secondary"
+                            className="size-md mb-space-sm text-base-secondary"
                             icon={`material-symbols:${icon}`}
                             height="none"
                             color="currentColor"
@@ -110,7 +110,7 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
                             <MorphingDialogClose className="h-10 w-10 rounded-full bg-neutral/10 px-2 py-2 text-base-secondary hover:bg-neutral/30" />
                             {icon && (
                               <Icon
-                                className="my-2 size-md text-base-secondary"
+                                className="size-md my-2 text-base-secondary"
                                 icon={`material-symbols:${icon}`}
                                 height="none"
                                 color="currentColor"

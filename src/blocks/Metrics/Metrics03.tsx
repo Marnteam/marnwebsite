@@ -8,7 +8,7 @@ export const Metrics03: React.FC<MetricsBlockProps> = ({ table, enableLogos, log
   const { logos: logosGroup, headline } = logos || {}
 
   return (
-    <div className="relative container py-xl">
+    <div className="relative container py-space-xl">
       {table && <StructuredTable table={table} />}
       {enableLogos && logos && logosGroup && logosGroup.length > 0 && (
         <div className="mt-space-md flex w-full flex-col items-start gap-space-md md:gap-space-lg">

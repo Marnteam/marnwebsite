@@ -29,7 +29,7 @@ export const CategoriesList: React.FC<Props> = (props) => {
   return (
     <>
       <div
-        className="group/anim-bg relative container grid w-full grid-rows-1 py-md max-lg:hidden"
+        className="group/anim-bg relative container grid w-full grid-rows-1 py-space-md max-lg:hidden"
         style={{
           gridTemplateColumns: `repeat(${categories.length + 1}, minmax(0,1fr))`,
         }}
@@ -57,7 +57,7 @@ export const CategoriesList: React.FC<Props> = (props) => {
         })}
       </div>
 
-      <div className="relative container w-full py-md lg:hidden">
+      <div className="relative container w-full py-space-md lg:hidden">
         <Label className="mb-2 block" asChild>
           <span>{locale === 'ar' ? 'التصنيفات' : 'Categories'}</span>
         </Label>

@@ -22,7 +22,7 @@ export const Gallery02: React.FC<Gallery02Props> = ({ images, className }) => {
   }
 
   return (
-    <div className={cn('container w-full py-xl', className)}>
+    <div className={cn('container w-full py-space-xl', className)}>
       <Carousel slidesPerView={1} className="w-full">
         <CarouselContent className="-ms-space-xs">
           {images.map((image, index) => (

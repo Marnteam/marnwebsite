@@ -22,7 +22,7 @@ export const Carousel02: React.FC<CarouselBlock> = ({ columns }) => {
   if (!columns || columns.length === 0) return null
 
   return (
-    <div className="container flex flex-col gap-space-xs py-xl md:grid md:grid-cols-2 md:items-start">
+    <div className="container flex flex-col gap-space-xs py-space-xl md:grid md:grid-cols-2 md:items-start">
       <Accordion
         type="single"
         collapsible={false}

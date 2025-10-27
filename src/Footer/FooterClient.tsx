@@ -214,7 +214,7 @@ export function FooterClient({ columns, currentYear, locale }: Props) {
             ref={footerRef}
             // data-theme="dark"
             style={{ y }}
-            className="py-md relative z-2 w-full rounded-3xl bg-background-neutral will-change-transform"
+            className="relative z-2 w-full rounded-3xl bg-background-neutral py-space-md will-change-transform"
           >
             <div className="container grid grid-cols-1 gap-4 max-lg:gap-y-8 lg:grid-cols-12">
               <div className="flex flex-wrap items-start gap-4 lg:col-span-4">

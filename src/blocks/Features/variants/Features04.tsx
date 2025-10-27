@@ -88,7 +88,7 @@ export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) =>
                 }}
                 transition={{ duration: 0.3, delay: 0.1 }}
                 className={cn(
-                  'mt-space-sm flex w-full flex-col items-start justify-start gap-space-sm md:mt-0 md:px-xl',
+                  'mt-space-sm flex w-full flex-col items-start justify-start gap-space-sm md:mt-0 md:px-space-xl',
                   // { 'md:pe-space-xl': activeColumn.reverseOrder },
                 )}
               >

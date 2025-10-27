@@ -80,7 +80,7 @@ export const Metrics01: React.FC<MetricsBlockProps> = ({ stats, enableLogos, log
   }
 
   return (
-    <div className="container py-xl">
+    <div className="container py-space-xl">
       <div
         className={cn(
           'grid grid-cols-2 content-center gap-space-xs',

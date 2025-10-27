@@ -22,10 +22,10 @@ export const CallToAction02: React.FC<CallToActionProps> = ({
   className,
 }) => {
   return (
-    <div className={cn('relative container overflow-hidden py-xl', className)}>
+    <div className={cn('relative container overflow-hidden py-space-xl', className)}>
       <motion.div
         className={cn(
-          'relative flex flex-col items-center gap-space-xl overflow-hidden rounded-3xl px-xl py-[calc(var(--spacing-xl)*2)]',
+          'relative flex flex-col items-center gap-space-xl overflow-hidden rounded-3xl px-space-xl py-[calc(var(--spacing-space-xl)*2)]',
         )}
         variants={containerVariants}
         initial="hidden"
