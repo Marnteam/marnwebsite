@@ -36,13 +36,13 @@ export const CallToAction05: React.FC<CallToActionProps> = ({
     <div data-theme="dark" className="bg-background-neutral py-xl" ref={containerRef}>
       <div
         className={cn(
-          'container flex flex-col items-center gap-md rounded-3xl px-md py-xl md:flex-row md:items-center md:justify-between',
+          'container flex flex-col items-center gap-space-md rounded-3xl px-md py-xl md:flex-row md:items-center md:justify-between',
           className,
         )}
       >
         <motion.div
           style={{ y }}
-          className="mx-auto flex flex-col items-start gap-sm max-md:w-full"
+          className="mx-auto flex flex-col items-start gap-space-sm max-md:w-full"
         >
           {richText && (
             <RichText

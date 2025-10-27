@@ -22,13 +22,13 @@ export const Carousel02: React.FC<CarouselBlock> = ({ columns }) => {
   if (!columns || columns.length === 0) return null
 
   return (
-    <div className="container flex flex-col gap-xs py-xl md:grid md:grid-cols-2 md:items-start">
+    <div className="container flex flex-col gap-space-xs py-xl md:grid md:grid-cols-2 md:items-start">
       <Accordion
         type="single"
         collapsible={false}
         value={activeAccordionId || undefined}
         onValueChange={(value) => setActiveAccordionId(value)}
-        className="flex flex-col md:pe-xs"
+        className="flex flex-col md:pe-space-xs"
       >
         {columns.map((column, index) => {
           const iconName = column.icon as string
@@ -39,11 +39,11 @@ export const Carousel02: React.FC<CarouselBlock> = ({ columns }) => {
               key={index}
               value={String(index)}
               className={cn(
-                'rounded-3xl border-0 p-sm transition-colors duration-200',
+                'rounded-3xl border-0 p-space-sm transition-colors duration-200',
                 isActive && 'bg-background-neutral',
               )}
             >
-              <AccordionTrigger className="flex items-center justify-start gap-xs bg-transparent p-0 text-base-tertiary hover:no-underline">
+              <AccordionTrigger className="flex items-center justify-start gap-space-xs bg-transparent p-0 text-base-tertiary hover:no-underline">
                 {column.icon && (
                   <div className={`flex-shrink-0`}>
                     <Icon

@@ -16,7 +16,7 @@ export const Features09: React.FC<FeaturesBlock> = ({ columns, link, CTALabel })
         const { image, content } = column
         return (
           <Card key={index} className="overflow-hidden !rounded-none bg-transparent !p-0">
-            <CardContent className="grid grid-cols-2 items-center gap-sm rounded-none bg-transparent p-0 md:grid-cols-1 md:flex-col">
+            <CardContent className="grid grid-cols-2 items-center gap-space-sm rounded-none bg-transparent p-0 md:grid-cols-1 md:flex-col">
               {image && (
                 <div className="h-auto w-full">
                   <Media

@@ -21,8 +21,8 @@ export const IntegrationHero: React.FC<
   // }, [setHeaderTheme])
 
   return (
-    <section className="container flex flex-col items-center gap-space-3xl pt-(--header-plus-admin-bar-height) pb-xl">
-      <div className="flex max-w-[36rem] flex-col items-center gap-md">
+    <section className="container flex flex-col items-center gap-space-3xl pt-(--header-plus-admin-bar-height) pb-space-xl">
+      <div className="flex max-w-[36rem] flex-col items-center gap-space-md">
         {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
         {icon && <ConnectingIcons icon={icon} />}
 

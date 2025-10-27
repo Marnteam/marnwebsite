@@ -66,9 +66,9 @@ export const Gallery04: React.FC<Gallery04Props> = ({ interactiveGallery, classN
         index={activeIndex}
         onIndexChange={setActiveIndex}
       >
-        <CarouselContent className="-ms-xs">
+        <CarouselContent className="-ms-space-xs">
           {interactiveGallery.map((item, index) => (
-            <CarouselItem key={item.id || index} className="ps-xs">
+            <CarouselItem key={item.id || index} className="ps-space-xs">
               {typeof item.image === 'object' && item.image !== null && (
                 <Media
                   resource={item.image}
@@ -79,7 +79,7 @@ export const Gallery04: React.FC<Gallery04Props> = ({ interactiveGallery, classN
           ))}
         </CarouselContent>
       </Carousel>
-      <div className="z-1 h-fit w-full space-y-sm overflow-hidden rounded-xl bg-neutral-950 p-sm max-lg:relative max-lg:mt-sm lg:absolute lg:right-[calc(var(--spacing-site)*2)] lg:bottom-[calc(var(--spacing-xl)+var(--spacing-site))] lg:max-w-[400px]">
+      <div className="z-1 h-fit w-full space-y-sm overflow-hidden rounded-xl bg-neutral-950 p-space-sm max-lg:relative max-lg:mt-space-sm lg:absolute lg:right-[calc(var(--spacing-site)*2)] lg:bottom-[calc(var(--spacing-xl)+var(--spacing-site))] lg:max-w-[400px]">
         <TransitionPanel
           activeIndex={activeIndex}
           variants={{
@@ -111,13 +111,13 @@ export const Gallery04: React.FC<Gallery04Props> = ({ interactiveGallery, classN
           custom={direction}
         >
           {interactiveGallery.map(({ panel }, index) => (
-            <div key={index} className="pe-lg" ref={ref}>
+            <div key={index} className="pe-space-lg" ref={ref}>
               <h3 className="text-body-md font-medium text-white">{panel?.title}</h3>
               <p className="text-body-sm text-white/70">{panel?.description}</p>
             </div>
           ))}
         </TransitionPanel>
-        <div className="absolute end-sm top-sm text-body-sm text-white/70">
+        <div className="absolute end-space-sm top-space-sm text-body-sm text-white/70">
           {activeIndex + 1} / {interactiveGallery.length}
         </div>
         <div className="flex justify-between">

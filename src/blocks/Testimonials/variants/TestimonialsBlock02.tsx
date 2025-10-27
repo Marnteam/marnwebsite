@@ -42,8 +42,8 @@ export const TestimonialsBlock02: React.FC<Props> = ({ testimonials, linkLabel }
           variants={itemVariants} // Animate the main card as one item
           className="grid grid-cols-1 rounded-3xl bg-background-neutral md:grid-cols-2 lg:items-stretch"
         >
-          <div className="flex flex-col justify-start gap-md p-md pb-xs md:pb-md">
-            <div className="flex flex-grow flex-col justify-start gap-md">
+          <div className="flex flex-col justify-start gap-space-md p-space-md pb-space-xs md:pb-space-md">
+            <div className="flex flex-grow flex-col justify-start gap-space-md">
               {companyLogo && (
                 <Media resource={companyLogo} imgClassName="h-8 w-auto opacity-50 dark:invert" />
               )}
@@ -56,7 +56,7 @@ export const TestimonialsBlock02: React.FC<Props> = ({ testimonials, linkLabel }
               )}
             </div>
             {authorInfo && (
-              <div className="flex flex-row items-center gap-xs">
+              <div className="flex flex-row items-center gap-space-xs">
                 {authorInfo.avatar && (
                   <Media
                     resource={authorInfo.avatar}
@@ -73,7 +73,10 @@ export const TestimonialsBlock02: React.FC<Props> = ({ testimonials, linkLabel }
             )}
           </div>
           {featuredImage && (
-            <motion.div variants={itemVariants} className="flex items-center justify-center p-xs">
+            <motion.div
+              variants={itemVariants}
+              className="flex items-center justify-center p-space-xs"
+            >
               <Media
                 resource={featuredImage}
                 fill
@@ -84,7 +87,7 @@ export const TestimonialsBlock02: React.FC<Props> = ({ testimonials, linkLabel }
           )}
         </motion.div>
         {stats && stats.length > 0 && (
-          <div className="mt-space-xs grid grid-cols-2 gap-xs sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-space-xs grid grid-cols-2 gap-space-xs sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((stat, index) => (
               <motion.div key={stat.id || index} variants={itemsFling}>
                 {<Stat stat={stat} index={index} />}

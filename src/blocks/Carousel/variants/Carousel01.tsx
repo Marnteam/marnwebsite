@@ -22,10 +22,14 @@ export const Carousel01: React.FC<Carousel01Props> = ({ columns, readMoreLabel }
   const carouselSlide = (column) => {
     return (
       <>
-        <div className={cn('grid h-full grid-rows-[auto_1fr_auto] items-start gap-sm p-xs')}>
+        <div
+          className={cn(
+            'grid h-full grid-rows-[auto_1fr_auto] items-start gap-space-sm p-space-xs',
+          )}
+        >
           {column.enableBadge && column.badge && <Badge {...column.badge} size="lg" />}
           {column.content && (
-            <div className="flex grow auto-rows-auto flex-col gap-xs">
+            <div className="flex grow auto-rows-auto flex-col gap-space-xs">
               {column.content.title && (
                 <h3 className="text-h3 font-medium text-base-primary">{column.content.title}</h3>
               )}
@@ -58,7 +62,7 @@ export const Carousel01: React.FC<Carousel01Props> = ({ columns, readMoreLabel }
 
   return (
     <div className="flex flex-col py-xl">
-      <div className="container mb-xs flex w-full items-center justify-stretch gap-xs overflow-x-auto [scrollbar-width:none]">
+      <div className="container mb-space-xs flex w-full items-center justify-stretch gap-space-xs overflow-x-auto [scrollbar-width:none]">
         {columns.map((column, index) => {
           if (column.tabLabel) {
             return (
@@ -110,7 +114,7 @@ export const Carousel01: React.FC<Carousel01Props> = ({ columns, readMoreLabel }
                   {
                     key: index,
                     className: cn(
-                      'group grid w-full grid-cols-1 gap-xs rounded-3xl bg-background-neutral p-4 hover:no-underline hover:shadow-border md:grid-cols-2',
+                      'group grid w-full grid-cols-1 gap-space-xs rounded-3xl bg-background-neutral p-4 hover:no-underline hover:shadow-border md:grid-cols-2',
                     ),
                     ...(column.link?.label
                       ? { ...column.link, label: null, variant: 'inline' }

@@ -18,7 +18,7 @@ export const Features03: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns?.length) return null
 
   return (
-    <div className="container grid grid-cols-1 gap-md bg-background py-xl md:grid-cols-4 lg:grid-cols-12">
+    <div className="container grid grid-cols-1 gap-space-md bg-background py-xl md:grid-cols-4 lg:grid-cols-12">
       {columns.map((column, index) => {
         const { image, size = 'full', content } = column
         const lgColSpanClass = colSpanClass[size || 'full']
@@ -26,7 +26,7 @@ export const Features03: React.FC<FeaturesBlock> = ({ columns }) => {
         return (
           <div key={index} className={cn('col-span-full', lgColSpanClass)}>
             <div
-              className={cn('flex flex-col gap-sm', {
+              className={cn('flex flex-col gap-space-sm', {
                 'md:flex-row md:items-center md:justify-start': size === 'full',
               })}
             >
@@ -41,14 +41,14 @@ export const Features03: React.FC<FeaturesBlock> = ({ columns }) => {
                 />
               )}
               <div
-                className={cn('flex flex-col items-start gap-sm', {
+                className={cn('flex flex-col items-start gap-space-sm', {
                   'w-full md:px-md lg:basis-1/2': size === 'full',
                   'md:px-sm': size !== 'full',
                 })}
               >
                 {column.enableBadge && column.badge && <Badge {...column.badge} />}
                 {content && (
-                  <div className="flex flex-col gap-xs">
+                  <div className="flex flex-col gap-space-xs">
                     {content.title && (
                       <h3 className="text-h2 font-medium text-base-primary">{content.title}</h3>
                     )}

@@ -28,11 +28,11 @@ export const FAQBlock01: React.FC<FaqBlockProps> = async (props) => {
                 <AccordionItem
                   value={'item-' + idx}
                   key={idx}
-                  className="group relative rounded-3xl bg-background-neutral py-4 ps-sm pe-[calc((var(--spacing-space-sm)+8px)+var(--spacing-space-md))]"
+                  className="group relative rounded-3xl bg-background-neutral py-4 ps-space-sm pe-[calc((var(--spacing-space-sm)+8px)+var(--spacing-space-md))]"
                 >
                   <AccordionTrigger className="flex flex-row justify-between text-start text-(length:--text-body-lg) text-base-secondary data-[state=open]:text-base-primary [&[data-state=open]_iconify-icon]:rotate-45">
                     {faq.question}
-                    <div className="absolute end-xs h-8 rounded-full bg-neutral/10 p-1 text-base-tertiary">
+                    <div className="absolute end-space-xs h-8 rounded-full bg-neutral/10 p-1 text-base-tertiary">
                       <Icon
                         icon="material-symbols:add-rounded"
                         className="size-6 transition-transform duration-200"

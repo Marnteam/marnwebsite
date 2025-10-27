@@ -31,9 +31,9 @@ export const CallToAction03: React.FC<CallToActionProps> = ({
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
-        className="flex flex-col items-center gap-sm rounded-3xl bg-background-neutral"
+        className="flex flex-col items-center gap-space-sm rounded-3xl bg-background-neutral"
       >
-        <div className="flex flex-col items-center gap-sm px-md pt-space-2xl">
+        <div className="flex flex-col items-center gap-space-sm px-md pt-space-2xl">
           {richText && (
             <RichText className="mb-0 text-center" data={richText} enableGutter={false} />
           )}

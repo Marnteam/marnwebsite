@@ -28,8 +28,8 @@ export const IntegrationCard: React.FC<{
       className="group flex h-full w-full flex-col overflow-hidden rounded-3xl bg-background-neutral hover:shadow-border lg:flex-row"
     >
       {/* Content Section */}
-      <div className="flex w-full flex-col justify-between p-md text-start">
-        <div className="flex flex-col items-start justify-start gap-sm">
+      <div className="flex w-full flex-col justify-between p-space-md text-start">
+        <div className="flex flex-col items-start justify-start gap-space-sm">
           {/* Integration Badge (Icon + Name) */}
           <div className="flex items-start justify-end gap-4">
             {icon && (
@@ -75,7 +75,7 @@ export const IntegrationCard: React.FC<{
             </div>
           </div>
           {/* Title and Description */}
-          <div className="flex flex-col gap-xs">
+          <div className="flex flex-col gap-space-xs">
             {/* {tagline && <h3 className="text-h3 text-base-primary font-medium">{tagline}</h3>} */}
             {/* Render summary using RichText component with `data` prop */}
             {summary && (
@@ -89,7 +89,7 @@ export const IntegrationCard: React.FC<{
         </div>
         {/* Link Button */}
         {link && (
-          <div className="mt-xs flex w-fit flex-row items-center gap-2 px-0 py-0 text-body-sm text-base-tertiary hover:bg-transparent hover:text-base-primary">
+          <div className="mt-space-xs flex w-fit flex-row items-center gap-2 px-0 py-0 text-body-sm text-base-tertiary hover:bg-transparent hover:text-base-primary">
             <span>{locale === 'ar' ? 'المزيد' : 'Learn More'}</span>
             <Icon
               icon="tabler:caret-left-filled"

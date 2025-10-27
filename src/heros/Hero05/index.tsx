@@ -29,13 +29,13 @@ export const Hero05: React.FC<Page['hero']> = ({
   return (
     <section
       className={cn(
-        'container mt-(--header-plus-admin-bar-height) flex flex-col items-stretch gap-xs pb-xl',
+        'container mt-(--header-plus-admin-bar-height) flex flex-col items-stretch gap-space-xs pb-space-xl',
         mediaGroup?.media && 'min-h-screen',
       )}
     >
-      <div className="flex w-full grow flex-col items-center justify-stretch gap-xs lg:flex-row lg:items-stretch">
-        <div className="w-full basis-1/2 rounded-3xl bg-background-neutral p-xl">
-          <div className="flex h-full max-w-[36rem] flex-col items-start justify-center gap-md">
+      <div className="flex w-full grow flex-col items-center justify-stretch gap-space-xs lg:flex-row lg:items-stretch">
+        <div className="w-full basis-1/2 rounded-3xl bg-background-neutral p-space-xl">
+          <div className="flex h-full max-w-[36rem] flex-col items-start justify-center gap-space-md">
             {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
 
             {richText && (
@@ -77,7 +77,7 @@ export const Hero05: React.FC<Page['hero']> = ({
         </div>
       </div>
       {logos && logosGroup && logosGroup.length > 0 && (
-        <div className="flex w-full flex-col items-start gap-space-md rounded-3xl bg-background-neutral p-md pb-lg">
+        <div className="flex w-full flex-col items-start gap-space-md rounded-3xl bg-background-neutral p-space-md pb-space-lg">
           {headline && <p className="text-body-sm font-medium text-base-tertiary">{headline}</p>}
           <div
             dir="ltr"

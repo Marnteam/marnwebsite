@@ -15,7 +15,7 @@ export const Features08: React.FC<FeaturesBlock> = ({ columns }) => {
 
   return (
     <motion.div
-      className="container grid grid-cols-1 gap-xs py-xl sm:grid-cols-2 md:grid-cols-3"
+      className="container grid grid-cols-1 gap-space-xs py-xl sm:grid-cols-2 md:grid-cols-3"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
@@ -26,8 +26,8 @@ export const Features08: React.FC<FeaturesBlock> = ({ columns }) => {
         const { content } = column
         return (
           <motion.div key={index} variants={itemsFling}>
-            <Card className="h-full w-full flex-grow rounded-3xl border-0 bg-card p-md">
-              <CardContent className={cn('flex flex-col justify-start gap-md p-0')}>
+            <Card className="h-full w-full flex-grow rounded-3xl border-0 bg-card p-space-md">
+              <CardContent className={cn('flex flex-col justify-start gap-space-md p-0')}>
                 {iconName && (
                   <Icon
                     className="size-md text-base-secondary"

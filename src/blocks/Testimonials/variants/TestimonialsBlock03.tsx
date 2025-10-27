@@ -33,8 +33,8 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, linkLabe
 
   return (
     <div className="grid w-full max-w-[90rem] grid-cols-1 rounded-3xl bg-background-neutral lg:grid-cols-2 lg:items-stretch">
-      <div className="flex w-full flex-col justify-start gap-md p-md pb-xs md:justify-between md:pb-md">
-        <div className="flex flex-grow flex-col justify-start gap-sm">
+      <div className="flex w-full flex-col justify-start gap-space-md p-space-md pb-space-xs md:justify-between md:pb-space-md">
+        <div className="flex flex-grow flex-col justify-start gap-space-sm">
           {companyLogo && (
             <Media
               resource={companyLogo}
@@ -52,7 +52,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, linkLabe
 
         {stats && stats.length > 0 && (
           <div
-            className="grid w-full grid-cols-2 gap-xs border-t border-neutral/10 pt-xs lg:grid-cols-[repeat(var(--cols),minmax(0,1fr))]"
+            className="grid w-full grid-cols-2 gap-space-xs border-t border-neutral/10 pt-space-xs lg:grid-cols-[repeat(var(--cols),minmax(0,1fr))]"
             style={
               {
                 '--cols': stats?.length || 0,
@@ -66,7 +66,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, linkLabe
         )}
         <div className="flex flex-row items-center justify-between">
           {authorInfo && (
-            <div className="flex flex-row items-center gap-xs">
+            <div className="flex flex-row items-center gap-space-xs">
               {authorInfo.avatar && (
                 <Media
                   resource={authorInfo.avatar}
@@ -93,7 +93,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, linkLabe
         </div>
       </div>
       {featuredImage && (
-        <div className="flex items-start justify-start p-xs">
+        <div className="flex items-start justify-start p-space-xs">
           <Media
             resource={featuredImage}
             fill
@@ -110,16 +110,16 @@ export const TestimonialsBlock03: React.FC<Props> = ({ testimonials, linkLabel }
   return (
     <section className="relative container py-xl">
       <Carousel slidesPerView={1}>
-        <CarouselContent className="-ms-sm">
+        <CarouselContent className="-ms-space-sm">
           {testimonials.map((testimonial, index) => (
-            <CarouselItem key={testimonial.id || index} className="basis-full ps-sm">
+            <CarouselItem key={testimonial.id || index} className="basis-full ps-space-sm">
               <TestimonialCard testimonial={testimonial} linkLabel={linkLabel} />
             </CarouselItem>
           ))}
         </CarouselContent>
         {testimonials.length > 1 && (
           <>
-            <CarouselNavigation className="relative mt-xs justify-between" />
+            <CarouselNavigation className="relative mt-space-xs justify-between" />
             <CarouselIndicator className="absolute bottom-0 h-10" />
           </>
         )}

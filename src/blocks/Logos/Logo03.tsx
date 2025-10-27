@@ -48,13 +48,13 @@ export const Logo03: React.FC<Logo03Props> = ({ logos, className }) => {
   const secondRow = currentLogos.slice(midpoint)
 
   return (
-    <div className={cn('py-xl container w-full', className)}>
+    <div className={cn('container w-full py-xl', className)}>
       <div className="space-y-lg">
         {/* First Row */}
         <AnimatedGroup
           preset="flip"
           key={`${currentIndex}-row1`}
-          className="gap-lg grid grid-cols-2 items-center perspective-midrange md:grid-cols-3 lg:grid-cols-6"
+          className="grid grid-cols-2 items-center gap-space-lg perspective-midrange md:grid-cols-3 lg:grid-cols-6"
         >
           {firstRow.map((logo, index) => (
             <div
@@ -73,7 +73,7 @@ export const Logo03: React.FC<Logo03Props> = ({ logos, className }) => {
           <AnimatedGroup
             preset="flip"
             key={`${currentIndex}-row2`}
-            className="gap-lg grid grid-cols-2 items-center perspective-midrange md:grid-cols-3 lg:grid-cols-6"
+            className="grid grid-cols-2 items-center gap-space-lg perspective-midrange md:grid-cols-3 lg:grid-cols-6"
           >
             {secondRow.map((logo, index) => (
               <div

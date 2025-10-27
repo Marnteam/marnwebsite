@@ -245,13 +245,14 @@
   --spacing-lg: clamp(2rem, 1.6rem + 1vw, 2.5rem); /* 32px - 40px larger element spacing */
   --spacing-xl: clamp(2.5rem, 2.1rem + 1vw, 3rem); /* 40px - 48px extra large element spacing*/
 
-  --text-display: clamp(2.4rem, 1.32rem + 2.7vw, 3.75rem); /* 32px - 56px display text */
-  --text-h1: clamp(1.92rem, 1.056rem + 2.16vw, 3rem); /* 31px - 48px heading 1 */
-  --text-h2: clamp(1.54rem, 0.852rem + 1.72vw, 2.4rem); /* 24px - 38px heading 2 */
-  --text-h3: clamp(1.23rem, 0.678rem + 1.38vw, 1.92rem); /* 20px - 31px heading 3 */
-  --text-h4: clamp(0.98rem, 0.532rem + 1.12vw, 1.54rem); /* 16px - 24px heading 4 */
-  --text-h5: clamp(0.79rem, 0.438rem + 0.88vw, 1.23rem); /* 13px - 20px heading 5 */
-  --text-h6: clamp(0.63rem, 0.35rem + 0.7vw, 0.98rem); /* 10px - 16px heading 6 */
+  --text-display: clamp(2.99rem, 2.666rem + 1.44vw, 4.05rem);
+  --text-h1: clamp(2.49rem, 2.1503rem + 1.51vw, 3.6rem);
+  --text-h2: clamp(2.07rem, 1.7235rem + 1.54vw, 3.2rem);
+  --text-h3: clamp(1.73rem, 1.388rem + 1.52vw, 2.85rem);
+  --text-h4: clamp(1.44rem, 1.107rem + 1.48vw, 2.53rem);
+  --text-h5: clamp(1.2rem, 0.8782rem + 1.43vw, 2.25rem);
+  --text-h6: clamp(1rem, 0.694rem + 1.36vw, 2rem);
+
   --text-body-lg: clamp(1.125rem, 1.025rem + 0.25vw, 1.25rem); /* 18px - 20px body large */
   --text-body-md: clamp(1.01rem, 0.914rem + 0.24vw, 1.13rem); /* 16px - 18px body medium */
   --text-body-sm: clamp(0.91rem, 0.83rem + 0.2vw, 1.01rem); /* 14px - 16px body small */
@@ -424,6 +425,17 @@
 
 @utility shadow-border {
   box-shadow: 0 0 0 1px var(--color-border);
+}
+
+@utility text-h1 {
+  line-height: theme(--text-h2);
+}
+@utility text-h2 {
+  line-height: theme(--text-h3);
+  border: 1px solid red;
+}
+@utility text-h3 {
+  line-height: theme(--text-h4);
 }
 
 .group\/anim-bg:has(.row-start-1:hover, .col-start-1:hover) .bg {

@@ -18,10 +18,10 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          className="flex flex-col gap-xs rounded-3xl bg-background-neutral p-4"
+          className="flex flex-col gap-space-xs rounded-3xl bg-background-neutral p-4"
         >
-          <div className="flex flex-col gap-xs md:flex-row">
-            <div className="mt-xs flex w-full flex-col gap-md px-xs lg:basis-1/2">
+          <div className="flex flex-col gap-space-xs md:flex-row">
+            <div className="mt-space-xs flex w-full flex-col gap-space-md px-xs lg:basis-1/2">
               {blockHeader && (
                 <BlockHeader
                   {...blockHeader}
@@ -40,7 +40,7 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
             )}
           </div>
           <motion.div
-            className="grid grid-cols-2 gap-xs p-xs md:grid-cols-(--columns)"
+            className="grid grid-cols-2 gap-space-xs p-space-xs md:grid-cols-(--columns)"
             style={
               { '--columns': `repeat(${columns.length}, minmax(0, 1fr))` } as React.CSSProperties
             }
@@ -54,11 +54,11 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
               return (
                 <motion.div
                   key={index}
-                  className="flex flex-col items-start gap-sm pe-sm"
+                  className="flex flex-col items-start gap-space-sm pe-space-sm"
                   variants={itemsFling}
                 >
                   {icon && (
-                    <div className="flex rounded-full bg-background-neutral-subtle p-xs">
+                    <div className="flex rounded-full bg-background-neutral-subtle p-space-xs">
                       <Icon
                         className="size-sm text-base-secondary"
                         height="none"

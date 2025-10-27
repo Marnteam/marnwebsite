@@ -37,7 +37,7 @@ export const CallToAction01: React.FC<CallToActionProps> = ({
       <div className="relative overflow-hidden rounded-3xl">
         <div
           data-theme="dark"
-          className="relative z-1 flex aspect-[9/16] h-auto w-full flex-col items-start justify-end gap-sm overflow-hidden rounded-3xl bg-transparent p-md md:aspect-video md:flex-row md:items-end md:justify-between"
+          className="relative z-1 flex aspect-[9/16] h-auto w-full flex-col items-start justify-end gap-space-sm overflow-hidden rounded-3xl bg-transparent p-space-md md:aspect-video md:flex-row md:items-end md:justify-between"
         >
           {richText && (
             <RichText className="mx-0 lg:max-w-[32rem]" data={richText} enableGutter={false} />

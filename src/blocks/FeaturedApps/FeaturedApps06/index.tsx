@@ -33,25 +33,25 @@ export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({ cards }) => {
           {cards?.map(({ title, subtitle, appReference, id }) => (
             <CarouselItem key={id} className="md:not-first:ps-space-xs">
               <Card key={id} className="h-full w-full space-y-sm">
-                <CardHeader className="flex flex-col gap-xs">
+                <CardHeader className="flex flex-col gap-space-xs">
                   <h3 className="text-h3">{title}</h3>
                   <p className="text-body-md font-normal text-base-secondary">{subtitle}</p>
                 </CardHeader>
-                <CardContent className="gap-sm">
+                <CardContent className="gap-space-sm">
                   <hr className="w-full border-border" />
-                  <div className="flex w-full flex-col gap-xs">
+                  <div className="flex w-full flex-col gap-space-xs">
                     {appReference?.map((app) => {
                       if (typeof app.value === 'string') return null
 
                       return (
                         <CMSLink
                           key={app.value?.id}
-                          className="group flex h-fit flex-row items-center justify-between gap-xs text-body-lg font-medium text-base-secondary hover:text-base-primary hover:no-underline"
+                          className="group flex h-fit flex-row items-center justify-between gap-space-xs text-body-lg font-medium text-base-secondary hover:text-base-primary hover:no-underline"
                           variant="inline"
                           {...app.value.link}
                           label={null}
                         >
-                          <span className="inline-flex items-center gap-xs text-body-lg">
+                          <span className="inline-flex items-center gap-space-xs text-body-lg">
                             {app.value?.icon && (
                               <Media
                                 resource={app.value?.icon as MediaType}
@@ -77,7 +77,7 @@ export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({ cards }) => {
         </CarouselContent>
         {cards && cards.length > 1 && (
           <>
-            <CarouselNavigation className="relative mt-xs justify-between max-md:hidden" />
+            <CarouselNavigation className="relative mt-space-xs justify-between max-md:hidden" />
             <CarouselIndicator className="absolute bottom-0 h-10 max-md:hidden" />
           </>
         )}

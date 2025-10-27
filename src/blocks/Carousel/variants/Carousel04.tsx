@@ -16,7 +16,7 @@ export const Carousel04: React.FC<CarouselBlock> = ({ columns }) => {
   if (!columns || columns.length === 0) return null
 
   return (
-    <div className="py-md container">
+    <div className="container py-md">
       <Carousel
         slidesPerView={{
           sm: 1, //   ≥640px: 1 slide
@@ -24,25 +24,27 @@ export const Carousel04: React.FC<CarouselBlock> = ({ columns }) => {
           lg: 3, //  ≥1024px: 4 slides
         }}
       >
-        {columns.length > 1 && <CarouselNavigation className="mb-xs relative justify-start" />}
-        <CarouselContent className="-ms-xs">
+        {columns.length > 1 && (
+          <CarouselNavigation className="relative mb-space-xs justify-start" />
+        )}
+        <CarouselContent className="-ms-space-xs">
           {columns.map((column, index) => {
             const { image, content, link } = column
             return (
-              <CarouselItem key={index} className="ps-xs">
+              <CarouselItem key={index} className="ps-space-xs">
                 <Card className="h-full w-full bg-transparent p-0">
                   <CardContent className="flex h-full flex-col items-start gap-0">
                     {image && (
                       <Media
                         resource={image}
                         className="h-auto w-full"
-                        imgClassName="w-full h-auto rounded-3xl"
+                        imgClassName="h-auto w-full rounded-3xl"
                       />
                     )}
                     {content && (
-                      <div className="p-sm pe-md flex flex-col">
+                      <div className="flex flex-col p-space-sm pe-space-md">
                         {content.title && (
-                          <h3 className="text-body-lg text-base-primary font-medium">
+                          <h3 className="text-body-lg font-medium text-base-primary">
                             {content.title}
                           </h3>
                         )}
@@ -58,7 +60,7 @@ export const Carousel04: React.FC<CarouselBlock> = ({ columns }) => {
             )
           })}
         </CarouselContent>
-        {columns.length > 1 && <CarouselIndicator className="mt-xs relative bottom-0 h-10" />}
+        {columns.length > 1 && <CarouselIndicator className="relative bottom-0 mt-space-xs h-10" />}
       </Carousel>
     </div>
   )

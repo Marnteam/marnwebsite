@@ -56,18 +56,18 @@ export const LinkBlock: React.FC<LinkBlockProps> = ({
         label={null}
         variant="inline"
         className={cn(
-          'text-h4 group p-sm bg-neutral hover:bg-neutral/90 text-inverted-primary ease-in-out-quad relative flex h-full items-center justify-center rounded-none text-center font-medium transition-all duration-300 hover:no-underline',
+          'group relative flex h-full items-center justify-center rounded-none bg-neutral p-space-sm text-center text-h4 font-medium text-inverted-primary transition-all duration-300 ease-in-out-quad hover:bg-neutral/90 hover:no-underline',
           position === 'corner' && 'items-start justify-start text-start',
         )}
       >
         <span
           data-position={position}
-          className="text-h4 ease-in-out-cubic transition-all duration-200 group-hover:opacity-0 data-[position=center]:group-hover:-translate-x-full data-[position=corner]:group-hover:translate-x-full"
+          className="text-h4 transition-all duration-200 ease-in-out-cubic group-hover:opacity-0 data-[position=center]:group-hover:-translate-x-full data-[position=corner]:group-hover:translate-x-full"
         >
           {label}
         </span>
 
-        <span className="ease-in-out-cubic text-h4 absolute inset-0 flex translate-x-1/2 items-center justify-center opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100">
+        <span className="absolute inset-0 flex translate-x-1/2 items-center justify-center text-h4 opacity-0 transition-all duration-200 ease-in-out-cubic group-hover:translate-x-0 group-hover:opacity-100">
           {/* <ArrowRight className="size-xl text-inverted-primary rtl:rotate-180" /> */}
           {CTALabel}
           <Icon
@@ -78,7 +78,7 @@ export const LinkBlock: React.FC<LinkBlockProps> = ({
         </span>
 
         {position === 'corner' && (
-          <span className="ease-in-out-cubic end-sm bottom-sm absolute transition-all duration-200 group-hover:-translate-x-full group-hover:opacity-0">
+          <span className="absolute end-space-sm bottom-space-sm transition-all duration-200 ease-in-out-cubic group-hover:-translate-x-full group-hover:opacity-0">
             <Icon
               icon="tabler:caret-left-filled"
               height="none"

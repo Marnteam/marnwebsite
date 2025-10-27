@@ -13,8 +13,8 @@ export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, block
   if (!columns || columns.length === 0) return null
 
   return (
-    <div className="container flex flex-col gap-xs rounded-3xl py-xl">
-      <div className="flex flex-col gap-md">
+    <div className="container flex flex-col gap-space-xs rounded-3xl py-xl">
+      <div className="flex flex-col gap-space-md">
         {blockHeader && <BlockHeader {...blockHeader} className="px-0" />}
         <motion.div
           variants={containerVariants}
@@ -33,7 +33,7 @@ export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, block
       </div>
 
       <motion.div
-        className="grid grid-cols-2 gap-xs md:grid-cols-2 lg:grid-cols-(--columns)"
+        className="grid grid-cols-2 gap-space-xs md:grid-cols-2 lg:grid-cols-(--columns)"
         style={{ '--columns': `repeat(${columns.length}, minmax(0, 1fr))` } as React.CSSProperties}
         variants={containerVariants}
         initial="hidden"
@@ -45,11 +45,11 @@ export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, block
           return (
             <motion.div
               key={index}
-              className="flex flex-col items-start gap-sm rounded-3xl bg-background-neutral p-sm pe-md"
+              className="flex flex-col items-start gap-space-sm rounded-3xl bg-background-neutral p-space-sm pe-space-md"
               variants={itemsFling}
             >
               {icon && (
-                <div className="inline-flex grow-0 rounded-full bg-background-neutral-subtle p-xs">
+                <div className="inline-flex grow-0 rounded-full bg-background-neutral-subtle p-space-xs">
                   <Icon
                     className="size-sm text-base-secondary"
                     height="none"

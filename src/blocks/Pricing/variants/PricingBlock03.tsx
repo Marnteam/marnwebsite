@@ -40,12 +40,14 @@ export const PricingBlock03: React.FC<PricingBlock03Props> = ({
           lg: 3, //  ≥1024px: 4 slides
         }}
       >
-        {pricingCards.length > 1 && <CarouselNavigation className="relative mb-xs justify-start" />}
-        <CarouselContent className="-ms-xs">
+        {pricingCards.length > 1 && (
+          <CarouselNavigation className="relative mb-space-xs justify-start" />
+        )}
+        <CarouselContent className="-ms-space-xs">
           {pricingCards.map((pricingCard, index) => {
             const { badge, title, subtitle, media, type, enableCta, link, price } = pricingCard
             return (
-              <CarouselItem key={index} className="ps-xs">
+              <CarouselItem key={index} className="ps-space-xs">
                 <Card className="h-full w-full bg-transparent p-0">
                   <CardContent className="flex h-full flex-col items-start gap-space-sm">
                     {media && (
@@ -82,7 +84,9 @@ export const PricingBlock03: React.FC<PricingBlock03Props> = ({
             )
           })}
         </CarouselContent>
-        {pricingCards.length > 1 && <CarouselIndicator className="relative bottom-0 mt-xs h-10" />}
+        {pricingCards.length > 1 && (
+          <CarouselIndicator className="relative bottom-0 mt-space-xs h-10" />
+        )}
       </Carousel>
     </div>
   )

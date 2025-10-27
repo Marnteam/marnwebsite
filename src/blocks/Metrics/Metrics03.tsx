@@ -11,7 +11,7 @@ export const Metrics03: React.FC<MetricsBlockProps> = ({ table, enableLogos, log
     <div className="relative container py-xl">
       {table && <StructuredTable table={table} />}
       {enableLogos && logos && logosGroup && logosGroup.length > 0 && (
-        <div className="mt-md flex w-full flex-col items-start gap-space-md md:gap-space-lg">
+        <div className="mt-space-md flex w-full flex-col items-start gap-space-md md:gap-space-lg">
           {headline && <p className="text-body-sm font-medium text-base-tertiary">{headline}</p>}
           <div
             dir="ltr"

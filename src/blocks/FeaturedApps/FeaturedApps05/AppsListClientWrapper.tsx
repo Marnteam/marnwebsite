@@ -68,7 +68,7 @@ export const AppsListClientWrapper: React.FC<AppsListClientWrapperProps> = ({
             key={name + index}
             label={null}
             variant="inline"
-            className="px-xs hover:bg-background-neutral flex h-fit w-full flex-row items-center justify-start gap-4 rounded-3xl whitespace-normal transition-colors hover:no-underline"
+            className="flex h-fit w-full flex-row items-center justify-start gap-4 rounded-3xl px-xs whitespace-normal transition-colors hover:bg-background-neutral hover:no-underline"
           >
             {/* Pass resource directly if it matches MediaProps resource type */}
             {icon && typeof icon === 'object' && (
@@ -81,8 +81,8 @@ export const AppsListClientWrapper: React.FC<AppsListClientWrapperProps> = ({
               /> // Cast icon
             )}
             <div className="flex w-full flex-col py-4" key={`info-${name}-${index}`}>
-              <p className="text-body-lg text-base-primary font-medium">{name}</p>
-              <p className="text-body-md text-base-secondary font-normal">{tagline}</p>
+              <p className="text-body-lg font-medium text-base-primary">{name}</p>
+              <p className="text-body-md font-normal text-base-secondary">{tagline}</p>
             </div>
           </CMSLink>
         )
@@ -91,9 +91,9 @@ export const AppsListClientWrapper: React.FC<AppsListClientWrapperProps> = ({
   )
 
   return (
-    <div className="py-xl container">
-      <div className="gap-xs grid grid-cols-1 md:grid-cols-2">
-        <div className="lg:pe-md flex flex-col">
+    <div className="container py-xl">
+      <div className="grid grid-cols-1 gap-space-xs md:grid-cols-2">
+        <div className="flex flex-col lg:pe-space-md">
           <PaginationControls
             totalPages={appsData.totalPages ?? 1}
             currentPage={currentPage}

@@ -207,7 +207,7 @@ export function FooterClient({ columns, currentYear, locale }: Props) {
   }, [])
 
   return (
-    <div className="bg-background pt-md">
+    <div className="bg-background pt-space-md">
       <div className="container">
         <div className="relative">
           <motion.footer
@@ -218,7 +218,7 @@ export function FooterClient({ columns, currentYear, locale }: Props) {
           >
             <div className="container grid grid-cols-1 gap-4 max-lg:gap-y-8 lg:grid-cols-12">
               <div className="flex flex-wrap items-start gap-4 lg:col-span-4">
-                <div id="newsletter" className="flex w-full flex-col gap-4 md:pe-md">
+                <div id="newsletter" className="flex w-full flex-col gap-4 md:pe-space-md">
                   <p className="text-sm font-medium text-base-tertiary">{t('newsletterTitle')}</p>
                   <p className="-mt-3 text-sm text-base-tertiary">{t('newsletterDescription')}</p>
                   <div className="flex w-full items-center space-x-2 md:max-w-96">

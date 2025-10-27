@@ -13,7 +13,7 @@ export const Features05: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns?.length) return null
   return (
     <motion.div
-      className="container grid grid-cols-1 gap-xs py-xl md:grid-cols-2"
+      className="container grid grid-cols-1 gap-space-xs py-xl md:grid-cols-2"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
@@ -24,7 +24,7 @@ export const Features05: React.FC<FeaturesBlock> = ({ columns }) => {
         return (
           <motion.div key={index} variants={itemsFling} className="overflow-hidden border-0">
             <Card className="overflow-hidden border-0 p-4">
-              <CardContent className="flex flex-col gap-xs">
+              <CardContent className="flex flex-col gap-space-xs">
                 {image && (
                   <div className="h-auto w-full">
                     <Media
@@ -34,10 +34,10 @@ export const Features05: React.FC<FeaturesBlock> = ({ columns }) => {
                     />
                   </div>
                 )}
-                <div className="flex flex-col gap-xs p-xs">
+                <div className="flex flex-col gap-space-xs p-space-xs">
                   {enableBadge && badge && <Badge {...badge} />}
                   {content && (
-                    <div className="flex flex-col gap-xs">
+                    <div className="flex flex-col gap-space-xs">
                       {content.title && (
                         <h3 className="text-h2 font-medium text-base-primary">{content.title}</h3>
                       )}
@@ -45,7 +45,7 @@ export const Features05: React.FC<FeaturesBlock> = ({ columns }) => {
                     </div>
                   )}
                   {enableCta && link?.label && (
-                    <CMSLink {...link} variant="primary" className="mt-xs" />
+                    <CMSLink {...link} variant="primary" className="mt-space-xs" />
                   )}
                 </div>
               </CardContent>

@@ -41,10 +41,10 @@ export const Hero01: React.FC<Page['hero']> = ({
         <div className="relative z-0 h-full w-full overflow-hidden rounded-3xl">
           <div
             data-theme="dark"
-            className="absolute bottom-0 z-1 flex w-full flex-col justify-between gap-4 p-md lg:p-xl"
+            className="absolute bottom-0 z-1 flex w-full flex-col justify-between gap-4 p-space-md lg:p-space-xl"
           >
             <div className="flex w-full flex-col justify-between gap-4 lg:flex-row lg:items-center">
-              <div className="flex h-full max-w-[36rem] flex-col items-start justify-center gap-md">
+              <div className="flex h-full max-w-[36rem] flex-col items-start justify-center gap-space-md">
                 {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
 
                 {richText && (

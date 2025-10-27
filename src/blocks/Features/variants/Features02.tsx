@@ -30,7 +30,7 @@ export const Features02: React.FC<Features02Props> = ({ columns, readMoreLabel }
   if (!safeColumns.length) return null
 
   return (
-    <div className="container grid grid-cols-1 gap-xs py-xl md:grid-cols-4 lg:grid-cols-12">
+    <div className="container grid grid-cols-1 gap-space-xs py-xl md:grid-cols-4 lg:grid-cols-12">
       {safeColumns.map((column, index) => {
         const { content, image, size } = column
         const lgColSpanClass = colSpanClass[size || 'full']
@@ -70,13 +70,13 @@ function FeatureCardContent({
   return (
     <>
       <div
-        className={cn('flex w-full flex-col gap-xs p-xs pe-md', {
-          'lg:basis-1/2 lg:pe-lg': size === 'full',
+        className={cn('flex w-full flex-col gap-space-xs p-space-xs pe-space-md', {
+          'lg:basis-1/2 lg:pe-space-lg': size === 'full',
         })}
       >
         {column.enableBadge && column.badge && <Badge size="md" {...column.badge} />}
         {content && (
-          <div className="flex flex-col gap-xs pe-4">
+          <div className="flex flex-col gap-space-xs pe-4">
             {content.title && (
               <h3
                 className={cn('text-h3 font-medium text-base-primary', {

@@ -131,7 +131,7 @@ export const TwoColumns: React.FC<BlogBlockType> = ({
   return (
     <div className="container py-xl">
       {/* Posts Sections */}
-      <div className="mx-auto flex flex-col gap-xs lg:flex-row">
+      <div className="mx-auto flex flex-col gap-space-xs lg:flex-row">
         {/* Popular Posts */}
         <PostsColumn {...recentPostsList} locale={locale} posts={recentPosts} />
 

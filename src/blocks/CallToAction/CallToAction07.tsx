@@ -66,7 +66,7 @@ export const CallToAction07: React.FC<CTABlockType> = (props) => {
   return (
     <div className="container py-xl">
       <div className="flex flex-col items-start gap-4 rounded-3xl bg-background-neutral px-md py-lg lg:flex-row lg:items-start lg:justify-between *:lg:basis-1/2">
-        <div className="flex flex-col items-start gap-sm">
+        <div className="flex flex-col items-start gap-space-sm">
           {richText && (
             <RichText className="mx-0 mb-0 text-start" data={richText} enableGutter={false} />
           )}
@@ -77,7 +77,7 @@ export const CallToAction07: React.FC<CTABlockType> = (props) => {
           </div>
         </div>
         {formID && formFromProps && (
-          <div className="w-full max-lg:mt-md lg:max-w-[48rem] lg:p-md">
+          <div className="w-full max-lg:mt-space-md lg:max-w-[48rem] lg:p-space-md">
             <FormProvider {...formMethods}>
               {status === 'success' && confirmationType === 'message' && confirmation && (
                 <RichText data={confirmation} />

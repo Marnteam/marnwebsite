@@ -14,7 +14,7 @@ export const Features10: React.FC<FeaturesBlock> = ({ columns, link, CTALabel })
         const { image, content } = column
         return (
           <Card key={index} className="p-4">
-            <CardContent className="grid grid-cols-2 items-center gap-sm bg-transparent p-0 md:items-center">
+            <CardContent className="grid grid-cols-2 items-center gap-space-sm bg-transparent p-0 md:items-center">
               {image && (
                 <div className="h-auto w-full">
                   <Media

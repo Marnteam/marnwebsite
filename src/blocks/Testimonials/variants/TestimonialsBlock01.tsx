@@ -54,8 +54,8 @@ export const TestimonialsBlock01: React.FC<TestimonialsBlock01> = ({ testimonial
           const itemClasses = cn(
             baseClasses,
             sizeClasses,
-            // Add p-md unless it's an image or logo cell
-            cellType !== 'image' ? 'p-md' : 'p-0',
+            // Add p-space-md unless it's an image or logo cell
+            cellType !== 'image' ? 'p-space-md' : 'p-0',
             cellType === 'quote' ? '' : 'aspect-square h-auto w-full',
           )
 
@@ -70,7 +70,7 @@ export const TestimonialsBlock01: React.FC<TestimonialsBlock01> = ({ testimonial
                       className="text-h4 font-medium text-base-primary"
                     />
                   </div>
-                  <div className="border-base mt-auto border-t pt-sm text-body-sm font-medium">
+                  <div className="border-base mt-auto border-t pt-space-sm text-body-sm font-medium">
                     {authorInfo?.name}
                     {authorInfo?.title && (
                       <span className="text-caption block text-muted-foreground">
@@ -103,7 +103,7 @@ export const TestimonialsBlock01: React.FC<TestimonialsBlock01> = ({ testimonial
               {/* )} */}
 
               {cellType === 'logo' && logo && (
-                <div className="flex h-full w-full flex-col items-center justify-center p-md">
+                <div className="flex h-full w-full flex-col items-center justify-center p-space-md">
                   <Media
                     resource={logo}
                     className="w-full"

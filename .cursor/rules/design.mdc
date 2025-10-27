@@ -9,10 +9,10 @@ Working with the project's design system.
 **1. Prioritize Theme Variables (`globals.css` `@theme`):**
 
 - **Golden Rule:** Always favor using Tailwind utility classes generated from the CSS variables defined within the `@theme { ... }` block in `src/app/(frontend)/[locale]/globals.css`.
-- **Correct Usage:** Use classes like `text-base-primary`, `bg-background-neutral`, `p-md`, `gap-sm`, `text-h3`, `rounded-3xl`, etc.
+- **Correct Usage:** Use classes like `text-base-primary`, `bg-background-neutral`, `p-space-md`, `gap-space-sm`, `text-h3`, `rounded-3xl`, etc.
 - **Avoid:**
   - Directly using variables defined only in `:root` or `[data-theme='dark']` (like `--neutral-primary`) in Tailwind classes, as these might not have corresponding utility classes.
-  - Hardcoding pixel/rem values (e.g., `p-8`, `text-[31px]`, `gap-4`) when a theme spacing or text size variable (`p-lg`, `text-h3`, `gap-sm`) provides a semantic equivalent.
+  - Hardcoding pixel/rem values (e.g., `p-8`, `text-[31px]`, `gap-4`) when a theme spacing or text size variable (`p-space-lg`, `text-h3`, `gap-space-sm`) provides a semantic equivalent.
   - Using arbitrary hex colors or Tailwind color palette classes (e.g., `bg-gray-50`, `text-gray-900`) if a theme color variable (`bg-background-neutral`, `text-base-primary`) fits the purpose.
 - **Dark Mode:** Using the `base-*` theme variables correctly generally ensures dark mode compatibility (`dark:*` variants are often handled by the variable definitions themselves or should be applied minimally where needed, like specific borders).
 
@@ -20,7 +20,7 @@ Working with the project's design system.
 
 - When translating designs (e.g., from Figma), identify the intended color, spacing, font size, or radius.
 - Find the closest matching variable within the `@theme` block in `globals.css`.
-- Use the corresponding utility class (`p-lg` for `--spacing-space-lg`, `text-h4` for `--text-h4`, etc.).
+- Use the corresponding utility class (`p-space-lg` for `--spacing-space-lg`, `text-h4` for `--text-h4`, etc.).
 - If an exact match doesn't exist, use the semantiall back to standard Tailwind classes or specific values if no theme variable is suitable.
 
 **3. Data Source is Payload Types:**

@@ -77,7 +77,7 @@ const ContentSection: React.FC<{ blockHeader: BlockHeaderType }> = ({ blockHeade
   const { badge, headerText, links } = blockHeader || {}
 
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-sm p-site text-center">
+    <div className="flex h-full flex-col items-center justify-center gap-space-sm p-space-site text-center">
       {headerText && (
         <RichText
           className="mx-auto text-center text-balance [&_p]:leading-relaxed"

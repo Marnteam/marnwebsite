@@ -9,24 +9,24 @@ export const Features11: React.FC<FeaturesBlock> = ({ columns, link, CTALabel })
   if (!columns?.length) return null
   const limitedColumns = columns.slice(0, 4)
   return (
-    <div className="py-xl container grid grid-cols-1 items-stretch gap-4 md:grid-cols-2 md:grid-rows-3">
+    <div className="container grid grid-cols-1 items-stretch gap-4 py-xl md:grid-cols-2 md:grid-rows-3">
       {limitedColumns.map((column, index) => {
         const { image, content } = column
         return (
           <Card key={index} className="p-4">
-            <CardContent className="gap-sm grid grid-cols-2 items-center p-0">
+            <CardContent className="grid grid-cols-2 items-center gap-space-sm p-0">
               {image && (
                 <div className="h-auto w-full">
                   <Media
                     resource={image}
                     className="h-auto w-full"
-                    imgClassName="w-full h-auto aspect-square object-cover rounded-lg "
+                    imgClassName="aspect-square h-auto w-full rounded-lg object-cover"
                   />
                 </div>
               )}
               {content && (
                 <div className="">
-                  <h3 className="text-body-lg text-base-primary mb-2 font-medium">
+                  <h3 className="mb-2 text-body-lg font-medium text-base-primary">
                     {content?.title}
                   </h3>
                   {content.subtitle && (

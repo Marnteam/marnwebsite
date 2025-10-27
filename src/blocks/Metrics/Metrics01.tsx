@@ -83,7 +83,7 @@ export const Metrics01: React.FC<MetricsBlockProps> = ({ stats, enableLogos, log
     <div className="container py-xl">
       <div
         className={cn(
-          'grid grid-cols-2 content-center gap-xs',
+          'grid grid-cols-2 content-center gap-space-xs',
           stats?.length === 1 && 'grid-cols-1 lg:grid-cols-2',
           stats?.length === 3 && 'lg:grid-cols-3',
         )}

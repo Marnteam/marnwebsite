@@ -25,14 +25,14 @@ export const CallToAction02: React.FC<CallToActionProps> = ({
     <div className={cn('relative container overflow-hidden py-xl', className)}>
       <motion.div
         className={cn(
-          'relative flex flex-col items-center gap-xl overflow-hidden rounded-3xl px-xl py-[calc(var(--spacing-xl)*2)]',
+          'relative flex flex-col items-center gap-space-xl overflow-hidden rounded-3xl px-xl py-[calc(var(--spacing-xl)*2)]',
         )}
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: false, amount: 0.1 }}
       >
-        <motion.div className="z-1 flex flex-col items-center gap-lg">
+        <motion.div className="z-1 flex flex-col items-center gap-space-lg">
           {richText && (
             <motion.div variants={itemsFling}>
               <RichText className="mb-0 text-center" data={richText} enableGutter={false} />
@@ -47,7 +47,7 @@ export const CallToAction02: React.FC<CallToActionProps> = ({
         <motion.hr variants={itemsFling} className="z-1 w-full border-border" />
         {list && (
           <div
-            className="z-1 grid w-full grid-cols-2 gap-sm md:grid-cols-(--columns)"
+            className="z-1 grid w-full grid-cols-2 gap-space-sm md:grid-cols-(--columns)"
             style={
               { '--columns': `repeat(${list?.length}, minmax(0, 1fr))` } as React.CSSProperties
             }
@@ -58,10 +58,10 @@ export const CallToAction02: React.FC<CallToActionProps> = ({
                 <motion.div
                   key={index}
                   variants={itemsFling}
-                  className="flex flex-col items-start gap-sm"
+                  className="flex flex-col items-start gap-space-sm"
                 >
                   {icon && (
-                    <div className="inline aspect-square rounded-full bg-background-neutral-subtle p-xs">
+                    <div className="inline aspect-square rounded-full bg-background-neutral-subtle p-space-xs">
                       <Icon
                         className="size-sm text-base-secondary"
                         height="none"

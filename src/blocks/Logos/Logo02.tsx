@@ -47,12 +47,12 @@ export const Logo02: React.FC<Logo02Props> = ({ logos, className }) => {
   const currentLogos = logoGroups[currentIndex] || []
 
   return (
-    <div className={cn('py-xl container w-full', className)}>
+    <div className={cn('container w-full py-xl', className)}>
       <AnimatePresence mode="sync">
         <AnimatedGroup
           preset="flip"
           key={`logo-group-${currentIndex}`}
-          className="gap-lg grid grid-cols-2 items-center perspective-midrange md:grid-cols-3 lg:grid-cols-6"
+          className="grid grid-cols-2 items-center gap-space-lg perspective-midrange md:grid-cols-3 lg:grid-cols-6"
         >
           {currentLogos.map((logo, index) => (
             <div

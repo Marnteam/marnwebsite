@@ -51,7 +51,7 @@ export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) =>
         <div className="container">
           <motion.div
             className={cn(
-              'flex flex-col items-center gap-xs md:flex-row',
+              'flex flex-col items-center gap-space-xs md:flex-row',
               // activeColumn?.reverseOrder && 'md:flex-row-reverse',
             )}
           >
@@ -88,8 +88,8 @@ export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) =>
                 }}
                 transition={{ duration: 0.3, delay: 0.1 }}
                 className={cn(
-                  'mt-sm flex w-full flex-col items-start justify-start gap-sm md:mt-0 md:px-xl',
-                  // { 'md:pe-xl': activeColumn.reverseOrder },
+                  'mt-space-sm flex w-full flex-col items-start justify-start gap-space-sm md:mt-0 md:px-xl',
+                  // { 'md:pe-space-xl': activeColumn.reverseOrder },
                 )}
               >
                 {activeColumn?.enableBadge && activeColumn?.badge && (
@@ -97,7 +97,7 @@ export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) =>
                 )}
 
                 {activeColumn?.content && (
-                  <div className="flex flex-col gap-xs">
+                  <div className="flex flex-col gap-space-xs">
                     {activeColumn.content.title && (
                       <h3 className="text-h2 font-medium text-base-primary">
                         {activeColumn.content.title}

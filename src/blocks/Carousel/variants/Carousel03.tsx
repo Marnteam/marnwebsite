@@ -24,15 +24,17 @@ export const Carousel03: React.FC<CarouselBlock> = ({ columns }) => {
           lg: 3, //  ≥1024px: 4 slides
         }}
       >
-        {columns.length > 1 && <CarouselNavigation className="relative mb-xs justify-start" />}
-        <CarouselContent className="-ms-xs">
+        {columns.length > 1 && (
+          <CarouselNavigation className="relative mb-space-xs justify-start" />
+        )}
+        <CarouselContent className="-ms-space-xs">
           {columns.map((column, index) => {
             const { image, content } = column
 
             return (
-              <CarouselItem key={index} className="ps-xs">
+              <CarouselItem key={index} className="ps-space-xs">
                 <Card className="h-full w-full p-4 transition-colors">
-                  <CardContent className="flex h-full flex-col items-start gap-xs rounded-3xl">
+                  <CardContent className="flex h-full flex-col items-start gap-space-xs rounded-3xl">
                     {image && (
                       <Media
                         resource={image}
@@ -41,7 +43,7 @@ export const Carousel03: React.FC<CarouselBlock> = ({ columns }) => {
                       />
                     )}
                     {content && (
-                      <div className="flex flex-col p-xs pe-md">
+                      <div className="flex flex-col p-space-xs pe-space-md">
                         <h3 className="text-body-lg font-medium text-base-primary">
                           {content.title}
                         </h3>
@@ -57,7 +59,7 @@ export const Carousel03: React.FC<CarouselBlock> = ({ columns }) => {
             )
           })}
         </CarouselContent>
-        {columns.length > 1 && <CarouselIndicator className="relative bottom-0 mt-xs h-10" />}
+        {columns.length > 1 && <CarouselIndicator className="relative bottom-0 mt-space-xs h-10" />}
       </Carousel>
     </div>
   )

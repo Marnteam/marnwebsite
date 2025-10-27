@@ -27,14 +27,14 @@ const AppCard: React.FC<{ app: Integration; locale?: TypedLocale }> = ({ app, lo
 
   return (
     <Card className="relative z-1 flex h-full w-full flex-col justify-between hover:border-border">
-      <CardContent className="gap-sm">
+      <CardContent className="gap-space-sm">
         {/* App Badge (Icon + Name) */}
-        <div className="flex items-center justify-end gap-xs">
+        <div className="flex items-center justify-end gap-space-xs">
           {icon && <Media resource={icon} className="size-8 overflow-hidden rounded-md" />}
           {name && <span className="text-body-lg font-medium text-base-secondary">{name}</span>}
         </div>
         {/* Title and Description */}
-        <div className="flex flex-col gap-xs">
+        <div className="flex flex-col gap-space-xs">
           {tagline && <h3 className="text-h4 font-medium text-base-primary">{tagline}</h3>}
           {summary && (
             <RichText
@@ -76,16 +76,16 @@ export const FeaturedApps04: React.FC<AppsCarouselClientProps> = (props) => {
           lg: 3, //  ≥1024px: 3 slides
         }}
       >
-        <CarouselContent className="-ms-xs">
+        <CarouselContent className="-ms-space-xs">
           {apps.map((app, index) => (
-            <CarouselItem key={app.id || index} className="ps-xs">
+            <CarouselItem key={app.id || index} className="ps-space-xs">
               <AppCard app={app} locale={locale} />
             </CarouselItem>
           ))}
         </CarouselContent>
         {apps.length > 1 && (
           <>
-            <CarouselNavigation className="relative mt-xs justify-between" />
+            <CarouselNavigation className="relative mt-space-xs justify-between" />
             <CarouselIndicator className="absolute bottom-0 h-10" />
           </>
         )}

@@ -29,7 +29,7 @@ export const Hero04: React.FC<Page['hero']> = ({
   return (
     <section
       className={cn(
-        'container flex flex-col items-center justify-center pt-(--header-plus-admin-bar-height) pb-xl',
+        'container flex flex-col items-center justify-center pt-(--header-plus-admin-bar-height) pb-space-xl',
         mediaGroup?.media && 'min-h-screen',
       )}
     >
@@ -39,8 +39,8 @@ export const Hero04: React.FC<Page['hero']> = ({
           // mediaGroup?.media && 'mt-header',
         )}
       >
-        <div className="w-full lg:pe-xl">
-          <div className="flex max-w-[36rem] flex-col items-start gap-md">
+        <div className="w-full lg:pe-space-xl">
+          <div className="flex max-w-[36rem] flex-col items-start gap-space-md">
             {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
 
             {richText && (

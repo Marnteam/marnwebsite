@@ -46,7 +46,9 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
         index={index}
         onIndexChange={setIndex}
       >
-        {columns.length > 1 && <CarouselNavigation className="relative mb-xs justify-start" />}
+        {columns.length > 1 && (
+          <CarouselNavigation className="relative mb-space-xs justify-start" />
+        )}
         <CarouselContent className="">
           {columns.map((column, idx) => {
             const { image, content, link, icon } = column
@@ -62,12 +64,12 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
                   <MorphingDialogTrigger className="h-full w-full">
                     <Card
                       dir={locale === 'ar' ? 'rtl' : 'ltr'}
-                      className="relative h-full w-full border border-none pb-xl text-start transition-colors hover:bg-background-neutral/90"
+                      className="relative h-full w-full border border-none pb-space-xl text-start transition-colors hover:bg-background-neutral/90"
                     >
-                      <CardContent className="flex flex-col items-start gap-2 rounded-3xl pe-md pb-4">
+                      <CardContent className="flex flex-col items-start gap-2 rounded-3xl pe-space-md pb-4">
                         {icon && (
                           <Icon
-                            className="mb-sm size-md text-base-secondary"
+                            className="mb-space-sm size-md text-base-secondary"
                             icon={`material-symbols:${icon}`}
                             height="none"
                             color="currentColor"
@@ -104,7 +106,7 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
                         type="scroll"
                       >
                         <Card className="h-full border border-none transition-colors">
-                          <CardContent className="flex h-full flex-col items-start gap-xs rounded-3xl p-0">
+                          <CardContent className="flex h-full flex-col items-start gap-space-xs rounded-3xl p-0">
                             <MorphingDialogClose className="h-10 w-10 rounded-full bg-neutral/10 px-2 py-2 text-base-secondary hover:bg-neutral/30" />
                             {icon && (
                               <Icon
@@ -128,12 +130,12 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
                             {column.image && (
                               <Media
                                 resource={column.image}
-                                className="mt-xs h-auto w-full overflow-hidden rounded-3xl"
+                                className="mt-space-xs h-auto w-full overflow-hidden rounded-3xl"
                                 imgClassName="h-auto w-full object-cover"
                               />
                             )}
                             {content?.subtitle && (
-                              <MorphingDialogDescription className="mt-xs">
+                              <MorphingDialogDescription className="mt-space-xs">
                                 <RichText data={content.subtitle} />
                                 {column.link && <CMSLink {...column.link} />}
                               </MorphingDialogDescription>
