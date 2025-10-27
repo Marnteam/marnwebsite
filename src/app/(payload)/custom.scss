@@ -237,9 +237,6 @@ html:not([dir='RTL']) .btn--withPopup .popup-button {
   }
   /* border: 1px solid red; */
 }
-.nav__link.active::before {
-  opacity: 1;
-}
 .nav__link::before {
   --icon-color: #fff;
   transition: opacity var(--nav-trans-time);
@@ -256,6 +253,9 @@ html:not([dir='RTL']) .btn--withPopup .popup-button {
   mask-size: contain;
 }
 .nav__link:hover::before {
+  opacity: 1;
+}
+.nav__link:has(.nav__link-indicator)::before {
   opacity: 1;
 }
 /* Fallback Icon */
