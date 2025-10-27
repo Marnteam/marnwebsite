@@ -99,7 +99,7 @@ export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) =>
                 {activeColumn?.content && (
                   <div className="flex flex-col gap-space-xs">
                     {activeColumn.content.title && (
-                      <h3 className="text-h2 font-medium text-base-primary">
+                      <h3 className="text-h3 font-medium text-base-primary">
                         {activeColumn.content.title}
                       </h3>
                     )}

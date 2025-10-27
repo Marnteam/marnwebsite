@@ -31,7 +31,7 @@
 
   h1:where(:not(.not-prose, .not-prose *)) {
     font-size: var(--text-h1);
-    line-height: var(--text-display);
+    line-height: 1.5;
     letter-spacing: -0.025em;
     color: var(--prose-heading-color);
     font-weight: var(--font-weight-medium);
@@ -40,7 +40,7 @@
 
   h2:where(:not(.not-prose, .not-prose *)) {
     font-size: var(--text-h2);
-    line-height: var(--text-h1);
+    line-height: 1.5;
     letter-spacing: -0.025em;
     color: var(--prose-heading-color);
     font-weight: var(--font-weight-medium);
@@ -60,7 +60,7 @@
 
   h3:where(:not(.not-prose, .not-prose *)) {
     font-size: var(--text-h3);
-    line-height: var(--text-h4);
+    line-height: 1.5;
     color: var(--prose-heading-color);
     font-weight: var(--font-weight-medium);
     margin-top: calc(var(--spacing) * 16);
@@ -72,7 +72,7 @@
 
   h4:where(:not(.not-prose, .not-prose *)) {
     font-size: var(--text-h4);
-    line-height: var(--text-h5);
+    line-height: 1.5;
     color: var(--prose-heading-color);
     font-weight: var(--font-weight-medium);
     margin-top: calc(var(--spacing) * 12);
@@ -147,7 +147,7 @@
 
   strong:where(:not(.not-prose, .not-prose *)) {
     color: var(--prose-strong-color);
-    font-weight: var(--font-weight-medium);
+    /*font-weight: var(--font-weight-medium);*/
   }
 
   code:where(:not(.not-prose, .not-prose *)) {

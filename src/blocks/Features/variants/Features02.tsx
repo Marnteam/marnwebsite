@@ -79,9 +79,10 @@ function FeatureCardContent({
           <div className="flex flex-col gap-space-xs pe-4">
             {content.title && (
               <h3
-                className={cn('text-h3 font-medium text-base-primary', {
-                  'text-h4': size === 'oneThird' || size === 'fortyPercent',
-                })}
+                className={cn(
+                  'font-medium text-base-primary',
+                  ['full'].includes(size!) ? 'text-h3' : 'text-h4',
+                )}
               >
                 {content.title}
               </h3>
