@@ -71,14 +71,20 @@ function FeatureCardContent({
     <>
       <div
         className={cn('flex w-full flex-col gap-xs p-xs pe-md', {
-          'lg:basis-1/2 lg:pe-md': size === 'full',
+          'lg:basis-1/2 lg:pe-lg': size === 'full',
         })}
       >
         {column.enableBadge && column.badge && <Badge size="md" {...column.badge} />}
         {content && (
-          <div className="flex flex-col gap-xs">
+          <div className="flex flex-col gap-xs pe-4">
             {content.title && (
-              <h3 className="text-h3 font-medium text-base-primary">{content.title}</h3>
+              <h3
+                className={cn('text-h3 font-medium text-base-primary', {
+                  'text-h4': size === 'oneThird' || size === 'fortyPercent',
+                })}
+              >
+                {content.title}
+              </h3>
             )}
             {content.subtitle && <RichText data={content.subtitle} />}
           </div>

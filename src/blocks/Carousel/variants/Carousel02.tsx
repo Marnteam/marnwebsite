@@ -48,7 +48,7 @@ export const Carousel02: React.FC<CarouselBlock> = ({ columns }) => {
                   <div className={`flex-shrink-0`}>
                     <Icon
                       className={cn(
-                        'size-md',
+                        'size-(--text-body-lg)',
                         isActive ? 'text-base-primary' : 'text-base-tertiary',
                       )}
                       icon={`material-symbols:${iconName}`}
@@ -67,7 +67,7 @@ export const Carousel02: React.FC<CarouselBlock> = ({ columns }) => {
                 {column.content?.subtitle && (
                   <RichText data={column.content.subtitle} className="[&>p]:text-body-md" />
                 )}
-                {column.link && <CMSLink variant="inline" {...column.link} />}
+                {column.link && <CMSLink variant="link" {...column.link} />}
                 {column.image && (
                   <Media
                     resource={column.image}
