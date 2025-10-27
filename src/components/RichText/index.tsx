@@ -59,7 +59,7 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     const text = extractTextFromHeading(headingNode)
     const slug = formatSlug(text)
     // Create the heading element dynamically based on the tag
-    return createElement(headingNode.tag, { id: slug }, text)
+    return createElement(headingNode.tag, { id: slug, style: { textAlign: 'inherit' } }, text)
   },
   paragraph: ({ node, nodesToJSX }) => {
     const children = nodesToJSX({
