@@ -85,7 +85,12 @@ export const CarouselBlock: Block = {
     {
       name: 'columns',
       type: 'array',
-      label: 'Carousel Items',
+      label: 'Items',
+      admin: {
+        components: {
+          RowLabel: 'src/blocks/CustomRowLabelFeatureCol.tsx',
+        },
+      },
       fields: [
         {
           name: 'tabLabel',

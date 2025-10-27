@@ -4,7 +4,25 @@
   position: relative;
 
   input {
-    @include formInput;
+    /* @include formInput; */
+    font-family: var(--font-body);
+    border: 1px solid var(--theme-elevation-150);
+    border-radius: 0px 8px 8px 0px;
+    background: var(--theme-input-bg);
+    width: 100%;
+    color: var(--theme-elevation-800);
+    -webkit-appearance: none;
+    height: 40px;
+    padding: 8px 15px;
+    font-size: 1rem;
+    line-height: 20px;
+    transition-property: border, box-shadow, background-color;
+    transition-duration: 0.1s, 0.1s, 0.5s;
+    transition-timing-function: cubic-bezier(0, 0.2, 0.2, 1);
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+    [dir='rtl'] & {
+      border-radius: 8px 0px 0px 8px;
+    }
   }
 }
 
@@ -18,12 +36,14 @@
     width: base(2);
     border: 1px solid var(--theme-elevation-150);
     box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
-
-    border-radius: 3px 0px 0px 3px;
+    border-radius: 8px 0px 0px 8px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: var(--theme-input-bg);
+    [dir='rtl'] & {
+      border-radius: 0px 8px 8px 0px;
+    }
 
     & span {
       color: var(--theme-elevation-800);
@@ -41,6 +61,7 @@
       border-color: var(--theme-elevation-250);
     }
   }
+
   &__icon-picker-modal {
     position: absolute;
     top: 100%;

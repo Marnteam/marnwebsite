@@ -33,6 +33,11 @@ export const StyledList: Block = {
     {
       name: 'items',
       type: 'array',
+      admin: {
+        components: {
+          RowLabel: '@/blocks/StyledList/CustomRowLabelListItem.tsx',
+        },
+      },
       fields: [
         {
           name: 'text',

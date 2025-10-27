@@ -4,9 +4,9 @@ import { useRowLabel } from '@payloadcms/ui'
 import { Header } from '@/payload-types'
 
 const CustomRowLabelCTA: PayloadClientReactComponent<RowLabelComponent> = () => {
-  const { data } = useRowLabel<any>()
+  const { data } = useRowLabel<NonNullable<Header['cta']>[number]>()
 
-  const label = data.link.label
+  const label = data.link?.label ?? 'Button'
 
   return label || `Button`
 }

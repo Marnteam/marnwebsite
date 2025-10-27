@@ -76,6 +76,9 @@ const fields: Field[] = [
       condition: (_, siblingData, { blockData }) => {
         return ['06'].includes(blockData?.type)
       },
+      components: {
+        RowLabel: '@/blocks/CustomRowLabelFeatureCol.tsx',
+      },
     },
   },
 ]

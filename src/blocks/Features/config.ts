@@ -75,6 +75,9 @@ export const FeaturesBlock: Block = {
   },
   interfaceName: 'FeaturesBlock',
   dbName: 'featuresBlock',
+  admin: {
+    disableBlockName: true,
+  },
   fields: [
     blockHeader,
     {
@@ -133,7 +136,12 @@ export const FeaturesBlock: Block = {
     {
       name: 'columns',
       type: 'array',
-      label: 'Feature Columns',
+      label: 'Items',
+      admin: {
+        components: {
+          RowLabel: 'src/blocks/CustomRowLabelFeatureCol.tsx',
+        },
+      },
       fields: [
         {
           name: 'size',

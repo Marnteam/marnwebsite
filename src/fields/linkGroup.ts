@@ -43,6 +43,11 @@ export const linkGroup: LinkGroupType = ({
             icon,
           }),
         ],
+        admin: {
+          components: {
+            RowLabel: '@/fields/CustomRowLabelCTA.tsx',
+          },
+        },
       },
     ],
   }

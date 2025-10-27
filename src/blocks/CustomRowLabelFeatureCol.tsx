@@ -1,12 +1,11 @@
 'use client'
 import type { PayloadClientReactComponent, RowLabelComponent } from 'payload'
 import { useRowLabel } from '@payloadcms/ui'
-import { Header } from '@/payload-types'
 
 const CustomRowLabelCTA: PayloadClientReactComponent<RowLabelComponent> = () => {
   const { data } = useRowLabel<any>()
 
-  const label = data.link.label
+  const label = data.content?.title || data?.title
 
   return label || `Button`
 }

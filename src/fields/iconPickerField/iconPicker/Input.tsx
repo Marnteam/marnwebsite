@@ -107,11 +107,9 @@ export const IconPickerInput: React.FC<IconPickerInputProps> = (props) => {
             }
           }}
         >
-          {!rtl && (
-            <div className={`${baseClass}__icon-preview`} onClick={() => setFieldIsFocused(true)}>
-              <span dangerouslySetInnerHTML={{ __html: (value && icons && icons[value]) || '' }} />
-            </div>
-          )}
+          <div className={`${baseClass}__icon-preview`} onClick={() => setFieldIsFocused(true)}>
+            <span dangerouslySetInnerHTML={{ __html: (value && icons && icons[value]) || '' }} />
+          </div>
           <input
             data-rtl={rtl}
             disabled={readOnly}
@@ -123,16 +121,9 @@ export const IconPickerInput: React.FC<IconPickerInputProps> = (props) => {
             ref={inputRef}
             type="text"
             value={value || ''}
-            style={{
-              borderRadius: '0px 3px 3px 0px',
-              marginLeft: '-1px',
-            }}
+            className="icon__icon-input"
           />
-          {rtl && (
-            <div className={`${baseClass}__icon-preview`} onClick={() => setFieldIsFocused(true)}>
-              <span dangerouslySetInnerHTML={{ __html: (value && icons && icons[value]) || '' }} />
-            </div>
-          )}
+
           {fieldIsFocused && (
             <div
               className={`${baseClass}__icon-picker-modal ${
