@@ -28,7 +28,7 @@ export const Hero02: React.FC<Page['hero']> = ({
 
   return (
     <section className="container mt-header md:mt-header-plus-admin-bar">
-      <div className="container flex flex-col items-center gap-space-3xl rounded-3xl bg-background-neutral pt-header pb-site">
+      <div className="container flex flex-col items-center gap-space-3xl rounded-3xl bg-background-neutral pt-header pb-space-site">
         <div className="flex max-w-[36rem] flex-col items-center gap-space-md">
           {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
 

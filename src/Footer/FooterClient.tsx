@@ -214,7 +214,7 @@ export function FooterClient({ columns, currentYear, locale }: Props) {
             ref={footerRef}
             // data-theme="dark"
             style={{ y }}
-            className="relative z-2 w-full rounded-3xl bg-background-neutral py-md will-change-transform"
+            className="py-md relative z-2 w-full rounded-3xl bg-background-neutral will-change-transform"
           >
             <div className="container grid grid-cols-1 gap-4 max-lg:gap-y-8 lg:grid-cols-12">
               <div className="flex flex-wrap items-start gap-4 lg:col-span-4">
@@ -280,7 +280,7 @@ export function FooterClient({ columns, currentYear, locale }: Props) {
                   <ThemeSelector locale={locale} />
                 </div>
               </div>
-              <nav className="grid grid-cols-2 gap-4 pb-site md:col-span-2 md:grid-cols-3 lg:col-span-6 lg:col-start-7">
+              <nav className="grid grid-cols-2 gap-4 pb-space-site md:col-span-2 md:grid-cols-3 lg:col-span-6 lg:col-start-7">
                 {columns?.map(({ label, navItems }, i) => {
                   return (
                     <div key={i} className="flex flex-col">
@@ -302,7 +302,7 @@ export function FooterClient({ columns, currentYear, locale }: Props) {
             </div>
           </motion.footer>
 
-          <div className="pointer-events-none absolute bottom-0 z-0 container mx-auto w-full px-site">
+          <div className="pointer-events-none absolute bottom-0 z-0 container mx-auto w-full px-space-site">
             <Link href="/" className="flex h-auto w-full justify-center">
               <Logo className="h-auto w-full text-base-primary/10" />
             </Link>

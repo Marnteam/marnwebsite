@@ -37,7 +37,7 @@ export const Hero01: React.FC<Page['hero']> = ({
 
   return (
     <section ref={containerRef} className="bg-background">
-      <div className="container h-screen pt-(--header-plus-admin-bar-height) pb-site">
+      <div className="container h-screen pt-(--header-plus-admin-bar-height) pb-space-site">
         <div className="relative z-0 h-full w-full overflow-hidden rounded-3xl">
           <div
             data-theme="dark"

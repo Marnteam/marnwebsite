@@ -133,7 +133,7 @@ export const HeaderClient: React.FC<HeaderType & HeaderAdminBarProps> = ({
               mass: 1,
             }}
             className={cn(
-              'fixed inset-x-0 top-[var(--header-height)] bottom-0 z-50 overflow-y-auto px-site pb-site lg:hidden',
+              'fixed inset-x-0 top-[var(--header-height)] bottom-0 z-50 overflow-y-auto px-space-site pb-space-site lg:hidden',
               // 'animate-in slide-in-from-top-4 duration-300 ease-out',
             )}
           >
