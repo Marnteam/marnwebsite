@@ -75,9 +75,6 @@ export const FeaturesBlock: Block = {
   },
   interfaceName: 'FeaturesBlock',
   dbName: 'featuresBlock',
-  admin: {
-    disableBlockName: true,
-  },
   fields: [
     blockHeader,
     {

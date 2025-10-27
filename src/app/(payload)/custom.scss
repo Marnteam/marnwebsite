@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
-@import '@/styles/admin-makeup.scss';
+/* @import '@/styles/admin-makeup.scss'; */
 
 /* rubik-regular - arabic_latin */
 @font-face {
@@ -223,4 +223,215 @@ html:not([dir='RTL']) .btn--withPopup .popup-button {
       }
     }
   }
+}
+
+.nav__link {
+  position: relative;
+  padding: 0.5rem;
+  padding-left: 0.75rem;
+  border-radius: 2rem;
+  transition: background-color var(--nav-trans-time);
+  &:hover {
+    text-decoration: none;
+    background-color: var(--theme-elevation-100);
+  }
+  /* border: 1px solid red; */
+}
+.nav__link.active::before {
+  opacity: 1;
+}
+.nav__link::before {
+  --icon-color: #fff;
+  transition: opacity var(--nav-trans-time);
+  opacity: 0.5;
+  margin-right: 0.5rem;
+  width: 1.3rem;
+  height: 1.3rem;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+.nav__link:hover::before {
+  opacity: 1;
+}
+/* Fallback Icon */
+.nav-group[id*='Collections'] .nav__link::before {
+  mask-image: url('https://api.iconify.design/material-symbols:filter_none.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='page']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:description.svg');
+  content: '';
+}
+.nav-group .nav__link[id*='solutions']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:point-of-sale.svg');
+  content: '';
+}
+.nav-group .nav__link[id*='integrations']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:sdk.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='post']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:border-color.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='customers']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:format-quote.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='categories']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:category.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='product']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:shopping-cart.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='media']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:image.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='upload']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:upload.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='faq']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:forum.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='changelog']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:history.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='callToAction']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:call-to-action-rounded.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='form']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:format-list-bulleted.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='submission']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:mark-email-read.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='block']::before,
+.nav-group .nav__link[id*='lock']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:boxes.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='redirect']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:conversion-path.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='folders']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:folder.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='header']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:top-panel-close.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='footer']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:bottom-panel-close.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='settings']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:settings.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='user']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:group.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='session']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:key.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='verification']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:rectangle-ellipsis.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='account']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:shield-user.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='admin-invitation']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:user-plus.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='comment']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:message-circle.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='review']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:star.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='search']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:search.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='tag']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:tags.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='analytics']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:bar-chart.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='objects']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:car-front.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='auctions']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:megaphone.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='bids']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:banknote-arrow-up.svg');
+  content: '';
+}
+
+.nav-group .nav__link[id*='appointment']::before,
+.nav-group .nav__link[id*='booking']::before,
+.nav-group .nav__link[id*='event']::before,
+.nav-group .nav__link[id*='calendar']::before {
+  mask-image: url('https://api.iconify.design/material-symbols:calendar-clock.svg');
+  content: '';
 }
