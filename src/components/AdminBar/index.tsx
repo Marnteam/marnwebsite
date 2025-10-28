@@ -1,6 +1,6 @@
 'use client'
 
-import type { PayloadAdminBarProps } from 'payload-admin-bar'
+import type { PayloadAdminBarProps, PayloadMeUser } from 'payload-admin-bar'
 
 import { cn } from '@/utilities/ui'
 import { useSelectedLayoutSegments } from 'next/navigation'
@@ -42,12 +42,9 @@ export const AdminBar: React.FC<{
     setIsAuthorized(Boolean(adminBarProps?.preview))
   }, [adminBarProps?.preview])
 
-  const onAuthChange = React.useCallback(
-    (user) => {
-      setIsAuthorized(Boolean(user?.id) || Boolean(adminBarProps?.preview))
-    },
-    [adminBarProps?.preview],
-  )
+  const onAuthChange = React.useCallback((user: PayloadMeUser) => {
+    setIsAuthorized(!!user?.id)
+  }, [])
 
   const show = !isMobile && isAuthorized
 
