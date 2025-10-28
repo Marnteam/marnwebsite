@@ -70,7 +70,10 @@ export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
                 <NavigationMenuItem key={i + ' - directLink'}>
                   <NavigationMenuLink asChild>
                     <CMSLink
-                      className={cn(navigationMenuTriggerStyle(), 'rounded-full')}
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        'rounded-full hover:no-underline',
+                      )}
                       label={tab.label}
                       {...tab.link}
                       variant="inline"
@@ -140,7 +143,7 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
                 {listLinks.tag}
               </div>
             )}
-            <div className="mt-1 flex flex-col gap-1">
+            <div className="mt-1 flex flex-col">
               {listLinks?.links?.map((subLink, i) => {
                 return (
                   <CMSLink
@@ -148,23 +151,23 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
                     {...subLink.link}
                     icon={null}
                     label={null}
-                    variant="inline"
+                    variant="ghost"
                     className={cn(
                       navigationMenuTriggerStyle(),
-                      'relative h-fit w-full items-center justify-center gap-2 rounded-2xl px-3 text-base [&_svg]:size-5',
+                      'relative h-fit w-full items-center justify-start gap-2 rounded-2xl px-2 text-base [&_svg]:size-5',
                       subLink.link.type === 'reference' &&
                         subLink.link.reference?.value?.icon &&
                         'items-start',
                     )}
                   >
                     {subLink.link.icon && (
-                      <div className="flex size-10 flex-none items-center justify-center rounded-md bg-background text-base-tertiary group-hover:bg-background-neutral group-hover:text-base-secondary">
+                      <div className="flex size-8 flex-none items-center justify-center rounded-full bg-background text-base-tertiary group-hover:bg-background-neutral group-hover:text-base-secondary">
                         {subLink.link.icon === 'marn-icon' ? (
                           <MarnIcon className="" />
                         ) : (
                           <Icon
                             icon={`material-symbols:${subLink.link.icon}`}
-                            className="size-6"
+                            className="size-5"
                             height="none"
                           />
                         )}
@@ -185,10 +188,10 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
                         sizes="40px"
                       />
                     )}
-                    <div className="flex flex-1 flex-col justify-start gap-1">
+                    <div className="flex flex-1 flex-col gap-0.5 text-sm text-base-primary">
                       {subLink.link.label}
                       {(subLink.link.description || subLink.link.reference?.value?.tagline) && (
-                        <p className="line-clamp-2 text-sm leading-snug font-normal whitespace-normal text-base-tertiary">
+                        <p className="text-sm leading-snug font-normal whitespace-normal text-base-tertiary group-hover:text-base-secondary">
                           {subLink.link.description || subLink.link.reference?.value?.tagline}
                         </p>
                       )}
@@ -259,7 +262,11 @@ const DropdownTab = React.forwardRef<HTMLAnchorElement | HTMLDivElement, Dropdow
       <NavigationMenuItem>
         <NavigationMenuTrigger asChild>
           {enableDirectLink && link && (link.url || link.reference?.value) ? (
-            <CMSLink {...link} variant="inline" className={navigationMenuTriggerStyle()}>
+            <CMSLink
+              {...link}
+              variant="inline"
+              className={(navigationMenuTriggerStyle(), 'hover:no-underline')}
+            >
               {label}
             </CMSLink>
           ) : (
@@ -268,19 +275,19 @@ const DropdownTab = React.forwardRef<HTMLAnchorElement | HTMLDivElement, Dropdow
         </NavigationMenuTrigger>
         <NavigationMenuContent>
           <ul
-            className="grid w-[400px] max-w-[94rem] grid-rows-1 gap-1 p-2 md:w-full md:grid-cols-2 lg:w-auto lg:min-w-[960px] lg:grid-cols-[var(--lgColumns)]"
+            className="flex flex-row gap-1 p-2"
             style={
               {
-                '--lgColumns': `repeat(12, minmax(0, 1fr))`,
+                '--lgColumns': `repeat(auto-fit, minmax(224px, 1fr))`,
                 '--content-width': `${columnsCount * 224 + (columnsCount - 1) * 16 + 32}px`,
-                transition: 'all 1s ease',
+                '--column-width': '224px',
               } as React.CSSProperties
             }
           >
             {description && (
               <li
-                className={cn('col-span-3', {
-                  'col-span-4': navItems.length === 2 && description,
+                className={cn('col-span-1 w-[calc(var(--column-width)*1.5)]', {
+                  // 'col-span-4': navItems.length === 2 && description,
                 })}
               >
                 <Card className="_bg-background-inverted _text-inverted-secondary flex h-full flex-col justify-between gap-6 rounded-lg p-4">
@@ -303,10 +310,8 @@ const DropdownTab = React.forwardRef<HTMLAnchorElement | HTMLDivElement, Dropdow
             {navItems?.map((navItem, idx) => (
               <li
                 key={idx}
-                className={cn('col-span-3', {
-                  'col-span-6':
-                    navItem.style === 'featured' || (navItems.length === 2 && !description),
-                  'col-span-4': navItems.length === 2 && description,
+                className={cn('col-span-1 w-(--column-width)', {
+                  'col-span-2 w-[calc(var(--column-width)*2)]': navItem.style === 'featured',
                 })}
               >
                 <ListItem {...navItem} />
