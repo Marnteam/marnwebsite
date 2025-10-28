@@ -81,13 +81,13 @@ function FeatureCardContent({
               <h3
                 className={cn(
                   'font-medium text-base-primary',
-                  ['full'].includes(size!) ? 'text-h3' : 'text-h4',
+                  ['full'].includes(size!) ? 'text-h4' : 'text-h5',
                 )}
               >
                 {content.title}
               </h3>
             )}
-            {content.subtitle && <RichText data={content.subtitle} />}
+            {content.subtitle && <RichText data={content.subtitle} className="[&_p]:text-base" />}
           </div>
         )}
         {column.enableCta && column.link?.label && (
@@ -100,10 +100,10 @@ function FeatureCardContent({
       {image && (
         <Media
           resource={image}
-          className={cn('group w-full flex-1 overflow-hidden rounded-lg bg-background', {
+          className={cn('group w-full flex-1 overflow-hidden rounded-lg', {
             'flex-auto lg:basis-1/2': size === 'full',
           })}
-          imgClassName="h-full w-full object-cover transition-all duration-300 group-hover:scale-102"
+          imgClassName="_group-hover:scale-102 h-full w-full object-cover transition-all duration-300"
         />
       )}
     </>
