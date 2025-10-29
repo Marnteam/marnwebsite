@@ -2,14 +2,7 @@
 
 import type { Integration, Media as MediaType } from '@/payload-types' // Import necessary types
 import { Media } from '@/components/Media'
-import {
-  motion,
-  MotionValue,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from 'motion/react'
+import { cubicBezier, motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { useRef, useMemo } from 'react'
 import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'
@@ -22,14 +15,11 @@ interface AppsGridClientProps {
   blockHeader: BlockHeaderType
 }
 
-// Type lives next to the component (or in a shared file)
 interface GridCell {
   app: Integration | null
   row: number
   column: number
   isReserved: boolean
-  startOffset: { x: number; y: number }
-  startScale: number
 }
 
 // Constants for grid based on screen size
@@ -69,10 +59,6 @@ const GRID_CONFIG = {
   },
 } as const
 
-/** +1, -1, or 0 depending on whether v is on the right/bottom, left/top or centered */
-const axisSign = (v: number) => (v === 0 ? 0 : v > 0 ? 1 : -1)
-
-// Content section with responsive styles
 const ContentSection: React.FC<{ blockHeader: BlockHeaderType }> = ({ blockHeader }) => {
   const { badge, headerText, links } = blockHeader || {}
 
@@ -80,11 +66,10 @@ const ContentSection: React.FC<{ blockHeader: BlockHeaderType }> = ({ blockHeade
     <div className="flex h-full flex-col items-center justify-center gap-space-sm p-space-site text-center">
       {headerText && (
         <RichText
-          className="mx-auto text-center text-balance [&_p]:leading-relaxed"
+          className="mx-auto text-center text-balance [&_h2]:text-h3 [&_p]:leading-relaxed"
           data={headerText}
         />
       )}
-
       {links && links.length > 0 && (
         <div className="flex w-auto flex-col justify-center gap-2 sm:flex-row">
           {links.map(({ link }, i) => (
@@ -98,41 +83,39 @@ const ContentSection: React.FC<{ blockHeader: BlockHeaderType }> = ({ blockHeade
 
 const AnimatedAppIcon: React.FC<{
   app: Integration
-  index: number
-  scrollYProgress: MotionValue<number>
-  startOffset: { x: number; y: number }
-  startScale: number
   shouldReduce?: boolean | null
-}> = ({ app, index, scrollYProgress, shouldReduce, startOffset, startScale }) => {
-  // 1. Scroll slice
-  const sliceStart = 0.15 + index * 0.05
-  const sliceEnd = sliceStart + 0.25
-  const progress = useSpring(useTransform(scrollYProgress, [sliceStart, sliceEnd], [0, 1]), {
-    stiffness: 150,
-    damping: 19,
-    mass: 1.2,
+}> = ({ app, shouldReduce }) => {
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['end end', 'start center'],
+  })
+  // 1. Scroll easing
+  const progress = useTransform(scrollYProgress, [0, 1], [0, 1], {
+    ease: cubicBezier(0.42, 0, 0.58, 1),
   })
 
   // 2. Disable motion when user prefers-reduced-motion
   const effective = shouldReduce ? null : progress // null ⇒ no transform
 
   // 3. Derived transforms
-  const { x: x0, y: y0 } = startOffset
-  const x = useTransform(effective ?? progress, [0, 1], [x0, 0])
-  const y = useTransform(effective ?? progress, [0, 1], [y0, 0])
-  const scale = useTransform(effective ?? progress, [0, 1], [startScale, 1])
+  const z = useTransform(effective ?? progress, [0, 1], [600, 0])
   const blurPx = useTransform(effective ?? progress, [0, 1], ['blur(4px)', 'blur(0px)'])
 
   return (
     <motion.div
-      className="z-2 transform-gpu" // Tailwind: force GPU layer
-      style={{ filter: blurPx, x, y, scale }}
-      transformTemplate={({ x, y, scale }) => `translate3d(${x}, ${y}, 0) scale(${scale})`}
+      ref={ref}
+      className={cn(
+        'relative aspect-square h-auto w-full overflow-hidden bg-neutral/5 [corner-shape:squircle]',
+        'rounded-[12.6px] md:rounded-[13.87px] lg:rounded-[15.67px] xl:rounded-[20.23px] 2xl:rounded-[24.86px]',
+      )}
+      style={{ filter: blurPx, translate: 'none', z, rotate: 'none', scale: 'none' }}
+      transformTemplate={({ z }) => `translate3d(0px, 0px, ${z})`}
     >
       <Media
         resource={app.icon as MediaType}
         className="h-full w-full"
-        imgClassName="h-full w-full rounded-2xl object-cover lg:rounded-3xl"
+        imgClassName="h-full w-full scale-102 object-cover"
       />
     </motion.div>
   )
@@ -144,23 +127,11 @@ export const AppsGridHero: React.FC<AppsGridClientProps> = ({ apps, blockHeader 
   const shouldReduce = useReducedMotion()
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'start start'],
-  })
-
   /* ──────────────────────────── 2.  Breakpoint-specific constants */
   const { COLUMNS, ROWS, RESERVED, POSITIONS } = GRID_CONFIG[breakpoint]
 
-  const DROP_DIST = breakpoint === 'mobile' ? 10 : 20 // px an icon starts outside its cell
-  const MIN_SCALE = 1.2
-  const MAX_SCALE = breakpoint === 'mobile' ? 1.2 : 2.0
-
   /* ──────────────────────────── 3.  Data prep */
   const appsToShow = apps?.slice(0, POSITIONS.length) as Integration[] | undefined
-  const centerRow = (ROWS - 1) / 2
-  const centerCol = (COLUMNS - 1) / 2
-  const maxRadius = Math.hypot(centerRow, centerCol)
 
   const gridCells: GridCell[] = useMemo(() => {
     if (!appsToShow?.length) return []
@@ -181,8 +152,6 @@ export const AppsGridHero: React.FC<AppsGridClientProps> = ({ apps, blockHeader 
         row,
         column,
         isReserved: isRes,
-        startOffset: { x: 0, y: 0 },
-        startScale: 1,
       }
     })
 
@@ -191,22 +160,8 @@ export const AppsGridHero: React.FC<AppsGridClientProps> = ({ apps, blockHeader 
       const pos = POSITIONS[i]
       const row = Math.floor(pos / COLUMNS)
       const column = pos % COLUMNS
-      const dx = column - centerCol
-      const dy = row - centerRow
-      const r = Math.hypot(dx, dy)
-      const throwMult = 0.6 + 0.4 * (r / maxRadius) // 0.6–1.0
-      const startOffset = {
-        x: -axisSign(dx) * DROP_DIST * throwMult,
-        y: axisSign(dy) * DROP_DIST * throwMult,
-      }
 
-      // const startOffset = {
-      //   x: axisSign(dx) * DROP_DIST, // ← 0 →
-      //   y: axisSign(dy) * DROP_DIST, // ↑ 0 ↓
-      // }
-      const startScale = MIN_SCALE + (MAX_SCALE - MIN_SCALE) * (r / maxRadius)
-
-      cells[pos] = { app, row, column, isReserved: false, startOffset, startScale }
+      cells[pos] = { app, row, column, isReserved: false }
     })
 
     return cells
@@ -219,55 +174,32 @@ export const AppsGridHero: React.FC<AppsGridClientProps> = ({ apps, blockHeader 
     RESERVED.START_ROW,
     RESERVED.END_ROW,
     POSITIONS,
-    centerRow,
-    centerCol,
-    maxRadius,
-    DROP_DIST,
-    MIN_SCALE,
-    MAX_SCALE,
   ])
 
   if (!appsToShow?.length || !gridCells.length) return null
 
   /* ──────────────────────────── 4.  Render */
   return (
-    <div className="relative overflow-x-clip">
-      <div
-        ref={containerRef}
-        className="relative container w-full py-[calc(var(--spacing-space-lg)*3)]"
-      >
+    <div ref={containerRef} className="container w-full py-[calc(var(--spacing-space-2xl)*3)]">
+      <div className="relative">
         <div
-          className="relative isolate grid gap-2 sm:gap-3"
+          className="relative z-2 grid gap-2 perspective-[3000px] sm:gap-3"
           style={{
             gridTemplateColumns: `repeat(${COLUMNS}, minmax(0, 1fr))`,
             gridTemplateRows: `repeat(${ROWS},    minmax(0, 1fr))`,
             aspectRatio: `${COLUMNS} / ${ROWS}`,
           }}
         >
-          {gridCells.map((cell, idx) => (
-            <div
-              key={idx}
-              className={cn(
-                'relative rounded-2xl bg-neutral/2 transition-colors hover:bg-background lg:rounded-3xl',
-                cell.isReserved && 'pointer-events-none opacity-0',
-              )}
-            >
-              {cell.app && (
-                <AnimatedAppIcon
-                  app={cell.app}
-                  index={appsToShow.findIndex((a) => a.id === cell.app!.id)}
-                  scrollYProgress={scrollYProgress}
-                  startOffset={cell.startOffset}
-                  startScale={cell.startScale}
-                  shouldReduce={shouldReduce}
-                />
-              )}
-            </div>
-          ))}
+          {gridCells.map((cell, idx) => {
+            if (cell.app) {
+              return <AnimatedAppIcon key={idx} app={cell.app} shouldReduce={shouldReduce} />
+            }
+            return <div key={idx} className="pointer-events-none aspect-square h-auto w-full" />
+          })}
 
           {/*  central content block  */}
           <div
-            className="absolute z-1 rounded-3xl"
+            className="absolute z-1 bg-background"
             style={{
               gridColumn: `${RESERVED.START_COL + 1} / span ${
                 RESERVED.END_COL - RESERVED.START_COL + 1
@@ -280,6 +212,26 @@ export const AppsGridHero: React.FC<AppsGridClientProps> = ({ apps, blockHeader 
           >
             <ContentSection blockHeader={blockHeader} />
           </div>
+        </div>
+        <div
+          className="base-grid absolute inset-0 grid gap-2 sm:gap-3"
+          style={{
+            gridTemplateColumns: `repeat(${COLUMNS}, minmax(0, 1fr))`,
+            gridTemplateRows: `repeat(${ROWS},    minmax(0, 1fr))`,
+            mask: 'radial-gradient(rgb(0, 0, 0) 25%, rgba(0, 0, 0, 0))',
+          }}
+        >
+          {gridCells.map((cell, idx) => {
+            return (
+              <div
+                key={idx}
+                className={cn(
+                  'pointer-events-auto aspect-square h-auto w-full border border-transparent bg-neutral/5 transition-colors hover:border-border hover:bg-background',
+                  'rounded-[12.6px] md:rounded-[13.87px] lg:rounded-[15.67px] xl:rounded-[20.23px] 2xl:rounded-[24.86px]',
+                )}
+              ></div>
+            )
+          })}
         </div>
       </div>
     </div>
