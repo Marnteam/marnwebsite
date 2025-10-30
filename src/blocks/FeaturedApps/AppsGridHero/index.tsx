@@ -106,7 +106,7 @@ const AnimatedAppIcon: React.FC<{
     <motion.div
       ref={ref}
       className={cn(
-        'relative aspect-square h-auto w-full overflow-hidden bg-neutral/5 [corner-shape:squircle]',
+        'relative aspect-square h-auto w-full overflow-hidden bg-neutral/5',
         'rounded-[12.6px] md:rounded-[13.87px] lg:rounded-[15.67px] xl:rounded-[20.23px] 2xl:rounded-[24.86px]',
       )}
       style={{ filter: blurPx, translate: 'none', z, rotate: 'none', scale: 'none' }}
@@ -115,7 +115,7 @@ const AnimatedAppIcon: React.FC<{
       <Media
         resource={app.icon as MediaType}
         className="h-full w-full"
-        imgClassName="h-full w-full scale-102 object-cover"
+        imgClassName="h-full w-full scale-105 object-cover"
       />
     </motion.div>
   )
