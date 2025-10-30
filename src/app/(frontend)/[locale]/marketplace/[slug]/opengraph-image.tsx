@@ -5,8 +5,6 @@ import type { PersistentImage } from '@takumi-rs/core'
 import { container, image, percentage, text } from '@takumi-rs/helpers'
 import { fromJsx } from '@takumi-rs/helpers/jsx'
 import { NextResponse } from 'next/server'
-import { readFile } from 'node:fs/promises'
-import { join } from 'node:path'
 
 // Image metadata
 export const alt = ''
@@ -58,9 +56,9 @@ export default async function Image({ params }: { params: { slug: string; locale
   }
 
   // Prepare font and renderer
-  // const fontData = await loadGoogleFont('Rubik', text)
+  const fontData = await loadGoogleFont('Rubik')
   // Load the font file from the public/fonts directory
-  const fontData = await readFile(join(process.cwd(), 'public/fonts/Rubik-VariableFont_wght.woff2'))
+  // const fontData = await readFile(join(process.cwd(), 'public/fonts/Rubik-VariableFont_wght.woff2'))
 
   const persistentImages: PersistentImage[] = []
   if (iconSrc.length > 0) {
@@ -287,8 +285,8 @@ export default async function Image({ params }: { params: { slug: string; locale
   })
 }
 
-async function loadGoogleFont(font: string, text: string) {
-  const url = `https://fonts.googleapis.com/css2?family=${font}&text=${encodeURIComponent(text)}`
+async function loadGoogleFont(font: string) {
+  const url = `https://fonts.googleapis.com/css2?family=${font}:ital,wght@0,300..900;1,300..900&display=swap`
   const css = await (await fetch(url)).text()
   const resource = css.match(/src: url\((.+)\) format\('(opentype|truetype)'\)/)
 

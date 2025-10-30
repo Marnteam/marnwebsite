@@ -1,8 +1,6 @@
 import { Renderer } from '@takumi-rs/core'
 import { container, text } from '@takumi-rs/helpers'
 import { NextResponse, type NextRequest } from 'next/server'
-import { readFile } from 'node:fs/promises'
-import { join } from 'node:path'
 import { getPayload } from 'payload'
 
 import type { Page } from '@/payload-types'
@@ -55,13 +53,27 @@ const colors = {
   },
 }
 
-let fontPromise: Promise<Buffer> | undefined
+// let fontPromise: Promise<Buffer> | undefined
+// const loadRubikFont = () => {
+//   if (!fontPromise) {
+//     fontPromise = readFile(join(process.cwd(), 'public/fonts/Rubik-VariableFont_wght.woff2'))
+//   }
+//   return fontPromise
+// }
 
-const loadRubikFont = () => {
-  if (!fontPromise) {
-    fontPromise = readFile(join(process.cwd(), 'public/fonts/Rubik-VariableFont_wght.woff2'))
+async function loadGoogleFont(font: string) {
+  const url = `https://fonts.googleapis.com/css2?family=${font}:ital,wght@0,300..900;1,300..900&display=swap`
+  const css = await (await fetch(url)).text()
+  const resource = css.match(/src: url\((.+)\) format\('(opentype|truetype)'\)/)
+
+  if (resource) {
+    const response = await fetch(resource[1])
+    if (response.status == 200) {
+      return await response.arrayBuffer()
+    }
   }
-  return fontPromise
+
+  throw new Error('failed to load font data')
 }
 
 const sanitizeString = (value?: string | null) => {
@@ -146,14 +158,13 @@ export async function GET(request: NextRequest) {
   const description = truncate(metaDescription || fallback.description, 180)
   const eyebrow = truncate(buildEyebrow(slug, locale), 48)
 
-  const fontData = await loadRubikFont()
-
   // Prepare font and renderer
-  // const fontData = await loadGoogleFont('Rubik', text)
+  const fontData = await loadGoogleFont('Rubik')
   // Load the font file from the public/fonts directory
+  // const fontData = await loadRubikFont()
 
   const renderer = new Renderer({
-    fonts: [Buffer.from(new Uint8Array(fontData))],
+    fonts: [fontData],
     loadDefaultFonts: false,
   })
 
