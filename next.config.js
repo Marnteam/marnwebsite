@@ -33,6 +33,7 @@ const nextConfig = {
   redirects,
   experimental: {
     cpus: 1,
+    workerThreads: false,
   },
 }
 
