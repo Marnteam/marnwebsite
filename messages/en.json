@@ -18,7 +18,10 @@
   },
   "PricingBlock": {
     "annually": "Annually",
-    "monthly": "Monthly"
+    "monthly": "Monthly",
+    "includedSolutions": "Included solutions",
+    "integrations": "Integrations",
+    "features": "Features"
   },
   "IntegrationPane": {
     "company": "Company",
