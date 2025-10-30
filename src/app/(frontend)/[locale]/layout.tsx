@@ -13,6 +13,7 @@ import { notFound } from 'next/navigation'
 
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
+import { setRequestLocale } from 'next-intl/server'
 
 const rubik = Rubik({
   weight: ['400', '500', '600'],
@@ -32,6 +33,7 @@ export default async function RootLayout({
   if (!routing.locales.includes(locale as any)) {
     notFound()
   }
+  setRequestLocale(locale)
 
   const { isEnabled } = await draftMode()
 
