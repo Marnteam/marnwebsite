@@ -31,6 +31,9 @@ const nextConfig = {
   serverExternalPackages: ['@takumi-rs/core'],
   reactStrictMode: true,
   redirects,
+  experimental: {
+    cpus: process.env.NEXT_CPU_COUNT,
+  },
 }
 
 const withBundleAnalyzer = bundleAnalyzer({
