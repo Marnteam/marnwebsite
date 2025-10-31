@@ -1,0 +1,53 @@
+name: Deploy to Netlify (prod)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: netlify-prod-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [22]
+    env:
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      DATABASE_URI: ${{secrets.DATABASE_URI}}
+      PAYLOAD_SECRET: ${{secrets.PAYLOAD_SECRET}}
+      CRON_SECRET: ${{secrets.CRON_SECRET}}
+      PREVIEW_SECRET: ${{secrets.PREVIEW_SECRET}}
+      S3_BUCKET: ${{secrets.S3_BUCKET}}
+      S3_ACCESS_KEY_ID: ${{secrets.S3_ACCESS_KEY_ID}}
+      S3_SECRET_ACCESS_KEY: ${{secrets.S3_SECRET_ACCESS_KEY}}
+      S3_REGION: ${{secrets.S3_REGION}}
+      S3_ENDPOINT: ${{secrets.S3_ENDPOINT}}
+      NEXT_PUBLIC_SERVER_URL: ${{secrets.NEXT_PUBLIC_SERVER_URL}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Netlify CLI
+        run: npm i -g netlify-cli
+
+      - name: Netlify deploy (build + prod)
+        run: netlify deploy --build --prod
