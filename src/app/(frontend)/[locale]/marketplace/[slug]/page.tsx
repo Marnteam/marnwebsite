@@ -13,7 +13,8 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { Media } from '@/payload-types'
 import { IntegrationPane } from '@/components/IntegrationPane'
 
-export const dynamicParams = true
+export const dynamic = 'force-static'
+export const revalidate = 86400 // 24h
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })

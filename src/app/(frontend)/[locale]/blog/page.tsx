@@ -12,7 +12,6 @@ import { RenderHero } from '@/heros/RenderHero'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { draftMode } from 'next/headers'
 import { generateMeta } from '@/utilities/generateMeta'
-import { Link } from '@/i18n/routing'
 import { CategoriesList } from '@/components/CategoriesList'
 
 type Args = {
@@ -21,6 +20,9 @@ type Args = {
   }>
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
+
+export const dynamic = 'force-static'
+export const revalidate = 86400 // 24h
 
 export default async function Page({ params, searchParams }: Args) {
   const { locale = 'ar' } = await params

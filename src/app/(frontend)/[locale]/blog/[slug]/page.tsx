@@ -24,41 +24,42 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 import { Link } from '@/i18n/routing'
-import { BlogPost, Category, Page } from '@/payload-types'
+import { Category } from '@/payload-types'
 import { generateMeta } from '@/utilities/generateMeta'
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-static'
+export const revalidate = 86400 // 24h
 
-export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
-  const locales = ['en', 'ar']
-  const params: { slug: string; locale: 'ar' | 'en' }[] = []
-  for (const locale of locales) {
-    const pages = await payload.find({
-      collection: 'blog-posts',
-      locale: locale as 'ar' | 'en',
-      draft: false,
-      limit: 1000,
-      overrideAccess: false,
-      pagination: false,
-      select: {
-        slug: true,
-      },
-    })
-    pages.docs
-      ?.filter((doc) => {
-        return doc.slug && doc.slug !== 'home'
-      })
-      .map((doc) => {
-        params.push({
-          slug: encodeURIComponent(doc.slug || ''),
-          locale: locale as 'ar' | 'en',
-        })
-      })
-  }
+// export async function generateStaticParams() {
+//   const payload = await getPayload({ config: configPromise })
+//   const locales = ['en', 'ar']
+//   const params: { slug: string; locale: 'ar' | 'en' }[] = []
+//   for (const locale of locales) {
+//     const pages = await payload.find({
+//       collection: 'blog-posts',
+//       locale: locale as 'ar' | 'en',
+//       draft: false,
+//       limit: 1000,
+//       overrideAccess: false,
+//       pagination: false,
+//       select: {
+//         slug: true,
+//       },
+//     })
+//     pages.docs
+//       ?.filter((doc) => {
+//         return doc.slug && doc.slug !== 'home'
+//       })
+//       .map((doc) => {
+//         params.push({
+//           slug: encodeURIComponent(doc.slug || ''),
+//           locale: locale as 'ar' | 'en',
+//         })
+//       })
+//   }
 
-  return params
-}
+//   return params
+// }
 
 type Args = {
   params: Promise<{
