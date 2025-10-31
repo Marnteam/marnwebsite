@@ -27,7 +27,7 @@ import { Link } from '@/i18n/routing'
 import { BlogPost, Category, Page } from '@/payload-types'
 import { generateMeta } from '@/utilities/generateMeta'
 
-export const dynamicParams = true
+export const dynamic = 'force-dynamic'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })

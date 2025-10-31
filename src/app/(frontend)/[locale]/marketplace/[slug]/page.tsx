@@ -13,6 +13,8 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { Media } from '@/payload-types'
 import { IntegrationPane } from '@/components/IntegrationPane'
 
+export const dynamicParams = true
+
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
   const locales = ['en', 'ar']
