@@ -46,7 +46,7 @@ const blockComponents = {
 
 type BlockWithHeader = {
   blockHeader?: BlockHeaderType
-} & Page['layout'][0]
+} & Page['layout'][number]
 
 export const RenderBlocks: React.FC<{
   locale: string
