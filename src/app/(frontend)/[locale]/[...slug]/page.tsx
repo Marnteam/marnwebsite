@@ -14,37 +14,42 @@ import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
-export const dynamic = 'force-dynamic'
+// First request to /[...slug] renders on the server, and the result is
+// stored in the Full Route Cache (FRC) for 86400s ≈ 24 hours. Subsequent
+// requests are served directly from that cache (no render), until it expires or path is revalidated.
 
-export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
-  const locales = ['en', 'ar']
-  const params: { slug: string[]; locale: 'ar' | 'en' }[] = []
-  for (const locale of locales) {
-    const pages = await payload.find({
-      collection: 'pages',
-      locale: locale as 'ar' | 'en',
-      draft: false,
-      limit: 1000,
-      overrideAccess: false,
-      pagination: false,
-      select: {
-        slug: true,
-      },
-    })
-    pages.docs
-      ?.filter((doc) => {
-        return doc.slug && doc.slug !== 'home'
-      })
-      .map((doc) => {
-        params.push({
-          slug: doc.slug?.split('/') || [],
-          locale: locale as 'ar' | 'en',
-        })
-      })
-  }
-  return params
-}
+export const dynamic = 'force-static'
+export const revalidate = 86400 // 24h
+
+// export async function generateStaticParams() {
+//   const payload = await getPayload({ config: configPromise })
+//   const locales = ['en', 'ar']
+//   const params: { slug: string[]; locale: 'ar' | 'en' }[] = []
+//   for (const locale of locales) {
+//     const pages = await payload.find({
+//       collection: 'pages',
+//       locale: locale as 'ar' | 'en',
+//       draft: false,
+//       limit: 1000,
+//       overrideAccess: false,
+//       pagination: false,
+//       select: {
+//         slug: true,
+//       },
+//     })
+//     pages.docs
+//       ?.filter((doc) => {
+//         return doc.slug && doc.slug !== 'home'
+//       })
+//       .map((doc) => {
+//         params.push({
+//           slug: doc.slug?.split('/') || [],
+//           locale: locale as 'ar' | 'en',
+//         })
+//       })
+//   }
+//   return params
+// }
 
 type Args = {
   params: Promise<{

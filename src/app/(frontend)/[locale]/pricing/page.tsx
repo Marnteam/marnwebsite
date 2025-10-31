@@ -14,7 +14,8 @@ import { PricingProvider } from '@/providers/Pricing'
 import { Hero03 } from '@/heros/Hero03'
 import { PricingToggle } from '@/blocks/Pricing/PricingToggle'
 
-export const revalidate = 600
+export const dynamic = 'force-static'
+export const revalidate = 86400 // 24h
 
 type Args = {
   params: Promise<{
@@ -29,12 +30,9 @@ type Args = {
   }>
 }
 
-export default async function Page({
-  params: paramsPromise,
-  searchParams: searchParamsPromise,
-}: Args) {
+export default async function Page({ params }: Args) {
   const { isEnabled: draft } = await draftMode()
-  const { slug: slugSegments = [], locale = 'ar' } = await paramsPromise
+  const { slug: slugSegments = [], locale = 'ar' } = await params
 
   const slugPath = slugSegments.join('/') || 'pricing'
   const url = `/${locale}/${slugPath === 'pricing' ? '' : slugPath}`
@@ -61,15 +59,11 @@ export default async function Page({
       <article className="overflow-x-clip bg-background">
         <PageClient />
         <PayloadRedirects disableNotFound url={url} />
-
         {draft && <LivePreviewListener />}
-
-        {/* <RenderHero {...hero} /> */}
         <Hero03 {...hero}>
           <PricingToggle className="w-full md:max-w-[400px]" locale={locale} />
         </Hero03>
-
-        <RenderBlocks blocks={layout as any} locale={locale} />
+        <RenderBlocks blocks={layout} locale={locale} />
       </article>
     </PricingProvider>
   )
