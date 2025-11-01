@@ -39,7 +39,9 @@ export default async function Image({ params }: { params: { slug: string; locale
   const req = await fetch(
     `${url}/api/blog-posts?where[slug][equals]=${decodedSlug}&depth=2&draft=false&locale=${locale}&limit=1&pagination=false&trash=false`,
   )
-  const { docs } = await req.json()
+
+  const data: { docs: BlogPost[] } = await req.json()
+  const { docs } = data
 
   let title = 'موقع مرن'
   const eyebrow = 'المدونة'

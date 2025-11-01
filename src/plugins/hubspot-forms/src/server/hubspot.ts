@@ -54,7 +54,7 @@ export async function fetchHubSpotFormById(req: PayloadRequest, id: string): Pro
     headers: { Authorization: `Bearer ${token}` },
   })
   if (!res.ok) throw new Error('Failed to fetch HubSpot form by id')
-  const data = await res.json()
+  const data: any = await res.json()
 
   return {
     id: data.guid,

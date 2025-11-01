@@ -570,7 +570,7 @@ async function migrateBlog() {
   for (const blogPost of blogPosts) {
     console.log(`migrating post ${i} or ${blogPosts.length}`)
     console.log(blogPost.link)
-    const fetchedData = await fetch(
+    const fetchedData: any = await fetch(
       `https://marn.com/blog/wp-json/wp/v2/posts/${blogPost['wp:post_id']}?context=edit`,
       {
         headers: {

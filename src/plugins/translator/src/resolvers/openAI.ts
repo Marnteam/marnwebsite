@@ -62,7 +62,7 @@ export const openAIResolver = ({
               },
               method: 'post',
             }).then(async (res) => {
-              const data = await res.json()
+              const data: OpenAIResponse = await res.json()
 
               if (!res.ok)
                 req.payload.logger.info({
