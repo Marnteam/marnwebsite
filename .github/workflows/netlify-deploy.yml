@@ -14,6 +14,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: false
     runs-on: ubuntu-22.04
     strategy:
       matrix:
@@ -42,7 +43,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
+          cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
 
