@@ -40,7 +40,7 @@ importers:
         version: 3.59.1(@opentelemetry/api@1.8.0)(@vercel/postgres@0.9.0)(payload@3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5))
       '@payloadcms/db-vercel-postgres':
         specifier: ^3.59.1
-        version: 3.59.1(@opentelemetry/api@1.8.0)(@types/pg@8.10.2)(payload@3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5))
+        version: 3.59.1(@opentelemetry/api@1.8.0)(@types/pg@8.15.6)(payload@3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5))
       '@payloadcms/email-resend':
         specifier: ^3.59.1
         version: 3.59.1(payload@3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5))
@@ -173,6 +173,9 @@ importers:
       payload-admin-bar:
         specifier: ^1.0.7
         version: 1.0.7(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      pg:
+        specifier: 8.16.3
+        version: 8.16.3
       prism-react-renderer:
         specifier: ^2.4.1
         version: 2.4.1(react@19.2.0)
@@ -246,6 +249,9 @@ importers:
       '@types/node':
         specifier: 24.0.10
         version: 24.0.10
+      '@types/pg':
+        specifier: ^8.15.6
+        version: 8.15.6
       '@types/react':
         specifier: 19.1.8
         version: 19.1.8
@@ -4448,6 +4454,9 @@ packages:
 
   '@types/pg@8.11.6':
     resolution: {integrity: sha512-/2WmmBXHLsfRqzfHW7BNZ8SbYzE8OSk7i3WjFYvfgRHj7S1xj+16Je5fUKv3lVdVzk/zn9TXOqf+avFCFIE0yQ==}
+
+  '@types/pg@8.15.6':
+    resolution: {integrity: sha512-NoaMtzhxOrubeL/7UZuNTrejB4MPAJ0RpxZqXQf2qXuVlTPuG6Y8p4u9dKRaue4yjmC7ZhzVO2/Yyyn25znrPQ==}
 
   '@types/prismjs@1.26.5':
     resolution: {integrity: sha512-AUZTa7hQ2KY5L7AmtSiqxlhWxb4ina0yd8hNbl4TWuqnv/pFP0nDMb3YrfSBf4hJVGLh2YEIBfKaBW/9UEl6IQ==}
@@ -13617,13 +13626,13 @@ snapshots:
       - sqlite3
       - supports-color
 
-  '@payloadcms/db-vercel-postgres@3.59.1(@opentelemetry/api@1.8.0)(@types/pg@8.10.2)(payload@3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5))':
+  '@payloadcms/db-vercel-postgres@3.59.1(@opentelemetry/api@1.8.0)(@types/pg@8.15.6)(payload@3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5))':
     dependencies:
-      '@payloadcms/drizzle': 3.59.1(@opentelemetry/api@1.8.0)(@types/pg@8.10.2)(@vercel/postgres@0.9.0)(payload@3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5))(pg@8.16.3)
+      '@payloadcms/drizzle': 3.59.1(@opentelemetry/api@1.8.0)(@types/pg@8.15.6)(@vercel/postgres@0.9.0)(payload@3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5))(pg@8.16.3)
       '@vercel/postgres': 0.9.0
       console-table-printer: 2.12.1
       drizzle-kit: 0.31.4
-      drizzle-orm: 0.44.2(@opentelemetry/api@1.8.0)(@types/pg@8.10.2)(@vercel/postgres@0.9.0)(pg@8.16.3)
+      drizzle-orm: 0.44.2(@opentelemetry/api@1.8.0)(@types/pg@8.15.6)(@vercel/postgres@0.9.0)(pg@8.16.3)
       payload: 3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5)
       pg: 8.16.3
       prompts: 2.4.2
@@ -13665,6 +13674,46 @@ snapshots:
       console-table-printer: 2.12.1
       dequal: 2.0.3
       drizzle-orm: 0.44.2(@opentelemetry/api@1.8.0)(@types/pg@8.10.2)(@vercel/postgres@0.9.0)(pg@8.16.3)
+      payload: 3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5)
+      prompts: 2.4.2
+      to-snake-case: 1.0.0
+      uuid: 9.0.0
+    transitivePeerDependencies:
+      - '@aws-sdk/client-rds-data'
+      - '@cloudflare/workers-types'
+      - '@electric-sql/pglite'
+      - '@libsql/client'
+      - '@libsql/client-wasm'
+      - '@neondatabase/serverless'
+      - '@op-engineering/op-sqlite'
+      - '@opentelemetry/api'
+      - '@planetscale/database'
+      - '@prisma/client'
+      - '@tidbcloud/serverless'
+      - '@types/better-sqlite3'
+      - '@types/pg'
+      - '@types/sql.js'
+      - '@upstash/redis'
+      - '@vercel/postgres'
+      - '@xata.io/client'
+      - better-sqlite3
+      - bun-types
+      - expo-sqlite
+      - gel
+      - knex
+      - kysely
+      - mysql2
+      - pg
+      - postgres
+      - prisma
+      - sql.js
+      - sqlite3
+
+  '@payloadcms/drizzle@3.59.1(@opentelemetry/api@1.8.0)(@types/pg@8.15.6)(@vercel/postgres@0.9.0)(payload@3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5))(pg@8.16.3)':
+    dependencies:
+      console-table-printer: 2.12.1
+      dequal: 2.0.3
+      drizzle-orm: 0.44.2(@opentelemetry/api@1.8.0)(@types/pg@8.15.6)(@vercel/postgres@0.9.0)(pg@8.16.3)
       payload: 3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5)
       prompts: 2.4.2
       to-snake-case: 1.0.0
@@ -15801,6 +15850,12 @@ snapshots:
       pg-protocol: 1.10.3
       pg-types: 4.1.0
 
+  '@types/pg@8.15.6':
+    dependencies:
+      '@types/node': 24.0.10
+      pg-protocol: 1.10.3
+      pg-types: 2.2.0
+
   '@types/prismjs@1.26.5': {}
 
   '@types/rclone.js@0.6.3':
@@ -17237,6 +17292,13 @@ snapshots:
     optionalDependencies:
       '@opentelemetry/api': 1.8.0
       '@types/pg': 8.10.2
+      '@vercel/postgres': 0.9.0
+      pg: 8.16.3
+
+  drizzle-orm@0.44.2(@opentelemetry/api@1.8.0)(@types/pg@8.15.6)(@vercel/postgres@0.9.0)(pg@8.16.3):
+    optionalDependencies:
+      '@opentelemetry/api': 1.8.0
+      '@types/pg': 8.15.6
       '@vercel/postgres': 0.9.0
       pg: 8.16.3
 

@@ -23,6 +23,15 @@
       "service": "marn-web",
     },
   ],
+  // Add this to your wrangler.jsonc
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "6418a4cae27d4bb1b22498c132bd91e5",
+      // Optional. Can be used to connect to a local database for local development with `wrangler dev`
+      "localConnectionString": "<LOCAL_CONNECTION_STRING_FOR_LOCAL_DEVELOPMENT_HERE>",
+    },
+  ],
   "r2_buckets": [
     // Create a R2 binding with the binding name "NEXT_INC_CACHE_R2_BUCKET"
     {
