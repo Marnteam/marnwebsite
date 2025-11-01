@@ -18,7 +18,7 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 // stored in the Full Route Cache (FRC) for 86400s ≈ 24 hours. Subsequent
 // requests are served directly from that cache (no render), until it expires or path is revalidated.
 
-// export const dynamic = 'force-static'
+export const dynamic = 'force-static'
 export const revalidate = 86400 // 24h
 
 export async function generateStaticParams() {

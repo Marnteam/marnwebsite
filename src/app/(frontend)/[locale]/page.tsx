@@ -1,5 +1,5 @@
-import PageTemplate, { generateMetadata, revalidate } from './[...slug]/page'
+import PageTemplate, { generateMetadata, dynamic, revalidate } from './[...slug]/page'
 
 export default PageTemplate
 
-export { generateMetadata, revalidate }
+export { generateMetadata, dynamic, revalidate }
