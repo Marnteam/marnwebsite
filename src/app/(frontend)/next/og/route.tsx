@@ -1,27 +1,29 @@
-import { Renderer } from '@takumi-rs/core'
-import { container, text } from '@takumi-rs/helpers'
-import { NextResponse, type NextRequest } from 'next/server'
+import type { NextRequest } from 'next/server'
+import { ImageResponse } from 'next/og'
 import { getPayload } from 'payload'
 
 import type { Page } from '@/payload-types'
 import configPromise from '@payload-config'
-import { fromJsx } from '@takumi-rs/helpers/jsx'
 
 export const runtime = 'nodejs'
-
-const size = {
+export const size = {
   width: 1200,
   height: 630,
 }
-const contentType = 'image/png'
+export const contentType = 'image/png'
 
 const VALID_LOCALES = ['en', 'ar'] as const
+
 type SupportedLocale = (typeof VALID_LOCALES)[number]
 
-const FALLBACK_COPY: Record<
-  SupportedLocale,
-  { title: string; description: string; eyebrow: string; brand: string }
-> = {
+type Copy = {
+  title: string
+  description: string
+  eyebrow: string
+  brand: string
+}
+
+const FALLBACK_COPY: Record<SupportedLocale, Copy> = {
   en: {
     title: 'Marn POS',
     description:
@@ -53,27 +55,28 @@ const colors = {
   },
 }
 
-// let fontPromise: Promise<Buffer> | undefined
-// const loadRubikFont = () => {
-//   if (!fontPromise) {
-//     fontPromise = readFile(join(process.cwd(), 'public/fonts/Rubik-VariableFont_wght.woff2'))
-//   }
-//   return fontPromise
-// }
+let rubikFontData: ArrayBuffer | null = null
 
-async function loadGoogleFont(font: string) {
-  const url = `https://fonts.googleapis.com/css2?family=${font}:ital,wght@0,300..900;1,300..900&display=swap`
-  const css = await (await fetch(url)).text()
-  const resource = css.match(/src: url\((.+)\) format\('(opentype|truetype)'\)/)
-
-  if (resource) {
-    const response = await fetch(resource[1])
-    if (response.status == 200) {
-      return await response.arrayBuffer()
-    }
+async function loadRubikFont() {
+  if (rubikFontData) {
+    return rubikFontData
   }
 
-  throw new Error('failed to load font data')
+  const url = 'https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap'
+  const css = await (await fetch(url)).text()
+  const resource = css.match(/src: url\((.+?)\) format\('(opentype|truetype)'\)/)
+
+  if (!resource) {
+    throw new Error('failed to locate Rubik font source')
+  }
+
+  const response = await fetch(resource[1])
+  if (!response.ok) {
+    throw new Error('failed to download Rubik font')
+  }
+
+  rubikFontData = await response.arrayBuffer()
+  return rubikFontData
 }
 
 const sanitizeString = (value?: string | null) => {
@@ -97,6 +100,7 @@ const normalizeSlug = (value?: string | null) => {
   if (!value) {
     return 'home'
   }
+
   const decoded = decodeURIComponent(value)
   const stripped = decoded.replace(/^\/+|\/+$/g, '')
   return stripped.length > 0 ? stripped : 'home'
@@ -106,6 +110,7 @@ const buildEyebrow = (slug: string, locale: SupportedLocale) => {
   if (slug === 'home') {
     return FALLBACK_COPY[locale].eyebrow
   }
+
   return slug
     .split('/')
     .filter(Boolean)
@@ -158,134 +163,143 @@ export async function GET(request: NextRequest) {
   const description = truncate(metaDescription || fallback.description, 180)
   const eyebrow = truncate(buildEyebrow(slug, locale), 48)
 
-  // Prepare font and renderer
-  const fontData = await loadGoogleFont('Rubik')
-  // Load the font file from the public/fonts directory
-  // const fontData = await loadRubikFont()
-
-  const renderer = new Renderer({
-    fonts: [fontData],
-    loadDefaultFonts: false,
-  })
-
-  const iconMarkup = (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="1em"
-      height="1em"
-      viewBox="0 0 12 12"
-      style={{
-        width: '56px',
-        height: '56px',
-        marginLeft: locale === 'ar' ? 'auto' : 0,
-        color: colors.base.primary,
-      }}
-    >
-      <path
-        fill="currentColor"
-        d="M9.2559 9.01851C11.2269 6.92251 11.8644 4.00797 11.7683 0.724895C11.7562 0.311827 11.7714 0.0791508 11.5294 0.0338891C11.2873 -0.0113725 6.12272 -0.0112217 5.7818 0.0338891C5.55452 0.0639631 5.45599 0.322674 5.48619 0.810023C5.52357 2.56546 5.23659 3.67367 4.41082 4.46946C3.58205 5.26814 2.50781 5.54412 0.73857 5.61087C-0.0359893 5.64009 0.00559866 5.96035 0.00559866 6.36881V11.2416C0.005599 11.6478 -0.111692 12 0.727419 11.9991L0.773561 12C4.25363 11.9624 7.28108 11.1186 9.2559 9.01851Z"
-      />
-    </svg>
-  )
-
   const direction = locale === 'ar' ? 'rtl' : 'ltr'
-  const flexStart = locale === 'ar' ? 'flex-end' : 'flex-start'
-  const flexEnd = locale === 'ar' ? 'flex-start' : 'flex-end'
+  const alignStart = locale === 'ar' ? 'flex-end' : 'flex-start'
+  const alignEnd = locale === 'ar' ? 'flex-start' : 'flex-end'
   const textAlign = locale === 'ar' ? 'right' : 'left'
 
-  const iconNode = await fromJsx(iconMarkup)
+  const fontData = await loadRubikFont()
 
-  const root = container({
-    style: {
-      width: '100%',
-      height: '100%',
-      display: 'flex',
-      padding: '32px',
-      backgroundColor: colors.bg.default,
-    },
-    children: [
-      container({
-        style: {
+  return new ImageResponse(
+    (
+      <div
+        style={{
           width: '100%',
           height: '100%',
           display: 'flex',
-          flexDirection: 'column',
-          alignContent: flexEnd,
-          justifyContent: 'space-between',
-          gap: '32px',
-          borderRadius: '32px',
-          backgroundColor: colors.bg.neutral,
-          padding: '56px',
-        },
-        children: [
-          container({
-            style: {
-              width: '100%',
-              height: '100%',
+          padding: '32px',
+          backgroundColor: colors.bg.default,
+          fontFamily: 'Rubik',
+          direction,
+        }}
+      >
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: '48px',
+            borderRadius: '32px',
+            backgroundColor: colors.bg.neutral,
+            padding: '56px',
+          }}
+        >
+          <div
+            style={{
               display: 'flex',
               flexDirection: 'column',
-              alignContent: flexEnd,
-              justifyContent: 'start',
-              gap: '56px',
-            },
-            children: [
-              iconNode,
-              container({
-                style: {
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignContent: 'start',
-                  gap: '24px',
-                },
-                children: [
-                  text(eyebrow, {
-                    color: colors.base.tertiary,
-                    fontFamily: 'Rubik',
-                    fontSize: '32px',
-                    lineHeight: '32px',
-                    fontWeight: 400,
-                    textAlign,
-                  }),
-                  text(title, {
-                    color: colors.base.primary,
-                    fontFamily: 'Rubik',
-                    fontSize: '56px',
-                    lineHeight: '84px',
-                    fontWeight: 500,
-                    display: 'block',
-                    textAlign,
-                  }),
-                ],
-              }),
-            ],
-          }),
-          // container({
-          //   style: {
-          //     display: 'flex',
-          //     flexDirection: 'row',
-          //     justifyContent: locale === 'en' ? 'flex-start' : 'flex-end',
-          //     flexWrap: 'wrap',
-          //     gap: '8px',
-          //   },
-          //   children: categoryNodes,
-          // }),
-        ],
-      }),
-    ],
-  })
-
-  const imageBuffer = await renderer.render(root, {
-    width: size.width,
-    height: size.height,
-    format: 'png',
-  })
-
-  const body = new Uint8Array(imageBuffer)
-
-  return new NextResponse(body, {
-    headers: {
-      'Content-Type': contentType,
-      'Cache-Control': 'public, max-age=31536000, immutable',
+              gap: '40px',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: alignStart,
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 12 12"
+                width={56}
+                height={56}
+                style={{ color: colors.base.primary }}
+              >
+                <path
+                  fill="currentColor"
+                  d="M9.2559 9.01851C11.2269 6.92251 11.8644 4.00797 11.7683 0.724895C11.7562 0.311827 11.7714 0.0791508 11.5294 0.0338891C11.2873 -0.0113725 6.12272 -0.0112217 5.7818 0.0338891C5.55452 0.0639631 5.45599 0.322674 5.48619 0.810023C5.52357 2.56546 5.23659 3.67367 4.41082 4.46946C3.58205 5.26814 2.50781 5.54412 0.73857 5.61087C-0.0359893 5.64009 0.00559866 5.96035 0.00559866 6.36881V11.2416C0.005599 11.6478 -0.111692 12 0.727419 11.9991L0.773561 12C4.25363 11.9624 7.28108 11.1186 9.2559 9.01851Z"
+                />
+              </svg>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '20px',
+                textAlign,
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 32,
+                  lineHeight: '36px',
+                  fontWeight: 400,
+                  color: colors.base.tertiary,
+                }}
+              >
+                {eyebrow}
+              </span>
+              <span
+                style={{
+                  fontSize: 68,
+                  lineHeight: '80px',
+                  fontWeight: 600,
+                  color: colors.base.primary,
+                  whiteSpace: 'pre-wrap',
+                }}
+              >
+                {title}
+              </span>
+              <span
+                style={{
+                  fontSize: 32,
+                  lineHeight: '48px',
+                  fontWeight: 400,
+                  color: colors.base.secondary,
+                  whiteSpace: 'pre-wrap',
+                }}
+              >
+                {description}
+              </span>
+            </div>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: alignEnd,
+            }}
+          >
+            <span
+              style={{
+                fontSize: 32,
+                lineHeight: '36px',
+                fontWeight: 500,
+                color: colors.accents.brand,
+              }}
+            >
+              {fallback.brand}
+            </span>
+          </div>
+        </div>
+      </div>
+    ),
+    {
+      ...size,
+      fonts: [
+        {
+          name: 'Rubik',
+          data: fontData,
+          weight: 400,
+          style: 'normal',
+        },
+        {
+          name: 'Rubik',
+          data: fontData,
+          weight: 600,
+          style: 'normal',
+        },
+      ],
     },
-  })
+  )
 }
