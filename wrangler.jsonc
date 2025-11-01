@@ -23,6 +23,12 @@
       "service": "marn-web",
     },
   ],
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "6418a4cae27d4bb1b22498c132bd91e5",
+    },
+  ],
   "r2_buckets": [
     // Create a R2 binding with the binding name "NEXT_INC_CACHE_R2_BUCKET"
     {

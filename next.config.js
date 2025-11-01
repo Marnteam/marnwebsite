@@ -19,6 +19,7 @@ const nextConfig = {
   images: {
     loader: 'custom',
     loaderFile: './image-loader.ts',
+    unoptimized: true,
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL /* 'https://example.com' */].map((item) => {
         const url = new URL(item)
@@ -33,9 +34,6 @@ const nextConfig = {
   serverExternalPackages: ['@takumi-rs/core'],
   reactStrictMode: true,
   redirects,
-  experimental: {
-    cpus: process.env.NEXT_CPU_COUNT,
-  },
 }
 
 const withBundleAnalyzer = bundleAnalyzer({
