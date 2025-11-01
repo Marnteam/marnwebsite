@@ -29,6 +29,7 @@ const nextConfig = {
       }),
     ],
   },
+  serverExternalPackages: ['@takumi-rs/core'],
   reactStrictMode: true,
   redirects,
   experimental: {
