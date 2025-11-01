@@ -6,11 +6,11 @@ import type { Page } from '@/payload-types'
 import configPromise from '@payload-config'
 
 export const runtime = 'nodejs'
-export const size = {
+const size = {
   width: 1200,
   height: 630,
 }
-export const contentType = 'image/png'
+const contentType = 'image/png'
 
 const VALID_LOCALES = ['en', 'ar'] as const
 
@@ -62,7 +62,8 @@ async function loadRubikFont() {
     return rubikFontData
   }
 
-  const url = 'https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap'
+  const url =
+    'https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap'
   const css = await (await fetch(url)).text()
   const resource = css.match(/src: url\((.+?)\) format\('(opentype|truetype)'\)/)
 
