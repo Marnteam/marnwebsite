@@ -241,11 +241,7 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
                         typeof referenceValue.icon === 'object' && // Ensure icon itself is an object
                         referenceValue.icon ? (
                         <Image
-                          src={
-                            referenceValue.icon.sizes?.thumbnail?.url ||
-                            referenceValue.icon.url ||
-                            ''
-                          }
+                          src={referenceValue.icon.url || ''}
                           alt={referenceValue.icon.alt ?? ''} // Safe to access now
                           width={40}
                           height={40}

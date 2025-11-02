@@ -17,6 +17,7 @@
 /out/
 /public/media
 .open-next
+.wrangler
 
 # production
 /build

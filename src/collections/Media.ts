@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url'
 
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
-import { generateBlurHash } from '@/utilities/generateBlurHash'
+// import { generateBlurHash } from '@/utilities/generateBlurHash'
 import { createS3SafeFilename } from '@/utilities/createS3SafeName'
 
 const filename = fileURLToPath(import.meta.url)
@@ -129,7 +129,8 @@ export const Media: CollectionConfig = {
     // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload
     staticDir: path.resolve(dirname, '../../public/media'),
     adminThumbnail: 'thumbnail',
-    focalPoint: true,
+    focalPoint: false,
+    crop: false,
     // imageSizes: [
     //   {
     //     name: 'thumbnail',
