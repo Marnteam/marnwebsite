@@ -67,7 +67,8 @@ initOpenNextCloudflareForDev()
 const directConnectionString =
   process.env.DATABASE_URI || process.env.CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE
 
-const cloudflareRemoteBindings = process.env.NODE_ENV === 'production'
+const cloudflareRemoteBindings =
+  process.env.NODE_ENV === 'production' && process.env.PLATFORM === 'cloudflare'
 
 let cloudflare: CloudflareContext | undefined
 
