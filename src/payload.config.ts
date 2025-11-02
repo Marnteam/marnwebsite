@@ -7,7 +7,11 @@ import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 import { getServerSideURL } from './utilities/getURL'
-import { CloudflareContext, getCloudflareContext } from '@opennextjs/cloudflare'
+import {
+  CloudflareContext,
+  getCloudflareContext,
+  initOpenNextCloudflareForDev,
+} from '@opennextjs/cloudflare'
 import { GetPlatformProxyOptions } from 'wrangler'
 
 import { plugins } from './plugins'
@@ -58,6 +62,7 @@ import { Marketplace } from './blocks/Marketplace/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+initOpenNextCloudflareForDev()
 
 const cloudflareRemoteBindings = process.env.NODE_ENV === 'production'
 const cloudflare = cloudflareRemoteBindings
