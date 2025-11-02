@@ -64,10 +64,26 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 initOpenNextCloudflareForDev()
 
+const directConnectionString =
+  process.env.DATABASE_URI || process.env.CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE
+
 const cloudflareRemoteBindings = process.env.NODE_ENV === 'production'
-const cloudflare = cloudflareRemoteBindings
-  ? await getCloudflareContext({ async: true })
-  : await getCloudflareContextFromWrangler()
+
+let cloudflare: CloudflareContext | undefined
+
+if (!directConnectionString) {
+  cloudflare =
+    process.argv.find((value) => value.match(/^(generate|migrate):?/)) || !cloudflareRemoteBindings
+      ? await getCloudflareContextFromWrangler()
+      : await getCloudflareContext({ async: true })
+}
+
+const resolvedConnectionString =
+  directConnectionString ?? cloudflare?.env?.HYPERDRIVE?.connectionString
+
+if (!resolvedConnectionString) {
+  throw new Error('Unable to resolve a Postgres connection string for Payload')
+}
 
 export default buildConfig({
   admin: {
@@ -189,7 +205,7 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   db: postgresAdapter({
     pool: {
-      connectionString: cloudflare.env.HYPERDRIVE.connectionString,
+      connectionString: resolvedConnectionString,
     },
     idType: 'uuid',
     push: false, // disable push mode
