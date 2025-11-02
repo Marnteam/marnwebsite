@@ -253,6 +253,8 @@ export default buildConfig({
       collections: {
         media: {
           prefix: 'media',
+          generateFileURL: ({ filename, prefix }) =>
+            `${process.env.MEDIA_DOMAIN}/${prefix}/${encodeURIComponent(filename)}`,
         },
       },
       bucket: process.env.S3_BUCKET || '',
