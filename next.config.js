@@ -1,6 +1,7 @@
 import { withPayload } from '@payloadcms/next/withPayload'
 import createNextIntlPlugin from 'next-intl/plugin'
 import bundleAnalyzer from '@next/bundle-analyzer'
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare'
 import redirects from './redirects.js'
 
 const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
@@ -10,6 +11,8 @@ const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
     : undefined || process.env.__NEXT_PRIVATE_ORIGIN || 'http://localhost:3000'
 
 const withNextIntl = createNextIntlPlugin()
+
+initOpenNextCloudflareForDev()
 
 console.log(NEXT_PUBLIC_SERVER_URL)
 console.log('env: ', process.env.NODE_ENV)
