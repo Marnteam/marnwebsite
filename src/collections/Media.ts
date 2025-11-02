@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url'
 
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
-// import { generateBlurHash } from '@/utilities/generateBlurHash'
+import { generateBlurHash } from '@/utilities/generateBlurHash'
 import { createS3SafeFilename } from '@/utilities/createS3SafeName'
 
 const filename = fileURLToPath(import.meta.url)
@@ -129,41 +129,40 @@ export const Media: CollectionConfig = {
     // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload
     staticDir: path.resolve(dirname, '../../public/media'),
     adminThumbnail: 'thumbnail',
-    focalPoint: false,
-    crop: false,
-    // imageSizes: [
-    //   {
-    //     name: 'thumbnail',
-    //     width: 300,
-    //   },
-    //   {
-    //     name: 'square',
-    //     width: 500,
-    //     height: 500,
-    //   },
-    //   {
-    //     name: 'small',
-    //     width: 600,
-    //   },
-    //   {
-    //     name: 'medium',
-    //     width: 900,
-    //   },
-    //   {
-    //     name: 'large',
-    //     width: 1400,
-    //   },
-    //   {
-    //     name: 'xlarge',
-    //     width: 1920,
-    //   },
-    //   {
-    //     name: 'og',
-    //     width: 1200,
-    //     height: 630,
-    //     crop: 'center',
-    //   },
-    // ],
+    focalPoint: true,
+    imageSizes: [
+      {
+        name: 'thumbnail',
+        width: 300,
+      },
+      {
+        name: 'square',
+        width: 500,
+        height: 500,
+      },
+      {
+        name: 'small',
+        width: 600,
+      },
+      {
+        name: 'medium',
+        width: 900,
+      },
+      {
+        name: 'large',
+        width: 1400,
+      },
+      {
+        name: 'xlarge',
+        width: 1920,
+      },
+      {
+        name: 'og',
+        width: 1200,
+        height: 630,
+        crop: 'center',
+      },
+    ],
   },
   hooks: {
     beforeValidate: [
@@ -175,7 +174,7 @@ export const Media: CollectionConfig = {
         }
         return data
       },
-      // generateBlurHash,
+      generateBlurHash,
       createS3SafeFilename,
     ],
   },

@@ -253,8 +253,8 @@ export default buildConfig({
       collections: {
         media: {
           prefix: 'media',
-          generateFileURL: ({ filename, prefix }) =>
-            `${process.env.MEDIA_DOMAIN}/${prefix}/${encodeURIComponent(filename)}`,
+          // generateFileURL: ({ filename, prefix }) =>
+          //   `${process.env.MEDIA_DOMAIN}/${prefix}/${encodeURIComponent(filename)}`,
         },
       },
       bucket: process.env.S3_BUCKET || '',
@@ -268,7 +268,7 @@ export default buildConfig({
         endpoint: process.env.S3_ENDPOINT,
       },
       // enabled: false,
-      enabled: process.env.NODE_ENV === 'production', // Use in production only
+      // enabled: process.env.NODE_ENV === 'production', // Use in production only
     }),
   ],
   secret: process.env.PAYLOAD_SECRET,
