@@ -62,29 +62,13 @@ import { Marketplace } from './blocks/Marketplace/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
 initOpenNextCloudflareForDev()
 
-const directConnectionString =
-  process.env.DATABASE_URI || process.env.CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE
-
-const cloudflareRemoteBindings =
-  process.env.NODE_ENV === 'production' && process.env.PLATFORM === 'cloudflare'
-
-let cloudflare: CloudflareContext | undefined
-
-if (!directConnectionString) {
-  cloudflare =
-    process.argv.find((value) => value.match(/^(generate|migrate):?/)) || !cloudflareRemoteBindings
-      ? await getCloudflareContextFromWrangler()
-      : await getCloudflareContext({ async: true })
-}
-
-const resolvedConnectionString =
-  directConnectionString ?? cloudflare?.env?.HYPERDRIVE?.connectionString
-
-if (!resolvedConnectionString) {
-  throw new Error('Unable to resolve a Postgres connection string for Payload')
-}
+const cloudflareRemoteBindings = process.env.NODE_ENV === 'production'
+const cloudflare = !cloudflareRemoteBindings
+  ? await getCloudflareContextFromWrangler()
+  : await getCloudflareContext({ async: true })
 
 export default buildConfig({
   admin: {
@@ -206,7 +190,7 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   db: postgresAdapter({
     pool: {
-      connectionString: resolvedConnectionString,
+      connectionString: cloudflare.env.HYPERDRIVE.connectionString,
     },
     idType: 'uuid',
     push: false, // disable push mode
