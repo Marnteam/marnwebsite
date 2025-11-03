@@ -17,8 +17,8 @@ console.log('env: ', process.env.NODE_ENV)
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    loader: 'custom',
-    loaderFile: './image-loader.ts',
+    // loader: 'custom',
+    // loaderFile: './image-loader.ts',
     unoptimized: true,
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL /* 'https://example.com' */].map((item) => {

@@ -48,6 +48,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       filename: fullFilename,
       height: fullHeight,
       url,
+      prefix,
       width: fullWidth,
       blurhash: blurhashFromResource,
       updatedAt: cacheTag,
@@ -57,8 +58,8 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     height = fullHeight!
     alt = altFromResource || ''
     blurhash = blurhashFromResource || placeholderBlur
-    src = getMediaUrl(url, cacheTag)
-    darkSrc = getMediaUrl(url, cacheTag)
+    src = getMediaUrl(`${prefix}/${fullFilename}`, cacheTag)
+    darkSrc = getMediaUrl(`${prefix}/${fullFilename}`, cacheTag)
   }
 
   const { dark, mobile, mobileDark } = (media?.media ?? {}) as Partial<Media>
@@ -69,6 +70,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       filename: fullFilename,
       height: fullHeight,
       url,
+      prefix,
       width: fullWidth,
       blurhash: blurhashFromLight,
       updatedAt: cacheTag,
@@ -78,10 +80,10 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     height = fullHeight!
     alt = altFromLight || ''
     blurhash = blurhashFromLight || placeholderBlur
-    src = getMediaUrl(url, cacheTag)
-    darkSrc = getMediaUrl(url, cacheTag)
-    mobileSrc = getMediaUrl(url, cacheTag)
-    mobileDarkSrc = getMediaUrl(url, cacheTag)
+    src = getMediaUrl(`${prefix}/${fullFilename}`, cacheTag)
+    darkSrc = getMediaUrl(`${prefix}/${fullFilename}`, cacheTag)
+    mobileSrc = getMediaUrl(`${prefix}/${fullFilename}`, cacheTag)
+    mobileDarkSrc = getMediaUrl(`${prefix}/${fullFilename}`, cacheTag)
   }
 
   if (dark && typeof dark === 'object') {
@@ -90,6 +92,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       filename: fullFilename,
       height: fullHeight,
       url,
+      prefix,
       width: fullWidth,
       blurhash: blurhashFromDark,
       updatedAt: cacheTag,
@@ -99,10 +102,10 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     height = fullHeight!
     alt = altFromDark || ''
     blurhash = blurhashFromDark || placeholderBlur
-    if (!src) src = getMediaUrl(url, cacheTag)
-    darkSrc = getMediaUrl(url, cacheTag)
-    mobileSrc = getMediaUrl(url, cacheTag)
-    mobileDarkSrc = getMediaUrl(url, cacheTag)
+    if (!src) src = getMediaUrl(`${prefix}/${fullFilename}`, cacheTag)
+    darkSrc = getMediaUrl(`${prefix}/${fullFilename}`, cacheTag)
+    mobileSrc = getMediaUrl(`${prefix}/${fullFilename}`, cacheTag)
+    mobileDarkSrc = getMediaUrl(`${prefix}/${fullFilename}`, cacheTag)
   }
 
   if (mobile && typeof mobile === 'object') {
@@ -111,6 +114,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       filename: fullFilename,
       height: fullHeight,
       url,
+      prefix,
       width: fullWidth,
       blurhash: blurhashFromLight,
       updatedAt: cacheTag,
@@ -120,8 +124,8 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     height = fullHeight!
     alt = altFromLight || ''
     blurhash = blurhashFromLight || placeholderBlur
-    mobileSrc = getMediaUrl(url, cacheTag)
-    mobileDarkSrc = getMediaUrl(url, cacheTag)
+    mobileSrc = getMediaUrl(`${prefix}/${fullFilename}`, cacheTag)
+    mobileDarkSrc = getMediaUrl(`${prefix}/${fullFilename}`, cacheTag)
   }
 
   if (mobileDark && typeof mobileDark === 'object') {
@@ -130,6 +134,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       filename: fullFilename,
       height: fullHeight,
       url,
+      prefix,
       width: fullWidth,
       blurhash: blurhashFromLight,
       updatedAt: cacheTag,
@@ -139,7 +144,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     height = fullHeight!
     alt = altFromLight || ''
     blurhash = blurhashFromLight || placeholderBlur
-    mobileDarkSrc = getMediaUrl(url, cacheTag)
+    mobileDarkSrc = getMediaUrl(`${prefix}/${fullFilename}`, cacheTag)
   }
 
   const loading = loadingFromProps || (!priority ? 'lazy' : undefined)

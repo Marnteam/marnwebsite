@@ -29,48 +29,48 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
   let mobileDarkSrc = ''
 
   if (!src && resource && typeof resource === 'object') {
-    const { url, updatedAt } = resource
+    const { url, prefix, filename, updatedAt } = resource
 
     const cacheTag = updatedAt
 
-    src = getMediaUrl(url, cacheTag)
-    darkSrc = getMediaUrl(url, cacheTag)
+    src = getMediaUrl(`${prefix}/${filename}`, cacheTag)
+    darkSrc = getMediaUrl(`${prefix}/${filename}`, cacheTag)
   }
 
   if (!src && mediaResource && typeof mediaResource === 'object') {
-    const { url, updatedAt } = mediaResource
+    const { url, prefix, filename, updatedAt } = mediaResource
 
     const cacheTag = updatedAt
 
-    src = getMediaUrl(url, cacheTag)
-    darkSrc = getMediaUrl(url, cacheTag)
-    mobileSrc = getMediaUrl(url, cacheTag)
-    mobileDarkSrc = getMediaUrl(url, cacheTag)
+    src = getMediaUrl(`${prefix}/${filename}`, cacheTag)
+    darkSrc = getMediaUrl(`${prefix}/${filename}`, cacheTag)
+    mobileSrc = getMediaUrl(`${prefix}/${filename}`, cacheTag)
+    mobileDarkSrc = getMediaUrl(`${prefix}/${filename}`, cacheTag)
   }
 
   if (dark && typeof dark === 'object') {
-    const { url, updatedAt } = dark
+    const { url, prefix, filename, updatedAt } = dark
     const cacheTag = updatedAt
 
-    if (!src) src = getMediaUrl(url, cacheTag)
-    darkSrc = getMediaUrl(url, cacheTag)
-    mobileSrc = getMediaUrl(url, cacheTag)
-    mobileDarkSrc = getMediaUrl(url, cacheTag)
+    if (!src) src = getMediaUrl(`${prefix}/${filename}`, cacheTag)
+    darkSrc = getMediaUrl(`${prefix}/${filename}`, cacheTag)
+    mobileSrc = getMediaUrl(`${prefix}/${filename}`, cacheTag)
+    mobileDarkSrc = getMediaUrl(`${prefix}/${filename}`, cacheTag)
   }
 
   if (mobile && typeof mobile === 'object') {
-    const { url, updatedAt } = mobile
+    const { url, prefix, filename, updatedAt } = mobile
     const cacheTag = updatedAt
 
-    mobileSrc = getMediaUrl(url, cacheTag)
-    mobileDarkSrc = getMediaUrl(url, cacheTag)
+    mobileSrc = getMediaUrl(`${prefix}/${filename}`, cacheTag)
+    mobileDarkSrc = getMediaUrl(`${prefix}/${filename}`, cacheTag)
   }
 
   if (mobileDark && typeof mobileDark === 'object') {
-    const { url, updatedAt } = mobileDark
+    const { url, prefix, filename, updatedAt } = mobileDark
     const cacheTag = updatedAt
 
-    mobileDarkSrc = getMediaUrl(url, cacheTag)
+    mobileDarkSrc = getMediaUrl(`${prefix}/${filename}`, cacheTag)
   }
 
   const isDark = theme === 'dark'
