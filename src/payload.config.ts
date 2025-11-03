@@ -11,6 +11,9 @@ import { getServerSideURL } from './utilities/getURL'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 
+import { CloudflareContext, getCloudflareContext } from '@opennextjs/cloudflare'
+import { GetPlatformProxyOptions } from 'wrangler'
+
 //globals
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
@@ -56,6 +59,12 @@ import { Marketplace } from './blocks/Marketplace/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+const cloudflareRemoteBindings = process.env.NODE_ENV === 'production'
+const cloudflare =
+  process.argv.find((value) => value.match(/^(generate|migrate):?/)) || !cloudflareRemoteBindings
+    ? await getCloudflareContextFromWrangler()
+    : await getCloudflareContext({ async: true })
 
 export default buildConfig({
   admin: {
@@ -177,7 +186,7 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI,
+      connectionString: cloudflare.env.HYPERDRIVE.connectionString,
     },
     idType: 'uuid',
     push: false, // disable push mode
@@ -292,3 +301,13 @@ export default buildConfig({
     tasks: [],
   },
 })
+
+function getCloudflareContextFromWrangler(): Promise<CloudflareContext> {
+  return import(/* webpackIgnore: true */ `${'__wrangler'.replaceAll('_', '')}`).then(
+    ({ getPlatformProxy }) =>
+      getPlatformProxy({
+        environment: process.env.CLOUDFLARE_ENV,
+        experimental: { remoteBindings: cloudflareRemoteBindings },
+      } satisfies GetPlatformProxyOptions),
+  )
+}
