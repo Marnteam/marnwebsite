@@ -2,7 +2,7 @@
 import React from 'react'
 import { FeaturesBlock } from '@/payload-types'
 import { Card, CardContent } from '@/components/ui/card'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'
 import { CMSBadge as Badge } from '@/components/Badge'

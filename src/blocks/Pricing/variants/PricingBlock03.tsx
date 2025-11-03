@@ -2,7 +2,7 @@
 
 import React from 'react'
 import type { PricingBlock } from '@/payload-types'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { CMSBadge as Badge } from '@/components/Badge'
 import { CMSLink } from '@/components/Link'
 import { SaudiRiyal } from '@/icons/saudi-riyal'

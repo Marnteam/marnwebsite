@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import type { Media as MediaType } from '@/payload-types'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import {
   Carousel,
   CarouselContent,

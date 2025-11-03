@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { cn } from '@/utilities/ui'
 import { Icon } from '@iconify-icon/react'
 import { CarouselBlock } from '@/payload-types'

@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import type { Media as MediaType } from '@/payload-types'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { cn } from '@/utilities/ui'
 import { AnimatedGroup } from '@/components/motion-ui/animated-group'
 import { AnimatePresence } from 'motion/react'

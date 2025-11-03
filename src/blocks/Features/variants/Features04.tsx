@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, useScroll } from 'motion/react'
 import { FeaturesBlock } from '@/payload-types'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { cn } from '@/utilities/ui'
 import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'

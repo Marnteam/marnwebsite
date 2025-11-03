@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import type { MetricsBlock as MetricsBlockProps } from '@/payload-types'
 
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { cn } from '@/utilities/ui'
 import { InfiniteSlider } from '@/components/motion-ui/infinite-slider'
 import { Icon } from '@iconify-icon/react/dist/iconify.mjs'

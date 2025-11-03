@@ -1,6 +1,6 @@
 import React from 'react'
 import { FeaturesBlock } from '@/payload-types'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { Card, CardContent } from '@/components/ui/card'
 import { LinkBlock } from '@/components/LinkBlock'
 import RichText from '@/components/RichText'

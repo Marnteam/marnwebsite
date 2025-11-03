@@ -4,7 +4,7 @@ import React from 'react'
 import RichText from '@/components/RichText'
 import { cn } from '@/utilities/ui'
 import type { Customer, Media as MediaType } from '@/payload-types'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 
 interface TestimonialsBlock01 {
   testimonials: Customer[]

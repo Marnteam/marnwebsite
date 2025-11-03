@@ -2,7 +2,7 @@ import React from 'react'
 import type { MetricsBlock as MetricsBlockProps } from '@/payload-types'
 import { StructuredTable } from '@/components/Table'
 import { InfiniteSlider } from '@/components/motion-ui/infinite-slider'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 
 export const Metrics03: React.FC<MetricsBlockProps> = ({ table, enableLogos, logos }) => {
   const { logos: logosGroup, headline } = logos || {}

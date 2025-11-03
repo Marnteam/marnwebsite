@@ -9,7 +9,7 @@ import {
   CarouselItem,
   CarouselNavigation,
 } from '@/components/ui/carousel'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import RichText from '@/components/RichText'
 
 export const Carousel04: React.FC<CarouselBlock> = ({ columns }) => {

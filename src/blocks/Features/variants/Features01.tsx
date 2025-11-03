@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { FeaturesBlock } from '@/payload-types'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { cn } from '@/utilities/ui'
 import { AppReference } from '@/components/AppReference'
 import RichText from '@/components/RichText'

@@ -1,6 +1,6 @@
 import React from 'react'
 import type { BlogPost, Category } from '@/payload-types'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { Badge } from '@/components/ui/badge'
 import { Link } from '@/i18n/routing'
 import { formatDateTime } from '@/utilities/formatDateTime'

@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { CarouselBlock } from '@/payload-types'
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { cn } from '@/utilities/ui'
 import { CMSBadge as Badge } from '@/components/Badge'
 import { CMSLink } from '@/components/Link'

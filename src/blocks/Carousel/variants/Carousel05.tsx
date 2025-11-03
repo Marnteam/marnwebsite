@@ -11,7 +11,7 @@ import {
   CarouselItem,
   CarouselNavigation,
 } from '@/components/ui/carousel'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import {
   MorphingDialog,
   MorphingDialogClose,
@@ -69,7 +69,7 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
                       <CardContent className="flex flex-col items-start gap-2 rounded-3xl pe-space-md pb-4">
                         {icon && (
                           <Icon
-                            className="size-md mb-space-sm text-base-secondary"
+                            className="mb-space-sm size-md text-base-secondary"
                             icon={`material-symbols:${icon}`}
                             height="none"
                             color="currentColor"
@@ -110,7 +110,7 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
                             <MorphingDialogClose className="h-10 w-10 rounded-full bg-neutral/10 px-2 py-2 text-base-secondary hover:bg-neutral/30" />
                             {icon && (
                               <Icon
-                                className="size-md my-2 text-base-secondary"
+                                className="my-2 size-md text-base-secondary"
                                 icon={`material-symbols:${icon}`}
                                 height="none"
                                 color="currentColor"

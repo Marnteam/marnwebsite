@@ -6,7 +6,7 @@ import { motion } from 'motion/react'
 
 import { Customer } from '@/payload-types'
 import RichText from '@/components/RichText'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { cn } from '@/utilities/ui'
 import { LinkBlock } from '@/components/LinkBlock'
 import { containerVariants, itemVariants, itemsFling } from '@/utilities/motion'

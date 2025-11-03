@@ -1,7 +1,7 @@
 'use client'
 import { FeaturesBlock } from '@/payload-types'
 import { CMSBadge as Badge } from '@/components/Badge'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { cn } from '@/utilities/ui'
 
 import { CMSLink } from '@/components/Link'

@@ -6,7 +6,7 @@ import {
 } from '@/components/ui/carousel'
 
 import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Carousel } from '@/components/ui/carousel'
 
@@ -32,7 +32,7 @@ export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({ cards }) => {
         <CarouselContent className="max-md:flex-col max-md:gap-space-xs">
           {cards?.map(({ title, subtitle, appReference, id }) => (
             <CarouselItem key={id} className="md:not-first:ps-space-xs">
-              <Card key={id} className="space-y-sm h-full w-full">
+              <Card key={id} className="h-full w-full space-y-sm">
                 <CardHeader className="flex flex-col gap-space-xs">
                   <h3 className="text-h3">{title}</h3>
                   <p className="text-body-md font-normal text-base-secondary">{subtitle}</p>

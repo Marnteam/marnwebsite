@@ -3,7 +3,7 @@
 import React, { useState, useCallback } from 'react'
 import type { Integration, Media as MediaType } from '@/payload-types'
 import { CMSLink } from '../../../components/Link'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { PaginationControls } from './PaginationControls'
 
 type PopulatedApp = Partial<Integration>

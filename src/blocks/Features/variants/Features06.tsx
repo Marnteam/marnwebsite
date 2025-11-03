@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { FeaturesBlock } from '@/payload-types'
 import { Icon } from '@iconify-icon/react'
 import { BlockHeader } from '@/components/BlockHeader'

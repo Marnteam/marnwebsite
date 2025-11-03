@@ -9,7 +9,7 @@ import {
   CarouselNavigation,
   CarouselIndicator,
 } from '@/components/ui/carousel'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { CMSLink } from '@/components/Link'
 import RichText from '@/components/RichText'
 import { TypedLocale } from 'payload'

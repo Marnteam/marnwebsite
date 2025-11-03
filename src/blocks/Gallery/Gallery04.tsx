@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import type { GalleryBlock } from '@/payload-types'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 import { cn } from '@/utilities/ui'
 import { TransitionPanel } from '@/components/motion-ui/transition-panel'
@@ -79,7 +79,7 @@ export const Gallery04: React.FC<Gallery04Props> = ({ interactiveGallery, classN
           ))}
         </CarouselContent>
       </Carousel>
-      <div className="space-y-sm z-1 h-fit w-full overflow-hidden rounded-xl bg-neutral-950 p-space-sm max-lg:relative max-lg:mt-space-sm lg:absolute lg:right-[calc(var(--spacing-site)*2)] lg:bottom-[calc(var(--spacing-space-xl)+var(--spacing-site))] lg:max-w-[400px]">
+      <div className="z-1 h-fit w-full space-y-sm overflow-hidden rounded-xl bg-neutral-950 p-space-sm max-lg:relative max-lg:mt-space-sm lg:absolute lg:right-[calc(var(--spacing-site)*2)] lg:bottom-[calc(var(--spacing-space-xl)+var(--spacing-site))] lg:max-w-[400px]">
         <TransitionPanel
           activeIndex={activeIndex}
           variants={{

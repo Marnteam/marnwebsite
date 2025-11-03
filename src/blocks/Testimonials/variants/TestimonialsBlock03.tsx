@@ -11,7 +11,7 @@ import {
 
 import { Customer } from '@/payload-types'
 import RichText from '@/components/RichText'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { Stat } from '../stat'
 import { CMSLink } from '@/components/Link'
 
@@ -71,7 +71,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, linkLabe
                 <Media
                   resource={authorInfo.avatar}
                   fill
-                  className="size-lg relative overflow-hidden rounded-full"
+                  className="relative size-lg overflow-hidden rounded-full"
                   imgClassName="object-cover"
                 />
               )}

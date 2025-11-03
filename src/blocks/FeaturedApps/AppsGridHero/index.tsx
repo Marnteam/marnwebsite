@@ -1,7 +1,7 @@
 'use client'
 
 import type { Integration, Media as MediaType } from '@/payload-types' // Import necessary types
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { cubicBezier, motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { useRef, useMemo } from 'react'
 import RichText from '@/components/RichText'
