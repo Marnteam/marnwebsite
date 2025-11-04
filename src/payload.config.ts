@@ -186,7 +186,9 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   db: postgresAdapter({
     pool: {
-      connectionString: cloudflare.env.HYPERDRIVE.connectionString,
+      connectionString: !!process.env.VERCEL
+        ? process.env.DATABASE_URI
+        : cloudflare.env.HYPERDRIVE.connectionString,
     },
     idType: 'uuid',
     push: false, // disable push mode

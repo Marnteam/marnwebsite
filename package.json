@@ -11,7 +11,7 @@
     "deploy:app": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "deploy:database": "cross-env NODE_ENV=production PAYLOAD_SECRET=ignore payload migrate",
     "postbuild": "next-sitemap --config next-sitemap.config.js",
-    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --turbo",
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
     "devsafe": "rm -rf .next && rm -rf .open-next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "dev:prod": "cross-env NODE_OPTIONS=--no-deprecation rm -rf .next && NODE_ENV=production && pnpm build && pnpm start",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
@@ -128,7 +128,7 @@
     "tailwindcss": "^4.1.14",
     "tsx": "^4.20.6",
     "typescript": "5.8.3",
-    "wrangler": "^4.42.0"
+    "wrangler": "^4.45.3"
   },
   "engines": {
     "node": "^18.20.2 || >=20.9.0",
@@ -138,6 +138,7 @@
     "onlyBuiltDependencies": [
       "sharp",
       "esbuild",
+      "rclone.js",
       "unrs-resolver"
     ]
   }
