@@ -61,11 +61,20 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 const cloudflareRemoteBindings = process.env.NODE_ENV === 'production'
-const cloudflare =
-  process.argv.find((value) => value.match(/^(generate|migrate):?/)) || !cloudflareRemoteBindings
-    ? await getCloudflareContextFromWrangler()
-    : await getCloudflareContext({ async: true })
+const isVercel = Boolean(process.env.VERCEL)
+let cloudflare
+if (isVercel) {
+  cloudflare = undefined
+} else {
+  cloudflare =
+    process.argv.find((value) => value.match(/^(generate|migrate):?/)) || !cloudflareRemoteBindings
+      ? await getCloudflareContextFromWrangler()
+      : await getCloudflareContext({ async: true })
+}
 
+const databaseConnectionString = isVercel
+  ? (process.env.DATABASE_URI ?? '')
+  : cloudflare?.env.HYPERDRIVE.connectionString
 export default buildConfig({
   admin: {
     autoLogin: {
@@ -186,9 +195,7 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   db: postgresAdapter({
     pool: {
-      connectionString: !!process.env.VERCEL
-        ? process.env.DATABASE_URI
-        : cloudflare.env.HYPERDRIVE.connectionString,
+      connectionString: databaseConnectionString,
     },
     idType: 'uuid',
     push: false, // disable push mode
@@ -310,6 +317,6 @@ function getCloudflareContextFromWrangler(): Promise<CloudflareContext> {
       getPlatformProxy({
         environment: process.env.CLOUDFLARE_ENV,
         experimental: { remoteBindings: cloudflareRemoteBindings },
-      } satisfies GetPlatformProxyOptions),
+      }),
   )
 }
