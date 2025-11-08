@@ -75,6 +75,7 @@ if (isVercel) {
 const databaseConnectionString = isVercel
   ? (process.env.DATABASE_URI ?? '')
   : cloudflare?.env.HYPERDRIVE.connectionString
+
 export default buildConfig({
   admin: {
     autoLogin: {
@@ -195,7 +196,7 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   db: postgresAdapter({
     pool: {
-      connectionString: databaseConnectionString,
+      connectionString: process.env.DATABASE_URI,
     },
     idType: 'uuid',
     push: false, // disable push mode
