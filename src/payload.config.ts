@@ -267,6 +267,13 @@ export default buildConfig({
     fallback: true, // defaults to true
   },
   globals: [Site, Header, Footer],
+  logger: {
+    debug: (msg: any, ...args: any[]) => console.log(msg, ...args),
+    error: (msg: any, ...args: any[]) => console.error(msg, ...args),
+    info: (msg: any, ...args: any[]) => console.log(msg, ...args),
+    warn: (msg: any, ...args: any[]) => console.log(msg, ...args),
+    trace: (msg: any, ...args: any[]) => console.trace(msg, ...args),
+  } as any,
   plugins: [
     ...plugins,
     s3Storage({
@@ -288,7 +295,7 @@ export default buildConfig({
         endpoint: process.env.S3_ENDPOINT,
       },
       // enabled: false,
-      // enabled: process.env.NODE_ENV === 'production', // Use in production only
+      enabled: process.env.NODE_ENV === 'production', // Use in production only
     }),
   ],
   secret: process.env.PAYLOAD_SECRET,
