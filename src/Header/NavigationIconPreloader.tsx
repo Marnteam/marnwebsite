@@ -1,11 +1,17 @@
 import Image from 'next/image'
-import type { Header as HeaderType } from '@/payload-types'
+import type { Header as HeaderType, Solution } from '@/payload-types'
 import React from 'react'
+import { getMediaUrl } from '@/utilities/getMediaURL'
+
+type navItems = NonNullable<HeaderType['tabs']>[number]['navItems']
+type listLinkGroup = NonNullable<navItems>[number]['listLinks']
+type listLinksArray = NonNullable<listLinkGroup>['links']
+type listLink = NonNullable<listLinksArray>[number]
 
 // Component to preload all navigation images
 export function NavigationImagePreloader({ tabs }: { tabs: HeaderType['tabs'] }) {
   const imageUrls = React.useMemo(() => {
-    const urls: string[] = []
+    const urls: { url: string; cacheTag: string }[] = []
 
     if (!tabs) return urls
 
@@ -19,9 +25,12 @@ export function NavigationImagePreloader({ tabs }: { tabs: HeaderType['tabs'] })
                 subLink.link.reference?.value &&
                 typeof subLink.link.reference.value === 'object'
               ) {
-                const referenceValue = subLink.link.reference.value as any
-                if (referenceValue.icon?.url) {
-                  urls.push(referenceValue.icon.url)
+                const referenceValue = subLink.link.reference.value as Solution
+                if (typeof referenceValue.icon === 'object' && referenceValue.icon?.url) {
+                  urls.push({
+                    url: referenceValue.icon.url,
+                    cacheTag: referenceValue.icon.updatedAt,
+                  })
                 }
               }
             }
@@ -35,18 +44,21 @@ export function NavigationImagePreloader({ tabs }: { tabs: HeaderType['tabs'] })
 
   return (
     <div className="sr-only" aria-hidden="true">
-      {imageUrls.map((url, index) => (
-        <Image
-          key={`preload-${index}`}
-          src={url}
-          alt=""
-          width={40}
-          height={40}
-          sizes="40px"
-          priority
-          style={{ display: 'none' }}
-        />
-      ))}
+      {imageUrls.map(({ url, cacheTag }, index) => {
+        const mediaUrl = getMediaUrl(url, cacheTag)
+        return (
+          <Image
+            key={`preload-${index}`}
+            src={mediaUrl}
+            alt=""
+            width={40}
+            height={40}
+            sizes="40px"
+            priority
+            style={{ display: 'none' }}
+          />
+        )
+      })}
     </div>
   )
 }
