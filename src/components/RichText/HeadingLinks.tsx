@@ -63,7 +63,7 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
         case 'h1':
           return ''
         case 'h2':
-          return 'ms-2 text-base-primary text-base hover:text-brand'
+          return 'ms-2 text-base-tertiary hover:text-brand'
         case 'h3':
           return 'ms-6 font-normal'
         case 'h4':
@@ -79,7 +79,7 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
       <Link
         href={`#${slug}`}
         className={cn(
-          'hover:text-brand group relative flex translate-x-0 flex-row items-center gap-2 text-sm font-medium text-(color:--color-base-tertiary) transition-[color,transform] duration-200 ease-in-out after:absolute after:inset-0 after:ps-10 hover:after:-start-4 hover:ltr:translate-x-2 rtl:hover:-translate-x-4',
+          'group relative flex translate-x-0 flex-row items-center gap-2 text-sm text-base-tertiary transition-[color,_translate] duration-200 ease-out after:absolute after:inset-0 after:ps-10 hover:text-brand hover:after:-start-4 hover:ltr:translate-x-2 rtl:hover:-translate-x-4',
           paddingClass,
         )}
       >
