@@ -13,6 +13,7 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { draftMode } from 'next/headers'
 import { generateMeta } from '@/utilities/generateMeta'
 import { CategoriesList } from '@/components/CategoriesList'
+import { setRequestLocale } from 'next-intl/server'
 
 type Args = {
   params: Promise<{
@@ -21,7 +22,7 @@ type Args = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export const dynamic = 'force-static'
+// export const dynamic = 'force-static'
 export const revalidate = 86400 // 24h
 
 export default async function Page({ params, searchParams }: Args) {
@@ -29,7 +30,7 @@ export default async function Page({ params, searchParams }: Args) {
   const { category = 'all', page = 1 } = await searchParams
   const slug = 'blog'
   const payload = await getPayload({ config: configPromise })
-
+  setRequestLocale(locale)
   let pageData: PageType | null
 
   pageData = await queryPageBySlug({
