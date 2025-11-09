@@ -20,7 +20,7 @@ const badgeVariants = cva(
       },
       color: {
         default: 'bg-transparent text-(color:--color-base-tertiary)',
-        blue: 'bg-sky-100 text-marn-600 disabled:bg-sky-50 disabled:text-blue-500/70 dark:bg-marn-950 dark:text-sky-300',
+        blue: 'bg-[#B8E6FE] text-marn-600 disabled:bg-sky-50 disabled:text-blue-500/70 dark:bg-marn-950 dark:text-[#B8E6FE]',
         red: 'bg-tomato-100 text-tomato-600 disabled:bg-tomato-50 disabled:text-tomato-500/70 dark:bg-tomato-950',
         green:
           'bg-lime-400 text-lime-900 disabled:bg-lime-50 disabled:text-lime-500/70 dark:bg-lime-950 dark:text-lime-300',

@@ -12,6 +12,11 @@
   letter-spacing: 0;
 }
 
+[lang='en'] {
+  direction: ltr;
+  letter-spacing: -0.025em;
+}
+
 @layer base {
   *,
   ::after,
@@ -22,8 +27,8 @@
   }
 
   ::selection {
-    background-color: --alpha(theme(--color-neutral) / 30%);
-    color: theme(--color-white);
+    background-color: --alpha(var(--color-brand) / 100%);
+    color: white;
   }
 
   input:autofill,
