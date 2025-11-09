@@ -93,7 +93,7 @@ export const Hero04: React.FC<Page['hero']> = ({
                 return (
                   <li key={i} className="flex items-center justify-center">
                     {logo && typeof logo === 'object' && (
-                      <Media imgClassName="h-space-md w-auto" priority resource={logo} />
+                      <Media imgClassName="h-space-xl w-auto" priority resource={logo} />
                     )}
                   </li>
                 )

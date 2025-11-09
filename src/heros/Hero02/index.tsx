@@ -74,7 +74,7 @@ export const Hero02: React.FC<Page['hero']> = ({
                     <li key={i} className="flex items-center justify-center">
                       {logo && typeof logo === 'object' && (
                         <Media
-                          imgClassName="h-space-md w-auto object-contain"
+                          imgClassName="h-space-xl w-auto object-contain"
                           priority
                           resource={logo}
                         />
