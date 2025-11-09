@@ -3,11 +3,6 @@ import type { Header as HeaderType, Solution } from '@/payload-types'
 import React from 'react'
 import { getMediaUrl } from '@/utilities/getMediaURL'
 
-type navItems = NonNullable<HeaderType['tabs']>[number]['navItems']
-type listLinkGroup = NonNullable<navItems>[number]['listLinks']
-type listLinksArray = NonNullable<listLinkGroup>['links']
-type listLink = NonNullable<listLinksArray>[number]
-
 // Component to preload all navigation images
 export function NavigationImagePreloader({ tabs }: { tabs: HeaderType['tabs'] }) {
   const imageUrls = React.useMemo(() => {
