@@ -274,8 +274,7 @@ export default buildConfig({
         media: {
           prefix: 'media',
           disablePayloadAccessControl: true,
-          // generateFileURL: ({ filename, prefix }) =>
-          //   `${process.env.MEDIA_DOMAIN}/${prefix}/${encodeURIComponent(filename)}`,
+          generateFileURL: ({ filename, prefix }) => `/${prefix}/${encodeURIComponent(filename)}`,
         },
       },
       bucket: process.env.S3_BUCKET || '',
