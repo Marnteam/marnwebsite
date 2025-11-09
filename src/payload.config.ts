@@ -196,7 +196,8 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI,
+      connectionString: databaseConnectionString,
+      maxUses: isVercel ? undefined : 1,
     },
     idType: 'uuid',
     push: false, // disable push mode
@@ -272,6 +273,7 @@ export default buildConfig({
       collections: {
         media: {
           prefix: 'media',
+          disablePayloadAccessControl: true,
           // generateFileURL: ({ filename, prefix }) =>
           //   `${process.env.MEDIA_DOMAIN}/${prefix}/${encodeURIComponent(filename)}`,
         },
