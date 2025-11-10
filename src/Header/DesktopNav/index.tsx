@@ -23,6 +23,7 @@ import MarnIcon from '@/components/ui/marn-icon'
 import type { Header as HeaderType } from '@/payload-types'
 
 import { NavigationImagePreloader } from '../NavigationIconPreloader'
+import { getMediaUrl } from '@/utilities/getMediaURL'
 
 interface DesktopNavProps extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdAt'> {
   className?: string
@@ -175,11 +176,7 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
                     )}
                     {subLink.link.type === 'reference' && subLink.link.reference?.value?.icon && (
                       <Image
-                        src={
-                          subLink.link.reference.value.icon.url ||
-                          subLink.link.reference.value.icon.sizes?.thumbnail?.url ||
-                          ''
-                        }
+                        src={getMediaUrl(subLink.link.reference.value.icon.url)}
                         alt={subLink.link.reference.value.icon.alt}
                         width={40}
                         height={40}

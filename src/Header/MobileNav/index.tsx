@@ -18,6 +18,7 @@ import {
 } from '@/components/motion-ui/accordion'
 
 import { NavigationImagePreloader } from '../NavigationIconPreloader'
+import { getMediaUrl } from '@/utilities/getMediaURL'
 
 // Define the type for a single nav item from HeaderType
 type NavItem = NonNullable<NonNullable<HeaderType['tabs']>[number]['navItems']>[number]
@@ -44,7 +45,7 @@ const navigationMenuTriggerStyle = cva(
 
 export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
   const validTabs = tabs || []
-  const pathname = usePathname()
+
   const [expandedValue, setExpandedValue] = React.useState<React.Key | null>(null)
 
   const handleLinkClick = () => {
@@ -241,7 +242,7 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
                         typeof referenceValue.icon === 'object' && // Ensure icon itself is an object
                         referenceValue.icon ? (
                         <Image
-                          src={referenceValue.icon.url || ''}
+                          src={getMediaUrl(referenceValue.icon.url) || ''}
                           alt={referenceValue.icon.alt ?? ''} // Safe to access now
                           width={40}
                           height={40}
