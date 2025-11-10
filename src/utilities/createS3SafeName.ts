@@ -1,6 +1,14 @@
-import crypto from 'crypto'
+// import crypto from 'crypto' // not compatible with workers runtime
 import { CollectionBeforeChangeHook } from 'payload'
 import { Media } from '@/payload-types'
+
+async function shortSha1Hex(input) {
+  const enc = new TextEncoder()
+  const data = enc.encode(input) // or your "normalized" value
+  const buf = await crypto.subtle.digest('SHA-1', data) // ArrayBuffer (20 bytes)
+  const hex = [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('')
+  return hex.slice(0, 8) // first 8 hex chars (32 bits)
+}
 
 export const createS3SafeFilename: CollectionBeforeChangeHook<Media> = async ({
   req,
@@ -24,7 +32,7 @@ export const createS3SafeFilename: CollectionBeforeChangeHook<Media> = async ({
     .replace(/-+/g, '-')
     .replace(/^[-.]+|[-.]+$/g, '')
 
-  const hashSuffix = crypto.createHash('sha1').update(normalized).digest('hex').slice(0, 8)
+  const hashSuffix = await shortSha1Hex(normalized)
   const shouldAppendHash = asciiBase !== baseName || asciiBase.length === 0
   const safeBase = asciiBase.length > 0 ? asciiBase : `file-${hashSuffix}`
   const finalBase =
