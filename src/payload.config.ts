@@ -76,6 +76,11 @@ const databaseConnectionString = isVercel
   ? (process.env.DATABASE_URI ?? '')
   : cloudflare?.env.HYPERDRIVE.connectionString
 
+console.log(
+  (process.env.S3_ACCESS_KEY_ID || '').slice(0, 4),
+  (process.env.S3_SECRET_ACCESS_KEY || '').slice(0, 4),
+)
+
 export default buildConfig({
   admin: {
     autoLogin: {
@@ -295,8 +300,9 @@ export default buildConfig({
         region: process.env.S3_REGION,
         endpoint: process.env.S3_ENDPOINT,
       },
+
       // enabled: false,
-      enabled: process.env.NODE_ENV === 'production', // Use in production only
+      // enabled: process.env.NODE_ENV === 'production', // Use in production only
     }),
   ],
   secret: process.env.PAYLOAD_SECRET,
