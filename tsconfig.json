@@ -3,7 +3,11 @@
     "baseUrl": ".",
     "esModuleInterop": true,
     "target": "ES2023",
-    "lib": ["DOM", "DOM.Iterable", "ES2023"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2023"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -23,9 +27,15 @@
       }
     ],
     "paths": {
-      "@payload-config": ["./src/payload.config.ts"],
-      "react": ["./node_modules/@types/react"],
-      "@/*": ["./src/*"]
+      "@payload-config": [
+        "./src/payload.config.ts"
+      ],
+      "react": [
+        "./node_modules/@types/react"
+      ],
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
   "include": [
@@ -39,5 +49,8 @@
     "**/*.jsx",
     "src/**/*"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
+  // "exclude": ["node_modules"]
 }

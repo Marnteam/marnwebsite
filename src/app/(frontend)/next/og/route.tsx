@@ -1,12 +1,22 @@
-import { Renderer } from '@takumi-rs/core'
-import { container, text } from '@takumi-rs/helpers'
 import { NextResponse, type NextRequest } from 'next/server'
 import { getPayload } from 'payload'
 
 import type { Page } from '@/payload-types'
 import configPromise from '@payload-config'
-import { fromJsx } from '@takumi-rs/helpers/jsx'
 
+import { container, text } from '@takumi-rs/helpers'
+import { fromJsx } from '@takumi-rs/helpers/jsx'
+import init, { initSync, Renderer } from '@takumi-rs/wasm'
+import module from '@takumi-rs/wasm/takumi_wasm_bg.wasm'
+import { join } from 'node:path'
+import { readFile } from 'node:fs/promises'
+
+const wasmPath = join(process.cwd(), 'public', 'takumi_wasm_bg.wasm')
+const wasmReady = readFile(wasmPath).then((bytes) => init({ module_or_path: bytes }))
+
+// await init({ module_or_path: module })
+// initSync({ module })
+export const maxDuration = 300
 export const runtime = 'nodejs'
 
 const size = {
@@ -62,16 +72,20 @@ const colors = {
 // }
 
 async function loadGoogleFont(font: string) {
-  const url = `https://fonts.googleapis.com/css2?family=${font}:ital,wght@0,300..900;1,300..900&display=swap`
-  const css = await (await fetch(url)).text()
-  const resource = css.match(/src: url\((.+)\) format\('(opentype|truetype)'\)/)
+  // const url = `https://fonts.googleapis.com/css2?family=${font}:ital,wght@0,300..900;1,300..900&display=swap`
+  // const css = await fetch(url).then((res) => res.text())
+  // const resource = css.match(/src: url\((.+)\) format\('(opentype|truetype|woff2)'\)/)
 
-  if (resource) {
-    const response = await fetch(resource[1])
-    if (response.status == 200) {
-      return await response.arrayBuffer()
-    }
-  }
+  // if (resource) {
+  //   const response = await fetch(resource[1])
+  //   if (response.status == 200) {
+  //     return await response.arrayBuffer()
+  //   }
+  // }
+
+  const fontPath = join(process.cwd(), 'public', 'fonts', 'Rubik-VariableFont_wght.woff2')
+  const fontData = readFile(fontPath)
+  return fontData
 
   throw new Error('failed to load font data')
 }
@@ -120,6 +134,7 @@ const buildEyebrow = (slug: string, locale: SupportedLocale) => {
 }
 
 export async function GET(request: NextRequest) {
+  await wasmReady
   const searchParams = request.nextUrl.searchParams
   const requestedLocale = (searchParams.get('locale') || '').toLowerCase() as SupportedLocale
   const locale: SupportedLocale = VALID_LOCALES.includes(requestedLocale) ? requestedLocale : 'ar'
@@ -157,16 +172,16 @@ export async function GET(request: NextRequest) {
   const title = truncate(metaTitle || pageTitle || fallback.title, 100)
   const description = truncate(metaDescription || fallback.description, 180)
   const eyebrow = truncate(buildEyebrow(slug, locale), 48)
+  // await initSync({ module_or_path: `http://localhost:3000/takumi_wasm_bg.wasm` })
 
   // Prepare font and renderer
   const fontData = await loadGoogleFont('Rubik')
   // Load the font file from the public/fonts directory
   // const fontData = await loadRubikFont()
 
-  const renderer = new Renderer({
-    fonts: [fontData],
-    loadDefaultFonts: false,
-  })
+  const renderer = new Renderer()
+
+  renderer.loadFont({ data: fontData })
 
   const iconMarkup = (
     <svg
@@ -274,14 +289,13 @@ export async function GET(request: NextRequest) {
     ],
   })
 
-  const imageBuffer = await renderer.render(root, {
+  const imageBuffer = renderer.render(root, {
     width: size.width,
     height: size.height,
     format: 'png',
   })
 
   const body = new Uint8Array(imageBuffer)
-
   return new NextResponse(body, {
     headers: {
       'Content-Type': contentType,
