@@ -28,17 +28,15 @@ import { Category } from '@/payload-types'
 import { generateMeta } from '@/utilities/generateMeta'
 import { setRequestLocale } from 'next-intl/server'
 
-// export const dynamic = 'force-static'
 // export const revalidate = 86400 // 24h
-
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
-  const locales = ['en', 'ar']
-  const params: { slug: string; locale: 'ar' | 'en' }[] = []
+  const locales = ['en', 'ar'] as ('en' | 'ar')[]
+  const params: { slug: string; locale: 'en' | 'ar' }[] = []
   for (const locale of locales) {
     const pages = await payload.find({
       collection: 'blog-posts',
-      locale: locale as 'ar' | 'en',
+      locale,
       draft: false,
       limit: 1000,
       overrideAccess: false,
@@ -47,16 +45,12 @@ export async function generateStaticParams() {
         slug: true,
       },
     })
-    pages.docs
-      ?.filter((doc) => {
-        return doc.slug && doc.slug !== 'home'
+    pages.docs.map((doc) => {
+      params.push({
+        slug: encodeURIComponent(doc.slug || ''),
+        locale,
       })
-      .map((doc) => {
-        params.push({
-          slug: encodeURIComponent(doc.slug || ''),
-          locale: locale as 'ar' | 'en',
-        })
-      })
+    })
   }
 
   return params
@@ -72,10 +66,9 @@ type Args = {
 export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = '', locale = 'ar' } = await paramsPromise
-  setRequestLocale(locale)
   const url = `/${locale}/blog/` + decodeURIComponent(slug)
   const post = await queryPostBySlug({ slug, locale })
-
+  setRequestLocale(locale)
   if (!post) return <PayloadRedirects url={url} />
 
   return (

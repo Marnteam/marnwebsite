@@ -13,6 +13,7 @@ import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { setRequestLocale } from 'next-intl/server'
 
 // First request to /[...slug] renders on the server, and the result is
 // stored in the Full Route Cache (FRC) for 86400s ≈ 24 hours. Subsequent
@@ -63,7 +64,7 @@ export default async function Page({ params }: Args) {
   const { slug: slugSegments = ['home'], locale = 'ar' } = await params
   const slugPath = slugSegments.join('/') || 'home'
   const url = `/${locale}/${slugPath}`
-
+  setRequestLocale(locale)
   let page: PageType | null
 
   page = await queryPageBySlug({

@@ -12,6 +12,7 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { Media } from '@/payload-types'
 import { IntegrationPane } from '@/components/IntegrationPane'
+import { setRequestLocale } from 'next-intl/server'
 
 export const dynamic = 'force-static'
 export const revalidate = 86400 // 24h
@@ -55,12 +56,11 @@ type Args = {
 }
 
 export default async function Post({ params: paramsPromise }: Args) {
-  const payload = await getPayload({ config: configPromise })
   const { isEnabled: draft } = await draftMode()
   const { slug = '', locale = 'ar' } = await paramsPromise
   const url = `/${locale}/marketplace/` + decodeURIComponent(slug)
   const integration = await queryIntegrationBySlug({ slug, locale })
-
+  setRequestLocale(locale)
   if (!integration) return <PayloadRedirects url={url} />
 
   const { icon, hero, layout } = integration
