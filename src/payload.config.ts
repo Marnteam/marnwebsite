@@ -310,7 +310,7 @@ export default buildConfig({
                 `${process.env.NEXT_PUBLIC_MEDIA_URL}/${prefix}/${encodeURIComponent(filename)}`,
             },
           },
-          bucket: cloudflare.env.R2.MARN_WEB_MEDIA,
+          bucket: cloudflare.env.MARN_WEB_MEDIA,
         }),
   ],
   secret: process.env.PAYLOAD_SECRET,

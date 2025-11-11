@@ -2,6 +2,7 @@ import { withPayload } from '@payloadcms/next/withPayload'
 import createNextIntlPlugin from 'next-intl/plugin'
 import bundleAnalyzer from '@next/bundle-analyzer'
 import redirects from './redirects.js'
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare'
 
 const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
@@ -13,6 +14,10 @@ const withNextIntl = createNextIntlPlugin()
 
 console.log(NEXT_PUBLIC_SERVER_URL)
 console.log('env: ', process.env.NODE_ENV)
+
+initOpenNextCloudflareForDev({
+  experimental: { remoteBindings: true },
+})
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
