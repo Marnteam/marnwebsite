@@ -4,7 +4,11 @@
   "name": "marn-web",
   "keep_vars": true,
   "compatibility_date": "2025-09-15",
-  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "compatibility_flags": [
+    "nodejs_compat",
+    "global_fetch_strictly_public",
+    "no_handle_cross_request_promise_resolution",
+  ],
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS",
@@ -25,6 +29,10 @@
     {
       "binding": "NEXT_INC_CACHE_R2_BUCKET",
       "bucket_name": "marn-web-inc-cache",
+    },
+    {
+      "binding": "MARN_WEB_MEDIA",
+      "bucket_name": "marn-web",
     },
   ],
   "d1_databases": [

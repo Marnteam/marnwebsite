@@ -71,6 +71,9 @@ importers:
       '@payloadcms/richtext-lexical':
         specifier: ^3.59.1
         version: 3.59.1(@faceless-ui/modal@3.0.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@faceless-ui/scroll-info@2.0.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@payloadcms/next@3.59.1(@types/react@19.1.8)(graphql@16.11.0)(monaco-editor@0.52.2)(next@15.4.4(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(sass@1.77.4))(payload@3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.8.3))(@types/react@19.1.8)(monaco-editor@0.52.2)(next@15.4.4(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(sass@1.77.4))(payload@3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.8.3)(yjs@13.6.27)
+      '@payloadcms/storage-r2':
+        specifier: ^3.59.1
+        version: 3.59.1(@types/react@19.1.8)(monaco-editor@0.52.2)(next@15.4.4(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(sass@1.77.4))(payload@3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.8.3)
       '@payloadcms/storage-s3':
         specifier: ^3.59.1
         version: 3.59.1(@types/react@19.1.8)(monaco-editor@0.52.2)(next@15.4.4(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(sass@1.77.4))(payload@3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.8.3)
@@ -119,6 +122,9 @@ importers:
       '@takumi-rs/image-response':
         specifier: ^0.36.2
         version: 0.36.2(@takumi-rs/core@0.36.2)(@takumi-rs/helpers@0.36.2)
+      '@takumi-rs/wasm':
+        specifier: ^0.36.2
+        version: 0.36.2
       ai:
         specifier: ^4.3.19
         version: 4.3.19(react@19.2.0)(zod@3.25.76)
@@ -2373,6 +2379,12 @@ packages:
       react: ^19.0.0 || ^19.0.0-rc-65a56d0e-20241020
       react-dom: ^19.0.0 || ^19.0.0-rc-65a56d0e-20241020
 
+  '@payloadcms/storage-r2@3.59.1':
+    resolution: {integrity: sha512-JxpbZ7OTHi3avoJR4YX1J1PIlzg62qcDWx6C4dz2TmlBvLVsVOZ57YJXXi1esHjiC5oiZY1B3T17vW0iz6qMzQ==}
+    engines: {node: ^18.20.2 || >=20.9.0}
+    peerDependencies:
+      payload: 3.59.1
+
   '@payloadcms/storage-s3@3.59.1':
     resolution: {integrity: sha512-ZR3mbcsUAQTy2fscUDxt2xMBwQJgKNOd4yq11qa8WHdtRpPsVKaNMuIafUQXoD5O3Tk01+8qqrLYnu6vx7fIJQ==}
     engines: {node: ^18.20.2 || >=20.9.0}
@@ -3769,6 +3781,9 @@ packages:
     peerDependencies:
       '@takumi-rs/core': 0.36.2
       '@takumi-rs/helpers': 0.36.2
+
+  '@takumi-rs/wasm@0.36.2':
+    resolution: {integrity: sha512-Hkzsk3/zm30XyLxGuul3gQoFvpJk/R4uLllKhumZ7MrH1qhMYWj1Gbe/W6+xXY8zvaA1hBIqmcDfakX4EFFD0A==}
 
   '@tokenizer/token@0.3.0':
     resolution: {integrity: sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==}
@@ -10772,6 +10787,19 @@ snapshots:
       - typescript
       - yjs
 
+  '@payloadcms/storage-r2@3.59.1(@types/react@19.1.8)(monaco-editor@0.52.2)(next@15.4.4(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(sass@1.77.4))(payload@3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.8.3)':
+    dependencies:
+      '@payloadcms/plugin-cloud-storage': 3.59.1(@types/react@19.1.8)(monaco-editor@0.52.2)(next@15.4.4(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(sass@1.77.4))(payload@3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.8.3)
+      payload: 3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5)
+    transitivePeerDependencies:
+      - '@types/react'
+      - monaco-editor
+      - next
+      - react
+      - react-dom
+      - supports-color
+      - typescript
+
   '@payloadcms/storage-s3@3.59.1(@types/react@19.1.8)(monaco-editor@0.52.2)(next@15.4.4(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(sass@1.77.4))(payload@3.59.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.8.3)(utf-8-validate@6.0.5))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.8.3)':
     dependencies:
       '@aws-sdk/client-s3': 3.906.0
@@ -12546,6 +12574,8 @@ snapshots:
     dependencies:
       '@takumi-rs/core': 0.36.2
       '@takumi-rs/helpers': 0.36.2
+
+  '@takumi-rs/wasm@0.36.2': {}
 
   '@tokenizer/token@0.3.0': {}
 
