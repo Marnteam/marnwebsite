@@ -1,13 +1,20 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "main": ".open-next/worker.js",
+  "main": "worker.tsx",
   "name": "marn-web",
   "keep_vars": true,
-  "compatibility_date": "2025-09-15",
+  "compatibility_date": "2025-10-30",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "rules": [
+    {
+      "type": "Data",
+      "globs": ["**/*.ttf", "**/*.woff", "**/*.woff2"],
+      "fallthrough": true, // important to load font in custom worker
+    },
+  ],
   "assets": {
-    "directory": ".open-next/assets",
     "binding": "ASSETS",
+    "directory": ".open-next/assets",
   },
   "services": [
     {
