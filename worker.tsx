@@ -178,7 +178,6 @@ async function OgCard({
               alignContent: flexEnd,
               justifyContent: 'space-between',
               gap: '32px',
-              border: '1px solid red',
             }}
           >
             <p
@@ -188,7 +187,6 @@ async function OgCard({
                 fontSize: '32px',
                 fontWeight: 400,
                 textAlign,
-                border: '1px solid pink',
               }}
             >
               {eyebrow}
@@ -199,9 +197,7 @@ async function OgCard({
                 fontFamily: 'Rubik',
                 fontSize: '56px',
                 fontWeight: 500,
-                display: 'block',
                 textAlign,
-                border: '1px solid blue',
               }}
             >
               {title}
