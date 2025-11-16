@@ -296,10 +296,9 @@ export default buildConfig({
         region: process.env.S3_REGION,
         endpoint: process.env.S3_ENDPOINT,
       },
-
-      // enabled: false,
-      // enabled: process.env.NODE_ENV === 'production', // Use in production only
+      enabled: isVercel && process.env.NODE_ENV === 'production', // Use in production only
     }),
+
     r2Storage({
       collections: {
         media: {
@@ -310,7 +309,7 @@ export default buildConfig({
         },
       },
       bucket: cloudflare.env.MARN_WEB_MEDIA,
-      enabled: false,
+      enabled: !isVercel,
     }),
   ],
   secret: process.env.PAYLOAD_SECRET,
