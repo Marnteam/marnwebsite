@@ -277,39 +277,39 @@ export default buildConfig({
   } as any,
   plugins: [
     ...plugins,
-    s3Storage({
-      collections: {
-        media: {
-          prefix: 'media',
-          disablePayloadAccessControl: true,
-          generateFileURL: ({ filename, prefix }) =>
-            `${process.env.NEXT_PUBLIC_MEDIA_URL}/${prefix}/${encodeURIComponent(filename)}`,
-        },
-      },
-      bucket: process.env.S3_BUCKET || '',
-      config: {
-        forcePathStyle: true, // Important for using Supabase
-        credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
-          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
-        },
-        region: process.env.S3_REGION,
-        endpoint: process.env.S3_ENDPOINT,
-      },
-      enabled: isVercel && process.env.NODE_ENV === 'production', // Use in production only
-    }),
-    r2Storage({
-      collections: {
-        media: {
-          prefix: 'media',
-          disablePayloadAccessControl: true,
-          generateFileURL: ({ filename, prefix }) =>
-            `${process.env.NEXT_PUBLIC_MEDIA_URL}/${prefix}/${encodeURIComponent(filename)}`,
-        },
-      },
-      bucket: cloudflare.env.MARN_WEB_MEDIA,
-      enabled: !isVercel,
-    }),
+    isVercel
+      ? s3Storage({
+          collections: {
+            media: {
+              prefix: 'media',
+              disablePayloadAccessControl: true,
+              generateFileURL: ({ filename, prefix }) =>
+                `${process.env.NEXT_PUBLIC_MEDIA_URL}/${prefix}/${encodeURIComponent(filename)}`,
+            },
+          },
+          bucket: process.env.S3_BUCKET || '',
+          config: {
+            forcePathStyle: true, // Important for using Supabase
+            credentials: {
+              accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+              secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
+            },
+            region: process.env.S3_REGION,
+            endpoint: process.env.S3_ENDPOINT,
+          },
+          enabled: isVercel && process.env.NODE_ENV === 'production', // Use in production only
+        })
+      : r2Storage({
+          collections: {
+            media: {
+              prefix: 'media',
+              disablePayloadAccessControl: true,
+              generateFileURL: ({ filename, prefix }) =>
+                `${process.env.NEXT_PUBLIC_MEDIA_URL}/${prefix}/${encodeURIComponent(filename)}`,
+            },
+          },
+          bucket: cloudflare.env.MARN_WEB_MEDIA,
+        }),
   ],
   secret: process.env.PAYLOAD_SECRET,
   // sharp,

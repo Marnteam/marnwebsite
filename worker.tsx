@@ -234,6 +234,9 @@ export default {
           },
         ],
         module,
+        headers: {
+          'cache-control': '',
+        },
       })
     }
 
