@@ -3,7 +3,7 @@ import type { ElementType, ComponentPropsWithoutRef } from 'react'
 import { cn } from '@/utilities/ui'
 import { Icon } from '@iconify-icon/react'
 import type { Solution, Integration, Media as MediaType } from '@/payload-types'
-import { Media } from '../Media'
+import { Media } from '../MediaResponsive'
 import { Badge, badgeVariants } from '../ui/badge'
 
 type AsProp<C extends ElementType> = {
