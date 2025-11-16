@@ -298,7 +298,6 @@ export default buildConfig({
       },
       enabled: isVercel && process.env.NODE_ENV === 'production', // Use in production only
     }),
-
     r2Storage({
       collections: {
         media: {

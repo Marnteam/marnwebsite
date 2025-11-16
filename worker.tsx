@@ -7,6 +7,7 @@ import { Config, Page } from '@/payload-types.js'
 import { ImageResponse } from '@takumi-rs/image-response/wasm'
 import module from '@takumi-rs/wasm/next'
 
+import React from 'react'
 import { PayloadSDK } from '@payloadcms/sdk'
 
 async function OgCard({
