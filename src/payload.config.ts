@@ -1,6 +1,6 @@
 import { s3Storage } from '@payloadcms/storage-s3'
 import { r2Storage } from '@payloadcms/storage-r2'
-import { postgresAdapter } from '@payloadcms/db-postgres'
+import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
 import { resendAdapter } from '@payloadcms/email-resend'
 
 // import sharp from 'sharp' // sharp-import
@@ -197,7 +197,7 @@ export default buildConfig({
     Users,
   ],
   cors: [getServerSideURL()].filter(Boolean),
-  db: postgresAdapter({
+  db: vercelPostgresAdapter({
     pool: {
       connectionString: databaseConnectionString,
       maxUses: isVercel ? 1 : 1,
@@ -270,13 +270,13 @@ export default buildConfig({
     fallback: true, // defaults to true
   },
   globals: [Site, Header, Footer],
-  logger: {
-    debug: (msg: any, ...args: any[]) => console.log(msg, ...args),
-    error: (msg: any, ...args: any[]) => console.error(msg, ...args),
-    info: (msg: any, ...args: any[]) => console.log(msg, ...args),
-    warn: (msg: any, ...args: any[]) => console.log(msg, ...args),
-    trace: (msg: any, ...args: any[]) => console.trace(msg, ...args),
-  } as any,
+  // logger: {
+  //   debug: (msg: any, ...args: any[]) => console.log(msg, ...args),
+  //   error: (msg: any, ...args: any[]) => console.error(msg, ...args),
+  //   info: (msg: any, ...args: any[]) => console.log(msg, ...args),
+  //   warn: (msg: any, ...args: any[]) => console.log(msg, ...args),
+  //   trace: (msg: any, ...args: any[]) => console.trace(msg, ...args),
+  // } as any,
   plugins: [
     ...plugins,
 

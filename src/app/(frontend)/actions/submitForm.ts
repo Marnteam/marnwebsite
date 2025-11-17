@@ -47,10 +47,7 @@ export const submitFormAction = async (input: SubmissionInput): Promise<SubmitFo
     })
     form = result as Form
   } catch (error) {
-    payload.logger?.error?.('Failed to load form for submission', {
-      formId,
-      error,
-    })
+    payload.logger?.error?.({ msg: 'Failed to load form for submission', formId, error })
     return {
       status: 'error',
       message: 'Form not found.',
@@ -59,9 +56,7 @@ export const submitFormAction = async (input: SubmissionInput): Promise<SubmitFo
   }
 
   if (!form || !form.fields) {
-    payload.logger?.error?.('Attempted submission with invalid form configuration', {
-      formId,
-    })
+    payload.logger?.error?.({ msg: 'Attempted submission with invalid form configuration', formId })
     return {
       status: 'error',
       message: 'This form is not configured to accept submissions.',
@@ -100,7 +95,8 @@ export const submitFormAction = async (input: SubmissionInput): Promise<SubmitFo
       })
 
       if (!hubspotResult.ok) {
-        payload.logger?.warn?.('HubSpot submission failed; continuing with local success.', {
+        payload.logger?.warn?.({
+          msg: 'HubSpot submission failed; continuing with local success.',
           formId,
           submissionId: created.id,
           status: hubspotResult.status,
@@ -129,10 +125,7 @@ export const submitFormAction = async (input: SubmissionInput): Promise<SubmitFo
       submissionId: created.id,
     }
   } catch (error) {
-    payload.logger?.error?.('Failed to persist form submission', {
-      formId,
-      error,
-    })
+    payload.logger?.error?.({ msg: 'Failed to persist form submission', formId, error })
 
     return {
       status: 'error',

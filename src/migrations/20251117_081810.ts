@@ -1,17 +1,12 @@
-import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
+import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-vercel-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
-   CREATE TABLE "payload_kv" (
-  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-  	"key" varchar NOT NULL,
-  	"data" jsonb NOT NULL
-  );
-  
+  CREATE TABLE "payload_kv" ( "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL, "key" varchar NOT NULL, "data" jsonb NOT NULL);
   ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_payload_jobs_fk";
-  
+
   ALTER TABLE "header_tabs_nav_items_featured_link_links_locales" DROP CONSTRAINT "header_tabs_nav_items_featured_link_links_locales_parent_id_fk";
-  
+
   DROP INDEX "archiveBlock_block_header_links_locales_locale_parent_id_unique";
   DROP INDEX "carouselBlock_block_header_links_locales_locale_parent_id_unique";
   DROP INDEX "customHtmlBlock_block_header_links_locales_locale_parent_id_unique";
@@ -140,7 +135,7 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
    ALTER TABLE "payload_kv" DISABLE ROW LEVEL SECURITY;
   DROP TABLE "payload_kv" CASCADE;
   ALTER TABLE "header_tabs_nav_items_featured_link_links_locales" DROP CONSTRAINT "header_tabs_nav_items_featured_link_links_locales_parent__fk";
-  
+
   DROP INDEX "archiveBlock_block_header_links_locales_locale_parent_id_uni";
   DROP INDEX "carouselBlock_block_header_links_locales_locale_parent_id_un";
   DROP INDEX "customHtmlBlock_block_header_links_locales_locale_parent_id_";
