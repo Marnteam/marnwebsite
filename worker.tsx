@@ -10,7 +10,7 @@ import { Config } from '@/payload-types.js'
 import { PayloadSDK } from '@payloadcms/sdk'
 
 async function loadGoogleFont(font: string) {
-  const url = `https://fonts.googleapis.com/css2?family=${font}:ital,wght@0,300..900;1,300..900&display=swap`
+  const url = `https://fonts.googleapis.com/css2?family=${font}:wght@400..600&display=swap`
   const css = await (await fetch(url)).text()
   const resource = css.match(/src: url\((.+)\) format\('(opentype|truetype)'\)/)
 
