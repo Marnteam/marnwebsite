@@ -59,7 +59,6 @@ export const generateMeta = async ({
   const contentTitle = typeof doc?.title === 'string' ? doc.title.trim() : undefined
   const integrationName =
     isIntegration(doc) && typeof doc?.name === 'string' ? doc.name.trim() : undefined
-
   const title = metaTitle || contentTitle || integrationName || fallbackTitle
 
   const slugValue = doc?.slug
@@ -104,6 +103,7 @@ export const generateMeta = async ({
         locale,
         publishedTime: doc?.publishedAt ?? undefined,
         modifiedTime: doc?.updatedAt ?? undefined,
+        images: `${url}/next/og?locale=${locale}&type=blog&slug=${pathSegment}`,
       }
     : {
         type: 'website',
@@ -112,7 +112,7 @@ export const generateMeta = async ({
         url: canonical,
         siteName: fallbackTitle,
         locale,
-        images: `${url}/next/og?locale=${locale}&slug=${pathSegment}`,
+        images: `${url}/next/og?locale=${locale}&type=${pathSegment}&slug=${pathSegment}`,
       }
 
   const metadata: Metadata = {

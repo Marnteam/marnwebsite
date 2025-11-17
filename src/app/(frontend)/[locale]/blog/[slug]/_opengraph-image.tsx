@@ -31,9 +31,7 @@ export const runtime = 'nodejs'
 // Image generation
 export default async function Image({ params }: { params: { slug: string; locale: 'en' | 'ar' } }) {
   const { slug, locale } = params
-
   const decodedSlug = encodeURIComponent(slug)
-
   const url = getServerSideURL()
 
   const req = await fetch(
