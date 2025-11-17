@@ -36,7 +36,7 @@ const nextConfig = {
       }),
     ],
   },
-  serverExternalPackages: ['@takumi-rs/image-response', 'pg-cloudflare'],
+  serverExternalPackages: ['@takumi-rs/image-response', 'jose', 'pg-cloudflare'],
   reactStrictMode: true,
   redirects,
   webpack: (webpackConfig) => {

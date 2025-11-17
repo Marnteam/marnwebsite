@@ -141,6 +141,7 @@
     "onlyBuiltDependencies": [
       "esbuild",
       "rclone.js",
+      "sharp",
       "unrs-resolver"
     ]
   }
