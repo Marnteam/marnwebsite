@@ -1,6 +1,6 @@
 import { s3Storage } from '@payloadcms/storage-s3'
 import { r2Storage } from '@payloadcms/storage-r2'
-import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { resendAdapter } from '@payloadcms/email-resend'
 
 // import sharp from 'sharp' // sharp-import
@@ -197,7 +197,7 @@ export default buildConfig({
     Users,
   ],
   cors: [getServerSideURL()].filter(Boolean),
-  db: vercelPostgresAdapter({
+  db: postgresAdapter({
     pool: {
       connectionString: databaseConnectionString,
       maxUses: isVercel ? 1 : 1,
