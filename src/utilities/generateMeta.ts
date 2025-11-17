@@ -103,7 +103,7 @@ export const generateMeta = async ({
         locale,
         publishedTime: doc?.publishedAt ?? undefined,
         modifiedTime: doc?.updatedAt ?? undefined,
-        images: `${url}/next/og?locale=${locale}&type=blog&slug=${pathSegment}`,
+        images: `${url}/next/og?locale=${locale}&type=blog&slug=${slugValue}`,
       }
     : {
         type: 'website',
@@ -112,7 +112,7 @@ export const generateMeta = async ({
         url: canonical,
         siteName: fallbackTitle,
         locale,
-        images: `${url}/next/og?locale=${locale}&type=${pathSegment}&slug=${pathSegment}`,
+        images: `${url}/next/og?locale=${locale}&type=${pathSegment}&slug=${slugValue}`,
       }
 
   const metadata: Metadata = {
