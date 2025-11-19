@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { CMSLink } from '@/components/Link'
 import RichText from '@/components/RichText'
@@ -5,6 +6,9 @@ import { CMSBadge as Badge } from '@/components/Badge'
 import { cn } from '@/utilities/ui'
 import { BlockHeaderType } from '@/types/blockHeader'
 import { countWords, extractTextFromLexical } from '@/utilities/extractTextFromLexical'
+import { motionConverters } from '../RichText/motion-converters'
+import { motion } from 'motion/react'
+import { containerVariants, itemsFling } from '@/utilities/motion'
 
 export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
   const {
@@ -23,34 +27,47 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
   if (!headerTextLength) return null
 
   return (
-    <div
+    <motion.div
       className={cn(
         'container grid grid-cols-1 justify-items-start gap-y-space-md pt-[clamp(4rem,2.4rem+4vw,6rem)]',
         type === 'split' && 'md:grid-cols-2 md:gap-space-sm',
         type === 'center' && 'justify-items-center',
         className,
       )}
+      initial="hidden"
+      whileInView="visible"
+      exit="exit"
+      variants={containerVariants}
+      viewport={{ once: true }}
     >
       {(badge?.label || badge?.reference) && (
-        <Badge size="lg" {...badge} className={cn('col-span-2', badgeClassName)} />
+        <motion.div className="col-span-2" variants={itemsFling}>
+          <Badge size="lg" {...badge} className={badgeClassName} />
+        </motion.div>
       )}
 
       {headerText && (
-        <RichText
+        <motion.div
           className={cn(
+            'prose',
             'mx-0 w-full max-w-4xl',
             type === 'center' && 'text-center text-pretty',
             type === 'split' &&
-              'md:col-span-2 md:grid md:grid-cols-subgrid [&>*:is(h1,h2,h3,h4,h5,h6)]:pe-(length:--spacing-space-xl)',
+              'md:col-span-2 md:grid md:grid-cols-subgrid *:md:pe-(length:--spacing-space-xl)',
             '[&_p]:text-body-lg',
             richTextClassName,
           )}
-          data={headerText}
-          enableGutter={false}
-        />
+        >
+          <RichText
+            data={headerText}
+            enableGutter={false}
+            disableContainer={true}
+            converters={motionConverters}
+          />
+        </motion.div>
       )}
       {Array.isArray(links) && links.length > 0 && (
-        <ul
+        <motion.ul
           className={cn(
             'col-span-2 flex w-full flex-row gap-1',
             type === 'center' && 'justify-center',
@@ -60,13 +77,36 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
         >
           {links.map(({ link }, i) => {
             return (
-              <li key={i} className="">
+              <motion.li key={i} className="" variants={itemsFling}>
                 <CMSLink className="w-full" size={'lg'} {...link} />
-              </li>
+              </motion.li>
             )
           })}
-        </ul>
+        </motion.ul>
       )}
-    </div>
+    </motion.div>
   )
+}
+
+const variants = {
+  container: {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2 },
+    },
+  },
+  item: {
+    hidden: {
+      opacity: 0,
+      y: 40,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.4,
+      },
+    },
+  },
 }

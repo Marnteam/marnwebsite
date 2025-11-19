@@ -53,7 +53,6 @@ const extractTextFromHeading = (node: SerializedHeadingNode): string => {
 
 const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
-  ...LinkJSXConverter({ internalDocToHref }),
   heading: ({ node }) => {
     const headingNode = node as SerializedHeadingNode
     const text = extractTextFromHeading(headingNode)
@@ -91,6 +90,7 @@ type Props = {
   converters?: JSXConvertersFunction<NodeTypes>
   enableGutter?: boolean
   enableProse?: boolean
+  disableContainer?: boolean
 } & React.HTMLAttributes<HTMLDivElement>
 
 export default function RichText(props: Props) {
@@ -99,10 +99,12 @@ export default function RichText(props: Props) {
     converters = jsxConverters,
     enableProse = true,
     enableGutter = true,
+    disableContainer = false,
     ...rest
   } = props
   return (
     <RichTextWithoutBlocks
+      disableContainer={disableContainer}
       converters={converters}
       className={cn(
         {
