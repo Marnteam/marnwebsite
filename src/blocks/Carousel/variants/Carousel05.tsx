@@ -137,7 +137,7 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
                             {content?.subtitle && (
                               <MorphingDialogDescription className="mt-space-xs">
                                 <RichText data={content.subtitle} />
-                                {column.link && <CMSLink {...column.link} />}
+                                {column.enableCta && column.link && <CMSLink {...column.link} />}
                               </MorphingDialogDescription>
                             )}
                           </CardContent>

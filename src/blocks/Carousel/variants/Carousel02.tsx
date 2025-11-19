@@ -45,29 +45,25 @@ export const Carousel02: React.FC<CarouselBlock> = ({ columns }) => {
             >
               <AccordionTrigger className="flex items-center justify-start gap-space-xs bg-transparent p-0 text-base-tertiary hover:no-underline">
                 {column.icon && (
-                  <div className={`flex-shrink-0`}>
-                    <Icon
-                      className={cn(
-                        'size-(--text-body-lg)',
-                        isActive ? 'text-base-primary' : 'text-base-tertiary',
-                      )}
-                      icon={`material-symbols:${iconName}`}
-                      height="none"
-                      color="currentColor"
-                    />
-                  </div>
+                  <Icon
+                    className={cn(
+                      'size-[1lh] shrink-0',
+                      isActive ? 'text-base-primary' : 'text-base-tertiary',
+                    )}
+                    icon={`material-symbols:${iconName}`}
+                    height="none"
+                    color="currentColor"
+                  />
                 )}
                 {column.content?.title && (
-                  <h3 className="text-start text-body-lg font-medium">{column.content.title}</h3>
+                  <h3 className="text-start text-body-md font-medium">{column.content.title}</h3>
                 )}
               </AccordionTrigger>
               <AccordionContent
-                className={`flex flex-col items-start gap-4 p-0 ${column.icon && 'ps-[clamp(2rem,1.2rem+2vw,3rem)]'}`}
+                className={`flex flex-col items-start gap-4 p-0 ${column.icon && 'ps-[calc(var(--text-body-lg)+var(--spacing-space-xs))]'}`}
               >
-                {column.content?.subtitle && (
-                  <RichText data={column.content.subtitle} className="[&>p]:text-body-md" />
-                )}
-                {column.link && <CMSLink variant="link" {...column.link} />}
+                {column.content?.subtitle && <RichText data={column.content.subtitle} />}
+                {column.enableCta && column.link && <CMSLink variant="link" {...column.link} />}
                 {column.image && (
                   <Media
                     resource={column.image}
