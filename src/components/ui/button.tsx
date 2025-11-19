@@ -5,17 +5,17 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/utilities/ui'
 
 const buttonVariants = cva(
-  'not-prose focus-visible:outline-ring inline-flex items-center justify-center gap-2 rounded-full text-base font-medium whitespace-nowrap transition-colors focus-visible:ring-0 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-50 rtl:tracking-normal [&_svg]:pointer-events-none [&_svg]:shrink-0',
+  'not-prose inline-flex items-center justify-center gap-2 rounded-full text-base font-medium whitespace-nowrap transition-colors focus-visible:ring-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 rtl:tracking-normal [&_svg]:pointer-events-none [&_svg]:shrink-0',
   {
     variants: {
       variant: {
         default: 'bg-brand text-base-primary hover:bg-brand/90',
         primary: 'bg-brand text-base-primary hover:bg-brand/90',
-        secondary: 'border-input bg-background hover:bg-accent hover:text-accent-foreground border',
+        secondary: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
         tertiary: '',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         ghost: 'bg-transparent',
-        link: 'text-base-secondary hover:text-base-secondary/90 p-0',
+        link: 'h-fit! p-0 text-base-secondary hover:text-base-secondary/90',
       },
       color: {
         brand: 'focus-visible:outline-brand',
@@ -34,17 +34,17 @@ const buttonVariants = cva(
       {
         color: 'brand',
         variant: 'primary',
-        className: 'bg-brand hover:bg-brand/90 text-white',
+        className: 'bg-brand text-white hover:bg-brand/90',
       },
       {
         color: 'brand',
         variant: 'secondary',
-        className: 'hover:bg-background-neutral text-base-secondary border-input bg-transparent',
+        className: 'border-input bg-transparent text-base-secondary hover:bg-background-neutral',
       },
       {
         color: 'brand',
         variant: 'tertiary',
-        className: 'bg-brand/10 hover:bg-brand/30 text-brand-secondary',
+        className: 'bg-brand/10 text-brand-secondary hover:bg-brand/30',
       },
       {
         color: 'brand',
@@ -54,23 +54,23 @@ const buttonVariants = cva(
       {
         color: 'brand',
         variant: 'link',
-        className: 'text-brand-primary hover:text-brand-primary/90 p-0',
+        className: 'p-0 text-brand-primary hover:text-brand-primary/90',
       },
       {
         color: 'neutral',
         variant: 'primary',
-        className: 'bg-neutral hover:bg-neutral/80 text-inverted-primary',
+        className: 'bg-neutral text-inverted-primary hover:bg-neutral/80',
       },
       {
         color: 'neutral',
         variant: 'secondary',
         className:
-          'hover:bg-background-neutral hover:border-neutral/20 text-base-secondary border-input bg-transparent',
+          'border-input bg-transparent text-base-secondary hover:border-neutral/20 hover:bg-background-neutral',
       },
       {
         color: 'neutral',
         variant: 'tertiary',
-        className: 'bg-neutral/10 hover:bg-neutral/30 text-base-secondary',
+        className: 'bg-neutral/10 text-base-secondary hover:bg-neutral/30',
       },
       {
         color: 'neutral',
@@ -80,7 +80,7 @@ const buttonVariants = cva(
       {
         color: 'neutral',
         variant: 'link',
-        className: 'text-base-secondary hover:text-base-secondary/90 p-0',
+        className: 'p-0 text-base-secondary hover:text-base-secondary/90',
       },
     ],
     defaultVariants: {
