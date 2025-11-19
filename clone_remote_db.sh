@@ -79,7 +79,7 @@ fi
 
 echo "▶ Syncing s3 bucket..."
 
-aws s3 --endpoint-url "$AWS_ENDPOINT" sync s3://$AWS_BUCKET ./public --delete
+aws s3 --endpoint-url "$AWS_ENDPOINT" sync s3://$AWS_BUCKET ./public
 
 if [ $? -eq 0 ]; then
   echo "✅ S3 bucket synced successfully."
