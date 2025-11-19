@@ -13,7 +13,7 @@ import { PostHero } from '@/heros/PostHero'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
-import { blogConverters } from '@/components/RichText/blogConverters'
+import { blogConverters } from '@/components/RichText/blog-converters'
 import { BlogSidebar } from '@/components/BlogSidebar'
 
 import {
