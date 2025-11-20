@@ -1,16 +1,22 @@
 // @ts-ignore – generated at build time
 import { default as handler } from './.open-next/worker.js'
 // @ts-ignore – generated at build time
-// import rubik from 'public/fonts/Rubik-VariableFont_wght.woff2'
+import rubik from 'public/fonts/Rubik-VariableFont_wght.woff2'
 
-import { ImageResponse } from '@takumi-rs/image-response/wasm'
-import module from '@takumi-rs/wasm/next'
+// import { ImageResponse } from '@takumi-rs/image-response/wasm'
+// import module from '@takumi-rs/wasm/next'
+
+import initWasmSync, { Renderer } from '@takumi-rs/wasm'
+import module from '@takumi-rs/wasm/takumi_wasm_bg.wasm'
 
 import { Config } from '@/payload-types.js'
 import { PayloadSDK } from '@payloadcms/sdk'
 
+initWasmSync(module)
+
 async function loadGoogleFont(font: string) {
-  const url = `https://fonts.googleapis.com/css2?family=${font}:wght@400..600&display=swap`
+  // const url = `https://fonts.googleapis.com/css2?family=${font}:wght@400..900&display=swap`
+  const url = `https://fonts.googleapis.com/css2?family=${font}:ital,wght@0,300..900;1,300..900&display=swap`
   const css = await (await fetch(url)).text()
   const resource = css.match(/src: url\((.+)\) format\('(opentype|truetype)'\)/)
 
@@ -49,22 +55,20 @@ export default {
           OGCard = (await import('@/components/OG/PagesOGCard.jsx')).default
       }
       const tree = await OGCard(props)
-      const rubik = await loadGoogleFont('Rubik')
-      return new ImageResponse(tree, {
+
+      // const rubik = await loadGoogleFont('Rubik')
+      const renderer = new Renderer()
+      renderer.loadFont(rubik)
+
+      const buffer = renderer.render(tree, {
         width: 1200,
         height: 630,
-        fonts: [
-          {
-            name: 'Rubik',
-            data: rubik,
-            weight: 900,
-            style: 'normal',
-          },
-        ],
-        // drawDebugBorder: true,
-        module,
+      })
+      const image = new Uint8Array(buffer)
+      return new Response(image, {
         headers: {
-          'cache-control': '',
+          'Content-Type': 'image/png',
+          'Cache-Control': 'public, max-age=31536000, immutable',
         },
       })
     }
