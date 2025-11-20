@@ -123,13 +123,13 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
       }
       style={{ borderRadius: 24 }}
       className={cn(
-        'relative space-y-4 bg-background-neutral',
-        type === 'featured' && 'bg-background-neutral p-card-xl',
-        type === 'basic' && 'bg-background-neutral-subtle p-card-xl',
+        'relative bg-background-neutral',
+        type === 'featured' && 'bg-background-neutral p-4',
+        type === 'basic' && 'bg-background-neutral-subtle p-4',
         type === null && 'p-space-md',
       )}
     >
-      <motion.div layout className="flex flex-col gap-4">
+      <motion.div layout className="flex flex-col gap-4 p-4">
         <div className="relative flex flex-row items-center gap-4">
           {badge?.label && (
             <div className="absolute end-0 top-0">
@@ -219,14 +219,12 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
           >
             {featuredSolutions.map((solution, idx) => {
               const { name, icon, tagline } = (solution as Solution) ?? {}
-
               const mediaElement = (
                 <Media
                   resource={icon as MediaType}
                   imgClassName={cn('size-12 rounded-md object-contain', isExpanded && 'size-12')}
                 />
               )
-
               const solutionItem = (
                 <motion.li
                   data-state={isExpanded ? 'expanded' : 'collapsed'}
@@ -279,6 +277,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                             },
                           }}
                           className="flex flex-col items-start justify-start text-start"
+                          layout
                         >
                           <p className="text-base font-medium text-base-secondary">{name}</p>
                           <p className="text-sm text-base-tertiary">{tagline}</p>
@@ -317,7 +316,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
 
       {/* Features */}
       {features && features.length > 0 && (
-        <div className="space-y-space-xs">
+        <div className="space-y-space-xs p-4">
           {/* <p className="text-body-sm mb-space-xs text-base-tertiary font-normal">
             {translations.features}
           </p> */}
