@@ -1,7 +1,7 @@
 // @ts-ignore – generated at build time
 import { default as handler } from './.open-next/worker.js'
 // @ts-ignore – generated at build time
-import rubik from 'public/fonts/Rubik-VariableFont_wght.woff2'
+// import rubik from 'public/fonts/Rubik-VariableFont_wght.woff2'
 
 // import { ImageResponse } from '@takumi-rs/image-response/wasm'
 // import module from '@takumi-rs/wasm/next'
@@ -56,7 +56,7 @@ export default {
       }
       const tree = await OGCard(props)
 
-      // const rubik = await loadGoogleFont('Rubik')
+      const rubik = await loadGoogleFont('Rubik')
       const renderer = new Renderer()
       renderer.loadFont(rubik)
 
