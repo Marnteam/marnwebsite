@@ -69,7 +69,7 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
       {Array.isArray(links) && links.length > 0 && (
         <motion.ul
           className={cn(
-            'col-span-2 flex w-full flex-row gap-1',
+            'col-span-2 flex w-full flex-row gap-2',
             type === 'center' && 'justify-center',
             type === 'split' && 'md:col-start-2',
             linksClassName,

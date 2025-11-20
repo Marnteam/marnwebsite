@@ -10,6 +10,8 @@ import { CMSBadge as Badge } from '@/components/Badge'
 import { cn } from '@/utilities/ui'
 import { InfiniteSlider } from '@/components/motion-ui/infinite-slider'
 import { motion, useScroll, useTransform } from 'motion/react'
+import { containerVariants, itemsFling } from '@/utilities/motion'
+import { motionConverters } from '@/components/RichText/motion-converters'
 
 export const Hero01: React.FC<Page['hero']> = ({
   richText,
@@ -26,7 +28,7 @@ export const Hero01: React.FC<Page['hero']> = ({
     target: containerRef,
     offset: ['start end', 'end start'],
   })
-  // Parallax: image moves up to -200px as you scroll through the block
+
   const y = useTransform(scrollYProgress, [0, 1], ['-50%', '50%'])
 
   // const { setHeaderTheme } = useHeaderObserver()
@@ -37,44 +39,56 @@ export const Hero01: React.FC<Page['hero']> = ({
 
   return (
     <section ref={containerRef} className="bg-background">
-      <div className="container h-screen pt-(--header-plus-admin-bar-height) pb-space-site">
+      <div className="container h-screen pt-(--header-plus-admin-bar-height) pb-4">
         <div className="relative z-0 h-full w-full overflow-hidden rounded-3xl">
-          <div
+          <motion.div
             data-theme="dark"
             className="absolute bottom-0 z-1 flex w-full flex-col justify-between gap-4 p-space-md lg:p-space-xl"
+            initial="hidden"
+            whileInView="visible"
+            exit="exit"
+            variants={containerVariants}
           >
-            <div className="flex w-full flex-col justify-between gap-4 lg:flex-row lg:items-center">
-              <div className="flex h-full max-w-[36rem] flex-col items-start justify-center gap-space-md">
+            <motion.div className="flex w-full flex-col justify-between gap-space-lg lg:flex-row lg:items-center lg:gap-4">
+              <motion.div className="flex h-full flex-col items-start justify-center gap-space-md lg:max-w-[36rem]">
                 {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
 
                 {richText && (
-                  <RichText
+                  <motion.div
                     className={cn(
-                      'flex w-full flex-col items-start text-start font-medium',
+                      'prose w-full text-start font-medium',
                       '[&>h3,h4,p]:mt-space-xs [&>h3,h4,p]:leading-normal [&>h3,h4,p]:text-base-tertiary [&>p]:text-(length:--text-body-lg) [&>p]:font-medium',
                     )}
-                    data={richText}
-                    enableGutter={false}
-                  />
+                  >
+                    <RichText
+                      disableContainer
+                      data={richText}
+                      enableGutter={false}
+                      converters={motionConverters}
+                    />
+                  </motion.div>
                 )}
-              </div>
-              <div className="flex w-full flex-col items-start gap-4 lg:w-fit">
+              </motion.div>
+              <motion.div className="flex w-full flex-col items-start gap-4 lg:w-fit">
                 {Array.isArray(links) && links.length > 0 && (
-                  <ul className="flex flex-row items-center justify-start gap-1">
+                  <motion.ul className="flex flex-row items-center justify-start gap-1">
                     {links.map(({ link }, i) => {
                       return (
-                        <li key={i}>
+                        <motion.li key={i} variants={itemsFling}>
                           <CMSLink className="w-full md:w-auto" size={'lg'} {...link} />
-                        </li>
+                        </motion.li>
                       )
                     })}
-                  </ul>
+                  </motion.ul>
                 )}
                 {caption && <p className="text-sm text-base-tertiary">{caption}</p>}
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
             {logos && logosGroup && logosGroup.length > 0 && (
-              <div className="flex w-full flex-col items-center gap-space-md md:gap-space-lg">
+              <motion.div
+                variants={itemsFling}
+                className="flex w-full flex-col items-center gap-space-md md:gap-space-lg"
+              >
                 {headline && (
                   <p className="text-body-sm font-medium text-base-quaternary">{headline}</p>
                 )}
@@ -98,9 +112,9 @@ export const Hero01: React.FC<Page['hero']> = ({
                     })}
                   </InfiniteSlider>
                 </div>
-              </div>
+              </motion.div>
             )}
-          </div>
+          </motion.div>
 
           {mediaGroup?.media && typeof mediaGroup?.media === 'object' && (
             <motion.div
