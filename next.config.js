@@ -15,9 +15,14 @@ const withNextIntl = createNextIntlPlugin()
 console.log(NEXT_PUBLIC_SERVER_URL)
 console.log('env: ', process.env.NODE_ENV)
 
-initOpenNextCloudflareForDev({
-  experimental: { remoteBindings: true },
-})
+// Skip wrangler/workerd initialisation when building in CI or production environments
+const shouldInitCloudflareDevBindings = process.env.NODE_ENV === 'development' && !process.env.CI
+
+if (shouldInitCloudflareDevBindings) {
+  initOpenNextCloudflareForDev({
+    experimental: { remoteBindings: true },
+  })
+}
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

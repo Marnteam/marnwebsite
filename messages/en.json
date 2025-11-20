@@ -51,5 +51,9 @@
   "Pagination": {
     "previous": "Previous",
     "next": "Next"
+  },
+  "Metadata": {
+    "defaultTitle": "Marn POS",
+    "defaultDescription": "All your tools in one flexible platform. Explore sales, operations, and management solutions built for fast-growing businesses."
   }
 }

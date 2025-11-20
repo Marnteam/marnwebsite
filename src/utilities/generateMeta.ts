@@ -1,21 +1,13 @@
 import type { Metadata } from 'next'
 
-import type { Media, Page, BlogPost, Config, Integration } from '../payload-types'
+import type { Page, BlogPost, Integration } from '../payload-types'
 
 import { mergeOpenGraph } from './mergeOpenGraph'
 import { getServerSideURL } from './getURL'
 
-const url = getServerSideURL()
+import { getTranslations } from 'next-intl/server'
 
-const DEFAULT_TITLES: Record<'en' | 'ar', string> = {
-  en: 'Marn POS',
-  ar: 'منظومة مرن',
-}
-
-const DEFAULT_DESCRIPTIONS: Record<'en' | 'ar', string> = {
-  en: 'All your tools in one flexible platform. Explore sales, operations, and management solutions built for fast-growing businesses.',
-  ar: 'كل أدواتك في منظومة مرنة. استكشف حلول البيع، التشغيل، والإدارة المصممة لتلبية احتياجاتك.',
-}
+const baseURL = getServerSideURL()
 
 const isBlogPost = (
   doc: Partial<Page> | Partial<BlogPost> | Partial<Integration> | null,
@@ -26,22 +18,21 @@ const isBlogPost = (
 const isIntegration = (
   doc: Partial<Page> | Partial<BlogPost> | Partial<Integration> | null,
 ): doc is Partial<Integration> => {
-  return !!doc && 'company' in doc
+  return !!doc && 'icon' in doc
 }
 
-const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
-  const serverUrl = getServerSideURL()
-
-  // let url = serverUrl + '/website-template-OG.webp'
-  let url = serverUrl
-
-  if (image && typeof image === 'object' && 'url' in image) {
-    const ogUrl = image.url
-
-    url = ogUrl ? serverUrl + ogUrl : serverUrl + image.url
-  }
-
-  return url
+const getImageURL = ({
+  doc,
+  locale,
+}: {
+  doc: Partial<Page> | Partial<BlogPost> | Partial<Integration>
+  locale: 'en' | 'ar'
+}) => {
+  const slug = doc.slug
+  let type = 'page'
+  if (isBlogPost(doc)) type = 'blog'
+  if (isIntegration(doc)) type = 'marketplace'
+  return `${baseURL}/next/og?locale=${locale}&type=${type}&slug=${slug}`
 }
 
 export const generateMeta = async ({
@@ -51,9 +42,9 @@ export const generateMeta = async ({
   doc: Partial<Page> | Partial<BlogPost> | Partial<Integration>
   locale: 'en' | 'ar'
 }): Promise<Metadata> => {
-  // const ogImage = getImageURL(doc?.meta?.image)
+  const t = await getTranslations({ locale, namespace: 'Metadata' })
 
-  const fallbackTitle = DEFAULT_TITLES[locale]
+  const fallbackTitle = t('defaultTitle')
   const metaTitle =
     typeof doc?.meta?.title === 'string' ? doc.meta.title.trim() : (doc?.meta?.title ?? undefined)
   const contentTitle = typeof doc?.title === 'string' ? doc.title.trim() : undefined
@@ -61,39 +52,25 @@ export const generateMeta = async ({
     isIntegration(doc) && typeof doc?.name === 'string' ? doc.name.trim() : undefined
   const title = metaTitle || contentTitle || integrationName || fallbackTitle
 
-  const slugValue = doc?.slug
-  const rawSlug = Array.isArray(slugValue)
-    ? slugValue.filter(Boolean).join('/')
-    : typeof slugValue === 'string'
-      ? slugValue
-      : 'home'
-  const cleanedSlug = rawSlug.replace(/^\/+|\/+$/g, '') || 'home'
-
-  const defaultDescription = DEFAULT_DESCRIPTIONS[locale]
+  const defaultDescription = t('defaultDescription')
   const description = doc?.meta?.description?.trim() || defaultDescription
 
-  let pathSegment = cleanedSlug === 'home' ? '' : cleanedSlug
+  const ogImage = getImageURL({ doc, locale })
+
+  const slug = doc?.slug || ''
+
+  let pathSegment = slug === 'home' ? '' : slug
 
   if (isBlogPost(doc)) {
-    pathSegment = pathSegment
-      ? pathSegment.startsWith('blog/')
-        ? pathSegment
-        : `blog/${pathSegment}`
-      : 'blog'
+    pathSegment = `blog/${pathSegment}`
   } else if (isIntegration(doc)) {
-    pathSegment = pathSegment
-      ? pathSegment.startsWith('marketplace/')
-        ? pathSegment
-        : `marketplace/${pathSegment}`
-      : 'marketplace'
+    pathSegment = `marketplace/${pathSegment}`
   }
 
   const relativePath = `/${locale}${pathSegment ? `/${pathSegment}` : ''}`
-  const canonical = `${url}${relativePath}`
+  const canonical = `${baseURL}${relativePath}`
 
-  const isBlog = isBlogPost(doc)
-
-  const openGraphInput: Metadata['openGraph'] = isBlog
+  const openGraphInput: Metadata['openGraph'] = isBlogPost(doc)
     ? {
         type: 'article',
         description,
@@ -103,7 +80,7 @@ export const generateMeta = async ({
         locale,
         publishedTime: doc?.publishedAt ?? undefined,
         modifiedTime: doc?.updatedAt ?? undefined,
-        images: `${url}/next/og?locale=${locale}&type=blog&slug=${pathSegment}`,
+        images: ogImage,
       }
     : {
         type: 'website',
@@ -112,19 +89,18 @@ export const generateMeta = async ({
         url: canonical,
         siteName: fallbackTitle,
         locale,
-        images: `${url}/next/og?locale=${locale}&type=${pathSegment}&slug=${pathSegment}`,
+        images: ogImage,
       }
 
   const metadata: Metadata = {
     title,
     description,
     openGraph: mergeOpenGraph(openGraphInput),
-
     alternates: {
       canonical,
       languages: {
-        ar: `${url}/ar${pathSegment ? `/${pathSegment}` : ''}`,
-        en: `${url}/en${pathSegment ? `/${pathSegment}` : ''}`,
+        ar: `${baseURL}/ar${pathSegment ? `/${pathSegment}` : ''}`,
+        en: `${baseURL}/en${pathSegment ? `/${pathSegment}` : ''}`,
       },
     },
     twitter: {

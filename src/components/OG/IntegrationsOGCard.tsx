@@ -1,7 +1,7 @@
 import React from 'react'
-import { Config, Integration, Media, Page } from '@/payload-types.js'
-import { PayloadSDK } from '@payloadcms/sdk'
-import { colors, FALLBACK_COPY } from './utils'
+import { Config, Integration, Media } from '@/payload-types.js'
+import type { PayloadSDK } from '@payloadcms/sdk'
+import { colors, FALLBACK_COPY, normalizeSlug, sanitizeString, truncate } from './utils'
 
 export default async function IntegrationsOGCard({
   sdk,
@@ -12,28 +12,6 @@ export default async function IntegrationsOGCard({
   slug: string
   locale: 'en' | 'ar'
 }) {
-  const sanitizeString = (value?: string | null) => {
-    if (!value) {
-      return undefined
-    }
-    const trimmed = value.trim()
-    return trimmed.length > 0 ? trimmed : undefined
-  }
-  const truncate = (value: string, maxLength: number) => {
-    if (value.length <= maxLength) {
-      return value
-    }
-
-    return `${value.slice(0, Math.max(0, maxLength - 1))}…`
-  }
-  const normalizeSlug = (value?: string | null) => {
-    if (!value) {
-      return 'home'
-    }
-    const decoded = decodeURIComponent(value)
-    const stripped = decoded.replace(/^\/+|\/+$/g, '')
-    return stripped.length > 0 ? stripped : 'home'
-  }
   const buildEyebrow = (slug: string, locale: string) => {
     return locale === 'ar' ? 'متجر تطبيقات مرن' : 'Marn App Marketplace'
   }
