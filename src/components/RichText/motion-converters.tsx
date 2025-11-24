@@ -29,7 +29,7 @@ export const motionConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConv
       nodes: node.children,
       converters: defaultConverters,
     })
-    console.log('HEADING CHILDREN:', children)
+
     const text = children[0] as string
     const slug = formatSlug(text)
     const MotionTag = motion[headingNode.tag as keyof typeof motion] as typeof motion.div

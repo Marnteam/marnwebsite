@@ -97,7 +97,6 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
       reference: doc as any,
       label: text,
     }
-    console.log(linkNode)
 
     return <CMSLink {...props} variant="link" className="text-body-md text-base-primary" />
   },
