@@ -8,7 +8,7 @@ import { JSXConvertersFunction, LinkJSXConverter } from '@payloadcms/richtext-le
 
 import { formatSlug } from '@/hooks/formatSlug'
 import { itemsFling } from '@/utilities/motion'
-import { motion } from 'motion/react'
+import * as motion from 'motion/react-client'
 
 type NodeTypes = DefaultNodeTypes | SerializedBlockNode
 
