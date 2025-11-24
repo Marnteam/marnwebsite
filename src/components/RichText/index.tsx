@@ -22,6 +22,7 @@ import { cn } from '@/utilities/ui'
 import { formatSlug } from '@/hooks/formatSlug'
 import { createElement } from 'react'
 import { StyledListBlock } from '@/blocks/StyledList/Component'
+import { CMSLink, CMSLinkType } from '../Link'
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -82,7 +83,23 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
   blocks: {
     styledListBlock: ({ node }) => <StyledListBlock {...node.fields} />,
   },
-  ...LinkJSXConverter({ internalDocToHref }),
+  link: ({ node: linkNode, nodesToJSX }) => {
+    const { type, url, doc } = linkNode.fields
+    const children = nodesToJSX({
+      nodes: linkNode.children,
+      converters: defaultConverters,
+    })
+    const text = children[0] as string
+    if (text === '←') return null // remove poorly entered links
+    const props: CMSLinkType = {
+      type: type === 'internal' ? 'reference' : 'custom',
+      url: url,
+      reference: doc as any,
+      label: text.replace('←', ''), // remove unwanted arrows,
+    }
+
+    return <CMSLink {...props} variant="link" className="text-body-md text-base-primary" />
+  },
 })
 
 type Props = {
