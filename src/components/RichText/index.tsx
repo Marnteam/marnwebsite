@@ -89,14 +89,15 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
       nodes: linkNode.children,
       converters: defaultConverters,
     })
-    const text = children[0] as string
-    if (text === '←') return null // remove poorly entered links
+    const text = (children[0] as string).replace('←', '').trim() // remove unwanted arrows,
+    if (text === '') return null // remove poorly entered links
     const props: CMSLinkType = {
       type: type === 'internal' ? 'reference' : 'custom',
       url: url,
       reference: doc as any,
-      label: text.replace('←', ''), // remove unwanted arrows,
+      label: text,
     }
+    console.log(linkNode)
 
     return <CMSLink {...props} variant="link" className="text-body-md text-base-primary" />
   },
