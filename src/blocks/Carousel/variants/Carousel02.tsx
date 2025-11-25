@@ -25,7 +25,7 @@ export const Carousel02: React.FC<CarouselBlock> = ({ columns }) => {
   const offset = 64
 
   function normalizeScrollPosition(accordionId: string | null) {
-    if (!accordionId) return
+    if (!accordionId || !mobile) return
 
     const accordionElement = accordionItemRefs.current[accordionId]
     if (!accordionElement) return
@@ -53,7 +53,7 @@ export const Carousel02: React.FC<CarouselBlock> = ({ columns }) => {
         value={activeAccordionId || undefined}
         onValueChange={(value) => {
           setActiveAccordionId(value)
-          mobile && normalizeScrollPosition(value)
+          normalizeScrollPosition(value)
         }}
         className="md:sticky md:top-[calc(var(--spacing-header-plus-admin-bar)+1rem)] md:block"
       >
