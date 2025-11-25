@@ -62,7 +62,7 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 const cloudflareRemoteBindings = process.env.NODE_ENV === 'production'
-const isVercel = true
+const isVercel = Boolean(process.env.VERCEL)
 let cloudflare
 if (isVercel) {
   cloudflare = undefined
