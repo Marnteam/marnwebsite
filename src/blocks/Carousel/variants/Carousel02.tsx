@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/MediaResponsive'
 import { cn } from '@/utilities/ui'
@@ -13,11 +13,35 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import RichText from '@/components/RichText'
+import { useMediaQuery } from '@/utilities/useMediaQuery'
 
 export const Carousel02: React.FC<CarouselBlock> = ({ columns }) => {
+  const accordionItemRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const [activeAccordionId, setActiveAccordionId] = useState<string | null>(
     columns && columns.length > 0 ? String(0) : null,
   )
+  const mobile = useMediaQuery('(max-width:768px)')
+  const delay = 240
+  const offset = 64
+
+  function normalizeScrollPosition(accordionId: string | null) {
+    if (!accordionId) return
+
+    const accordionElement = accordionItemRefs.current[accordionId]
+    if (!accordionElement) return
+
+    const scrollToAccordion = () => {
+      const rect = accordionElement.getBoundingClientRect()
+      window.scrollTo({
+        top: rect.top + window.scrollY - offset,
+        behavior: 'smooth',
+      })
+    }
+
+    setTimeout(() => {
+      scrollToAccordion()
+    }, delay)
+  }
 
   if (!columns || columns.length === 0) return null
 
@@ -27,8 +51,11 @@ export const Carousel02: React.FC<CarouselBlock> = ({ columns }) => {
         type="single"
         collapsible={false}
         value={activeAccordionId || undefined}
-        onValueChange={(value) => setActiveAccordionId(value)}
-        className="flex flex-col md:pe-space-xs"
+        onValueChange={(value) => {
+          setActiveAccordionId(value)
+          mobile && normalizeScrollPosition(value)
+        }}
+        className="md:sticky md:top-[calc(var(--spacing-header-plus-admin-bar)+1rem)] md:block"
       >
         {columns.map((column, index) => {
           const iconName = column.icon as string
@@ -36,14 +63,21 @@ export const Carousel02: React.FC<CarouselBlock> = ({ columns }) => {
 
           return (
             <AccordionItem
+              ref={(node) => {
+                if (node) {
+                  accordionItemRefs.current[String(index)] = node
+                } else {
+                  delete accordionItemRefs.current[String(index)]
+                }
+              }}
               key={index}
               value={String(index)}
               className={cn(
-                'rounded-3xl border-0 p-space-sm transition-colors duration-200',
-                isActive && 'bg-background-neutral',
+                '_p-space-sm rounded-3xl pb-space-sm transition-colors duration-200',
+                '_data-[state=open]:p-space-sm data-[state=open]:bg-background-neutral',
               )}
             >
-              <AccordionTrigger className="flex items-center justify-start gap-space-xs bg-transparent p-0 text-base-tertiary hover:no-underline">
+              <AccordionTrigger className="flex translate-0 items-center justify-start gap-space-xs bg-transparent pt-4 text-base-tertiary hover:no-underline data-[state=open]:-translate-x-space-sm">
                 {column.icon && (
                   <Icon
                     className={cn(
@@ -60,7 +94,7 @@ export const Carousel02: React.FC<CarouselBlock> = ({ columns }) => {
                 )}
               </AccordionTrigger>
               <AccordionContent
-                className={`flex flex-col items-start gap-4 p-0 ${column.icon && 'ps-[calc(var(--text-body-lg)+var(--spacing-space-xs))]'}`}
+                className={`flex flex-col items-start gap-4 px-space-sm pb-0 ${column.icon && 'ps-[calc(var(--text-body-lg)+var(--spacing-space-xs))]'}`}
               >
                 {column.content?.subtitle && <RichText data={column.content.subtitle} />}
                 {column.enableCta && column.link && <CMSLink variant="link" {...column.link} />}
@@ -81,8 +115,8 @@ export const Carousel02: React.FC<CarouselBlock> = ({ columns }) => {
           {columns[parseInt(activeAccordionId)].image && (
             <Media
               resource={columns[parseInt(activeAccordionId)].image || undefined}
-              className="hidden h-auto w-full overflow-hidden rounded-3xl md:sticky md:top-[calc(var(--header-height)+var(--admin-bar-height))] md:block"
-              imgClassName="h-auto w-full object-cover"
+              className="hidden h-auto w-full md:sticky md:top-[calc(var(--spacing-header-plus-admin-bar)+1rem)] md:block"
+              imgClassName="h-auto w-full rounded-3xl object-cover"
             />
           )}
         </>
