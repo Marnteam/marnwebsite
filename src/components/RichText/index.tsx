@@ -83,22 +83,63 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
   blocks: {
     styledListBlock: ({ node }) => <StyledListBlock {...node.fields} />,
   },
-  link: ({ node: linkNode, nodesToJSX }) => {
-    const { type, url, doc } = linkNode.fields
+
+  link: ({ node, nodesToJSX }) => {
+    // remove '←' from text content
+    const cleanedNodes = [
+      {
+        ...node.children[0],
+        text:
+          'text' in node.children[0] &&
+          (node.children[0].text as string).trim().replace('←', '').trim(),
+      },
+    ]
+    if ((cleanedNodes[0].text as string)?.trim() === '') return null
+
     const children = nodesToJSX({
-      nodes: linkNode.children,
-      converters: defaultConverters,
+      nodes: cleanedNodes,
     })
-    const text = (children[0] as string).replace('←', '').trim() // remove unwanted arrows,
-    if (text === '') return null // remove poorly entered links
+
+    const rel: string | undefined = node.fields.newTab ? 'noopener noreferrer' : undefined
+    const target: string | undefined = node.fields.newTab ? '_blank' : undefined
+
+    let href: string = node.fields.url ?? ''
+    if (node.fields.linkType === 'internal') {
+      if (internalDocToHref) {
+        href = internalDocToHref({ linkNode: node })
+      } else {
+        console.error(
+          'Lexical => JSX converter: Link converter: found internal link, but internalDocToHref is not provided',
+        )
+        href = '#' // fallback
+      }
+    }
     const props: CMSLinkType = {
-      type: type === 'internal' ? 'reference' : 'custom',
-      url: url,
-      reference: doc as any,
-      label: text,
+      type: node.fields.linkType === 'internal' ? 'reference' : 'custom',
+      url: node.fields.url,
+      reference: node.fields.doc as any,
+      label: null,
     }
 
-    return <CMSLink {...props} variant="link" className="text-body-md text-base-primary" />
+    return (
+      <CMSLink {...props} {...{ rel, target }}>
+        {children}
+      </CMSLink>
+    )
+  },
+  autolink: ({ node, nodesToJSX }) => {
+    const children = nodesToJSX({
+      nodes: node.children,
+    })
+
+    const rel: string | undefined = node.fields.newTab ? 'noopener noreferrer' : undefined
+    const target: string | undefined = node.fields.newTab ? '_blank' : undefined
+
+    return (
+      <a href={node.fields.url} {...{ rel, target }}>
+        {children}
+      </a>
+    )
   },
 })
 

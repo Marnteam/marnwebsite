@@ -84,7 +84,7 @@ export const CMSLink = React.forwardRef<HTMLAnchorElement, CMSLinkType>((props, 
           <Icon
             icon="tabler:caret-left-filled"
             height="none"
-            className="size-[0.75lh] shrink-0 translate-x-1 transition-[translate] duration-150 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180"
+            className="size-[0.6lh] shrink-0 translate-x-1 transition-[translate] duration-150 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180"
           />
         )}
       </Link>
