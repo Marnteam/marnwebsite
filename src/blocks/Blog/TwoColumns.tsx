@@ -24,7 +24,7 @@ const PostCard: React.FC<{
 
   const href = `/${locale}/blog/${post.slug}`
   const { text } = getReadTimeFromLexical(post.content, locale as 'en' | 'ar', t)
-  const excerpt = extractTextFromLexical(post.content)
+  const excerpt = extractTextFromLexical(post.content.root.children)
   const category =
     Array.isArray(post.categories) && post.categories.length > 0 ? post.categories[0] : null
   const author = Array.isArray(post.authors) && post.authors.length > 0 ? post.authors[0] : null

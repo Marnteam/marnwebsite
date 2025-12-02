@@ -3,12 +3,15 @@ import {
   SerializedBlockNode,
   SerializedHeadingNode,
   SerializedLinkNode,
+  SerializedTextNode,
 } from '@payloadcms/richtext-lexical'
+import { SerializedLexicalNode } from 'lexical'
 import { JSXConvertersFunction, LinkJSXConverter } from '@payloadcms/richtext-lexical/react'
 
 import { formatSlug } from '@/hooks/formatSlug'
 import { itemsFling } from '@/utilities/motion'
 import * as motion from 'motion/react-client'
+import { extractTextFromLexical, extractTextFromNode } from '@/utilities/extractTextFromLexical'
 
 type NodeTypes = DefaultNodeTypes | SerializedBlockNode
 
@@ -29,9 +32,8 @@ export const motionConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConv
       nodes: node.children,
       converters: defaultConverters,
     })
-
-    const text = children[0] as string
-    const slug = formatSlug(text)
+    const plainText = extractTextFromLexical(headingNode.children)
+    const slug = plainText ? formatSlug(plainText) : undefined
     const MotionTag = motion[headingNode.tag as keyof typeof motion] as typeof motion.div
 
     // Create the heading element dynamically based on the tag

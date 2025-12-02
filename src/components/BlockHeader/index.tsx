@@ -22,7 +22,7 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
     type,
   } = props
 
-  const headerTextLength = countWords(extractTextFromLexical(headerText))
+  const headerTextLength = countWords(extractTextFromLexical(headerText?.root.children))
 
   if (!headerTextLength) return null
 

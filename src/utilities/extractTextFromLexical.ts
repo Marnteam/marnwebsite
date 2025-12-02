@@ -1,30 +1,19 @@
-// Extract all text content from Lexical format
-const extractTextFromNode = (node: any): string => {
-  let text = ''
+import { SerializedTextNode } from '@payloadcms/richtext-lexical'
+import { SerializedLexicalNode } from 'lexical'
 
-  // Handle text nodes
-  if (node.type === 'text' && node.text) {
-    return node.text + ' '
-  }
-
-  // Handle nodes with children
-  if (node.children && Array.isArray(node.children)) {
-    for (const child of node.children) {
-      text += extractTextFromNode(child)
+export const extractTextFromLexical = (nodes: SerializedLexicalNode[] | undefined): string => {
+  if (!nodes || !nodes.length) return ''
+  let allText = ''
+  for (const node of nodes) {
+    if (node.type === 'text') {
+      allText += (node as SerializedTextNode).text + ' '
+    }
+    if ('children' in node && Array.isArray(node.children)) {
+      for (const child of node.children) {
+        allText += extractTextFromLexical(child)
+      }
     }
   }
-
-  return text
-}
-
-export const extractTextFromLexical = (content: any): string => {
-  if (!content?.root?.children) return ''
-
-  let allText = ''
-  for (const child of content.root.children) {
-    allText += extractTextFromNode(child)
-  }
-
   return allText.trim()
 }
 
@@ -40,7 +29,7 @@ export const getReadTimeFromLexical = (
   locale: 'en' | 'ar' = 'ar',
   t: (key: string, values?: any) => string,
 ): { minutes: number; text: string } => {
-  const text = extractTextFromLexical(content)
+  const text = extractTextFromLexical(content.root.children)
   const wordCount = countWords(text)
 
   // Reading speeds (words per minute)

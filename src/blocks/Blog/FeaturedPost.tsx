@@ -61,7 +61,7 @@ export const FeaturedPost: React.FC<BlogBlockType> = ({ featuredPost, locale }) 
               {/* Featured Post Excerpt */}
               {featuredPost.content && (
                 <p className="line-clamp-3 h-full text-body-lg text-base-secondary transition-colors group-hover:text-base-tertiary">
-                  {extractTextFromLexical(featuredPost.content).slice(0, 180)}...
+                  {extractTextFromLexical(featuredPost.content.root.children).slice(0, 180)}...
                 </p>
               )}
 
