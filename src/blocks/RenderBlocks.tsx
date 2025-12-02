@@ -21,6 +21,7 @@ import { RenderPricingBlock } from './Pricing/RenderPricingBlock'
 import { SearchableIntegrationsGrid } from '@/blocks/Marketplace/SearchableGrid'
 import { RenderBlogBlock } from './Blog/RenderBlogBlock'
 import { RenderCarouselBlock } from './Carousel/RenderCarouselBlock'
+import { RenderScrollEffectBlock } from './ScrollEffect/RenderScrollEffectBlock'
 import { cn } from '@/utilities/ui'
 
 const blockComponents = {
@@ -41,6 +42,7 @@ const blockComponents = {
   metricsBlock: RenderMetricsBlock,
   pricingBlock: RenderPricingBlock,
   richTextBlock: RenderRichTextBlock,
+  scrollEffectBlock: RenderScrollEffectBlock,
   testimonialsBlock: RenderTestimonialsBlock,
 }
 

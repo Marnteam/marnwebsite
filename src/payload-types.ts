@@ -84,6 +84,7 @@ export interface Config {
     metricsBlock: MetricsBlock;
     pricingBlock: PricingBlock;
     richTextBlock: RichTextBlock;
+    scrollEffectBlock: ScrollEffectBlock;
     styledListBlock: StyledListBlock;
     testimonialsBlock: TestimonialsBlock;
   };
@@ -527,6 +528,7 @@ export interface Page {
     | MetricsBlock
     | PricingBlock
     | RichTextBlock
+    | ScrollEffectBlock
     | TestimonialsBlock
   )[];
   meta?: {
@@ -2772,6 +2774,154 @@ export interface PricingBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'pricingBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ScrollEffectBlock".
+ */
+export interface ScrollEffectBlock {
+  blockHeader: {
+    type: 'center' | 'split' | 'start';
+    badge?: {
+      type?: ('label' | 'reference') | null;
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: string | Solution;
+          } | null)
+        | ({
+            relationTo: 'integrations';
+            value: string | Integration;
+          } | null);
+      /**
+       * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
+       */
+      icon?: string | null;
+      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+    };
+    headerText?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: string | Page;
+                } | null)
+              | ({
+                  relationTo: 'blog-posts';
+                  value: string | BlogPost;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: string | Solution;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            color?: ('brand' | 'neutral') | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  type: '01' | '02' | '03';
+  columns?:
+    | {
+        tabLabel?: string | null;
+        image?: (string | null) | Media;
+        /**
+         * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
+         */
+        icon?: string | null;
+        content: {
+          title: string;
+          subtitle?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+        };
+        enableBadge?: boolean | null;
+        enableCta?: boolean | null;
+        badge?: {
+          type?: ('label' | 'reference') | null;
+          label?: string | null;
+          color?: ('blue' | 'red' | 'green' | 'yellow' | 'violet' | 'gray' | 'inverted') | null;
+          reference?:
+            | ({
+                relationTo: 'solutions';
+                value: string | Solution;
+              } | null)
+            | ({
+                relationTo: 'integrations';
+                value: string | Integration;
+              } | null);
+          /**
+           * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
+           */
+          icon?: string | null;
+          icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+        };
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: string | Page;
+              } | null)
+            | ({
+                relationTo: 'blog-posts';
+                value: string | BlogPost;
+              } | null)
+            | ({
+                relationTo: 'solutions';
+                value: string | Solution;
+              } | null);
+          url?: string | null;
+          label: string;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'scrollEffectBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

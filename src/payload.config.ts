@@ -38,25 +38,26 @@ import { ArchiveBlock } from '@/blocks/ArchiveBlock/config'
 import { Banner } from './blocks/Banner/config'
 import { BlogBlock } from './blocks/Blog/config'
 import { CallToActionBlock } from '@/blocks/CallToAction/config'
+import { CarouselBlock } from '@/blocks/Carousel/config'
 import { CustomHtmlBlock } from '@/blocks/CustomHTML/config'
+import { DividerBlock } from '@/blocks/Divider/config'
+import { FaqBlock } from '@/blocks/FAQ/config'
 import { FeaturedAppsBlock } from '@/blocks/FeaturedApps/config'
 import { FeaturesBlock } from '@/blocks/Features/config'
-import { CarouselBlock } from '@/blocks/Carousel/config'
 import { FormBlock } from '@/blocks/Form/config'
+import { GalleryBlock } from '@/blocks/Gallery/config'
+import { LogosBlock } from '@/blocks/Logos/config'
+import { Marketplace } from './blocks/Marketplace/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
+import { MetricsBlock } from '@/blocks/Metrics/config'
+import { PricingBlock } from '@/blocks/Pricing/config'
+import { RichTextBlock } from '@/blocks/RichText/config'
+import { ScrollEffect } from './blocks/ScrollEffect/config'
 import { StyledList } from '@/blocks/StyledList/config'
 import { TestimonialsBlock } from '@/blocks/Testimonials/config'
-import { GalleryBlock } from '@/blocks/Gallery/config'
-import { FaqBlock } from '@/blocks/FAQ/config'
-import { DividerBlock } from '@/blocks/Divider/config'
-import { LogosBlock } from '@/blocks/Logos/config'
-import { RichTextBlock } from '@/blocks/RichText/config'
-import { PricingBlock } from '@/blocks/Pricing/config'
-import { MetricsBlock } from '@/blocks/Metrics/config'
 
 import { en } from '@payloadcms/translations/languages/en'
 import { ar } from '@payloadcms/translations/languages/ar'
-import { Marketplace } from './blocks/Marketplace/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -72,12 +73,10 @@ if (isVercel) {
       ? await getCloudflareContextFromWrangler()
       : await getCloudflareContext({ async: true })
 }
-console.log({ isVercel })
+
 const databaseConnectionString = isVercel
   ? (process.env.DATABASE_URI ?? '')
   : cloudflare?.env.HYPERDRIVE.connectionString
-
-const storageBucket = isVercel ? undefined : cloudflare?.env.MARN_WEB_MEDIA
 
 export default buildConfig({
   admin: {
@@ -180,6 +179,7 @@ export default buildConfig({
     MetricsBlock,
     PricingBlock,
     RichTextBlock,
+    ScrollEffect,
     StyledList,
     TestimonialsBlock,
   ],
@@ -310,8 +310,8 @@ export default buildConfig({
             `${process.env.NEXT_PUBLIC_MEDIA_URL}/${prefix}/${encodeURIComponent(filename)}`,
         },
       },
-      bucket: storageBucket,
-      enabled: !isVercel,
+      bucket: !isVercel && cloudflare?.env.MARN_WEB_MEDIA,
+      enabled: !isVercel && process.env.NODE_ENV === 'production',
     }),
   ],
   secret: process.env.PAYLOAD_SECRET,
