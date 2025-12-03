@@ -1,4 +1,4 @@
-import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
+import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-vercel-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
@@ -20,14 +20,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_color" "link_color" DEFAULT 'neutral',
   	"link_variant" "link_variant" DEFAULT 'primary'
   );
-  
+
   CREATE TABLE "scrollEffectBlock_block_header_links_locales" (
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" varchar NOT NULL
   );
-  
+
   CREATE TABLE "scrollEffectBlock_columns" (
   	"_order" integer NOT NULL,
   	"_parent_id" varchar NOT NULL,
@@ -43,7 +43,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_new_tab" boolean,
   	"link_url" varchar
   );
-  
+
   CREATE TABLE "scrollEffectBlock_columns_locales" (
   	"tab_label" varchar,
   	"image_id" uuid,
@@ -55,7 +55,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" varchar NOT NULL
   );
-  
+
   CREATE TABLE "scrollEffectBlock" (
   	"_order" integer NOT NULL,
   	"_parent_id" uuid NOT NULL,
@@ -69,7 +69,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"type" "enum_scrollEffectBlock_type" DEFAULT '01',
   	"block_name" varchar
   );
-  
+
   CREATE TABLE "scrollEffectBlock_locales" (
   	"block_header_badge_label" varchar,
   	"block_header_header_text" jsonb DEFAULT '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'::jsonb,
@@ -77,7 +77,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" varchar NOT NULL
   );
-  
+
   CREATE TABLE "_scrollEffectBlock_v_block_header_links" (
   	"_order" integer NOT NULL,
   	"_parent_id" uuid NOT NULL,
@@ -89,14 +89,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_variant" "link_variant" DEFAULT 'primary',
   	"_uuid" varchar
   );
-  
+
   CREATE TABLE "_scrollEffectBlock_v_block_header_links_locales" (
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" uuid NOT NULL
   );
-  
+
   CREATE TABLE "_scrollEffectBlock_v_columns" (
   	"_order" integer NOT NULL,
   	"_parent_id" uuid NOT NULL,
@@ -113,7 +113,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_url" varchar,
   	"_uuid" varchar
   );
-  
+
   CREATE TABLE "_scrollEffectBlock_v_columns_locales" (
   	"tab_label" varchar,
   	"image_id" uuid,
@@ -125,7 +125,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" uuid NOT NULL
   );
-  
+
   CREATE TABLE "_scrollEffectBlock_v" (
   	"_order" integer NOT NULL,
   	"_parent_id" uuid NOT NULL,
@@ -140,7 +140,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_uuid" varchar,
   	"block_name" varchar
   );
-  
+
   CREATE TABLE "_scrollEffectBlock_v_locales" (
   	"block_header_badge_label" varchar,
   	"block_header_header_text" jsonb DEFAULT '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'::jsonb,
@@ -148,7 +148,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" uuid NOT NULL
   );
-  
+
   ALTER TABLE "scrollEffectBlock_block_header_links" ADD CONSTRAINT "scrollEffectBlock_block_header_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."scrollEffectBlock"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "scrollEffectBlock_block_header_links_locales" ADD CONSTRAINT "scrollEffectBlock_block_header_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."scrollEffectBlock_block_header_links"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "scrollEffectBlock_columns" ADD CONSTRAINT "scrollEffectBlock_columns_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."scrollEffectBlock"("id") ON DELETE cascade ON UPDATE no action;

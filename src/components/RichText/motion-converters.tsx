@@ -11,7 +11,7 @@ import { JSXConvertersFunction, LinkJSXConverter } from '@payloadcms/richtext-le
 import { formatSlug } from '@/hooks/formatSlug'
 import { itemsFling } from '@/utilities/motion'
 import * as motion from 'motion/react-client'
-import { extractTextFromLexical, extractTextFromNode } from '@/utilities/extractTextFromLexical'
+import { extractTextFromLexical } from '@/utilities/extractTextFromLexical'
 
 type NodeTypes = DefaultNodeTypes | SerializedBlockNode
 
