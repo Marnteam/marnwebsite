@@ -64,7 +64,7 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
                   <MorphingDialogTrigger className="h-full w-full">
                     <Card
                       dir={locale === 'ar' ? 'rtl' : 'ltr'}
-                      className="relative h-full w-full border border-none pb-space-xl text-start transition-colors hover:bg-background-neutral/90"
+                      className="relative h-full w-full border border-none pb-space-xl text-start transition-colors hover:bg-background-neutral-subtle"
                     >
                       <CardContent className="flex flex-col items-start gap-2 rounded-3xl pe-space-md pb-4">
                         {icon && (
@@ -94,12 +94,7 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
                     </Card>
                   </MorphingDialogTrigger>
                   <MorphingDialogContainer>
-                    <MorphingDialogContent
-                      style={{
-                        borderRadius: 'var(--radius-space-sm)',
-                      }}
-                      className="relative h-auto w-[calc(100vw-(var(--spacing-space-site)*2))] max-w-3xl border-border bg-background-neutral"
-                    >
+                    <MorphingDialogContent className="relative h-auto w-[calc(100vw-(var(--spacing-space-site)*2))] max-w-3xl rounded-3xl border-border bg-background-neutral">
                       <ScrollArea
                         dir={locale === 'ar' ? 'rtl' : 'ltr'}
                         className="h-[90vh]"
@@ -116,26 +111,22 @@ export const Carousel05: React.FC<Carousel05Props> = ({ columns, locale }) => {
                                 color="currentColor"
                               />
                             )}
+
                             {content?.title && (
-                              <MorphingDialogTitle className="text-body-lg font-medium text-base-primary">
+                              <MorphingDialogTitle className="text-h3 font-medium text-base-primary">
                                 {content.title}
                               </MorphingDialogTitle>
-                            )}
-                            {content?.subtitle && (
-                              <MorphingDialogSubtitle>
-                                {content.subtitle && <RichText data={content.subtitle} />}
-                              </MorphingDialogSubtitle>
                             )}
                             <hr className="w-full border-border" />
                             {column.image && (
                               <Media
                                 resource={column.image}
-                                className="mt-space-xs h-auto w-full overflow-hidden rounded-3xl"
+                                className="h-auto w-full overflow-hidden rounded-3xl"
                                 imgClassName="h-auto w-full object-cover"
                               />
                             )}
                             {content?.subtitle && (
-                              <MorphingDialogDescription className="mt-space-xs">
+                              <MorphingDialogDescription className="mt-space-xs w-full">
                                 <RichText data={content.subtitle} />
                                 {column.enableCta && column.link && <CMSLink {...column.link} />}
                               </MorphingDialogDescription>

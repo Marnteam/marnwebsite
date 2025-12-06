@@ -33,7 +33,7 @@ export const Carousel04: React.FC<CarouselBlock> = ({ columns }) => {
             return (
               <CarouselItem key={index} className="ps-space-xs">
                 <Card className="h-full w-full bg-transparent p-0">
-                  <CardContent className="flex h-full flex-col items-start gap-0">
+                  <CardContent className="flex h-full flex-col items-start gap-space-sm">
                     {image && (
                       <Media
                         resource={image}
@@ -42,18 +42,18 @@ export const Carousel04: React.FC<CarouselBlock> = ({ columns }) => {
                       />
                     )}
                     {content && (
-                      <div className="flex flex-col p-space-sm pe-space-md">
+                      <div className="pe-space-md">
                         {content.title && (
-                          <h3 className="text-body-lg font-medium text-base-primary">
+                          <h3 className="mb-space-xs text-h4 font-medium text-base-primary">
                             {content.title}
                           </h3>
                         )}
                         {content.subtitle && (
                           <RichText data={content.subtitle} className="mx-0 w-full" />
                         )}
+                        {link && <CMSLink className="mt-space-sm" {...link} />}
                       </div>
                     )}
-                    {link && <CMSLink {...link} />}
                   </CardContent>
                 </Card>
               </CarouselItem>
