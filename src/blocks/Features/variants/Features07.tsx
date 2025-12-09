@@ -15,7 +15,7 @@ export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage }) => 
   return (
     <div className="container flex flex-col gap-space-xs rounded-3xl py-space-xl">
       <motion.div
-        className="flex- flex"
+        className="flex flex-col"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
