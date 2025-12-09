@@ -31,7 +31,7 @@ export const Features06: React.FC<FeaturesBlock> = ({
           className="flex flex-col gap-space-xs rounded-3xl bg-background-neutral p-4"
         >
           <div className="flex flex-col gap-space-xs md:flex-row">
-            {blockHeader && (
+            {headerText && (
               <div className="my-space-xs flex flex-col gap-space-md ps-space-xs pe-space-xl lg:basis-1/2">
                 {(badge?.label || badge?.reference) && (
                   <motion.div variants={itemsFling}>
