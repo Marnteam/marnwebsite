@@ -12,6 +12,7 @@ import { Icon } from '@iconify-icon/react/dist/iconify.mjs'
 
 export const FAQBlock02: React.FC<FaqBlock> = async (props) => {
   const { faqs, blockHeader } = props
+
   return (
     <div className="bg-background pt-[clamp(4rem,2.4rem+4vw,6rem)]">
       <div className="container flex flex-col gap-4 lg:flex-row lg:items-start">

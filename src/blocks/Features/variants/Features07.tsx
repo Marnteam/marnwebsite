@@ -9,28 +9,26 @@ import { motion } from 'motion/react'
 import { containerVariants, itemsFling } from '@/utilities/motion'
 import RichText from '@/components/RichText'
 
-export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, blockHeader }) => {
+export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage }) => {
   if (!columns || columns.length === 0) return null
 
   return (
     <div className="container flex flex-col gap-space-xs rounded-3xl py-space-xl">
-      <div className="flex flex-col gap-space-md">
-        {blockHeader && <BlockHeader {...blockHeader} className="px-0" />}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          {blockImage && (
-            <Media
-              resource={blockImage}
-              className="h-auto w-full overflow-hidden rounded-3xl lg:basis-1/2"
-              imgClassName="aspect-[16/9] h-auto w-full object-cover"
-            />
-          )}
-        </motion.div>
-      </div>
+      <motion.div
+        className="flex- flex"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        {blockImage && (
+          <Media
+            resource={blockImage}
+            className="h-auto w-full overflow-hidden rounded-3xl lg:basis-1/2"
+            imgClassName="aspect-[16/9] h-auto w-full object-cover"
+          />
+        )}
+      </motion.div>
 
       <motion.div
         className="grid grid-cols-2 gap-space-xs md:grid-cols-2 lg:grid-cols-(--columns)"

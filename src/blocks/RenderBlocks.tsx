@@ -68,7 +68,9 @@ export const RenderBlocks: React.FC<{
         if (!Block) {
           return null
         }
-
+        if (blockType === 'featuresBlock' && block.type === '07') {
+          console.log('features 07')
+        }
         return (
           <div
             id={block.blockName || undefined}
@@ -80,7 +82,7 @@ export const RenderBlocks: React.FC<{
             key={index}
           >
             {blockHeader &&
-              !(block?.blockType === 'featuresBlock' && ['06', '07', '17'].includes(block.type)) &&
+              !(block?.blockType === 'featuresBlock' && ['06', '17'].includes(block.type)) &&
               !(block.blockType === 'featuredAppsBlock' && block.type === '01') &&
               !(block.blockType === 'faqBlock' && block.type === '02') && (
                 <BlockHeader {...blockHeader} />

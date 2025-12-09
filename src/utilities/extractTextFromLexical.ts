@@ -9,9 +9,7 @@ export const extractTextFromLexical = (nodes: SerializedLexicalNode[] | undefine
       allText += (node as SerializedTextNode).text + ' '
     }
     if ('children' in node && Array.isArray(node.children)) {
-      for (const child of node.children) {
-        allText += extractTextFromLexical(child)
-      }
+      allText += extractTextFromLexical(node.children)
     }
   }
   return allText.trim()

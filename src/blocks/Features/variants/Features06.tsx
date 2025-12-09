@@ -1,15 +1,25 @@
 'use client'
 import React from 'react'
-import { Media } from '@/components/MediaResponsive'
 import { FeaturesBlock } from '@/payload-types'
 import { Icon } from '@iconify-icon/react'
-import { BlockHeader } from '@/components/BlockHeader'
+
 import { motion } from 'motion/react'
 import { containerVariants, itemsFling } from '@/utilities/motion'
-import RichText from '@/components/RichText'
 
-export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, blockHeader }) => {
+import { Media } from '@/components/MediaResponsive'
+import RichText from '@/components/RichText'
+import { CMSBadge as Badge } from '@/components/Badge'
+import { CMSLink } from '@/components/Link'
+import { cn } from '@/utilities/ui'
+import { motionConverters } from '@/components/RichText/motion-converters'
+
+export const Features06: React.FC<FeaturesBlock> = ({
+  columns,
+  blockImage,
+  blockHeader: { badge, headerText, links },
+}) => {
   if (!columns || columns.length === 0) return null
+
   return (
     <div className="w-full bg-background py-space-xl">
       <div className="container py-space-xl">
@@ -21,16 +31,36 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
           className="flex flex-col gap-space-xs rounded-3xl bg-background-neutral p-4"
         >
           <div className="flex flex-col gap-space-xs md:flex-row">
-            <div className="mt-space-xs flex w-full flex-col gap-space-md px-space-xs lg:basis-1/2">
-              {blockHeader && (
-                <BlockHeader
-                  {...blockHeader}
-                  richTextClassName="auto-rows-auto"
-                  className="h-full grid-cols-1 grid-rows-[auto_1fr_auto] px-0"
-                  type="start"
-                />
-              )}
-            </div>
+            {blockHeader && (
+              <div className="my-space-xs flex flex-col gap-space-md ps-space-xs pe-space-xl lg:basis-1/2">
+                {(badge?.label || badge?.reference) && (
+                  <motion.div variants={itemsFling}>
+                    <Badge size="lg" {...badge} />
+                  </motion.div>
+                )}
+                {headerText && (
+                  <motion.div className="prose">
+                    <RichText
+                      data={headerText}
+                      enableGutter={false}
+                      disableContainer={true}
+                      converters={motionConverters}
+                    />
+                  </motion.div>
+                )}
+                {Array.isArray(links) && links.length > 0 && (
+                  <motion.ul className="col-span-2 flex w-full flex-row gap-2">
+                    {links.map(({ link }, i) => {
+                      return (
+                        <motion.li key={i} className="" variants={itemsFling}>
+                          <CMSLink className="w-full" size={'lg'} {...link} />
+                        </motion.li>
+                      )
+                    })}
+                  </motion.ul>
+                )}
+              </div>
+            )}
             {blockImage && (
               <Media
                 resource={blockImage}
