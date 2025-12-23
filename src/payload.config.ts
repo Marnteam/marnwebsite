@@ -305,9 +305,9 @@ export default buildConfig({
       collections: {
         media: {
           prefix: 'media',
-          disablePayloadAccessControl: true,
-          generateFileURL: ({ filename, prefix }) =>
-            `${process.env.NEXT_PUBLIC_MEDIA_URL}/${prefix}/${encodeURIComponent(filename)}`,
+          // disablePayloadAccessControl: true,
+          // generateFileURL: ({ filename, prefix }) =>
+          //   `${process.env.NEXT_PUBLIC_MEDIA_URL}/${prefix}/${encodeURIComponent(filename)}`,
         },
       },
       bucket: !isVercel && cloudflare?.env.MARN_WEB_MEDIA,
