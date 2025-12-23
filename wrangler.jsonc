@@ -31,7 +31,7 @@
   "r2_buckets": [
     {
       "binding": "NEXT_INC_CACHE_R2_BUCKET",
-      "bucket_name": "marn-web-inc-cache",
+      "bucket_name": "marn-web",
     },
     {
       "binding": "MARN_WEB_MEDIA",
