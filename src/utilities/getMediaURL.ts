@@ -14,9 +14,9 @@ export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | 
     return cacheTag ? `${url}?${cacheTag}` : url
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_MEDIA_URL
+  // const baseUrl = process.env.NEXT_PUBLIC_MEDIA_URL
   // Otherwise prepend client-side URL
-  // const baseUrl = getClientSideURL()
+  const baseUrl = getClientSideURL()
 
   const mediaUrl = cacheTag ? `${baseUrl}${url}?${cacheTag}` : `${baseUrl}${url}`
 
