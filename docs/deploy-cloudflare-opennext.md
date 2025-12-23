@@ -19,9 +19,9 @@ This guide is tailored to this repo's Cloudflare + OpenNext setup. It covers the
 
 ### 2) R2 buckets
 
-Create two buckets and map them to bindings:
+Create a bucket `marn-web` and map it to bindings:
 
-- `NEXT_INC_CACHE_R2_BUCKET` -> bucket `marn-web-inc-cache` (Next.js incremental cache)
+- `NEXT_INC_CACHE_R2_BUCKET` -> bucket `marn-web` (Next.js incremental cache)
 - `MARN_WEB_MEDIA` -> bucket `marn-web` (Payload media)
 
 If you use different bucket names, update `wrangler.jsonc`.
@@ -50,7 +50,7 @@ Ensure these entries are correct:
 
 - `name` (worker name)
 - Hyperdrive `id`
-- R2 bucket names
+- R2 bucket name
 - D1 `database_id`
 
 ### `open-next.config.ts`
@@ -68,7 +68,7 @@ OpenNext builds a worker bundle first, then runs it on Cloudflare. Keep these se
 - **Build-time**: variables used during `opennextjs-cloudflare build` (CI or local build env).
 - **Runtime**: variables defined in Cloudflare Worker settings (what the worker sees at request time).
 
-If a value is needed at runtime (for example, Payload secrets or storage URLs), define it in Cloudflare Worker settings. If a value is only used during build, set it in your CI environment.
+If a value is needed at runtime (for example, Payload secrets or storage URLs), define it in Cloudflare Worker settings. If a value is only used during build, set it in your CI environment and/or in the Cloudflare dashboard.
 
 ### Required
 
@@ -77,7 +77,6 @@ If a value is needed at runtime (for example, Payload secrets or storage URLs), 
 - `PREVIEW_SECRET` - used by `/next/preview` route.
 - `CRON_SECRET` - protects Payload job endpoint.
 - `NEXT_PUBLIC_SERVER_URL` - public site URL.
-- `NEXT_PUBLIC_MEDIA_URL` - public base URL for media assets.
 - `RESEND_API_KEY` - Payload email adapter.
 - `RESEND_EMAIL` - default From address.
 
@@ -88,7 +87,7 @@ If a value is needed at runtime (for example, Payload secrets or storage URLs), 
 - `NEXT_PUBLIC_SENTRY_DSN` - if you wire up Sentry.
 - `WP_USER`, `WP_PASS` - only used by migration scripts.
 
-### Special build-time variables
+### Build-time only variables
 
 - `CLOUDFLARE_ACCOUNT_ID` - Cloudflar account ID
 - `CF_ACCOUNT_ID` - Cloudflar account ID
@@ -101,18 +100,6 @@ If a value is needed at runtime (for example, Payload secrets or storage URLs), 
 
 - `DATABASE_URI` is not used by Cloudflare runtime; it is used by local tooling/drizzle.
 
-## Storage setup details (R2)
-
-`MARN_WEB_MEDIA` is used by Payload's R2 storage adapter. `NEXT_PUBLIC_MEDIA_URL` should be a public URL that serves the R2 bucket content. Options:
-
-- Enable R2 public access and use the public bucket URL.
-- Or serve the bucket via a custom domain/worker and use that URL.
-
-Payload generates URLs like:
-
-```
-${NEXT_PUBLIC_MEDIA_URL}/media/<filename>
-```
 
 ## Build and deploy
 
