@@ -29,18 +29,7 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { slugField } from '@/fields/slug'
 
-const EMPTY_CONTENT = {
-  root: {
-    children: [
-      { children: [], direction: null, format: '', indent: 0, type: 'paragraph', version: 1 },
-    ],
-    direction: null,
-    format: '',
-    indent: 0,
-    type: 'root',
-    version: 1,
-  },
-}
+import { EMPTY_CONTENT } from '@/utilities/defaultRichTextContent'
 
 export const Posts: CollectionConfig<'blog-posts'> = {
   slug: 'blog-posts',

@@ -14,19 +14,7 @@ import materialIcons from '@/fields/iconPickerField/material-symbols-icons.json'
 import { badge } from '@/fields/badge'
 import { linkGroup } from '@/fields/linkGroup'
 import { media } from '@/fields/media'
-
-const EMPTY_CONTENT = {
-  root: {
-    children: [
-      { children: [], direction: null, format: '', indent: 0, type: 'paragraph', version: 1 },
-    ],
-    direction: null,
-    format: '',
-    indent: 0,
-    type: 'root',
-    version: 1,
-  },
-}
+import { EMPTY_CONTENT } from '@/utilities/defaultRichTextContent'
 
 export const CallToActionBlock: Block = {
   slug: 'callToActionBlock',
