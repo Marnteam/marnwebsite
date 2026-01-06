@@ -63,9 +63,9 @@ type Props = {
 }
 
 /* ─── knobs ──────────────────────────────────────────────────────────────── */
-const MAX_PEEK = 400 // absolute cap in px
-const TOUCH_GAIN = 1.2 // multiplier per px of finger travel
-const WHEEL_GAIN = 45 // multiplier per wheel tick ≈ 1
+const MAX_PEEK = 360 // absolute cap in px
+const TOUCH_GAIN = 1 // multiplier per px of finger travel
+const WHEEL_GAIN = 1 // multiplier per wheel tick ≈ 1
 const WHEEL_IDLE = 0 // ms gap that ends a wheel gesture
 /* ────────────────────────────────────────────────────────────────────────── */
 
