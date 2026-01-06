@@ -63,10 +63,10 @@ type Props = {
 }
 
 /* ─── knobs ──────────────────────────────────────────────────────────────── */
-const MAX_PEEK = 300 // absolute cap in px
+const MAX_PEEK = 400 // absolute cap in px
 const TOUCH_GAIN = 1.2 // multiplier per px of finger travel
 const WHEEL_GAIN = 45 // multiplier per wheel tick ≈ 1
-const WHEEL_IDLE = 65 // ms gap that ends a wheel gesture
+const WHEEL_IDLE = 0 // ms gap that ends a wheel gesture
 /* ────────────────────────────────────────────────────────────────────────── */
 
 export function FooterClient({ columns, currentYear, locale }: Props) {
@@ -92,8 +92,9 @@ export function FooterClient({ columns, currentYear, locale }: Props) {
     springing.current = true
     animate(y, 0, {
       type: 'spring',
-      stiffness: 550,
-      damping: 44,
+      stiffness: 26.7,
+      damping: 4.2,
+      mass: 0.2,
       onComplete: () => {
         springing.current = false
         peekRef.current = 0

@@ -80,10 +80,6 @@ const databaseConnectionString = isVercel
 
 export default buildConfig({
   admin: {
-    autoLogin: {
-      email: 'demo-author@example.com',
-      password: 'password',
-    },
     avatar: 'default',
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
@@ -203,7 +199,7 @@ export default buildConfig({
       maxUses: isVercel ? 1 : 1,
     },
     idType: 'uuid',
-    push: false, // disable push mode
+    // push: false, // disable push mode
   }),
   editor: defaultLexical,
   email: resendAdapter({
