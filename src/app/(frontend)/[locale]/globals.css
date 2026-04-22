@@ -185,6 +185,7 @@
     --chart-5: hsl(340 75% 55%);
 
     --neutral: var(--color-white);
+    --brand: var(--color-marn-300);
     /* use for background */
     --background: var(--color-black);
     --background-light: var(--color-neutral-900);

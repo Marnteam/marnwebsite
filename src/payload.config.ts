@@ -199,7 +199,7 @@ export default buildConfig({
       maxUses: isVercel ? 1 : 1,
     },
     idType: 'uuid',
-    // push: false, // disable push mode
+    push: false, // disable push mode
   }),
   editor: defaultLexical,
   email: resendAdapter({

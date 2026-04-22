@@ -4,8 +4,8 @@
   --prose-strong-color: theme(--color-base-primary);
   --prose-link-color: theme(--color-brand-primary);
   --prose-code-color: theme(--color-base-secondary);
-  --prose-marker-color: var(--color-base-secondary);
-  --prose-link-underline-color: var(--color-base-tertiary);
+  --prose-marker-color: var(--color-base-primary);
+  --prose-link-underline-color: var(--color-brand-primary);
   --prose-th-borders: var(--border);
   --prose-td-borders: var(--border);
   --prose-hr-color: color-mix(in oklab, var(--color-neutral-950) 5%, transparent);
@@ -145,9 +145,13 @@
     text-underline-offset: 6px;
   }
 
+  a:where(:has(strong)):not(.not-prose, .not-prose *) {
+    text-decoration-color: var(--prose-strong-color);
+  }
+
   strong:where(:not(.not-prose, .not-prose *)) {
     color: var(--prose-strong-color);
-    /*font-weight: var(--font-weight-medium);*/
+    font-weight: var(--font-weight-normal);
   }
 
   code:where(:not(.not-prose, .not-prose *)) {
