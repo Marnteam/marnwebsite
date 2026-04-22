@@ -22,6 +22,16 @@
       "service": "marn-web",
     },
   ],
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "invocation_logs": true,
+    },
+  },
+  "vars": {
+    "ENVIRONMENT": "development",
+  },
   "hyperdrive": [
     {
       "binding": "HYPERDRIVE",
@@ -45,11 +55,34 @@
       "database_id": "0062e8bb-8a47-4ea7-be4c-839772497f76",
     },
   ],
-  "observability": {
-    "logs": {
-      "enabled": true,
-      "head_sampling_rate": 1,
-      "invocation_logs": true,
+  "env": {
+    "production": {
+      "vars": {
+        "ENVIRONMENT": "production",
+      },
+      "hyperdrive": [
+        {
+          "binding": "HYPERDRIVE",
+          "id": "48b1fb5bb01b4cc2b4e41f1b106e42f3",
+        },
+      ],
+      "r2_buckets": [
+        {
+          "binding": "NEXT_INC_CACHE_R2_BUCKET",
+          "bucket_name": "marn-web",
+        },
+        {
+          "binding": "MARN_WEB_MEDIA",
+          "bucket_name": "marn-web",
+        },
+      ],
+      "d1_databases": [
+        {
+          "binding": "NEXT_TAG_CACHE_D1",
+          "database_name": "marn-tag-cache",
+          "database_id": "0062e8bb-8a47-4ea7-be4c-839772497f76",
+        },
+      ],
     },
   },
 }
